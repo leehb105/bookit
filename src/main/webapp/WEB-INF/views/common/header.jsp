@@ -14,13 +14,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Title -->
-    <title>Roberto - Hotel &amp; Resort HTML Template</title>
+    <title>Bookit - Book Rental & Resale</title>
 
-    <!-- Favicon -->
-    <link rel="icon" href="${pageContext.request.contextPath}/resources/img/core-img/favicon.png">
+    <!-- Favicon --> 
+    <%-- <link rel="icon" href="${pageContext.request.contextPath}/resources/img/core-img/favicon.png"> --%>
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/roberto/style.css">
 
 </head>
 
@@ -80,7 +80,7 @@
                     <nav class="classy-navbar justify-content-between" id="robertoNav">
 
                         <!-- Logo -->
-                        <a class="nav-brand" href="index.html"><img src="${pageContext.request.contextPath}/resources//img/core-img/logo.png" alt=""></a>
+                        <a class="nav-brand" href="index.html"><img src="${pageContext.request.contextPath}/resources/img/bookit_logo.jpg" alt=""></a>
 
                         <!-- Navbar Toggler -->
                         <div class="classy-navbar-toggler">

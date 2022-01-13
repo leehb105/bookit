@@ -11,7 +11,7 @@
                     <div class="col-12 col-sm-6 col-lg-3">
                         <div class="single-footer-widget mb-80">
                             <!-- Footer Logo -->
-                            <a href="#" class="footer-logo"><img src="img/core-img/logo2.png" alt=""></a>
+                            <a href="#" class="footer-logo"><img src="roberto/img/core-img/logo2.png" alt=""></a>
 
                             <h4>+12 345-678-9999</h4>
                             <span>Info.colorlib@gmail.com</span>
@@ -72,7 +72,7 @@
                 </div>
             </div>
         </div>
-
+ 
         <!-- Copywrite Area -->
         <div class="container">
             <div class="copywrite-content">
@@ -102,15 +102,15 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
     <!-- **** All JS Files ***** -->
     <!-- jQuery 2.2.4 -->
-    <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/roberto/js/jquery.min.js"></script>
     <!-- Popper -->
-    <script src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/roberto/js/popper.min.js"></script>
     <!-- Bootstrap -->
-    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/roberto/js/bootstrap.min.js"></script>
     <!-- All Plugins -->
-    <script src="${pageContext.request.contextPath}/resources/js/roberto.bundle.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/roberto/js/roberto.bundle.js"></script>
     <!-- Active -->
-    <script src="${pageContext.request.contextPath}/resources/js/default-assets/active.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/roberto/js/default-assets/active.js"></script>
 
 </body>
 
