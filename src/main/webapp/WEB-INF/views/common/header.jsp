@@ -16,7 +16,7 @@
     <!-- Title -->
     <title>Bookit - Book Rental & Resale</title>
 
-    <!-- Favicon -->
+    <!-- Favicon --> 
     <%-- <link rel="icon" href="${pageContext.request.contextPath}/resources/img/core-img/favicon.png"> --%>
 
     <!-- Stylesheet -->
