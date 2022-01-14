@@ -1715,24 +1715,24 @@ html .ui-button.ui-state-disabled:active {
   .single-service--area:hover h5, .single-service--area:focus h5 {
     color: #1cc3b2; }
 
-.hotel-search-form-area {
+.book-search-form-area {
   position: relative;
   z-index: 1;
   padding-left: 10%;
   padding-right: 10%; }
   @media only screen and (min-width: 992px) and (max-width: 1199px) {
-    .hotel-search-form-area {
+    .book-search-form-area {
       padding-left: 2%;
       padding-right: 2%; } }
   @media only screen and (min-width: 768px) and (max-width: 991px) {
-    .hotel-search-form-area {
+    .book-search-form-area {
       padding-left: 0%;
       padding-right: 0%; } }
   @media only screen and (max-width: 767px) {
-    .hotel-search-form-area {
+    .book-search-form-area {
       padding-left: 0%;
       padding-right: 0%; } }
-  .hotel-search-form-area .hotel-search-form {
+  .book-search-form-area .book-search-form {
     position: relative;
     z-index: 1;
     width: 100%;
@@ -1741,31 +1741,31 @@ html .ui-button.ui-state-disabled:active {
     border-radius: 5px;
     background-color: #ffffff; }
     @media only screen and (max-width: 767px) {
-      .hotel-search-form-area .hotel-search-form {
+      .book-search-form-area .book-search-form {
         padding: 30px 30px 0 30px; } }
-    .hotel-search-form-area .hotel-search-form label {
+    .book-search-form-area .book-search-form label {
       font-size: 16px;
       font-weight: 500; }
       @media only screen and (max-width: 767px) {
-        .hotel-search-form-area .hotel-search-form label {
+        .book-search-form-area .book-search-form label {
           font-size: 13px; } }
-    .hotel-search-form-area .hotel-search-form .form-control {
+    .book-search-form-area .book-search-form .form-control {
       width: 100%;
       margin-bottom: 40px;
       height: 50px;
       border: 1px solid #ebebeb;
       font-size: 13px; }
       @media only screen and (max-width: 767px) {
-        .hotel-search-form-area .hotel-search-form .form-control {
+        .book-search-form-area .book-search-form .form-control {
           margin-bottom: 30px; } }
-      .hotel-search-form-area .hotel-search-form .form-control:focus {
+      .book-search-form-area .book-search-form .form-control:focus {
         box-shadow: none;
         border-color: #1cc3b2; }
 
 .roberto-about-area {
   position: relative;
   z-index: 1; }
-  .roberto-about-area .hotel-search-form-area {
+  .roberto-about-area .book-search-form-area {
     position: absolute;
     width: 100%;
     z-index: 100;
@@ -1773,7 +1773,7 @@ html .ui-button.ui-state-disabled:active {
     -webkit-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
     transform: translateY(-50%); }
-    .roberto-about-area .hotel-search-form-area .nice-select {
+    .roberto-about-area .book-search-form-area .nice-select {
       line-height: 35px; }
 
 .roberto--video--area {
