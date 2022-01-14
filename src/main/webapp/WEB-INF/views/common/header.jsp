@@ -20,7 +20,7 @@
     <%-- <link rel="icon" href="${pageContext.request.contextPath}/resources/img/core-img/favicon.png"> --%>
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/roberto/style.css">
 
 </head>
 
@@ -96,7 +96,7 @@
                             <!-- Nav Start -->
                             <div class="classynav">
                                 <ul id="nav">
-                                    <li class="active"><a href="./index.html">Home</a></li>
+                                    
                                     <li><a href="#">중고거래</a></li>
                                     <li><a href="#">커뮤니티</a></li>
                                     <li><a href="#">도서요청</a>
@@ -119,7 +119,7 @@
                                         </ul> -->
                                     </li>
                                     <li><a href="#">컬렉션</a></li>
-                                    <!-- <li><a href="#">(임시)</a></li> -->
+                                    <li><a href="#">관리자</a></li>
                                 </ul>
 
                                 <!-- Search -->
