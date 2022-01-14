@@ -80,7 +80,7 @@
                     <nav class="classy-navbar justify-content-between" id="robertoNav">
 
                         <!-- Logo -->
-                        <a class="nav-brand" href="index.html"><img src="${pageContext.request.contextPath}/resources/img/bookit_logo.jpg" alt=""></a>
+                        <a class="nav-brand" href="index.html"><img src="${pageContext.request.contextPath}/resources/img/bookit_logo.png" alt=""></a>
 
                         <!-- Navbar Toggler -->
                         <div class="classy-navbar-toggler">
