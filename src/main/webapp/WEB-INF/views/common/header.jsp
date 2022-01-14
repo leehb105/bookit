@@ -20,7 +20,7 @@
     <%-- <link rel="icon" href="${pageContext.request.contextPath}/resources/img/core-img/favicon.png"> --%>
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/roberto/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/style.css">
 
 </head>
 
@@ -44,7 +44,7 @@
         </div>
 
         <!-- Top Header Area Start -->
-        <div class="top-header-area">
+        <!-- <div class="top-header-area">
             <div class="container">
                 <div class="row">
 
@@ -57,7 +57,7 @@
 
                     <div class="col-6">
                         <div class="top-header-content">
-                            <!-- Top Social Area -->
+                            Top Social Area
                             <div class="top-social-area ml-auto">
                                 <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
                                 <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
@@ -69,7 +69,7 @@
 
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- Top Header Area End -->
 
         <!-- Main Header Start -->
@@ -80,7 +80,7 @@
                     <nav class="classy-navbar justify-content-between" id="robertoNav">
 
                         <!-- Logo -->
-                        <a class="nav-brand" href="index.html"><img src="${pageContext.request.contextPath}/resources/img/bookit_logo.png" alt=""></a>
+                        <a class="nav-brand" href="index.jsp"><img src="${pageContext.request.contextPath}/resources/img/bookit_logo.png" alt=""></a>
 
                         <!-- Navbar Toggler -->
                         <div class="classy-navbar-toggler">
@@ -97,10 +97,10 @@
                             <div class="classynav">
                                 <ul id="nav">
                                     <li class="active"><a href="./index.html">Home</a></li>
-                                    <li><a href="./room.html">Rooms</a></li>
-                                    <li><a href="./about.html">About Us</a></li>
-                                    <li><a href="#">Pages</a>
-                                        <ul class="dropdown">
+                                    <li><a href="#">중고거래</a></li>
+                                    <li><a href="#">커뮤니티</a></li>
+                                    <li><a href="#">도서요청</a>
+                                        <!-- <ul class="dropdown">
                                             <li><a href="./index.html">- Home</a></li>
                                             <li><a href="./room.html">- Rooms</a></li>
                                             <li><a href="./single-room.html">- Single Rooms</a></li>
@@ -116,10 +116,10 @@
                                                     <li><a href="#">- Dropdown Item</a></li>
                                                 </ul>
                                             </li>
-                                        </ul>
+                                        </ul> -->
                                     </li>
-                                    <li><a href="./blog.html">News</a></li>
-                                    <li><a href="./contact.html">Contact</a></li>
+                                    <li><a href="#">컬렉션</a></li>
+                                    <!-- <li><a href="#">(임시)</a></li> -->
                                 </ul>
 
                                 <!-- Search -->
@@ -129,7 +129,7 @@
 
                                 <!-- Book Now -->
                                 <div class="book-now-btn ml-3 ml-lg-5">
-                                    <a href="#">Book Now <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                                    <a href="#">로그인/회원가입<i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
                                 </div>
                             </div>
                             <!-- Nav End -->

@@ -7,7 +7,7 @@
     <section class="welcome-area">
         <div class="welcome-slides owl-carousel">
             <!-- Single Welcome Slide -->
-            <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(img/bg-img/16.jpg);" data-img-url="img/bg-img/16.jpg">
+            <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(roberto/img/bg-img/16.jpg);" data-img-url="roberto/img/bg-img/16.jpg">
                 <!-- Welcome Content -->
                 <div class="welcome-content h-100">
                     <div class="container h-100">
@@ -15,8 +15,8 @@
                             <!-- Welcome Text -->
                             <div class="col-12">
                                 <div class="welcome-text text-center">
-                                    <h6 data-animation="fadeInLeft" data-delay="200ms">Hotel &amp; Resort</h6>
-                                    <h2 data-animation="fadeInLeft" data-delay="500ms">Welcome To Roberto</h2>
+                                    <h6 data-animation="fadeInLeft" data-delay="200ms">Rental &amp; Resale</h6>
+                                    <h2 data-animation="fadeInLeft" data-delay="500ms">Welcome To Bookit</h2>
                                     <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInLeft" data-delay="800ms">Discover Now</a>
                                 </div>
                             </div>
@@ -26,7 +26,7 @@
             </div>
 
             <!-- Single Welcome Slide -->
-            <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(img/bg-img/17.jpg);" data-img-url="img/bg-img/17.jpg">
+            <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(roberto/img/bg-img/17.jpg);" data-img-url="roberto/img/bg-img/17.jpg">
                 <!-- Welcome Content -->
                 <div class="welcome-content h-100">
                     <div class="container h-100">
@@ -34,8 +34,8 @@
                             <!-- Welcome Text -->
                             <div class="col-12">
                                 <div class="welcome-text text-center">
-                                    <h6 data-animation="fadeInUp" data-delay="200ms">Hotel &amp; Resort</h6>
-                                    <h2 data-animation="fadeInUp" data-delay="500ms">Welcome To Roberto</h2>
+                                    <h6 data-animation="fadeInUp" data-delay="200ms">Rental &amp; Resale</h6>
+                                    <h2 data-animation="fadeInUp" data-delay="500ms">Welcome To Bookit</h2>
                                     <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInUp" data-delay="800ms">Discover Now</a>
                                 </div>
                             </div>
@@ -53,8 +53,8 @@
                             <!-- Welcome Text -->
                             <div class="col-12">
                                 <div class="welcome-text text-center">
-                                    <h6 data-animation="fadeInDown" data-delay="200ms">Hotel &amp; Resort</h6>
-                                    <h2 data-animation="fadeInDown" data-delay="500ms">Welcome To Roberto</h2>
+                                    <h6 data-animation="fadeInDown" data-delay="200ms">Rental &amp; Resale</h6>
+                                    <h2 data-animation="fadeInDown" data-delay="500ms">Welcome To Bookit</h2>
                                     <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInDown" data-delay="800ms">Discover Now</a>
                                 </div>
                             </div>
@@ -69,20 +69,24 @@
     <!-- About Us Area Start -->
     <section class="roberto-about-area section-padding-100-0">
         <!-- Hotel Search Form Area -->
-        <div class="hotel-search-form-area">
+        <div class="book-search-form-area">
             <div class="container-fluid">
-                <div class="hotel-search-form">
+                <div class="book-search-form">
                     <form action="#" method="post">
                         <div class="row justify-content-between align-items-end">
                             <div class="col-6 col-md-2 col-lg-3">
-                                <label for="checkIn">Check In</label>
+                                <label for="checkIn">대여 시작일</label>
                                 <input type="date" class="form-control" id="checkIn" name="checkin-date">
                             </div>
                             <div class="col-6 col-md-2 col-lg-3">
-                                <label for="checkOut">Check Out</label>
+                                <label for="checkOut">대여 종료일</label>
                                 <input type="date" class="form-control" id="checkOut" name="checkout-date">
                             </div>
-                            <div class="col-4 col-md-1">
+                            <div class="col-6 col-md-2 col-lg-3">
+                            	<label for="bookTitle">책 제목</label>
+                            	<input type="text" class="form-control" id="bookTitle" placeholder="책 제목을 입력하세요 ...">
+                            </div>
+                            <!-- <div class="col-4 col-md-1">
                                 <label for="room">Room</label>
                                 <select name="room" id="room" class="form-control">
                                     <option value="01">01</option>
@@ -114,7 +118,7 @@
                                     <option value="05">05</option>
                                     <option value="06">06</option>
                                 </select>
-                            </div>
+                            </div> -->
                             <div class="col-12 col-md-3">
                                 <button type="submit" class="form-control btn roberto-btn w-100">Check Availability</button>
                             </div>
