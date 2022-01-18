@@ -129,7 +129,7 @@
 
                                 <!-- Book Now -->
                                 <div class="book-now-btn ml-3 ml-lg-5">
-                                    <a href="#">로그인/회원가입<i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                                    <a href="${pageContext.request.contextPath}/member/memberLogin.do">로그인/회원가입<i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
                                 </div>
                             </div>
                             <!-- Nav End -->
