@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,48 +10,37 @@
 
 <!-- #HB.3 script 3개등록 -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script src="${pageContext.request.contextPath }/resources/dist/sockjs.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
 <title>Insert title here</title>
 </head>
 <body>
 
-<input type="text" value="chatMain" id = "input" />
-<button onclick="send()">메세지 보내기</button>
+	        <div class="container">
+	           <ul>
+		            <c:forEach items="${list}" var ="ChatRoom">
+		                
+		                    <li>${ChatRoom.name}</li>
+		                    <button class = "detail" value = ${ChatRoom.roomId}>${ChatRoom.name} 입장하기</button>
+		            </c:forEach>
+	            </ul>
+	        </div>
+	        <form action="${pageContext.request.contextPath}/chatroom/create" method="post">
+	            <input type="text" name="name" class="form-control">
+	            <button class="btn btn-secondary">개설하기</button>
+	        </form>
+
 
 
 
 <script>
-$(document).ready(function() {
-	var socket = new SockJS("${pageContext.request.contextPath}/endpoint");
-	client = Stomp.over(socket);
+$(".detail").click((e) => {
 	
-	client.connect({}, function(frame) {
-		
-		client.subscribe("/topic/a", function(response){
-			console.log(response);
-			console.log(JSON.parse(response.body));
-		});
-	});
-	
-	
-	
+	const id = $(e.target).val()
+	console.log(id);
+	location.href = `${pageContext.request.contextPath}/chatroom/detail.do?id=\${id}`;
 });
-function send(){
-	
-	var msg = $("#input").val();
-	console.log(msg);
-	
-	// 첫번째 인자는 spring controller mapping("/app"을 spring controller로 배낸다는 stomp prefix 규칙이다 즉 "/app"뒤가 진짜 mapping 주소)
-	// 두번째 인자는 서버로 보낼 떄 추가하고싶은 stomp 헤더이다.
-	// 세번째 인자는 서버로 보낼 때 추가하고 싶은 stomp 바디이다. 서버 컨트롤러에서는 mapping된 함수의 String 인자로 json stringify된 문자열을 받을 수 있다.
-	client.send("/app/chat",{},"msg : hello");
-	
-	/**app은 컨트롤러쪽에서 빠져있어도됨 spring이 자동으로 해줌
-		
-	*/
-	
-};
+
+
 
 
 </script> 
