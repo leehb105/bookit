@@ -1,15 +1,14 @@
 package com.finale.bookit.chat.controller;
 
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import lombok.RequiredArgsConstructor;
 
 
 
@@ -23,7 +22,7 @@ public class ChatController {
 	
 	
 	@GetMapping("chat/chatMain.do")
-	public String chatMain() {
+	public String chatMain(Model model) {
 		
 		return "forward:/WEB-INF/views/chat/chatMain.jsp";
 	}
@@ -31,11 +30,13 @@ public class ChatController {
 
     @MessageMapping("/chat")
     @SendTo("/topic/a")
-    public Message broadcasting(@Payload Message msg) {
+    public void broadcasting(String msg) {
     	
-    	System.out.println("메세지성공");
-    	template.convertAndSend("/topic/a", msg);
-    	return msg;
+    	System.out.println("msg : " + msg);
+    	HashMap<String,Object> payload = new HashMap<>();
+    	payload.put("name", "chan");
+    	template.convertAndSend("/topic/a", payload);
+
     }
 	
 }

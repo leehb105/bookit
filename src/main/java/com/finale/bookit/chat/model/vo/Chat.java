@@ -18,13 +18,9 @@ public class Chat implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private int no;
-	private String memberId;
-	private int srNo;
-	private String chatContent;
-	private Date sendDate;
-	
-	private String vaildYN;
+    private String roomId;
+    private String writer;
+    private String message;
 	
 	
 }
