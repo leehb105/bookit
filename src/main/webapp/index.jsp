@@ -7,7 +7,7 @@
     <section class="welcome-area">
         <div class="welcome-slides owl-carousel">
             <!-- Single Welcome Slide -->
-            <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(roberto/img/bg-img/16.jpg);" data-img-url="roberto/img/bg-img/16.jpg">
+            <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(img/bg-img/16.jpg);" data-img-url="img/bg-img/16.jpg">
                 <!-- Welcome Content -->
                 <div class="welcome-content h-100">
                     <div class="container h-100">
@@ -26,7 +26,7 @@
             </div>
 
             <!-- Single Welcome Slide -->
-            <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(roberto/img/bg-img/17.jpg);" data-img-url="roberto/img/bg-img/17.jpg">
+            <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(img/bg-img/17.jpg);" data-img-url="img/bg-img/17.jpg">
                 <!-- Welcome Content -->
                 <div class="welcome-content h-100">
                     <div class="container h-100">
@@ -86,39 +86,6 @@
                             	<label for="bookTitle">책 제목</label>
                             	<input type="text" class="form-control" id="bookTitle" placeholder="책 제목을 입력하세요 ...">
                             </div>
-                            <!-- <div class="col-4 col-md-1">
-                                <label for="room">Room</label>
-                                <select name="room" id="room" class="form-control">
-                                    <option value="01">01</option>
-                                    <option value="02">02</option>
-                                    <option value="03">03</option>
-                                    <option value="04">04</option>
-                                    <option value="05">05</option>
-                                    <option value="06">06</option>
-                                </select>
-                            </div>
-                            <div class="col-4 col-md-1">
-                                <label for="adults">Adult</label>
-                                <select name="adults" id="adults" class="form-control">
-                                    <option value="01">01</option>
-                                    <option value="02">02</option>
-                                    <option value="03">03</option>
-                                    <option value="04">04</option>
-                                    <option value="05">05</option>
-                                    <option value="06">06</option>
-                                </select>
-                            </div>
-                            <div class="col-4 col-md-2 col-lg-1">
-                                <label for="children">Children</label>
-                                <select name="children" id="children" class="form-control">
-                                    <option value="01">01</option>
-                                    <option value="02">02</option>
-                                    <option value="03">03</option>
-                                    <option value="04">04</option>
-                                    <option value="05">05</option>
-                                    <option value="06">06</option>
-                                </select>
-                            </div> -->
                             <div class="col-12 col-md-3">
                                 <button type="submit" class="form-control btn roberto-btn w-100">Check Availability</button>
                             </div>
@@ -128,10 +95,10 @@
             </div>
         </div>
 
-        <div class="container mt-100">
+        <!-- <div class="container mt-100">
             <div class="row align-items-center">
                 <div class="col-12 col-lg-6">
-                    <!-- Section Heading -->
+                    Section Heading
                     <div class="section-heading wow fadeInUp" data-wow-delay="100ms">
                         <h6>About Us</h6>
                         <h2>Welcome to <br>Roberto Hotel Luxury</h2>
@@ -165,39 +132,39 @@
             </div>
         </div>
     </section>
-    <!-- About Us Area End -->
+    About Us Area End
 
-    <!-- Service Area Start -->
+    Service Area Start
     <div class="roberto-service-area">
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <div class="service-content d-flex align-items-center justify-content-between">
-                        <!-- Single Service Area -->
+                        Single Service Area
                         <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="100ms">
                             <img src="img/core-img/icon-1.png" alt="">
                             <h5>Transportion</h5>
                         </div>
 
-                        <!-- Single Service Area -->
+                        Single Service Area
                         <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="300ms">
                             <img src="img/core-img/icon-2.png" alt="">
                             <h5>Reiseservice</h5>
                         </div>
 
-                        <!-- Single Service Area -->
+                        Single Service Area
                         <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="500ms">
                             <img src="img/core-img/icon-3.png" alt="">
                             <h5>Spa Relaxtion</h5>
                         </div>
 
-                        <!-- Single Service Area -->
+                        Single Service Area
                         <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="700ms">
                             <img src="img/core-img/icon-4.png" alt="">
                             <h5>Restaurant</h5>
                         </div>
 
-                        <!-- Single Service Area -->
+                        Single Service Area
                         <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="900ms">
                             <img src="img/core-img/icon-1.png" alt="">
                             <h5>Bar &amp; Drink</h5>
@@ -207,17 +174,17 @@
             </div>
         </div>
     </div>
-    <!-- Service Area End -->
+    Service Area End
 
-    <!-- Our Room Area Start -->
+    Our Room Area Start
     <section class="roberto-rooms-area">
         <div class="rooms-slides owl-carousel">
-            <!-- Single Room Slide -->
+            Single Room Slide
             <div class="single-room-slide d-flex align-items-center">
-                <!-- Thumbnail -->
+                Thumbnail
                 <div class="room-thumbnail h-100 bg-img" style="background-image: url(img/bg-img/16.jpg);"></div>
 
-                <!-- Content -->
+                Content
                 <div class="room-content">
                     <h2 data-animation="fadeInUp" data-delay="100ms">Premium King Room</h2>
                     <h3 data-animation="fadeInUp" data-delay="300ms">400$ <span>/ Day</span></h3>
@@ -231,12 +198,12 @@
                 </div>
             </div>
 
-            <!-- Single Room Slide -->
+            Single Room Slide
             <div class="single-room-slide d-flex align-items-center">
-                <!-- Thumbnail -->
+                Thumbnail
                 <div class="room-thumbnail h-100 bg-img" style="background-image: url(img/bg-img/17.jpg);"></div>
 
-                <!-- Content -->
+                Content
                 <div class="room-content">
                     <h2 data-animation="fadeInUp" data-delay="100ms">Best King Room</h2>
                     <h3 data-animation="fadeInUp" data-delay="300ms">125$ <span>/ Day</span></h3>
@@ -251,9 +218,9 @@
             </div>
         </div>
     </section>
-    <!-- Our Room Area End -->
+    Our Room Area End
 
-    <!-- Testimonials Area Start -->
+    Testimonials Area Start
     <section class="roberto-testimonials-area section-padding-100-0">
         <div class="container">
             <div class="row align-items-center">
@@ -265,15 +232,15 @@
                 </div>
 
                 <div class="col-12 col-md-6">
-                    <!-- Section Heading -->
+                    Section Heading
                     <div class="section-heading">
                         <h6>Testimonials</h6>
                         <h2>Our Guests Love Us</h2>
                     </div>
-                    <!-- Testimonial Slide -->
+                    Testimonial Slide
                     <div class="testimonial-slides owl-carousel mb-100">
 
-                        <!-- Single Testimonial Slide -->
+                        Single Testimonial Slide
                         <div class="single-testimonial-slide">
                             <h5>âThis can be achieved by applying search engine optimization or popularly known as SEO. This is a marketing strategy which increases the quality and quantity of traffic flow to a particular website via search engines.â</h5>
                             <div class="rating-title">
@@ -288,7 +255,7 @@
                             </div>
                         </div>
 
-                        <!-- Single Testimonial Slide -->
+                        Single Testimonial Slide
                         <div class="single-testimonial-slide">
                             <h5>âLorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus delectus facilis molestias, error vitae praesentium quos eaque qui ea, tempore blanditiis sint reprehenderit, quaerat. Commodi ab architecto sit suscipit exercitationem!â</h5>
                             <div class="rating-title">
@@ -303,7 +270,7 @@
                             </div>
                         </div>
 
-                        <!-- Single Testimonial Slide -->
+                        Single Testimonial Slide
                         <div class="single-testimonial-slide">
                             <h5>âLorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor, ex quos. Alias a rem maiores, possimus dicta sit distinctio quis iusto!â</h5>
                             <div class="rating-title">
@@ -318,7 +285,7 @@
                             </div>
                         </div>
 
-                        <!-- Single Testimonial Slide -->
+                        Single Testimonial Slide
                         <div class="single-testimonial-slide">
                             <h5>âLorem ipsum dolor sit amet, consectetur adipisicing elit. Labore sequi laboriosam fugit suscipit aspernatur, minima minus voluptatum, id ab atque similique ex earum. Magni.â</h5>
                             <div class="rating-title">
@@ -338,22 +305,22 @@
             </div>
         </div>
     </section>
-    <!-- Testimonials Area End -->
+    Testimonials Area End
 
-    <!-- Projects Area Start -->
+    Projects Area Start
     <section class="roberto-project-area">
-        <!-- Projects Slide -->
+        Projects Slide
         <div class="projects-slides owl-carousel">
-            <!-- Single Project Slide -->
+            Single Project Slide
             <div class="single-project-slide active bg-img" style="background-image: url(img/bg-img/5.jpg);">
-                <!-- Project Text -->
+                Project Text
                 <div class="project-content">
                     <div class="text">
                         <h6>Entertaiment</h6>
                         <h5>Racing Bike</h5>
                     </div>
                 </div>
-                <!-- Hover Effects -->
+                Hover Effects
                 <div class="hover-effects">
                     <div class="text">
                         <h6>Entertaiment</h6>
@@ -364,16 +331,16 @@
                 </div>
             </div>
 
-            <!-- Single Project Slide -->
+            Single Project Slide
             <div class="single-project-slide bg-img" style="background-image: url(img/bg-img/6.jpg);">
-                <!-- Project Text -->
+                Project Text
                 <div class="project-content">
                     <div class="text">
                         <h6>Entertaiment</h6>
                         <h5>Racing Bike</h5>
                     </div>
                 </div>
-                <!-- Hover Effects -->
+                Hover Effects
                 <div class="hover-effects">
                     <div class="text">
                         <h6>Entertaiment</h6>
@@ -384,16 +351,16 @@
                 </div>
             </div>
 
-            <!-- Single Project Slide -->
+            Single Project Slide
             <div class="single-project-slide bg-img" style="background-image: url(img/bg-img/7.jpg);">
-                <!-- Project Text -->
+                Project Text
                 <div class="project-content">
                     <div class="text">
                         <h6>Entertaiment</h6>
                         <h5>Racing Bike</h5>
                     </div>
                 </div>
-                <!-- Hover Effects -->
+                Hover Effects
                 <div class="hover-effects">
                     <div class="text">
                         <h6>Entertaiment</h6>
@@ -404,16 +371,16 @@
                 </div>
             </div>
 
-            <!-- Single Project Slide -->
+            Single Project Slide
             <div class="single-project-slide bg-img" style="background-image: url(img/bg-img/8.jpg);">
-                <!-- Project Text -->
+                Project Text
                 <div class="project-content">
                     <div class="text">
                         <h6>Entertaiment</h6>
                         <h5>Racing Bike</h5>
                     </div>
                 </div>
-                <!-- Hover Effects -->
+                Hover Effects
                 <div class="hover-effects">
                     <div class="text">
                         <h6>Entertaiment</h6>
@@ -424,16 +391,16 @@
                 </div>
             </div>
 
-            <!-- Single Project Slide -->
+            Single Project Slide
             <div class="single-project-slide bg-img" style="background-image: url(img/bg-img/9.jpg);">
-                <!-- Project Text -->
+                Project Text
                 <div class="project-content">
                     <div class="text">
                         <h6>Entertaiment</h6>
                         <h5>Racing Bike</h5>
                     </div>
                 </div>
-                <!-- Hover Effects -->
+                Hover Effects
                 <div class="hover-effects">
                     <div class="text">
                         <h6>Entertaiment</h6>
@@ -445,13 +412,13 @@
             </div>
         </div>
     </section>
-    <!-- Projects Area End -->
+    Projects Area End
 
-    <!-- Blog Area Start -->
+    Blog Area Start
     <section class="roberto-blog-area section-padding-100-0">
         <div class="container">
             <div class="row">
-                <!-- Section Heading -->
+                Section Heading
                 <div class="col-12">
                     <div class="section-heading text-center wow fadeInUp" data-wow-delay="100ms">
                         <h6>Our Blog</h6>
@@ -461,48 +428,48 @@
             </div>
 
             <div class="row">
-                <!-- Single Post Area -->
+                Single Post Area
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="single-post-area mb-100 wow fadeInUp" data-wow-delay="300ms">
                         <a href="#" class="post-thumbnail"><img src="img/bg-img/2.jpg" alt=""></a>
-                        <!-- Post Meta -->
+                        Post Meta
                         <div class="post-meta">
                             <a href="#" class="post-date">Jan 02, 2019</a>
                             <a href="#" class="post-catagory">Event</a>
                         </div>
-                        <!-- Post Title -->
+                        Post Title
                         <a href="#" class="post-title">Learn How To Motivate Yourself</a>
                         <p>How many free autoresponders have you tried? And how many emails did you get through using them?</p>
                         <a href="index.html" class="btn continue-btn"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
                     </div>
                 </div>
 
-                <!-- Single Post Area -->
+                Single Post Area
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="single-post-area mb-100 wow fadeInUp" data-wow-delay="500ms">
                         <a href="#" class="post-thumbnail"><img src="img/bg-img/3.jpg" alt=""></a>
-                        <!-- Post Meta -->
+                        Post Meta
                         <div class="post-meta">
                             <a href="#" class="post-date">Jan 02, 2019</a>
                             <a href="#" class="post-catagory">Event</a>
                         </div>
-                        <!-- Post Title -->
+                        Post Title
                         <a href="#" class="post-title">What If Let You Run The Hubble</a>
                         <p>My point here is that if you have no clue for the answers above you probably are not operating a followup.</p>
                         <a href="index.html" class="btn continue-btn"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
                     </div>
                 </div>
 
-                <!-- Single Post Area -->
+                Single Post Area
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="single-post-area mb-100 wow fadeInUp" data-wow-delay="700ms">
                         <a href="#" class="post-thumbnail"><img src="img/bg-img/4.jpg" alt=""></a>
-                        <!-- Post Meta -->
+                        Post Meta
                         <div class="post-meta">
                             <a href="#" class="post-date">Jan 02, 2019</a>
                             <a href="#" class="post-catagory">Event</a>
                         </div>
-                        <!-- Post Title -->
+                        Post Title
                         <a href="#" class="post-title">Six Pack Abs The Big Picture</a>
                         <p>Some good steps to take to ensure you are getting what you need out of a autoresponder includeâ¦</p>
                         <a href="index.html" class="btn continue-btn"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
@@ -512,9 +479,9 @@
             </div>
         </div>
     </section>
-    <!-- Blog Area End -->
+    Blog Area End
 
-    <!-- Call To Action Area Start -->
+    Call To Action Area Start
     <section class="roberto-cta-area">
         <div class="container">
             <div class="cta-content bg-img bg-overlay jarallax" style="background-image: url(img/bg-img/1.jpg);">
@@ -532,29 +499,29 @@
             </div>
         </div>
     </section>
-    <!-- Call To Action Area End -->
+    Call To Action Area End
 
-    <!-- Partner Area Start -->
+    Partner Area Start
     <div class="partner-area">
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <div class="partner-logo-content d-flex align-items-center justify-content-between wow fadeInUp" data-wow-delay="300ms">
-                        <!-- Single Partner Logo -->
+                        Single Partner Logo
                         <a href="#" class="partner-logo"><img src="img/core-img/p1.png" alt=""></a>
-                        <!-- Single Partner Logo -->
+                        Single Partner Logo
                         <a href="#" class="partner-logo"><img src="img/core-img/p2.png" alt=""></a>
-                        <!-- Single Partner Logo -->
+                        Single Partner Logo
                         <a href="#" class="partner-logo"><img src="img/core-img/p3.png" alt=""></a>
-                        <!-- Single Partner Logo -->
+                        Single Partner Logo
                         <a href="#" class="partner-logo"><img src="img/core-img/p4.png" alt=""></a>
-                        <!-- Single Partner Logo -->
+                        Single Partner Logo
                         <a href="#" class="partner-logo"><img src="img/core-img/p5.png" alt=""></a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- Partner Area End -->
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
  
