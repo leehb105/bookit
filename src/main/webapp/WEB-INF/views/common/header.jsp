@@ -7,6 +7,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="">
@@ -90,9 +91,9 @@
                         <!-- Menu -->
                         <div class="classy-menu">
                             <!-- Menu Close Button -->
-                            <div class="classycloseIcon">
+                            <!-- <div class="classycloseIcon">
                                 <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
-                            </div>
+                            </div> -->
                             <!-- Nav Start -->
                             <div class="classynav">
                                 <ul id="nav">
@@ -120,18 +121,31 @@
                                     </li>
                                     <li><a href="#">컬렉션</a></li>
                                     <li><a href="#">관리자</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/chat/chatMain.do">채팅테스트</a></li>
-                                </ul>
+									<li><a href="${pageContext.request.contextPath}/chat/chatMain.do">채팅테스트</a></li>                               
+ 									</ul>
 
                                 <!-- Search -->
-                                <div class="search-btn ml-4">
+                                <div class="search-btn ml-4" style="padding-right: 30px">
                                     <i class="fa fa-search" aria-hidden="true"></i>
                                 </div>
 
-                                <!-- Book Now -->
+                                <!-- Login -->
+                              <c:if test="${empty loginMember}">
                                 <div class="book-now-btn ml-3 ml-lg-5">
                                     <a href="${pageContext.request.contextPath}/member/memberLogin.do">로그인/회원가입<i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
                                 </div>
+                              </c:if>
+                              <c:if test="${!empty loginMember}">
+                              	<div style="padding-right:10px">
+                              		
+	                            	<a href="#">${loginMember.name}님</a>
+	                            	<a href="#"><i class="fa fa-heart fa-lg"></i></a>
+	                              		
+                              	</div>
+                              	
+								<a href="${pageContext.request.contextPath}/member/memberLogout.do" class="btn roberto-btn mb-15">로그아웃</a>
+						  	  	
+						  	  </c:if>
                             </div>
                             <!-- Nav End -->
                         </div>
