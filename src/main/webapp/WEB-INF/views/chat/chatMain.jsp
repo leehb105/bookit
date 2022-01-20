@@ -18,7 +18,7 @@
 	        <div class="container">
 	           <ul>
 		            <c:forEach items="${list}" var ="ChatRoom">
-		                
+
 		                    <li>${ChatRoom.name}</li>
 		                    <button class = "detail" value = ${ChatRoom.roomId}>${ChatRoom.name} 입장하기</button>
 		            </c:forEach>
@@ -28,17 +28,34 @@
 	            <input type="text" name="name" class="form-control">
 	            <button class="btn btn-secondary">개설하기</button>
 	        </form>
+				 <button class="btn-search">채팅방 목록조회</button>
+
 
 
 
 
 <script>
-$(".detail").click((e) => {
+
+$(document).ready(function() {
 	
-	const id = $(e.target).val()
-	console.log(id);
-	location.href = `${pageContext.request.contextPath}/chatroom/detail.do?id=\${id}`;
+	
+	$(".btn-search").on("click", function(e){
+
+		
+		location.href = `${pageContext.request.contextPath}/chatroom/list`;
+		
+	});	
+	
+	$(".detail").click((e) => {
+		
+		const id = $(e.target).val()
+		console.log(id);
+		location.href = `${pageContext.request.contextPath}/chatroom/detail.do?id=\${id}`;
+	});
+
 });
+
+
 
 
 
