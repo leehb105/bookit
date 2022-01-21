@@ -1,7 +1,7 @@
-﻿CREATE TABLE member (
+CREATE TABLE member (
 	id	varchar2(20)		NOT NULL,
 	password	varchar2(300)		NOT NULL,
-	email	varchar2(11)		NOT NULL,
+	email	varchar2(30)		NOT NULL,
 	nickname	varchar2(20)		NOT NULL,
 	name	varchar2(20)		NOT NULL,
 	phone	varchar2(11)		NULL,
