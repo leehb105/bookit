@@ -16,7 +16,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     	// /topic 해당 주소를 구독하고 있는 n명의 클라이언트들에게 전달
     	// /queue 한명이 message를 발행했을 떄 발행한 한명에게 다시 정보를 보내는 경우
     	
-        config.enableSimpleBroker("/topic");
+        config.enableSimpleBroker("/sub");
         
         /** 클라이언트에서 보낸 메세지를 받을 prefix	
         *	/topic/hello 라는 토픽에 대해 구독을 신청했을 떄 실제 경로는 /app/topic/hello가 되는 것
