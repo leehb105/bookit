@@ -40,11 +40,13 @@ CREATE TABLE inquire (
 	category	varchar2(20)		NOT NULL,
 	content	varchar2(4000)		NOT NULL,
 	reg_date	date	DEFAULT current_date	NOT NULL,
-	member_id	varchar2(20)		NOT NULL
+	member_id	varchar2(20)		NOT NULL,
+	condition	number	NOT NULL
 
 	,CONSTRAINT pk_inquire_no PRIMARY KEY(no)
 	,CONSTRAINT fk_inquire_member_id FOREIGN KEY(member_id) REFERENCES member(id)
 	,CONSTRAINT ck_inquire_category check(category IN ('게시판', '북토리', '대여'))
+	,CONSTRAINT ch_inquire_condition check(condition IN (1, 0))
 	
 );
 CREATE SEQUENCE seq_inquire_no nocache;
