@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bookCollection">
+	<select id="selectAllCollection" resultType="bookCollection">
+		select * from book_collection order by no desc
+	</select>
+	
+	<select id="selectOneCollection" resultType="bookCollection">
+		select * from book_collection where no = #{no}
+	</select>
+</mapper>

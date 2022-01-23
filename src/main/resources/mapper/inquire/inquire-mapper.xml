@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="inquire">
+	<select id="selectAllInquire" resultMap="inquireMap">
+		select i.*, a.* from inquire i left join admin_inquire a on i.no = a.inquire_no order by i.no desc
+	</select>
+	
+	<resultMap type="inquire" id="inquireMap">
+		<id column="no" property="no"/>
+		<result column="title" property="title"/>
+		<result column="category" property="category"/>
+		<result column="content" property="content"/>
+		<result column="reg_date" property="regDate"/>
+		<result column="member_id" property="memberId"/>
+		<result column="condition" property="condition"/>
+	</resultMap>
+	
+	<select id="selectTotalContent" resultType="_int">
+		select count(*) from inquire
+	</select>
+	
+	<insert id="insertInquire">
+		insert into inquire(no, title, category, member_id, content)
+		values(
+			seq_inquire_no.nextval, #{title}, #{category}, #{memberId}, #{content}
+		)
+		<selectKey order="AFTER" resultType="_int" keyProperty="no">
+			select seq_inquire_no.currval from dual <!-- insert된 게시글의 번호를 가져올 수 있음 -->
+		</selectKey>
+	</insert>
+	
+	<select id="selectOneInquire" resultType="inquire">
+		select * from inquire where no = #{no}
+	</select>
+	
+	<select id="selectOneAdminInquire" resultType="adminInquire">
+		select * from admin_inquire where inquire_no = #{no}
+	</select>
+	
+	<update id="updateCondition">
+		update inquire set condition = 0 where no = #{no}
+	</update>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
