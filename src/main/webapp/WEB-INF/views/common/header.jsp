@@ -22,7 +22,11 @@
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/roberto/style.css">
-
+    
+    <!-- Socket JS등록 및 STOMP 채팅을 위한 script 3개 -->
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="${pageContext.request.contextPath }/resources/dist/sockjs.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 </head>
 
 <c:if test="${not empty msg}">
@@ -99,7 +103,7 @@
                                     </li>
                                     <li><a href="#">컬렉션</a></li>
                                     <li><a href="#">관리자</a></li>
-									<%-- <li><a href="${pageContext.request.contextPath}/chat/chatMain.do">채팅테스트</a></li> --%>                               
+									<li><a href="${pageContext.request.contextPath}/chat/chatMain.do">채팅테스트</a></li>                           
  									</ul>
 
                                 <!-- Search -->

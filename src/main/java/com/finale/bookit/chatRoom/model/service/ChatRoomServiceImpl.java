@@ -21,15 +21,15 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 	private ChatRoomDao dao;
 	
 	@Override
-	public ChatRoom createChatRoom(String name) {
+	public int createChatRoom(String chatParticipants) {
 		
-		return dao.createChatRoom(name);
+		return dao.createChatRoom(chatParticipants);
 	}
 
 	@Override
-	public List<ChatRoom> findAllRooms() {
+	public List<ChatRoom> findAllRooms(String loginMember) {
 		// TODO Auto-generated method stub
-		return dao.findAllRooms();
+		return dao.findAllRooms(loginMember);
 	}
 
 	@Override

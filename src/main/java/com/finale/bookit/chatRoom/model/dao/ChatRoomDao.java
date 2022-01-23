@@ -6,9 +6,9 @@ import com.finale.bookit.chatRoom.model.vo.ChatRoom;
 
 public interface ChatRoomDao {
 
-	ChatRoom createChatRoom(String name);
+	int createChatRoom(String chatParticipants);
 
-	List<ChatRoom> findAllRooms();
+	List<ChatRoom> findAllRooms(String loginMember);
 
 	ChatRoom findRoomById(String id);
 

@@ -24,15 +24,15 @@ public class ChatRoom implements Serializable {
 	
 	
 	   private String roomId;
-	   private String name;
+	   private String memberId;
 	  // private Set<WebSocketSession> sessions = new HashSet<>();
 	   //WebSocketSession은 Spring에서 Websocket Connection이 맺어진 세션
 	    
-	   public static ChatRoom create(String name){
+	   public static ChatRoom create(String memberId){
 	        ChatRoom room = new ChatRoom();
 
-	        room.setRoomId(name); 		// UUID는 고유값을 생성하는 코드로 C20CEEBE-BF80... 등 으로 생성된다.
-	        room.setName(name);
+	        room.setRoomId(UUID.randomUUID().toString()); 		// UUID는 고유값을 생성하는 코드로 C20CEEBE-BF80... 등 으로 생성된다.
+	        room.setMemberId(memberId);
 	        return room;
 	    } 
 }
