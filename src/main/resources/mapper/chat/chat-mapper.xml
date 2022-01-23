@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="chat">
+	
+	<insert id ="insertChatRoom">
+		insert into
+			chat_room(chat_room_id,chat_member_id)
+		values(
+			#{roomId},
+			#{memberId}
+		)
+	
+	</insert>
+	
+	<select id="selectChatRoom" resultMap="chatRoomMap">
+		select
+			*
+		from
+			chat_room
+		where
+			chat_member_id like '%'||#{loginMember}||'%'
+
+	</select>
+	
+	<select id="selectOneChatRoom" resultMap="chatRoomMap">
+		select
+			*
+		from
+			chat_room
+		where
+			chat_room_id = #{id}
+	</select>
+	
+	<resultMap type="chatroom" id="chatRoomMap">
+		<id column="chat_room_id" property="roomId"/>
+		<result column="chat_member_id" property="memberId"/>
+	</resultMap>
+  
+	
+</mapper>  

@@ -30,10 +30,24 @@ public class RoomController {
 	
 	// 채팅방 목록 조회
 	@GetMapping(value = "/list")
-	public ModelAndView rooms() {
+	public ModelAndView rooms(@RequestParam String loginMember) {
 		
+
         ModelAndView mv = new ModelAndView("chat/chatMain");
-        List<ChatRoom> result = service.findAllRooms();
+        List<ChatRoom> result = service.findAllRooms(loginMember);
+        
+        for(ChatRoom room : result) {
+        	String memberId = room.getMemberId();
+        	
+        	memberId = memberId.replace(loginMember, "");
+        	memberId = memberId.replace(",","");
+        	
+        	room.setMemberId(memberId);
+        	
+        	log.debug("newId = {}",room.getMemberId());
+        	
+        	
+        }
         log.debug("list = {}", result);
         mv.addObject("list", result);
         
@@ -41,19 +55,32 @@ public class RoomController {
 	}
 	 //채팅방 개설
     @PostMapping(value = "/create")
-    public String create(@RequestParam("name") String name,RedirectAttributes rttr){
+    public String create(@RequestParam("name") String name,@RequestParam("loginMember") String loginMember,RedirectAttributes rttr){
 
-        log.info("# Create Chat Room , name: " + name);
-        ChatRoom room = service.createChatRoom(name);
-        rttr.addFlashAttribute("roomName", room);
-        return "redirect:/chatroom/list";
+    
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append(name);
+        sb.append(",");
+        sb.append(loginMember);
+        
+        String chatParticipants = sb.toString();
+        log.debug("chatParticipants = {}",chatParticipants);
+        
+        int result = service.createChatRoom(chatParticipants);
+        
+    
+        
+        return "redirect:/chatroom/list?loginMember="+loginMember;
     }
     
     
     // 채팅방 조회
     @GetMapping("/detail.do")
     public void getRoom(@RequestParam String id,Model model) {
-
-    	model.addAttribute("room", service.findRoomById(id));
+    	
+    	log.debug("id = {}",id);
+    	
+    	model.addAttribute("chatRoom", service.findRoomById(id));
     }
 }

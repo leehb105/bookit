@@ -21,11 +21,21 @@
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/roberto/style.css">
-
+    
+    <!-- Socket JS등록 및 STOMP 채팅을 위한 script 3개 -->
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="${pageContext.request.contextPath }/resources/dist/sockjs.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 </head>
 <c:if test="${not empty msg}">
 	<script>
 		alert("${msg}");
+	</script>
+</c:if>
+
+<c:if test="${not empty msg}">
+	<script>
+		alert("${msg}");	
 	</script>
 </c:if>
 
@@ -48,44 +58,16 @@
             </div>
         </div>
 
-        <!-- Top Header Area Start -->
-        <!-- <div class="top-header-area">
-            <div class="container">
-                <div class="row">
-
-                    <div class="col-6">
-                        <div class="top-header-content">
-                            <a href="#"><i class="icon_phone"></i> <span>(123) 456-789-1230</span></a>
-                            <a href="#"><i class="icon_mail"></i> <span>info.colorlib@gmail.com</span></a>
-                        </div>
-                    </div>
-
-                    <div class="col-6">
-                        <div class="top-header-content">
-                            Top Social Area
-                            <div class="top-social-area ml-auto">
-                                <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-tripadvisor" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div> -->
-        <!-- Top Header Area End -->
 
         <!-- Main Header Start -->
         <div class="main-header-area">
-            <div class="classy-nav-container breakpoint-off">
+            <div class="classy-nav-container breakpoint-off" style="box-shadow: 3px 3px 3px 3px #f5f5f5">
                 <div class="container">
                     <!-- Classy Menu -->
                     <nav class="classy-navbar justify-content-between" id="robertoNav">
 
                         <!-- Logo -->
-                        <a class="nav-brand" href="index.jsp"><img src="${pageContext.request.contextPath}/resources/img/bookit_logo.png" alt=""></a>
+                        <a class="nav-brand" href="${pageContext.request.contextPath}"><img src="${pageContext.request.contextPath}/resources/img/bookit_logo.png" alt=""></a>
 
                         <!-- Navbar Toggler -->
                         <div class="classy-navbar-toggler">
@@ -125,7 +107,7 @@
                                     </li>
                                     <li><a href="#">컬렉션</a></li>
                                     <li><a href="#">관리자</a></li>
-									<li><a href="${pageContext.request.contextPath}/chat/chatMain.do">채팅테스트</a></li>                               
+									<li><a href="${pageContext.request.contextPath}/chat/chatMain.do">채팅테스트</a></li>                           
  									</ul>
 
                                 <!-- Search -->
@@ -142,12 +124,12 @@
                               <c:if test="${!empty loginMember}">
                               	<div style="padding-right:10px">
                               		
-	                            	<a href="#">${loginMember.name}님</a>
+	                            	<a href="${pageContext.request.contextPath}/member/memberProfile.do">${loginMember.name}님</a>
 	                            	<a href="#"><i class="fa fa-heart fa-lg"></i></a>
 	                              		
                               	</div>
                               	
-								<a href="${pageContext.request.contextPath}/member/memberLogout.do" class="btn roberto-btn mb-15">로그아웃</a>
+								<a href="${pageContext.request.contextPath}/member/memberLogout.do" class="btn roberto-btn mb-15 w-10">로그아웃</a>
 						  	  	
 						  	  </c:if>
                             </div>
