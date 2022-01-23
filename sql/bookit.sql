@@ -229,7 +229,7 @@ CREATE TABLE authority (
 	authority	varchar2(20)		NOT NULL,
 	member_id	varchar2(20)		NOT NULL
 
-	,constraint pk_authority_authority PRIMARY KEY(authority)
+	,constraint pk_authority_authority PRIMARY KEY(authority, member_id) -- 기본키 복합키로 변경했습니다.
 	,constraint fk_authority_member_id FOREIGN key(member_id) REFERENCES member(id)
 );
 
