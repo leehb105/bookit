@@ -124,7 +124,7 @@
                               <c:if test="${!empty loginMember}">
                               	<div style="padding-right:10px">
                               		
-	                            	<a href="${pageContext.request.contextPath}/member/memberProfile.do">${loginMember.name}님</a>
+	                            	<a href="${pageContext.request.contextPath}/member/mypageMain.do">${loginMember.name}님</a>
 	                            	<a href="#"><i class="fa fa-heart fa-lg"></i></a>
 	                              		
                               	</div>

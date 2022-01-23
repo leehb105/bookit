@@ -109,7 +109,16 @@ public class MemberController {
 		// 리다이렉트후에 session의 속성을 참조할 수 있도록한다.
 		redirectAttr.addFlashAttribute("msg", result > 0 ? "회원 가입 성공!" : "회원 가입 실패!");
 		
-		return "redirect:/";
+		return "redirect:/member/memberLogin.do";
 	}
 	
+	@GetMapping("/mypageMain.do")
+	public void memberProfile() {
+		
+	}
+	
+	@GetMapping("/editProfile.do")
+	public void editProfile() {
+		
+	}
 }
