@@ -1,20 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/chat.css" />
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script src="${pageContext.request.contextPath }/resources/dist/sockjs.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-</head>
-<body>
 
         <div class="container">
             <div class="col-6">
-                <h1>${room.name}</h1>
+                <h1>${chatRoom.memberId}</h1>
             </div>
             <div>
                 <div id="msgArea" class="col"></div>
@@ -34,17 +25,17 @@
         <hr />
 
         <form action="">
-        	<input type="hidden" value = ${room.name} id = "roomName"/>
-        	<input type="hidden" value = ${room.roomId} id = "roomId"/>
+        	<input type="hidden" value = ${chatRoom.memberId} id = "roomMember"/>
+        	<input type="hidden" value = ${chatRoom.roomId} id = "roomId"/>
+        	<input type="hidden" value = ${loginMember.name} id = "loginMember"/>
         </form>
-        <button class = "honggd" value = "honggd">honggd 로그인</button>
-        <button class = "sinsa" value = "sinsa">sinsa 로그인</button>
 <script>
 $(document).ready(function() {
 	var socket = new SockJS("${pageContext.request.contextPath}/endpoint");
-	var roomName = $("#roomName").val();
+	var roomMember = $("#roomMember").val();
 	var roomId = $("#roomId").val();
-	var username;
+	var username = $("#loginMember").val();
+	
 	
 
 
@@ -100,21 +91,9 @@ $(document).ready(function() {
 		
 	});
 	
-	$(".honggd").on("click", function(e){
-		
-		username = $(e.target).val();
-		
-	});
-	
-	$(".sinsa").on("click", function(e){
-		
-		username = $(e.target).val();
-		
-	});
 	
 	
 });
 
 </script>
-</body>
-</html>
+<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
