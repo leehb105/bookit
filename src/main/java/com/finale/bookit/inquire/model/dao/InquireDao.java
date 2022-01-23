@@ -3,7 +3,7 @@ package com.finale.bookit.inquire.model.dao;
 import java.util.List;
 import java.util.Map;
 
-import com.finale.bookit.inquire.model.vo.AdminInquire;
+import com.finale.bookit.admin.model.vo.AdminInquire;
 import com.finale.bookit.inquire.model.vo.Inquire;
 
 public interface InquireDao {
@@ -17,8 +17,6 @@ public interface InquireDao {
 	Inquire selectOneInquire(int no);
 
 	AdminInquire selectOneAdminInquire(int no);
-	
-	int insertAdminReply(AdminInquire adminInquire);
 
 	int updateCondition(int no);
 

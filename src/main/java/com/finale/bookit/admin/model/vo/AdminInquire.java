@@ -1,4 +1,4 @@
-package com.finale.bookit.inquire.model.vo;
+package com.finale.bookit.admin.model.vo;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -23,5 +23,5 @@ public class AdminInquire implements Serializable{
 	private String adminName;
 	private String content;
 	private Date regDate;
-
+	private int condition;
 }

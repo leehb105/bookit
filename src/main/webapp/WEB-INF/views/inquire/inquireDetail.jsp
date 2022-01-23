@@ -6,37 +6,14 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
 <script>
-/* function adminInquireValidate(){
+function adminInquireValidate(){
 	var $content = $("[name=content]");
 	if(/^(.|\n)+$/.test($content.val()) == false){
 		alert("내용을 입력하세요.");
 		return false;
 	}
 	return true;
-}; */
-
-$(conditionUpdateFrm).submit((e) => {
-	e.preventDefault();
-	
-	const no = $("[name=inquireNo]", e.target).val();
-	const obj = {condition : $("[name=condition]", e.target).val()};
-	const jsonStr = JSON.stringify(obj);
-	
-	$.ajax({
-		url: `${pageContext.request.contextPath}/inquire/inquireUpdateCondition.do?no=\${no}`,
-		method: "PUT",
-		data: jsonStr,
-		contentType: "application/json; charset=utf-8",
-		success(resp){
-			console.log(resp);
-		},
-		error: console.log,
-		complete(){
-			$(e.target)[0].reset();
-			$(menuSearchFrm)[0].reset();
-		}
-	});
-});
+};
 </script>
 
     <!-- Blog Area Start -->
@@ -66,51 +43,52 @@ $(conditionUpdateFrm).submit((e) => {
                     </div>
 		
                     <!-- Comments Area -->
-                    <%-- <c:if test="${inquire.condition eq 0}"> --%>
-                    <div class="comment_area mb-50 clearfix">
-                        <p><h5>[답변]<small>[${inquire.category}] ${inquire.title}</small></h5></p>
+                    <c:if test="${adminInquire.condition eq 1}">
+	                    <div class="comment_area mb-50 clearfix">
+	                        <p><h5>[답변]<small>[${inquire.category}] ${inquire.title}</small></h5></p>
+	
+	                        <ol>
+	                            <!-- Single Comment Area -->
+	                            <li class="single_comment_area">
+	                                <!-- Comment Content -->
+	                                <div class="comment-content d-flex">
+	                                    <!-- Comment Meta -->
+	                                    <div class="comment-meta">
+	                                        <a href="#" class="post-date"><fmt:formatDate value="${adminInquire.regDate}" pattern="yyyy/MM/dd"/></a>
+	                                        <h6>${adminInquire.adminName}</h6>
+	                                        <pre class="mt-50">${adminInquire.content}</pre>
+	                                    </div>
+	                                </div>
+	                            </li>
+	                        </ol>
+	                    </div>
+                    </c:if>
 
-                        <ol>
-                            <!-- Single Comment Area -->
-                            <li class="single_comment_area">
-                                <!-- Comment Content -->
-                                <div class="comment-content d-flex">
-                                    <!-- Comment Meta -->
-                                    <div class="comment-meta">
-                                        <a href="#" class="post-date"><fmt:formatDate value="${adminInquire.regDate}" pattern="yyyy/MM/dd"/></a>
-                                        <h6>${adminInquire.adminName}</h6>
-                                        <pre class="mt-50">${adminInquire.content}</pre>
-                                    </div>
-                                </div>
-                            </li>
-                        </ol>
-                    </div>
-                    <%-- </c:if> --%>
-
-                    <!-- Leave A Reply -->
-                    <div class="roberto-contact-form mt-80 mb-100">
-                        <h2>문의 답변</h2>
-
-                        <!-- Form -->
-                        	<!-- onsubmit="return adminInquireValidate();" -->
-                        <form 
-                        	id="conditionUpdateFrm"
-                        	action="${pageContext.request.contextPath}/inquire/inquireAdminReply.do"
-                        	method="post">
-                            <div class="row">
-                                <input type="hidden" name="inquireNo" value="${inquire.no}"/>
-                                <input type="hidden" name="condition" value="${inquire.condition}"/>
-                                <input type="hidden" name="adminId" value="admin1234"/>
-                                <input type="hidden" name="adminName" value="관리자이올시다"/>
-                                <div class="col-12">
-                                    <textarea name="content" class="form-control mb-30" placeholder="내용을 입력하세요."></textarea>
-                                </div>
-                                <div class="col-12">
-                                    <input type="submit" class="btn roberto-btn btn-3 mt-15" value="답변 등록">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+					<c:if test="${adminInquire.condition lt 1 || adminInquire.condition == null}">
+	                    <!-- Leave A Reply -->
+	                    <div class="roberto-contact-form mt-80 mb-100">
+	                        <h2>문의 답변</h2>
+	
+	                        <!-- Form -->
+	                        <form 
+	                        	action="${pageContext.request.contextPath}/admin/inquireAdminReply.do"
+	                        	method="post"
+	                        	onsubmit="return adminInquireValidate();">
+	                            <div class="row">
+	                                <input type="hidden" name="inquireNo" value="${inquire.no}"/>
+	                                <input type="hidden" name="condition" value="0"/>
+	                                <input type="hidden" name="adminId" value="admin1234"/>
+	                                <input type="hidden" name="adminName" value="관리자이올시다"/>
+	                                <div class="col-12">
+	                                    <textarea name="content" class="form-control mb-30" placeholder="내용을 입력하세요."></textarea>
+	                                </div>
+	                                <div class="col-6">
+	                                    <input type="submit" class="btn roberto-btn btn-3 mt-15" value="답변 등록">
+	                                </div>
+	                            </div>
+	                        </form>
+	                    </div>
+                    </c:if>
                 </div>
             </div>
         </div>

@@ -8,7 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.finale.bookit.inquire.model.vo.AdminInquire;
+import com.finale.bookit.admin.model.vo.AdminInquire;
 import com.finale.bookit.inquire.model.vo.Inquire;
 
 @Repository
@@ -39,18 +39,12 @@ public class InquireDaoImpl implements InquireDao {
 	public Inquire selectOneInquire(int no) {
 		return session.selectOne("inquire.selectOneInquire", no);
 	}
-	
 
 	@Override
 	public AdminInquire selectOneAdminInquire(int no) {
 		return session.selectOne("inquire.selectOneAdminInquire", no);
 	}
-
-	@Override
-	public int insertAdminReply(AdminInquire adminInquire) {
-		return session.insert("inquire.insertAdminReply", adminInquire);
-	}
-
+	
 	@Override
 	public int updateCondition(int no) {
 		return session.update("inquire.updateCondition", no);

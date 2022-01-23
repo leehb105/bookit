@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="inquire">
 	<select id="selectAllInquire" resultMap="inquireMap">
-		select * from inquire order by no desc
+		select i.*, a.* from inquire i left join admin_inquire a on i.no = a.inquire_no order by i.no desc
 	</select>
 	
 	<resultMap type="inquire" id="inquireMap">
@@ -39,13 +39,8 @@
 		select * from admin_inquire where inquire_no = #{no}
 	</select>
 	
-	<insert id="insertAdminReply">
-		insert into admin_inquire
-		values(seq_admin_inquire_no.nextval, #{inquireNo}, #{adminId}, #{adminName}, #{content}, default)
-	</insert>
-	
 	<update id="updateCondition">
-		update inquire set condition = 0 where no = #{no};
+		update inquire set condition = 0 where no = #{no}
 	</update>
 </mapper>
 

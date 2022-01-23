@@ -6,8 +6,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.finale.bookit.admin.model.vo.AdminInquire;
 import com.finale.bookit.inquire.model.dao.InquireDao;
-import com.finale.bookit.inquire.model.vo.AdminInquire;
 import com.finale.bookit.inquire.model.vo.Inquire;
 
 @Service
@@ -41,11 +41,6 @@ public class InquireServiceImple implements InquireService {
 		return inquireDao.selectOneAdminInquire(no);
 	}
 	
-	@Override
-	public int insertAdminReply(AdminInquire adminInquire) {
-		return inquireDao.insertAdminReply(adminInquire);
-	}
-
 	@Override
 	public int updateCondition(int no) {
 		return inquireDao.updateCondition(no);

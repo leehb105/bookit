@@ -11,14 +11,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.finale.bookit.admin.model.vo.AdminInquire;
 import com.finale.bookit.common.util.BookitUtils;
 import com.finale.bookit.inquire.model.service.InquireService;
-import com.finale.bookit.inquire.model.vo.AdminInquire;
 import com.finale.bookit.inquire.model.vo.Inquire;
 
 import lombok.extern.slf4j.Slf4j;
@@ -85,26 +84,6 @@ public class InquireController {
 		model.addAttribute("inquire", inquire);
 		model.addAttribute("adminInquire", adminInquire);
 	}
-	
-	// 관리자 답변 등록
-	@PostMapping("/inquireAdminReply.do")
-	public String inquireAdminReply(HttpServletRequest request, RedirectAttributes redirectAttr, AdminInquire adminInquire) {
-//		log.debug("adminInquire = {}", adminInquire);
-		int result = inquireService.insertAdminReply(adminInquire);
-		redirectAttr.addFlashAttribute("msg", result > 0 ? "답변이 등록되었습니다." : "다시 시도하세요.");
-
-		return "redirect:/inquire/inquireDetail.do?no=" + adminInquire.getInquireNo();
-	}
-	
-	@PutMapping("inquireUpdateCondition.do")
-	public String inquireUpdateCondition(@RequestParam int no, Inquire inquire, RedirectAttributes redirectAttr) {
-		
-		int result = inquireService.updateCondition(no);
-		redirectAttr.addFlashAttribute("msg", result > 0 ? "답변을 완료하였습니다." : "다시 시도하세요.");
-		
-		return "redirect:/inquire/inquireList.do";
-	}
-	
 	
 }
 

@@ -3,25 +3,24 @@ package com.finale.bookit.inquire.model.vo;
 import java.io.Serializable;
 import java.util.Date;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
-public class Inquire implements Serializable{
+public class Inquire extends InquireEntity implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private int no;
-	private String title;
-	private String category;
-	private String content;
-	private Date regDate;
-	private String memberId;
 	private int condition;
+
+	public Inquire(int no, String title, String category, String content, Date regDate, String memberId,
+			int condition) {
+		super(no, title, category, content, regDate, memberId);
+		this.condition = condition;
+	}
+	
 }
