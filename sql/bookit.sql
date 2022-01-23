@@ -40,13 +40,11 @@ CREATE TABLE inquire (
 	category	varchar2(20)		NOT NULL,
 	content	varchar2(4000)		NOT NULL,
 	reg_date	date	DEFAULT current_date	NOT NULL,
-	member_id	varchar2(20)		NOT NULL,
-	condition	number	NOT NULL
+	member_id	varchar2(20)		NOT NULL
 
 	,CONSTRAINT pk_inquire_no PRIMARY KEY(no)
 	,CONSTRAINT fk_inquire_member_id FOREIGN KEY(member_id) REFERENCES member(id)
 	,CONSTRAINT ck_inquire_category check(category IN ('게시판', '북토리', '대여'))
-	,CONSTRAINT ch_inquire_condition check(condition IN (1, 0))
 	
 );
 CREATE SEQUENCE seq_inquire_no nocache;
@@ -366,3 +364,17 @@ CREATE TABLE my_trade_history (
 	,constraint pk_my_trade_history_rent_no PRIMARY KEY(rent_no)
 );
 CREATE SEQUENCE seq_my_trade_history_rent_no nocache;
+
+
+create table admin_inquire(
+    no number,
+    inquire_no number,
+    admin_id varchar2(20),  -- 제약조건 아직 안 넣었습니다
+    admin_name varchar2(30),
+    content varchar2(4000),
+    reg_date date default sysdate,
+    condition number default 1,
+    constraint pk_admin_inquire_no primary key(no),
+    constraint fk_admin_inquire_inquire_no foreign key(inquire_no) references inquire(no)
+);
+create sequence seq_admin_inquire_no;
