@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.finale.bookit.chat.model.vo.Chat;
 import com.finale.bookit.chatRoom.model.dao.ChatRoomDao;
 import com.finale.bookit.chatRoom.model.vo.ChatRoom;
 
@@ -36,6 +37,12 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 	public ChatRoom findRoomById(String id) {
 		// TODO Auto-generated method stub
 		return dao.findRoomById(id);
+	}
+
+	@Override
+	public List<Chat> selectChatHistory(String id) {
+		// TODO Auto-generated method stub
+		return dao.selectChatHistory(id);
 	}
 
 }
