@@ -56,7 +56,7 @@ function inquireValidate(){
                     <div class="roberto-contact-form">
                         <form action="${pageContext.request.contextPath}/inquire/inquireEnroll.do" method="post" onsubmit="return inquireValidate();">
                             <div class="row">
-	                            <select name="category" class="ml-15">
+	                            <select name="category" class="ml-15 wow fadeInUp" data-wow-delay="100ms">
 								    <option value="게시판">게시판</option>
 								    <option value="북토리">북토리</option>
 								    <option value="대여">대여</option>
@@ -65,10 +65,10 @@ function inquireValidate(){
 	                                <input type="text" name="title" class="form-control mb-30" placeholder="제목을 입력하세요.">
                                 </div>
 								<div class="col-8 col-lg-4 wow fadeInUp" data-wow-delay="100ms">
-	                                <input name="memberId" class="form-control mb-30" value="honggd" readonly>
+	                                <input name="memberId" class="form-control mb-30" value="${loginMember.id}" readonly>
                                 </div>
                                 <div class="col-12 wow fadeInUp" data-wow-delay="100ms">
-                                    <textarea name="content" class="form-control mb-30" placeholder="내용을 입력하세요.(200자)"></textarea>
+                                    <textarea name="content" class="form-control mb-30" style="resize: none" maxlength="200" placeholder="내용을 입력하세요.(200자)"></textarea>
                                 </div>
                                 <div class="col-12 text-center wow fadeInUp" data-wow-delay="100ms">
                                     <button type="submit" class="btn roberto-btn mt-15">문의접수</button>
