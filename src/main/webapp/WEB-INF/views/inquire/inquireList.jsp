@@ -3,6 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
 <script>
@@ -44,7 +48,12 @@ $(() => {
 	                    	<c:forEach items="${inquireList}" var="inquireList">
 		                        <tr data-no="${inquireList.no}" class="selectInquire">
 		                            <td>${inquireList.no}</td>
-		                            <td>${inquireList.memberId}</td>
+		                            <sec:authorize access="isAuthenticated()">
+			                            <td>${loginMember.id}</td>		                            
+		                            </sec:authorize>
+		                            <%-- <sec:authorize access="hasRole('ADMIN')">
+		                            	<td>${inquireList.memberId}</td>
+		                            </sec:authorize> --%>
 		                            <td>[${inquireList.category}] ${inquireList.title}</td>
 		                            <td><fmt:formatDate value="${inquireList.regDate}" pattern="yyyy/MM/dd"/></td>
 		                            <td>
