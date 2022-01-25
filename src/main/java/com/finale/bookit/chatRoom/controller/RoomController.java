@@ -29,10 +29,8 @@ public class RoomController {
 	
 	// 채팅방 목록 조회
 	@GetMapping(value = "/list")
-	public ModelAndView rooms(@RequestParam String loginMember) {
-		
-
-        ModelAndView mv = new ModelAndView("chat/chatMain");
+	public String rooms(@RequestParam String loginMember,Model model) {
+        
         List<ChatRoom> result = service.findAllRooms(loginMember);
         
         for(ChatRoom room : result) {
@@ -48,9 +46,9 @@ public class RoomController {
         	
         }
         log.debug("list = {}", result);
-        mv.addObject("list", result);
+        model.addAttribute("list", result);
         
-        return mv;
+        return "forward:/WEB-INF/views/chat/chatMain.jsp";
 	}
 	 //채팅방 개설
     @PostMapping(value = "/create")

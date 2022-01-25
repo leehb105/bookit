@@ -6,42 +6,35 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/chat.css" />
 
-        <div class="container">
-            <div class="col-6">
-                <h1>${chatRoom.memberId}</h1>
-            </div>
-            <div>
-                <div id="msgArea" class="col">
-                
-                	
-                	<c:forEach items="${ChatList}" var ="chatHistory">
-                		<c:if test="${not empty chatHistory and chatHistory.writer eq loginMember.id}">
-                			<div class='alert-secondary'>
-                				<b>${chatHistory.writer} : ${chatHistory.message}</b>
-                			</div>
-                		</c:if>
-                		
-                			<c:if test="${not empty chatHistory and chatHistory.writer ne loginMember.id}">
-                			<div class='alert-warning'>
-                				<b>${chatHistory.writer} : ${chatHistory.message}</b>
-                			</div>
-                		</c:if>
-                	
-                	 </c:forEach>
-                
-                </div>
-                <div class="col-6">
-                    <div class="input-group mb-3">
-                        <input type="text" value="chatMain" id = "msg" class="form-control"/>
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button" id="button-send">메세지 보내기</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            
-        </div>
+<div class="container member-profile">
+
+                <div id="msgArea" class="chat-history">
+                	<ul>
+                	
+	                	<c:forEach items="${ChatList}" var ="chatHistory">
+	                		<c:if test="${not empty chatHistory and chatHistory.writer eq loginMember.id}">
+	                				<li class="self"><b>${chatHistory.writer} : ${chatHistory.message}</b></li>
+	                		</c:if>
+	                			<c:if test="${not empty chatHistory and chatHistory.writer ne loginMember.id}">
+	                				<li class="member"><b>${chatHistory.writer} : ${chatHistory.message}</b></li>
+	                		</c:if>
+	                	
+	                	 </c:forEach>
+	                </ul>
+                </div>
+                
+                <div class="msg-send">
+                        <input type="text" value="chatMain" id = "msg" class="inputChat"/>
+                        <button class="btn btn-outline-secondary" type="button" id="button-send">전송</button>
+                </div>
+
+   
+
+		
+		
+</div>
+        
         <br />
         <hr />
 
@@ -76,17 +69,17 @@ $(document).ready(function() {
 		
 		
 			if(writer == userId){
-				str = "<div class='alert-secondary'>";
+				str = "<li class=self>";
 				str += "<b>" + writer + " : " + message + "</b>";
-				str += "</div>";
-				$("#msgArea").append(str);
+				str += "</li>";
+				$("#msgArea ul").append(str);
 					
 			}
 			else{
-				str = "<div class='alert-warning'>";
+				str = "<li class=member>";
 				str += "<b>" + writer + " : " + message + "</b>";
-				str += "</div>";
-				$("#msgArea").append(str);
+				str += "</li>";
+				$("#msgArea ul").append(str);
 			}
 			
 		});

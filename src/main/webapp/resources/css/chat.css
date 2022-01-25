@@ -3,3 +3,132 @@
 
 div.alert-secondary {color:red;}
 div.alert-warning {color:blue;}
+
+
+.member-profile{
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border-radius: 0.5rem;
+    background: #fff;
+    height: 600px;
+}
+
+.profile-work{
+	display: flex;
+	flex-wrap: wrap;
+    padding: 10%;
+    margin-left: 0%;
+    border: 2px solid #1cc3b2;
+    border-radius: 13px;
+    position: relative;
+}
+.profile-work p{
+    font-size: 12px;
+    color: #818182;
+    font-weight: 600;
+    margin-top: 10%;
+}
+.profile-work a{
+    text-decoration: none;
+    color: #495057;
+    font-weight: 600;
+    font-size: 14px;
+}
+.chat-row{
+	display: inline;
+}
+.col-2{
+	display: inline-block;
+	position: relative;
+
+}
+form{
+	display: inline;
+}
+.container member-profile {
+	display: inline-flex;
+}
+
+.container-chat{
+	position: relative;
+	display: inline-block;
+	width: 700px;	
+}
+
+.container-chatheader{
+	display: inline-block;
+	width: 700px;
+}
+.container-chatheader h5{
+	display: inline;
+}
+
+.container-chatmain{
+	display: inline-block;
+	width: 700px;
+}
+.container-chatmain ul{
+	display: inline;
+}
+.container-chatmain ul li{
+	display: inline;
+}
+.chatList{
+	display: inline-block;
+	height: 500px;
+	width: 150px;
+	background-color: #98FB98;
+}
+.chatList button{
+	margin-top: 5px;
+}
+
+
+
+
+
+/**
+========================================== detail css===================================================
+*/
+
+.self {
+	color: red;
+	text-align:right;
+
+}
+.member {
+	color: blue;
+
+}
+.chat-history{
+	display: inline-block;
+	width: 800px;
+	background-color: #C9DAEB;
+	position: relative;
+	height: 500px;
+	flex-direction:column;
+	align-items: flex-end;
+
+}
+.chat-history ul{
+}
+
+.msg-send{
+	display:inline-block;
+	width:800px;
+	position: relative;
+	left: 188px;
+	bottom: 15px;
+
+}
+.inputChat{
+	width: 735px;
+	height: 50px;
+}
+#button-send{
+	width: 60px;
+	height: 50px;
+	margin-bottom: 1px;
+}
+
+
