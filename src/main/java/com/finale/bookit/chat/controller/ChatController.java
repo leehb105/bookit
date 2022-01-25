@@ -29,7 +29,9 @@ public class ChatController {
 	
 	@GetMapping("chat/chatMain.do")
 	public String chatMain(Model model) {
-
+		
+		
+		
 		return "forward:/WEB-INF/views/chat/chatMain.jsp";
 	}
 	
