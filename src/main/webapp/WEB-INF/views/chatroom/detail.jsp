@@ -11,7 +11,6 @@
 
                 <div id="msgArea" class="chat-history">
                 	<ul>
-                	
 	                	<c:forEach items="${ChatList}" var ="chatHistory">
 	                		<c:if test="${not empty chatHistory and chatHistory.writer eq loginMember.id}">
 	                				<li class="self"><b>${chatHistory.writer} : ${chatHistory.message}</b></li>
