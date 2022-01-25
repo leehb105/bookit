@@ -100,8 +100,7 @@
                                         </ul> -->
                                     </li>
                                     <li><a href="#">컬렉션</a></li>
-                                    <li><a href="#">관리자</a></li>
-									<li><a href="${pageContext.request.contextPath}/chat/chatMain.do">채팅테스트</a></li>                           
+                                    <li><a href="#">관리자</a></li>                   
  									</ul>
 
                                 <!-- Search -->
