@@ -7,6 +7,28 @@
 		insert into admin_inquire
 		values(seq_admin_inquire_no.nextval, #{inquireNo}, #{adminId}, #{adminName}, #{content}, default, default)
 	</insert>
+	
+	
+	<select id="selectChart" resultMap="chartMap">
+		select  
+			extract(month from m.enroll_date)
+			,count(*) 
+		from 
+			member m 
+		where 
+			extract(month from m.enroll_date) is not null 
+		group by 
+			extract(month from m.enroll_date) 
+		order by
+			extract(month from m.enroll_date) asc
+	
+	</select>
+	
+	<resultMap type="chart" id="chartMap">
+		<result column="EXTRACT(MONTHFROMM.ENROLL_DATE)" property="month"/>
+		<result column="COUNT(*)" property="count"/>
+	</resultMap>
+  
 </mapper>
 
 

@@ -15,7 +15,11 @@
                <div class="col-2">
                    <div class="profile-work">
                        <a href="#"><p>회원목록</p></a>
- 				 	   <a href="${pageContext.request.contextPath}/admin/chart.do"><p>회원통계</p></a>
+                       <p>통계</p>	
+ 				 	   <a href="${pageContext.request.contextPath}/admin/chart.do">-가입 회원</a><br />
+ 				 	   <a href="#">-회원 주소</a><br />
+ 				 	   <a href="#">-리뷰 작성</a><br />
+ 				 	   <a href="#">-북토리 충전</a>
                    </div>
                </div>
         
@@ -28,22 +32,24 @@
 
 <script>
 
+
+
 const labels = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
+    '1월',
+    '2월',
+    '3월',
+    '4월',
+    '5월',
+    '6월'
   ];
 
   const data = {
     labels: labels,
     datasets: [{
-      label: 'My First dataset',
+      label: '가입 회원수',
       backgroundColor: 'rgb(255, 99, 132)',
       borderColor: 'rgb(255, 99, 132)',
-      data: [0, 10, 5, 2, 20, 30, 45],
+      data: [${arr[0]}, ${arr[1]}, ${arr[2]}, ${arr[3]}, ${arr[4]}, ${arr[5]},${arr[6]}],
     }]
   };
 
