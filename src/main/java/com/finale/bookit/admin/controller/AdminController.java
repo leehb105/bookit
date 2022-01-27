@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.finale.bookit.admin.model.service.AdminService;
@@ -25,6 +27,32 @@ public class AdminController {
 	private AdminService adminService;
 	
 	
+	
+	
+	@GetMapping("/selectChartDay")
+	@ResponseBody
+	public List<Chart> selectChartDay(@RequestParam String month,Model model) {
+		
+
+		List<Chart> chartDay = adminService.selectChartDay(month);
+		
+		log.debug("chartDay = {}",chartDay);
+		
+		return chartDay;
+		
+	}
+	@GetMapping("/selectChartMonth")
+	@ResponseBody
+	public String selectChartMonth(@RequestParam String category,Model model) {
+		String month = "month";
+		log.debug("category = {}",category);
+		if(category.equals(month)) {
+			model.addAttribute("category", month);
+		};
+		
+		return category;
+		
+	}
 	
 	@GetMapping("/admin.do")
 	public void adminPage() {}

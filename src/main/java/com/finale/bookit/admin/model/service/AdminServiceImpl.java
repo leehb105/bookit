@@ -26,4 +26,9 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.selectChart();
 	}
 
+	@Override
+	public List<Chart> selectChartDay(String month) {
+		return adminDao.selectChartDay(month);
+	}
+
 }

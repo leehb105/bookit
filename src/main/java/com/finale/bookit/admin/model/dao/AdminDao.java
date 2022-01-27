@@ -11,4 +11,6 @@ public interface AdminDao {
 
 	List<Chart> selectChart();
 
+	List<Chart> selectChartDay(String month);
+
 }

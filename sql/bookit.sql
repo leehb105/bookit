@@ -390,4 +390,4 @@ select  extract(month from m.enroll_date),count(*) from member m where extract(m
 delete from member where id ='chart1';
 commit;
 
-select * from member;
+select * from (select count(*) from member group by extract(day from enroll_date));

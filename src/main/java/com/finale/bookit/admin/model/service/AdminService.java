@@ -11,4 +11,6 @@ public interface AdminService {
 
 	List<Chart> selectChart();
 
+	List<Chart> selectChartDay(String month);
+
 }
