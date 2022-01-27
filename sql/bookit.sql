@@ -112,7 +112,6 @@ CREATE TABLE charge_history (
 	,CONSTRAINT fk_charge_history_member_id FOREIGN KEY(member_id) REFERENCES member(id)
 );
 CREATE SEQUENCE seq_charge_history_no nocache;
-
 CREATE TABLE rent (
 	rent_no	number		NOT NULL,
 	rent_start_date	date		NOT NULL,
@@ -293,10 +292,9 @@ CREATE SEQUENCE seq_used_board_attachment_no nocache;
 
 CREATE TABLE chat_room (
 	chat_room_id	number		NOT NULL,
-	chat_member_id	varchar2(20)		NOT NULL
+	chat_member_id	varchar2(50)		NOT NULL
 
-	,constraint pk_chat_room_chat_room_id_chat_member_id PRIMARY KEY(chat_room_id, chat_member_id)
-	,constraint fk_chat_room_chat_member_id FOREIGN key(chat_member_id) REFERENCES member(id)
+	,constraint pk_chat_room_chat_room_id_chat_member_id PRIMARY KEY(chat_room_id)
 );
 
 -- CREATE TABLE chat_history (
@@ -378,3 +376,18 @@ create table admin_inquire(
     constraint fk_admin_inquire_inquire_no foreign key(inquire_no) references inquire(no)
 );
 create sequence seq_admin_inquire_no;
+
+
+
+insert into member values('chart2','$2a$10$/7oikXVoSStVl3qVBL3B5.S7x1hb7PcNWRkV7j7XAVR.P0Iom78iK','chartTest2@naver.com','ch2','차트테스트','01012345678',1,'2022-03-03','N',0);
+insert into member values('chart3','$2a$10$/7oikXVoSStVl3qVBL3B5.S7x1hb7PcNWRkV7j7XAVR.P0Iom78iK','chartTest3@naver.com','ch3','차트테스트','01012345678',1,'2022-04-03','N',0);
+insert into member values('chart3.1','$2a$10$/7oikXVoSStVl3qVBL3B5.S7x1hb7PcNWRkV7j7XAVR.P0Iom78iK','chartTest3.1@naver.com','ch3.1','차트테스트','01012345678',1,'2022-04-05','N',0);
+insert into member values('chart4','$2a$10$/7oikXVoSStVl3qVBL3B5.S7x1hb7PcNWRkV7j7XAVR.P0Iom78iK','chartTest4@naver.com','ch4','차트테스트','01012345678',1,'2022-05-03','N',0);
+insert into member values('chart5','$2a$10$/7oikXVoSStVl3qVBL3B5.S7x1hb7PcNWRkV7j7XAVR.P0Iom78iK','chartTest5@naver.com','ch5','차트테스트','01012345678',1,'2022-06-03','N',0);
+insert into member values('chart6','$2a$10$/7oikXVoSStVl3qVBL3B5.S7x1hb7PcNWRkV7j7XAVR.P0Iom78iK','chartTest2@naver.com','ch6','차트테스트','01012345678',1,'2022-07-03','N',0);
+
+select  extract(month from m.enroll_date),count(*) from member m where extract(month from m.enroll_date) is not null group by extract(month from m.enroll_date) order by extract(month from m.enroll_date) asc;
+delete from member where id ='chart1';
+commit;
+
+select * from (select count(*) from member group by extract(day from enroll_date));

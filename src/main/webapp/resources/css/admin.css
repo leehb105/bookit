@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+
+canvas#myChart {
+	width: 800px !important;
+}
+.container-chart {
+	display: inline-block;
+}

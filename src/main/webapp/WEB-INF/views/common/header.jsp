@@ -100,7 +100,7 @@
                                         </ul> -->
                                     </li>
                                     <li><a href="#">컬렉션</a></li>
-                                    <li><a href="#">관리자</a></li>                   
+                                    <li><a href="${pageContext.request.contextPath}/admin/admin.do">관리자</a></li>                   
  									</ul>
 
                                 <!-- Search -->
