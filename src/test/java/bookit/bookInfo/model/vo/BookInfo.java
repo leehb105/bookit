@@ -1,4 +1,4 @@
-package com.finale.bookit.bookInfo.model.vo;
+package bookit.bookInfo.model.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
