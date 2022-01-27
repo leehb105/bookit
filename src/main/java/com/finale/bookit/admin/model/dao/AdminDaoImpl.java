@@ -25,4 +25,10 @@ public class AdminDaoImpl implements AdminDao {
 		return session.selectList("admin.selectChart");
 	}
 
+	@Override
+	public List<Chart> selectChartDay(String month) {
+		
+		return session.selectList("admin.selectChartDay",month);
+	}
+
 }

@@ -11,7 +11,7 @@
 	
 	<select id="selectChart" resultMap="chartMap">
 		select  
-			extract(month from m.enroll_date)
+			extract(month from m.enroll_date) as md
 			,count(*) 
 		from 
 			member m 
@@ -24,11 +24,30 @@
 	
 	</select>
 	
+	
+	<select id="selectChartDay" resultMap="chartMap">
+		select 
+			* 
+		from 
+			(select 
+				extract(day from enroll_date) as md,count(*) 
+			from 
+				member 
+			where 
+				extract(month from enroll_date) = #{month} 
+			group by 
+				extract(day from enroll_date))
+			order by 
+				md asc
+	
+	</select>
+	
 	<resultMap type="chart" id="chartMap">
-		<result column="EXTRACT(MONTHFROMM.ENROLL_DATE)" property="month"/>
+		<result column="md" property="md"/>
 		<result column="COUNT(*)" property="count"/>
 	</resultMap>
   
+
 </mapper>
 
 

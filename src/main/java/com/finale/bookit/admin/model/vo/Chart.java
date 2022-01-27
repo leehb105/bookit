@@ -18,7 +18,7 @@ public class Chart implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private int month;
+	private int md;
 	private int count;
 	
 	
