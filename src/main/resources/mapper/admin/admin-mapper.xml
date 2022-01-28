@@ -8,6 +8,9 @@
 		values(seq_admin_inquire_no.nextval, #{inquireNo}, #{adminId}, #{adminName}, #{content}, default, default)
 	</insert>
 	
+	<update id="updateCondition">
+		update report_user set condition = #{condition} where no = #{no}
+	</update>
 	
 	<select id="selectChart" resultMap="chartMap">
 		select  

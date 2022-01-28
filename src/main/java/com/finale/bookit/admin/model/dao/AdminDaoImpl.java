@@ -1,5 +1,6 @@
 package com.finale.bookit.admin.model.dao;
 
+import java.util.Map;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -21,13 +22,17 @@ public class AdminDaoImpl implements AdminDao {
 	}
 
 	@Override
+	public int updateCondition(Map<String, Object> param) {
+		return session.update("admin.updateCondition", param);
+	}
+	
+	@Override
 	public List<Chart> selectChart() {
 		return session.selectList("admin.selectChart");
 	}
 
 	@Override
 	public List<Chart> selectChartDay(String month) {
-		
 		return session.selectList("admin.selectChartDay",month);
 	}
 
