@@ -7,6 +7,10 @@
 		insert into admin_inquire
 		values(seq_admin_inquire_no.nextval, #{inquireNo}, #{adminId}, #{adminName}, #{content}, default, default)
 	</insert>
+	
+	<update id="updateCondition">
+		update report_user set condition = #{condition} where no = #{no}
+	</update>
 </mapper>
 
 

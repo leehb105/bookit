@@ -69,7 +69,7 @@ CREATE SEQUENCE seq_used_board_used_board_no nocache;
 CREATE TABLE report_user (
 	no	number		NOT NULL,
 	reason	varchar2(20)		NULL,
-	detail	varchar2(20)		NULL,
+	detail	varchar2(100)		NULL,
 	reporter	varchar2(20)		NOT NULL,
 	reportee	varchar2(20)		NOT NULL,
 	reg_date	date	DEFAULT current_date	NOT NULL
@@ -202,12 +202,12 @@ CREATE SEQUENCE seq_request_board_no nocache;
 CREATE TABLE book_collection (
 	no	number		NOT NULL,
 	collection_no	number		NOT NULL,
-	collection_name	varchar2(20)		NOT NULL,
-	member_id	varchar2(20)		NOT NULL,
+	collection_name	varchar2(50)		NOT NULL,
+	member_nickname	varchar2(20)		NOT NULL,
 	isbn13	varchar2(13)		NOT NULL
 
 	,constraint pk_book_collection_no_collection_no PRIMARY KEY(no, collection_no)
-	,constraint fk_book_collection_member_id FOREIGN key(member_id) REFERENCES member(id)
+	,constraint fk_book_collection_member_nickname FOREIGN key(member_nickname) REFERENCES member(nickname)
 	,constraint fk_book_collection_isbn13 FOREIGN key(isbn13) REFERENCES book_info(isbn13)
 );
 CREATE SEQUENCE seq_book_collection_no nocache;
