@@ -29,6 +29,8 @@ public class AdminController {
 	private AdminService adminService;
 	
 	
+	
+	
 	@GetMapping("/selectChartDay")
 	@ResponseBody
 	public List<Chart> selectChartDay(@RequestParam String month,Model model) {
@@ -57,7 +59,7 @@ public class AdminController {
 	@GetMapping("/admin.do")
 	public void adminPage() {}
 	
-	// 관리자 문의 답변 등록
+	@GetMapping("/chart.do")
 	public void chart(Model model) {
 		
 		List<Chart> chart = adminService.selectChart();
