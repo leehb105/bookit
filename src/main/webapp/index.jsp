@@ -72,7 +72,9 @@
         <div class="book-search-form-area">
             <div class="container-fluid">
                 <div class="book-search-form">
-                    <form action="#" method="post">
+                    <form
+<%--                        action="${pageContext.request.contextPath}/booking/bookingList.do"--%>
+                        method="get">
                         <div class="row justify-content-between align-items-end">
                             <div class="col-6 col-md-2 col-lg-3">
                                 <label for="checkIn">대여 시작일</label>
@@ -87,7 +89,7 @@
                             	<input type="text" class="form-control" id="bookTitle" placeholder="책 제목을 입력하세요 ...">
                             </div>
                             <div class="col-12 col-md-3">
-                                <button type="submit" class="form-control btn roberto-btn w-100">Check Availability</button>
+                                <button type="submit" class="form-control btn roberto-btn w-100" onclick="checkInputDate();">Check Availability</button>
                             </div>
                         </div>
                     </form>
@@ -523,5 +525,23 @@
         </div>
     </div> -->
     <!-- Partner Area End -->
+
+<script>
+    function checkInputDate() {
+
+        const checkIn = document.getElementById("checkIn").value;
+        const checkOut = document.getElementById("checkOut").value;
+        console.log(checkIn);
+        console.log(checkOut);
+        if (checkIn == '' || checkOut == '') {
+            alert("");
+            return;
+        }
+
+    }
+
+
+
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
  

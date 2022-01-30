@@ -79,7 +79,7 @@
                                 <ul id="nav">
                                     
                                     <li><a href="#">중고거래</a></li>
-                                    <li><a href="#">커뮤니티</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/board/community.do">커뮤니티</a></li>
                                     <li><a href="#">도서요청</a>
                                         <!-- <ul class="dropdown">
                                             <li><a href="./index.html">- Home</a></li>

@@ -14,7 +14,7 @@ public class BookInfo {
     private String title;
     private String author;
     private String publisher;
-    private Date pubDate;
+    private Date pubdate;
     private int itemPage;
     private String categoryName;
     private String toc;
