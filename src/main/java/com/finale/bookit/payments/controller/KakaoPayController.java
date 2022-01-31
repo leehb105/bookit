@@ -35,7 +35,7 @@ public class KakaoPayController {
 	
 	// iamport.properties에서 속성값 불러오기
 	@Value("${iamport.uid}")
-	private String iampportUid;
+	private String iamportUid;
 	
 	@Value("${iamport.apiKey}")
 	private String apiKey;
@@ -46,7 +46,8 @@ public class KakaoPayController {
 	
 	// 북토리 충전 페이지
 	@GetMapping(value="/member/payments/charge.do")
-	public void charge() {
+	public void charge(Model model) {
+		model.addAttribute("iamportUid", iamportUid);
 	}
 
 //	https://okky.kr/article/361093
@@ -63,9 +64,10 @@ public class KakaoPayController {
 		if(this.isCounterfeited(body, token))
 			return "결제 실패(사유: 위변조 시도)";
 
+		body.setBonusCash((int) (body.getBonusCash() * 0.03));
 		int result = paymentsService.insertCash(body);
 		
-		return body.toString();
+		return String.valueOf(body.getChargeCash() + body.getBonusCash());
 	
 	}
 	
@@ -106,7 +108,9 @@ public class KakaoPayController {
 		
 		log.debug("amount = {}원", amount);
 		log.debug("impUid = {}", impUid);
+		log.debug("body.cash = {}", body.getChargeCash());
+		log.debug("body.impuid = {}", body.getImpUid());
 
-		return !(amount != body.getChargeCash() || !impUid.equals(body.getImpUid()));
+		return (amount != body.getChargeCash() || !impUid.equals(body.getImpUid()));
 	}
 }
