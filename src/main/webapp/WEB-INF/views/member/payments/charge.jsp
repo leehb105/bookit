@@ -51,7 +51,9 @@
       </tr>      
     </tbody>
   </table>
-  <button onclick="requestPay()">충전하기</button>
+  <div class="text-center">
+	  <img src="${pageContext.request.contextPath}/resources/img/payment_icon_yellow_small.png" alt="" onclick="requestPay()"/>
+  </div>
 </div>
 
 <script>
