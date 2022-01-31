@@ -13,7 +13,7 @@
 			#{pgTid},
 			#{chargeCash},
 			#{bonusCash},
-			current_date, 
+			#{chargeDate}, 
 			#{memberId}
 		)
 	</insert>

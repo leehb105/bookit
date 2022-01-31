@@ -84,7 +84,7 @@
 						merchantUid: res.merchant_uid,
 						pgTid: res.pg_tid,
 						chargeCash: res.paid_amount,
-						chargeDate: res.paid_at,
+						chargeDate: res.paid_at * 1000, // UNIXTIMESTAMP * 1000
 						memberId: res.custom_data, // 회원 아이디는 custom_data로 + 추가적인 데이터가 필요한 경우 custom_data에 함께 담아 보내기
 						// Content-type: application/json?
 						// https://denodo1.tistory.com/322

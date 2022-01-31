@@ -1,8 +1,13 @@
 package com.finale.bookit.payments.controller;
 
+import java.beans.PropertyEditor;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -12,7 +17,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -64,7 +71,7 @@ public class KakaoPayController {
 		if(this.isCounterfeited(body, token))
 			return "결제 실패(사유: 위변조 시도)";
 
-		body.setBonusCash((int) (body.getBonusCash() * 0.03));
+		body.setBonusCash((int) (body.getChargeCash() * 0.03));
 		int result = paymentsService.insertCash(body);
 		
 		return String.valueOf(body.getChargeCash() + body.getBonusCash());
