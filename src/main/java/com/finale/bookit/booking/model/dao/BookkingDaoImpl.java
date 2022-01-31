@@ -22,4 +22,9 @@ public class BookkingDaoImpl implements BookingDao{
     public List<Booking> selectBookInfo(Map<String, Object> param) {
         return session.selectList("booking.selectBookInfo", param);
     }
+
+	@Override
+	public Booking selectBooking(Map<String, Object> param) {
+		return session.selectOne("booking.selectBooking", param);
+	}
 }

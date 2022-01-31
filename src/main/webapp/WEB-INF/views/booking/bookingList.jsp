@@ -15,13 +15,14 @@
 	                    <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
 	                        <!-- List Cover -->
 	                        <div class="post-thumbnail">
+								<!-- <input type="hidden" name="bno" value="${booking.boardNo}"> -->
 	                            <a href="#"><img src="${booking.bookInfo.cover }" alt=""></a>
 	                        </div>
 	                        <!-- List Content -->
 	                        <div class="post-content">
 	                            <!-- List Meta -->
 	                            <!-- List Title -->
-	                            <a href="#" class="post-title">${booking.bookInfo.title }</a>
+	                            <a href="${pageContext.request.contextPath}/booking/bookingDetail.do?bno=${booking.boardNo}" class="post-title">${booking.bookInfo.title }</a>
 	                            <!-- List Author, publisher, pubdate -->
 	                            <p>${booking.bookInfo.author} 저 | ${booking.bookInfo.publisher} | <fmt:formatDate value="${booking.bookInfo.pubdate }" pattern="yyyy년 MM월"/></p>
 	                            

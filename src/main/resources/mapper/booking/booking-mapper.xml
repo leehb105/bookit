@@ -39,6 +39,11 @@
 		<result column="end_date" property="endDate"/>
 	</resultMap>
 	
+	<resultMap type="member" id="memberMap">
+		<id column="id" property="id"/>
+		<result column="nickname" property="nickname"/>
+	</resultMap>
+	
 	<resultMap type="booking" id="bookingMap">
 		<id column="board_no" property="boardNo"/>
 		<result column="content" property="content"/>
@@ -50,6 +55,7 @@
 		<result column="isbn13" property="isbn13"/>
 		<result column="reg_date" property="regDate"/>
 		<association property="bookInfo" resultMap="bookInfoMap"/>
+		<association property="member" resultMap="memberMap"/>
 		<collection property="bookReservation" resultMap="bookReservationMap"/>
 	</resultMap>
 
@@ -59,5 +65,24 @@
         from
             booking
     </select>
+
+	<select id="selectBooking" resultMap="bookingMap">
+		select
+		    b.*,
+		    bi.*,
+		    br.*,
+		    m.id,
+		    m.nickname
+		from
+		    booking b join book_info bi ON
+		    b.isbn13 = bi.isbn13
+		    JOIN BOOKING_RESERVATION br ON
+		    b.board_no = br.board_no
+		    JOIN MEMBER m ON 
+		    b.writer = m.id
+		WHERE
+			b.board_no = #{bno}
+	</select>
+
 	
 </mapper>

@@ -139,5 +139,12 @@ public class BookitUtils {
 				+ "</script>");
 		return pagebar.toString();
 	}
+	
+	public static String getFormatDate(Date date) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
+		String newDate = sdf.format(date);
+		
+		return newDate;
+	}
 
 }

@@ -57,7 +57,17 @@ public class BookingController {
     }
 
     @GetMapping("bookingDetail.do")
-    public void bookingDetail() {
+    public void bookingDetail(@RequestParam(value = "bno") int bno, Model model) {
+    	Map<String, Object> param = new HashMap<>();
+    	param.put("bno", bno);
     	
+    	log.debug("bno = {}", bno);
+    	
+    	Booking booking = bookingService.selectBooking(param);
+    	String newDate = BookitUtils.getFormatDate(booking.getRegDate());
+    	log.debug("booking = {} ", booking);
+    	
+    	model.addAttribute("booking", booking);
+    	model.addAttribute("newDate", newDate);
     }
 }

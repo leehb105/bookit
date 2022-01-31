@@ -3,6 +3,8 @@ package com.finale.bookit.booking.model.vo;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.finale.bookit.member.model.vo.Member;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,5 +28,6 @@ public class Booking implements Serializable{
     
     private BookInfo bookInfo;
     private BookReservation bookReservation;
+    private Member member;
 
 }

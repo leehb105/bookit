@@ -13,156 +13,79 @@
                     <!-- Single Room Details Area -->
                     <div class="single-room-details-area mb-50">
                         <!-- Room Thumbnail Slides -->
-                        <div class="room-thumbnail-slides mb-50">
+                        <!-- <div class="room-thumbnail-slides mb-50">
                             <div id="room-thumbnail--slide" class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
-                                        <img src="img/bg-img/48.jpg" class="d-block w-100" alt="">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img src="img/bg-img/49.jpg" class="d-block w-100" alt="">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img src="img/bg-img/50.jpg" class="d-block w-100" alt="">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img src="img/bg-img/51.jpg" class="d-block w-100" alt="">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img src="img/bg-img/52.jpg" class="d-block w-100" alt="">
-                                    </div>
-                                </div>
+                                        <img src="${booking.bookInfo.cover}" class="d-block w-40" alt="">
 
-                                <ol class="carousel-indicators">
-                                    <li data-target="#room-thumbnail--slide" data-slide-to="0" class="active">
-                                        <img src="img/bg-img/48.jpg" class="d-block w-100" alt="">
-                                    </li>
-                                    <li data-target="#room-thumbnail--slide" data-slide-to="1">
-                                        <img src="img/bg-img/49.jpg" class="d-block w-100" alt="">
-                                    </li>
-                                    <li data-target="#room-thumbnail--slide" data-slide-to="2">
-                                        <img src="img/bg-img/50.jpg" class="d-block w-100" alt="">
-                                    </li>
-                                    <li data-target="#room-thumbnail--slide" data-slide-to="3">
-                                        <img src="img/bg-img/51.jpg" class="d-block w-100" alt="">
-                                    </li>
-                                    <li data-target="#room-thumbnail--slide" data-slide-to="4">
-                                        <img src="img/bg-img/52.jpg" class="d-block w-100" alt="">
-                                    </li>
-                                </ol>
+                                    </div>
+                                   
+                                </div>  
+                            </div>
+                        </div> -->
+                        <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
+                            <img src="${booking.bookInfo.cover}" class="d-block w-40" alt="">
+                            <div class="post-content">
+                                <!-- booking Title -->
+                                <a href="#" class="post-title">${booking.bookInfo.title }</a>
+                                <!-- 분류 -->
+                                <p>${booking.bookInfo.categoryName}</p>
+                                <!-- 저자, 출판사, 출판일 -->
+                                <table class="table table-borderless table-sm">
+                                    <tr>
+                                        <td>저자</td>
+                                        <td>${booking.bookInfo.author}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>출판사</td>
+                                        <td>${booking.bookInfo.publisher}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>출판일</td>
+                                        <td><fmt:formatDate value="${booking.bookInfo.pubdate }" pattern="yyyy년 MM월"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>ISBN</td>
+                                        <td>${booking.bookInfo.isbn13}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>쪽수</td>
+                                        <td>${booking.bookInfo.itemPage} 쪽</td>
+                                    </tr>
+                                </table>
+                                
+
                             </div>
                         </div>
-
                         <!-- Room Features -->
                         <div class="room-features-area d-flex flex-wrap mb-50">
-                            <h6>Size: <span>350-425sqf</span></h6>
-                            <h6>Capacity: <span>Max persion 5</span></h6>
-                            <h6>Bed: <span>King beds</span></h6>
-                            <h6>Services: <span>Wifi, television ...</span></h6>
+                            <h6>책 상태: <span>${booking.bookStatus}</span></h6>
+                            <h6>보증금: <span><fmt:formatNumber type="number" maxFractionDigits="3" value="${booking.deposit }" />원</span></h6>
+                            <h6>일 대여료: <span><fmt:formatNumber type="number" maxFractionDigits="3" value="${booking.price }" />원</span></h6>
+
                         </div>
 
-                        <p>If you live in New York City or travel to and from New York City a lot, you know all about the traffic there. Getting places is often next to impossible, even with the gazillion yellow cabs. If you’re like me you often look with envy at those shiny limousines with their unformed drivers and wish you could sit in one. Well, you can. New York limo service is more affordable than you think, whether it’s for Newark airport transportation, LaGuardia airport transportation, or to drive wherever you wish to go.</p>
+                        <h2>대여정보</h2>
+                        <span>제공자</span>
+                        <span>${booking.member.nickname}(${booking.member.id})</span>
+                        <br>
+                        <span>작성일 ${newDate}</span>
+                       
 
-                        <ul>
+                        <!-- <ul>
                             <li><i class="fa fa-check"></i> Mauris molestie lectus in irdiet auctor.</li>
                             <li><i class="fa fa-check"></i> Dictum purus at blandit molestie.</li>
                             <li><i class="fa fa-check"></i> Neque non fermentum suscipit.</li>
                             <li><i class="fa fa-check"></i> Donec id dui ac massa malesuada.</li>
                             <li><i class="fa fa-check"></i> In sit amet sapien quis orci maximus.</li>
                             <li><i class="fa fa-check"></i> Vestibulum rutrum diam vel eros tristique.</li>
-                        </ul>
+                        </ul> -->
 
-                        <p>Every time I hail a cab in New York City or wait for one at the airports, I hope I’ll be lucky enough to get one that’s halfway decent and that the driver actually speaks English. I have spent many anxious moments wondering if I ever get to my destination. Or whether I’d get ripped off. Even if all goes well, I can’t say I can remember many rides in New York cabs that were very pleasant. And given how much they cost by now, going with a limo makes ever more sense.</p>
+                        <p>${booking.content}</p>
                     </div>
 
-                    <!-- Room Service -->
-                    <div class="room-service mb-50">
-                        <h4>Room Services</h4>
-
-                        <ul>
-                            <li><img src="img/core-img/icon1.png" alt=""> Air Conditioning</li>
-                            <li><img src="img/core-img/icon2.png" alt=""> Free drinks</li>
-                            <li><img src="img/core-img/icon3.png" alt=""> Restaurant quality</li>
-                            <li><img src="img/core-img/icon4.png" alt=""> Cable TV</li>
-                            <li><img src="img/core-img/icon5.png" alt=""> Unlimited Wifi</li>
-                            <li><img src="img/core-img/icon6.png" alt=""> Service 24/24</li>
-                        </ul>
-                    </div>
-
-                    <!-- Room Review -->
-                    <div class="room-review-area mb-100">
-                        <h4>Room Review</h4>
-
-                        <!-- Single Review Area -->
-                        <div class="single-room-review-area d-flex align-items-center">
-                            <div class="reviwer-thumbnail">
-                                <img src="img/bg-img/53.jpg" alt="">
-                            </div>
-                            <div class="reviwer-content">
-                                <div class="reviwer-title-rating d-flex align-items-center justify-content-between">
-                                    <div class="reviwer-title">
-                                        <span>27 Aug 2019</span>
-                                        <h6>Brandon Kelley</h6>
-                                    </div>
-                                    <div class="reviwer-rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                </div>
-                                <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora.</p>
-                            </div>
-                        </div>
-
-                        <!-- Single Review Area -->
-                        <div class="single-room-review-area d-flex align-items-center">
-                            <div class="reviwer-thumbnail">
-                                <img src="img/bg-img/54.jpg" alt="">
-                            </div>
-                            <div class="reviwer-content">
-                                <div class="reviwer-title-rating d-flex align-items-center justify-content-between">
-                                    <div class="reviwer-title">
-                                        <span>27 Aug 2019</span>
-                                        <h6>Sounron Masha</h6>
-                                    </div>
-                                    <div class="reviwer-rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                </div>
-                                <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora.</p>
-                            </div>
-                        </div>
-
-                        <!-- Single Review Area -->
-                        <div class="single-room-review-area d-flex align-items-center">
-                            <div class="reviwer-thumbnail">
-                                <img src="img/bg-img/55.jpg" alt="">
-                            </div>
-                            <div class="reviwer-content">
-                                <div class="reviwer-title-rating d-flex align-items-center justify-content-between">
-                                    <div class="reviwer-title">
-                                        <span>27 Aug 2019</span>
-                                        <h6>Amada Lyly</h6>
-                                    </div>
-                                    <div class="reviwer-rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                </div>
-                                <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora.</p>
-                            </div>
-                        </div>
-
-                    </div>
+                    
                 </div>
 
                 <div class="col-12 col-lg-4">
@@ -170,7 +93,7 @@
                     <div class="hotel-reservation--area mb-100">
                         <form action="#" method="post">
                             <div class="form-group mb-30">
-                                <label for="checkInDate">Date</label>
+                                <label for="checkInDate">대여일자</label>
                                 <div class="input-daterange" id="datepicker">
                                     <div class="row no-gutters">
                                         <div class="col-6">
@@ -182,34 +105,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group mb-30">
-                                <label for="guests">Guests</label>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <select name="adults" id="guests" class="form-control">
-                                            <option value="adults">Adults</option>
-                                            <option value="01">01</option>
-                                            <option value="02">02</option>
-                                            <option value="03">03</option>
-                                            <option value="04">04</option>
-                                            <option value="05">05</option>
-                                            <option value="06">06</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-6">
-                                        <select name="children" id="children" class="form-control">
-                                            <option value="children">Children</option>
-                                            <option value="01">01</option>
-                                            <option value="02">02</option>
-                                            <option value="03">03</option>
-                                            <option value="04">04</option>
-                                            <option value="05">05</option>
-                                            <option value="06">06</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group mb-50">
+                            
+                            <!-- <div class="form-group mb-50">
                                 <div class="slider-range">
                                     <div class="range-price">Max Price: $0 - $3000</div>
                                     <div data-min="0" data-max="3000" data-unit="$" class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" data-value-min="0" data-value-max="3000" data-label-result="Max Price: ">
@@ -218,7 +115,7 @@
                                         <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="form-group">
                                 <button type="submit" class="btn roberto-btn w-100">Check Available</button>
                             </div>
