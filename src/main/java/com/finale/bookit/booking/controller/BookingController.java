@@ -2,6 +2,8 @@ package com.finale.bookit.booking.controller;
 
 import com.finale.bookit.booking.model.service.BookingService;
 import com.finale.bookit.booking.model.vo.Booking;
+import com.finale.bookit.common.util.BookitUtils;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,27 +33,31 @@ public class BookingController {
 //    	
 //    }
     @GetMapping("/bookingList.do")
-    public void bookingList(@RequestParam(defaultValue = "1") int cPage, Model model, HttpServletRequest request ){
+    public void bookingList(@RequestParam(defaultValue = "1") int cPage, @RequestParam(value = "bookTitle") String bookTitle, Model model, HttpServletRequest request ){
         int limit = 10;
         int offset = (cPage - 1) * limit;
 
         Map<String, Object> param = new HashMap<>();
         param.put("offset", offset);
         param.put("limit", limit);
-
+        param.put("bookTitle", bookTitle);
+        log.debug("title = {}", bookTitle);
         List<Booking> list = bookingService.selectBookInfo(param);
 //        String cover = list.get(0).getBookInfo().getCover();
 //        log.debug("cover = {}", cover);
         int total = bookingService.selectTotalBookingCount();
         log.debug("total = {}", total);
         String url = request.getRequestURI();
-//        String pagebar = HelloSpringUtils.getPagebar(cPage, limit, total, url);
+        String pagebar = BookitUtils.getPagebar(cPage, limit, total, url);
         log.debug("list = {}", list);
         log.debug("url = {}", url);
 
         model.addAttribute("list", list);
-//        model.addAttribute("pagebar", pagebar);
+        model.addAttribute("pagebar", pagebar);
     }
 
-
+    @GetMapping("bookingDetail.do")
+    public void bookingDetail() {
+    	
+    }
 }

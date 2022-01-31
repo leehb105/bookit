@@ -4,13 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookInfo {
-    private String isbn13;
+public class BookInfo implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
+	private String isbn13;
     private String title;
     private String author;
     private String publisher;

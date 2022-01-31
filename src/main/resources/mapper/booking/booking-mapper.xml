@@ -5,13 +5,20 @@
 
 <mapper namespace="booking">
     <select id="selectBookInfo" resultMap="bookingMap">
-        select
-            b.*,
-            bi.*
-        from
-            booking b join book_info bi on
-            b.isbn13 = bi.isbn13
+       select
+		    b.*,
+		    bi.*,
+		    br.*
+		from
+		    booking b join book_info bi ON
+		    b.isbn13 = bi.isbn13
+		    JOIN BOOKING_RESERVATION br ON
+		    b.board_no = br.board_no
+		WHERE
+			bi.title LIKE '%' || #{bookTitle} || '%' 
+		order by b.reg_date desc
     </select>
+
 	<resultMap type="bookInfo" id="bookInfoMap">
 		<id column="isbn13" property="isbn13"/>
 		<result column="title" property="title"/>
@@ -25,6 +32,13 @@
 		<result column="description" property="description"/>
 	</resultMap>
 	
+	<resultMap type="bookReservation" id="bookReservationMap">
+		<id column="res_no" property="resNo"/>
+		<result column="board_no" property="boardNo"/>
+		<result column="start_date" property="startDate"/>
+		<result column="end_date" property="endDate"/>
+	</resultMap>
+	
 	<resultMap type="booking" id="bookingMap">
 		<id column="board_no" property="boardNo"/>
 		<result column="content" property="content"/>
@@ -34,7 +48,9 @@
 		<result column="writer" property="writer"/>
 		<result column="delete_yn" property="deleteYn"/>
 		<result column="isbn13" property="isbn13"/>
+		<result column="reg_date" property="regDate"/>
 		<association property="bookInfo" resultMap="bookInfoMap"/>
+		<collection property="bookReservation" resultMap="bookReservationMap"/>
 	</resultMap>
 
 	<select id="selectTotalBookingCount" resultType="int">

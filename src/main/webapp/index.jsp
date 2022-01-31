@@ -73,23 +73,24 @@
             <div class="container-fluid">
                 <div class="book-search-form">
                     <form
-<%--                        action="${pageContext.request.contextPath}/booking/bookingList.do"--%>
-                        method="get">
+                        action="${pageContext.request.contextPath}/booking/bookingList.do"
+                        method="get"
+                        id="resfrm">
                         <div class="row justify-content-between align-items-end">
                             <div class="col-6 col-md-2 col-lg-3">
                                 <label for="checkIn">대여 시작일</label>
-                                <input type="date" class="form-control" id="checkIn" name="checkin-date">
+                                <input type="date" class="form-control" id="checkIn" name="checkIn">
                             </div>
                             <div class="col-6 col-md-2 col-lg-3">
                                 <label for="checkOut">대여 종료일</label>
-                                <input type="date" class="form-control" id="checkOut" name="checkout-date">
+                                <input type="date" class="form-control" id="checkOut" name="checkOut">
                             </div>
                             <div class="col-6 col-md-2 col-lg-3">
                             	<label for="bookTitle">책 제목</label>
-                            	<input type="text" class="form-control" id="bookTitle" placeholder="책 제목을 입력하세요 ...">
+                            	<input type="text" class="form-control" id="bookTitle" name="bookTitle" placeholder="책 제목을 입력하세요" autofocus>
                             </div>
                             <div class="col-12 col-md-3">
-                                <button type="submit" class="form-control btn roberto-btn w-100" onclick="checkInputDate();">Check Availability</button>
+                                <button type="button" class="form-control btn roberto-btn w-100" onclick="checkInputDate();">Check Availability</button>
                             </div>
                         </div>
                     </form>
@@ -529,15 +530,46 @@
 <script>
     function checkInputDate() {
 
-        const checkIn = document.getElementById("checkIn").value;
-        const checkOut = document.getElementById("checkOut").value;
-        console.log(checkIn);
-        console.log(checkOut);
-        if (checkIn == '' || checkOut == '') {
-            alert("");
-            return;
-        }
+        const checkIn = document.getElementById("checkIn");
+        const checkOut = document.getElementById("checkOut");
+        const $bookTitle = $(bookTitle);
+        const resfrm = document.getElementById("resfrm");
+        // console.log(checkIn);
+        // console.log(checkOut);
+        // console.log(new Date());
 
+        //날짜 객체 생성
+        let startDate = new Date(checkIn.value);
+        let endDate = new Date(checkOut.value);
+
+        if(startDate < new Date()){
+            alert("오늘보다 이전 날짜는 선택할 수 없습니다.");
+            //대여시작일 오늘날짜로 변경
+            checkIn.value = getFormatDate();
+        }else if (checkIn.value == '' || checkOut.value == '') {
+            alert("대여 기간을 선택하세요.");
+            //대여시작일 오늘날짜로 변경
+            checkIn.value = getFormatDate();
+        }else if(startDate.getTime() > endDate.getTime()){
+            alert("대여시작일이 예약 마지막일보다 후일 수 없습니다. ");
+            //마지막일 초기화
+            checkOut.value = '';
+        }
+        else if($bookTitle.val() == ''){
+            alert("대여할 책의 제목을 입력하세요.");
+            //커서 이동
+            $bookTitle.focus();
+        }else{
+            //체크 완료후 제출
+            resfrm.submit();
+        }
+    }
+    //오늘날짜 포멧함수
+    function getFormatDate(){
+        const date = new Date();
+        //날짜 포멧 ex) 2022-01-01
+        const today = date.getFullYear() + '-' + (("00"+(date.getMonth()+1).toString()).slice(-2)) + '-' + (("00"+date.getDate().toString()).slice(-2));
+        return today;
     }
 
 
