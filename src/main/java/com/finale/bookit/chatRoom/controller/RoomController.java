@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.finale.bookit.admin.model.vo.Chart;
 import com.finale.bookit.chat.model.vo.Chat;
 import com.finale.bookit.chatRoom.model.service.ChatRoomService;
 import com.finale.bookit.chatRoom.model.vo.ChatRoom;
@@ -50,6 +52,7 @@ public class RoomController {
         
         return "forward:/WEB-INF/views/chat/chatMain.jsp";
 	}
+	
 	 //채팅방 개설
     @PostMapping(value = "/create")
     public String create(@RequestParam("name") String name,@RequestParam("loginMember") String loginMember,RedirectAttributes rttr){
@@ -73,16 +76,23 @@ public class RoomController {
     
     
     // 채팅방 조회
-    @GetMapping("/detail.do")
-    public void getRoom(@RequestParam String id,Model model) {
+    @GetMapping("/detail")
+    @ResponseBody
+    public List<Chat> getRoom(@RequestParam String id,Model model) {
     	
     	log.debug("id = {}",id);
-    	List<Chat> ChatList = service.selectChatHistory(id);
     	
+
+    	List<Chat> ChatList = service.selectChatHistory(id);
+    	ChatRoom room = service.findRoomById(id);
     	log.debug("ChatList = {}", ChatList);
     	
-    	model.addAttribute("chatRoom", service.findRoomById(id));
+    	model.addAttribute("chatRoom", room);
     	model.addAttribute("ChatList", ChatList);
+
     	
+    	return ChatList;
     }
+    
+	
 }
