@@ -1,5 +1,7 @@
 package com.finale.bookit.payments.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,11 @@ public class KakaoPayServiceImpl implements PaymentsService {
 	@Override
 	public int insertCash(KakaoPay info) {
 		return paymentsDao.insertCash(info);
+	}
+
+	@Override
+	public List<KakaoPay> selectHistoryList() {
+		return paymentsDao.selectHistoryList();
 	}
 
 }

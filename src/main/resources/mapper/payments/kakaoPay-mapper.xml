@@ -17,5 +17,17 @@
 			#{memberId}
 		)
 	</insert>
+	
+	<select id="selectHistoryList" resultType="kakaoPay">
+		select
+			*
+		from
+			charge_history
+<!--  where
+			member_id = #{memberId}
+-->
+		order by
+			charge_date desc
+	</select>
 
 </mapper>

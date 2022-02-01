@@ -3,6 +3,7 @@ package com.finale.bookit.payments.controller;
 import java.beans.PropertyEditor;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
@@ -76,6 +78,14 @@ public class KakaoPayController {
 		
 		return String.valueOf(body.getChargeCash() + body.getBonusCash());
 	
+	}
+	
+	@GetMapping(value="/member/payments/history.do")
+	public void history(Authentication authentication, Model model) {
+		log.debug("authentication = {}", authentication);
+		List<KakaoPay> list = paymentsService.selectHistoryList();
+		
+		model.addAttribute("list", list);
 	}
 	
 	public String getToken() {
