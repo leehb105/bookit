@@ -78,9 +78,9 @@
                             <div class="classynav">
                                 <ul id="nav">
                                     
-                                    <li><a href="#">중고거래</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/board/community.do">커뮤니티</a></li>
-                                    <li><a href="#">도서요청</a>
+                                    <li><a href="${pageContext.request.contextPath}/board/used.do">중고거래</a></li>  
+                                    <li><a href="${pageContext.request.contextPath}/board/community.do">커뮤니티</a></li>  
+                                  <li><a href="${pageContext.request.contextPath}/board/request.do">도서요청</a></li>  
                                         <!-- <ul class="dropdown">
                                             <li><a href="./index.html">- Home</a></li>
                                             <li><a href="./room.html">- Rooms</a></li>
