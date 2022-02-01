@@ -14,13 +14,10 @@ div.alert-warning {color:blue;}
 }
 
 .profile-work{
-	display: flex;
-	flex-wrap: wrap;
     padding: 10%;
     margin-left: 0%;
     border: 2px solid #1cc3b2;
     border-radius: 13px;
-    position: relative;
 }
 .profile-work p{
     font-size: 12px;
@@ -77,13 +74,23 @@ form{
 	display: inline;
 }
 .chatList{
-	display: inline-block;
+	display: table;
 	height: 500px;
 	width: 150px;
 	background-color: #98FB98;
 }
 .chatList button{
 	margin-top: 5px;
+}
+
+.container-chatHistory{
+	display:inline-block;
+    width: 550px;
+    height: 500px;
+	position:absolute;
+	top: 62px;
+    left: 150px;
+	background-color: lightgrey;
 }
 
 
@@ -117,32 +124,20 @@ form{
 	background-color: #C9DAEB;
 	height: 500px;
 	overflow-y: scroll;
-	display: inline-block;
-	position:relative;
-	left:190px;
-	flex-direction: column;
 	margin-bottom: 10px;
 	
-
-}
-.chat-history ul {
 	display: flex;
-    list-style-type: none;
     flex-direction: column;
     align-items: flex-end;
 	
-}
-.chat-history ul li {
-	align-items: flex-end;
+
 }
 
 .msg-send{
-	display:inline-block;
-	width:800px;
-	position: relative;
-	left: 188px;
-	bottom: 15px;
-
+	display: inline-block;
+    width: 800px;
+    position: absolute;
+    top: 500px;
 }
 .inputChat{
 	width: 735px;
