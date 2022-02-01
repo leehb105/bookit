@@ -4,7 +4,17 @@
 div.alert-secondary {color:red;}
 div.alert-warning {color:blue;}
 
-
+.chat{
+	border: 0;
+	outline: 0;
+	background-color: white;
+    font-weight: bold;
+    font-size: 14px;
+    color: #495057;
+    cursor:pointer;
+	font-style: bold;
+	
+}
 .member-profile{
     margin-top: 5%;
     margin-bottom: 5%;

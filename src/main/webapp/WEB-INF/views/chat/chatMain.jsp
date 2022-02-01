@@ -27,7 +27,7 @@
                        <a href="${pageContext.request.contextPath}/inquire/inquireList.do">1:1 문의내역</a><br/>
                        <p>신고내역</p>
                        <a href="">나의 신고목록</a><br/>
-                        <p><a href="${pageContext.request.contextPath}/chat/chatMain.do">채팅 내역</a></p>
+                       <button type = "button" value = ${loginMember.id} class = "chat">채팅내역</button>
                    </div>
                </div>	 	
 			</div>
@@ -41,7 +41,6 @@
 				<input type="hidden" name = "loginMember" class = "loginMember" value = ${loginMember.id}>
 				<button class="btn btn-secondary">개설하기</button>
 				</form>
-				<button class="btn-search" value = ${loginMember.id}>채팅방 목록조회</button>
 			</div>
 			<br />       
         	<div class="container-chatmain">
@@ -77,7 +76,7 @@
 var socket = new SockJS("${pageContext.request.contextPath}/endpoint");
 var id;
 var loginMember;
-
+var tf = 0;
 
 // 채팅방 구독하는 함수
 function connect(id,loginMember){
@@ -107,13 +106,23 @@ function connect(id,loginMember){
 		});
 };
 
+
 function detail(roomid,loginId) {
 	id = roomid;
 	loginMember = loginId;
 	
-
+	if(tf == 0){
+		
+		
+		<c:forEach items="${list}" var ="ChatRoom">
+			arrRoomId = "${ChatRoom.roomId}";
+			connect(arrRoomId,loginMember);
+		</c:forEach>
+		
+		tf = 1;
+	}
 	
-	connect(id,loginMember);
+	//connect(id,loginMember);
 	// div 비우기
 	$(".chat-history").empty();
 	
@@ -170,15 +179,21 @@ $(document).ready(function() {
 	
 	// 클라이언트 연결
 	client.connect({});
+	
 
 
 	
-	$(".btn-search").on("click", function(e){
+	
+	
+	$(".chat").on("click", function(e){
+
 		loginMember = $(e.target).val();
 	
-		location.href = `${pageContext.request.contextPath}/chatroom/list?loginMember=\${loginMember}`;
+		location.href = `${pageContext.request.contextPath}/chat/chatMain?loginMember=\${loginMember}`;
 		
 	});
+
+
 	
 	$("#button-send").on("click", function(e){
 
@@ -203,9 +218,7 @@ $(document).ready(function() {
 	
 
 
-
 });
-
 
 
 
