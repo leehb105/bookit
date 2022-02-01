@@ -79,3 +79,14 @@
 .profile-work ul{
     list-style: none;
 }
+.chat{
+	border: 0;
+	outline: 0;
+	background-color: white;
+    font-weight: bold;
+    font-size: 14px;
+    color: #495057;
+    cursor:pointer;
+	font-style: bold;
+	
+}
