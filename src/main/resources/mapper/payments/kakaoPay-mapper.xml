@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kakaoPay">
+
+	<insert id="insertCash">
+		insert into
+			charge_history
+		values(
+			#{impUid},
+			#{merchantUid},
+			#{pgTid},
+			#{chargeCash},
+			#{bonusCash},
+			#{chargeDate}, 
+			#{memberId}
+		)
+	</insert>
+	
+	<select id="selectHistoryList" resultType="kakaoPay">
+		select
+			*
+		from
+			charge_history
+<!--  where
+			member_id = #{memberId}
+-->
+		order by
+			charge_date desc
+	</select>
+
+</mapper>

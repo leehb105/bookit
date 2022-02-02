@@ -193,5 +193,6 @@ $RECYCLE.BIN/
 # End of https://www.toptal.com/developers/gitignore/api/java,eclipse,maven,windows,macos,linux
 
 src/main/resources/datasource.properties
+src/main/resources/iamport.properties
 src/main/webapp/resources/roberto/img/bg-img/
 .sass-cache/
