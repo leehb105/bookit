@@ -105,7 +105,7 @@ public class MemberController {
 		member.setPassword(encodedPassword);
 		
 		// 업무로직
-		address.getExtraAddress().replace("(", "").replace(")", "");
+		address.setExtraAddress(address.getExtraAddress().replace("(", "").replace(")", ""));
 		address.setMemberId(member.getId());
 		int result = memberService.insertMember(member, address);
 		
