@@ -88,5 +88,21 @@
 			b.board_no = #{bno}
 	</select>
 
+	<select id="selectBook" resultType="bookInfo">
+		SELECT
+			*
+		FROM	
+			BOOK_INFO
+		WHERE
+			title LIKE '%' || #{bookTitle} || '%' 
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
 	
 </mapper>

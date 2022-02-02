@@ -12,4 +12,6 @@ public interface BookingService {
 	int selectTotalBookingCount();
 
 	public Booking selectBooking(Map<String, Object> param);
+
+	public List<BookInfo> selectBook(Map<String, Object> param);
 }

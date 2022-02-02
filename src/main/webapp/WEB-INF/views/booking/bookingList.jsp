@@ -4,6 +4,19 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
+	<c:if test="${!empty loginMember}">
+		<div class="button-area mt-40">
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+						<button type="button" class="btn roberto-btn w-10 float-right" onclick="location.href='bookingEnroll.do'">책 등록</button>
+					</div>
+	
+				</div>
+			</div>
+		</div>
+
+	</c:if>
 
 	<!-- Booking Area Start -->
     <div class="roberto-news-area section-padding-100-0">

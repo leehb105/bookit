@@ -1,5 +1,6 @@
 package com.finale.bookit.booking.model.dao;
 
+import com.finale.bookit.booking.model.vo.BookInfo;
 import com.finale.bookit.booking.model.vo.Booking;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,4 +28,10 @@ public class BookkingDaoImpl implements BookingDao{
 	public Booking selectBooking(Map<String, Object> param) {
 		return session.selectOne("booking.selectBooking", param);
 	}
+
+	@Override
+	public List<BookInfo> selectBook(Map<String, Object> param) {
+		return session.selectList("booking.selectBook", param);
+	}
+	
 }

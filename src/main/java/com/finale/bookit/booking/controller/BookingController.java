@@ -1,6 +1,7 @@
 package com.finale.bookit.booking.controller;
 
 import com.finale.bookit.booking.model.service.BookingService;
+import com.finale.bookit.booking.model.vo.BookInfo;
 import com.finale.bookit.booking.model.vo.Booking;
 import com.finale.bookit.common.util.BookitUtils;
 
@@ -78,4 +79,21 @@ public class BookingController {
     	model.addAttribute("booking", booking);
     	model.addAttribute("newDate", newDate);
     }
+    
+    @GetMapping("bookingEnroll.do")
+    public void bookingEnroll() {
+    	
+    }
+    	
+    @GetMapping("bookSearch.do")
+    public void bookSearch(@RequestParam String bookTitle) {
+    	log.debug("bookTitle = {}", bookTitle);
+    	Map<String, Object> param = new HashMap<>();
+    	param.put("bookTitle", bookTitle);
+    	
+    	List<BookInfo> list = bookingService.selectBook(param);
+    	log.debug("bookInfo = {}", list);
+    }
+    
+    
 }

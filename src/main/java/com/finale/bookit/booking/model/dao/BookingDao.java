@@ -1,5 +1,6 @@
 package com.finale.bookit.booking.model.dao;
 
+import com.finale.bookit.booking.model.vo.BookInfo;
 import com.finale.bookit.booking.model.vo.Booking;
 
 import java.util.List;
@@ -12,4 +13,6 @@ public interface BookingDao {
     List<Booking> selectBookInfo(Map<String, Object> param);
 
 	Booking selectBooking(Map<String, Object> param);
+
+	List<BookInfo> selectBook(Map<String, Object> param);
 }

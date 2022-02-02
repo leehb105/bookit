@@ -30,4 +30,9 @@ public class BookingServiceImpl implements BookingService {
 		return bookingDao.selectBooking(param);
 	}
 
+	@Override
+	public List<BookInfo> selectBook(Map<String, Object> param) {
+		return bookingDao.selectBook(param);
+	}
+
 }

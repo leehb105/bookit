@@ -5,6 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
+
 	<!-- Rooms Area Start -->
     <div class="roberto-rooms-area section-padding-100-0">
         <div class="container">
