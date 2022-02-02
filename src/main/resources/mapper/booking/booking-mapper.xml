@@ -16,9 +16,13 @@
 		    b.board_no = br.board_no
 		WHERE
 			bi.title LIKE '%' || #{bookTitle} || '%' 
+			AND
+			br.start_date NOT BETWEEN #{checkIn} AND #{checkOut}
+			AND
+			br.end_date NOT BETWEEN #{checkIn} AND #{checkOut}
 		order by b.reg_date desc
     </select>
-
+    
 	<resultMap type="bookInfo" id="bookInfoMap">
 		<id column="isbn13" property="isbn13"/>
 		<result column="title" property="title"/>

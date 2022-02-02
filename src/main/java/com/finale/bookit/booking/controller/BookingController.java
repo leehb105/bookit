@@ -33,7 +33,13 @@ public class BookingController {
 //    	
 //    }
     @GetMapping("/bookingList.do")
-    public void bookingList(@RequestParam(defaultValue = "1") int cPage, @RequestParam(value = "bookTitle") String bookTitle, Model model, HttpServletRequest request ){
+    public void bookingList(
+    		@RequestParam(defaultValue = "1") int cPage, 
+    		@RequestParam(value = "bookTitle") String bookTitle, 
+    		@RequestParam(value = "checkIn") String checkIn, 
+    		@RequestParam(value = "checkOut") String checkOut, 
+    		Model model, 
+    		HttpServletRequest request ){
         int limit = 10;
         int offset = (cPage - 1) * limit;
 
@@ -41,6 +47,8 @@ public class BookingController {
         param.put("offset", offset);
         param.put("limit", limit);
         param.put("bookTitle", bookTitle);
+        param.put("checkIn", checkIn);
+        param.put("checkOut", checkOut);
         log.debug("title = {}", bookTitle);
         List<Booking> list = bookingService.selectBookInfo(param);
 //        String cover = list.get(0).getBookInfo().getCover();
