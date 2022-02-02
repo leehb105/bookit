@@ -4,6 +4,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.finale.bookit.member.model.vo.Address;
 import com.finale.bookit.member.model.vo.Member;
 
 @Repository
@@ -20,6 +21,11 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public Member selectOneMember(String id) {
 		return session.selectOne("member.selectOneMember", id);
+	}
+
+	@Override
+	public int insertAddress(Address address) {
+		return session.insert("member.insertAddress", address);
 	}
 
 }

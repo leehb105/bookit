@@ -337,18 +337,27 @@ CREATE TABLE chat_history (
 	,constraint fk_chat_history_chat_room_id FOREIGN key(chat_room_id, sender_id) REFERENCES chat_room(chat_room_id, chat_member_id)
 );
 
-
 CREATE TABLE address (
 	member_id	varchar2(20)		NOT NULL,
-	land_lot	varchar2(100)		NULL,
-	road_name	varchar2(100)		NULL,
+	postcode	varchar2(10)		NOT NULL,
+	jibun_address varchar2(100)		NOT NULL,
+	road_address varchar2(100)		NOT NULL,
 	detail_address	varchar2(100)		NULL,
+	extra_address	varchar2(100)		NULL,
 	latitude	float(126)		NULL,
 	longitude	float(126)		NULL
 
 	,constraint pk_address_member_id PRIMARY KEY(member_id)
 	,constraint fk_address_member_id FOREIGN key(member_id) REFERENCES member(id)
 );
+
+GRANT CREATE VIEW TO spring;
+CREATE OR REPLACE VIEW member_view
+AS
+SELECT
+	*
+FROM MEMBER m LEFT JOIN address a
+	ON m.id = a.member_id;
 
 CREATE TABLE wishlist (
 	member_id	varchar2(20)		NOT NULL,

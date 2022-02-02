@@ -22,4 +22,18 @@
 			member
 		where id = #{id}
 	</select>
+	
+	<insert id="insertAddress">
+		insert into
+			address(member_id, postcode, jibun_address, road_address, detail_address, extra_address)
+		values(
+			#{memberId},
+			#{postcode},
+			#{jibunAddress},
+			#{roadAddress},
+			#{detailAddress},
+			#{extraAddress}
+		)
+	</insert>	
+	
 </mapper>
