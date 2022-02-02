@@ -12,8 +12,10 @@
 
 
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/kakaoPostcode.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
-<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrit6="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
 <br /><br />
 
@@ -60,6 +62,22 @@
                            <div class="form-group">
                               <label for="exampleInputEmail1">휴대폰</label>
                               <input type="tel" name="phone" id="phone" class="form-control" aria-describedby="emailHelp" placeholder="숫자만 입력하세요">
+                           </div>
+                           <div class="form-group">
+							  <label for="postcode">주소</label>
+							  <div class="row">
+								<input type="text" onclick="execDaumPostcode()" name="postcode" id="postcode" class="form-control col-6" placeholder="우편번호" readonly required>
+								<input type="button" onclick="execDaumPostcode()" class="btn roberto-btn w-10 col-4" value="우편번호 찾기"><br>
+							  </div>
+							  <div class="row">
+							    <input type="text" name="roadAddress" id="roadAddress" class="form-control col-6" placeholder="도로명주소" readonly required>
+							    <input type="text" name="jibunAddress" id="jibunAddress" class="form-control col-6" placeholder="지번주소" readonly required>
+							  </div>
+							  <span id="guide" style="color:#999;display:none"></span>
+						      <div class="row">
+						  	    <input type="text" name="detailAddress" id="detailAddress" class="form-control col-8" placeholder="상세주소">
+						 	    <input type="text" name="extraAddress" id="extraAddress" class="form-control col-4" placeholder="참고항목" readonly>
+						      </div>
                            </div>
                            <div class="col-md-12 text-center mb-3">
                               <button type="submit" class="btn roberto-btn w-100">가입하기</button>
