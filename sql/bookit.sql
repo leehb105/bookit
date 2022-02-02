@@ -102,17 +102,6 @@ CREATE TABLE community (
 CREATE SEQUENCE seq_community_community_no nocache;
 
 CREATE TABLE charge_history (
-	no	number		NOT NULL,
-	charge_cash	number		NOT NULL,
-	bonus_cash	number		NOT NULL,
-	charge_date	date	DEFAULT current_date	NOT NULL,
-	member_id	varchar2(20)		NOT NULL
-
-	,CONSTRAINT pk_charge_history_no PRIMARY KEY(no)
-	,CONSTRAINT fk_charge_history_member_id FOREIGN KEY(member_id) REFERENCES member(id)
-);
-
-CREATE TABLE charge_history (
 	imp_uid varchar2(16)		NOT NULL,
 	merchant_uid varchar2(20)	NOT NULL,
 	pg_tid varchar2(20)			NOT NULL,
