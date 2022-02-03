@@ -15,4 +15,6 @@ public interface ChatRoomDao {
 
 	List<Chat> selectChatHistory(String id);
 
+	int updateRead_Check(String id);
+
 }

@@ -16,5 +16,7 @@ public interface ChatRoomService {
 
 	List<Chat> selectChatHistory(String id);
 
+	int updateRead_check(String id);
+
 	
 }

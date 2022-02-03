@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.finale.bookit.chat.model.service.ChatService;
 import com.finale.bookit.chat.model.vo.Chat;
@@ -34,11 +35,36 @@ public class ChatController {
 	@Autowired
 	private ChatRoomService chatRoomService;
 
+	private List<ChatRoom> list = null;
+	
+	
+	
+	@GetMapping("chat/chatAlarm")
+	@ResponseBody
+	public List<ChatRoom> chatAlarm() {
+		
+		for(ChatRoom room : list) {
+			String id = room.getRoomId();
+			List<Chat> ChatAlarm = chatService.selectChatAlarm(id);
+			
+			log.debug("ChatAlarm = {}",ChatAlarm);
+			if(!ChatAlarm.isEmpty()) {
+				room.setRead_count(1);
+			}
+		}
+		
+		log.debug("for check = {}",list);
+		
+		return list;
+		
+	}
+	
 	@GetMapping("chat/chatMain")
 	public String chatMain(@RequestParam String loginMember,Model model) {
 		
 		List<ChatRoom> result = chatRoomService.findAllRooms(loginMember);
-        
+		this.list = result;
+
         for(ChatRoom room : result) {
         	String memberId = room.getMemberId();
         	
@@ -54,7 +80,6 @@ public class ChatController {
         log.debug("list = {}", result);
         
         model.addAttribute("list", result);
-		model.addAttribute("listSize", result.size());
 		return "forward:/WEB-INF/views/chat/chatMain.jsp";
 	}
 	

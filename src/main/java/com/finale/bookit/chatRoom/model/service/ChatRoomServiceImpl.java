@@ -45,4 +45,10 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 		return dao.selectChatHistory(id);
 	}
 
+	@Override
+	public int updateRead_check(String id) {
+		// TODO Auto-generated method stub
+		return dao.updateRead_Check(id);
+	}
+
 }
