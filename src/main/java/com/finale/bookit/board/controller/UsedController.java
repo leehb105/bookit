@@ -12,4 +12,7 @@ public class UsedController {
     public void board(){
         
     }
+	@GetMapping("/usedForm.do")
+	public void usedForm() {}
+    
 }

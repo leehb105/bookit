@@ -16,6 +16,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.finale.bookit.member.model.service.MemberService;
+import com.finale.bookit.member.model.vo.Address;
 import com.finale.bookit.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -94,17 +95,20 @@ public class MemberController {
 	}
 	
 	@PostMapping("/memberEnroll.do")
-	public String memberEnroll(Member member, RedirectAttributes redirectAttr) {
+	public String memberEnroll(Member member, Address address, RedirectAttributes redirectAttr) {
 		log.info("member = {}", member);
+		log.info("address = {}", address);
 		// 비밀번호 암호화 처리
 		String rawPassword = member.getPassword(); // 평문
 		// 랜덤 salt값을 이용한 hashing처리:
 		String encodedPassword = bcryptPasswordEncoder.encode(rawPassword); // 암호화처리
 		member.setPassword(encodedPassword);
 		
-		
 		// 업무로직
-		int result = memberService.insertMember(member);
+		String extraAddress = address.getExtraAddress();
+		address.setExtraAddress(extraAddress.substring(1, extraAddress.lastIndexOf(")")));
+		address.setMemberId(member.getId());
+		int result = memberService.insertMember(member, address);
 		
 		// 리다이렉트후에 session의 속성을 참조할 수 있도록한다.
 		redirectAttr.addFlashAttribute("msg", result > 0 ? "회원 가입 성공!" : "회원 가입 실패!");

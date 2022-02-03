@@ -9,7 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class RequestController {
 
     @GetMapping("/request.do")
-    public void board(){
+    public void request(){
+        
+    }
+    
+    @GetMapping("/requestForm.do")
+    public void requestForm(){
         
     }
 }
