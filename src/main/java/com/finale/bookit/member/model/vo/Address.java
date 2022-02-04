@@ -23,11 +23,17 @@ public class Address implements Serializable {
 	
 	private String memberId;
 	private String postcode;
-	private String jibunAddress;
 	private String roadAddress;
-	private String detailAddress;
 	private String extraAddress;
-	private String latitude;
-	private String longitude;
+	private String depth1;
+	private String depth2;
+	private String depth3;
+	private String bunji1;
+	private String bunji2;
+	private String mainAddress;
+	private String subAddress;
+	private String detailAddress;
+	private float latitude;
+	private float longitude;
 	
 }
