@@ -21,7 +21,7 @@
 		from
 			chat_history
 		where
-			chat_room_id = #{id} and read_check = 1
+			chat_room_id = #{roomId} and read_check = 1 and sender_id != #{writer} 
 	</select>
 	
 	
