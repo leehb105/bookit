@@ -15,4 +15,6 @@ public interface MemberDao {
 
 	int memberUpdate(Map<String, Object> param);
 
+	int selectOneMemberCount(String id);
+
 }

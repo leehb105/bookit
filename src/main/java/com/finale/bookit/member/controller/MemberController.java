@@ -310,7 +310,13 @@ public class MemberController {
 		return "redirect:/member/mypageMain.do";
 	}
 	
-	
+	@ResponseBody
+	@PostMapping("/checkDuplicateId.do")
+	public int checkDuplicateId(@RequestParam String id, RedirectAttributes redirectAttr) {
+		log.debug("id = {}", id);
+		int result = memberService.selectOneMemberCount(id);
+		return result;
+	}
 	
 	
 	

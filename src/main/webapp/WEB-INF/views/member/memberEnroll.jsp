@@ -37,16 +37,17 @@
                            <div class="form-group">
                               <label for="exampleInputEmail1">아이디</label>
                               <input type="text"  name="id" class="form-control" id="id" aria-describedby="emailHelp" placeholder="아이디를 입력하세요">
+                              <span id="idHelp"></span>
                            </div>
                            <div class="form-group">
                               <label for="exampleInputEmail1">비밀번호</label>
                               <input type="password" name="password" id="password" class="form-control" aria-describedby="idHelp" placeholder="비밀번호를 입력하세요">
-                              <!-- <span id="idHelp">영문, 숫자가 하나 이상 포함된 8-16자리의 암호를 입력하세요.</span> -->
+                              <span id="passwordHelp"></span>
                            </div>
                            <div class="form-group">
                               <label for="exampleInputEmail1">비밀번호 확인</label>
                               <input type="password" id="passwordCheck" class="form-control" aria-describedby="passwordHelp" placeholder="비밀번호를 한번 더 입력하세요">
-                              <!-- <span id="passwordHelp">8-16자리의 암호를 입력하세요.영문, 숫자가 하나 이상 포함되어야하며, 영문 중 하나 이상은 반듯이 대문자여야 합니다.</span> -->
+                              <span id="passwordCheckHelp"></span>
                            </div>
                            <div class="form-group">
                               <label for="exampleInputEmail1">이름</label>
@@ -55,6 +56,7 @@
                            <div class="form-group">
                               <label for="exampleInputEmail1">닉네임</label>
                               <input type="text"  name="nickname" class="form-control" id="nickname" aria-describedby="emailHelp" placeholder="닉네임을 입력하세요">
+                              <span id="nicknameHelp"></span>
                            </div>
                            <div class="form-group">
                               <label for="exampleInputEmail1">이메일</label>
@@ -123,7 +125,58 @@
 
 <br /><br /><br /><br /><br /><br />
 <script>
+$("#id").focusout(function() {
+	var id = $("#id").val();
+	var advice = $("#idHelp");
+	var idRegExp = /^[a-z0-9]{4,12}$/;
 
+	if(id == "") {
+		idHelp.innerText = "필수 입력사항입니다";
+		advice.css({
+			"color": "red",
+			"font-size": "12px"
+		});
+		return false;
+	}
+	else if(!idRegExp.test(id)) {
+		idHelp.innerText = "영문 숫자 포함 4~12자리로 입력하세요.";
+		advice.css({
+			"color": "red",
+			"font-size": "12px"
+		});
+		return false;
+	}
+	else if(idRegExp.test(id)) {
+		$.ajax({
+			url: `${pageContext.request.contextPath}/member/checkDuplicateId.do`,
+			type: "POST",
+			data: {
+				id : id
+			},
+			dataType: "json",
+			success: function(data){
+				console.log(data);
+				if(data == 0) {
+					idHelp.innerText = "사용가능한 아이디입니다.";
+					advice.css({
+						"color": "blue",
+						"font-size": "12px"
+					});
+					return true;
+				} 
+				else {
+					idHelp.innerText = "사용중인 아이디입니다.";
+					advice.css({
+						"color": "red",
+						"font-size": "12px"
+					});
+					return false;
+				}
+			},
+			error: console.log
+		});
+	}
+});
 
 	/* $(function() {
 	  

@@ -17,4 +17,6 @@ public interface MemberService {
 
 	int memberUpdate(Map<String, Object> param);
 
+	int selectOneMemberCount(String id);
+
 }

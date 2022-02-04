@@ -11,7 +11,7 @@ $(() => {
 	$(memberUpdateFrm).submit((e) => {
     	// nickname
     	if(!/^[가-힣]{2,}$/.test($(nickname).val())){
-    		alert("이름은 한글 2글자 이상이어야 합니다.");
+    		alert("닉네임은 한글 2글자 이상이어야 합니다.");
     		return false;
     	}
     	/* // password

@@ -53,4 +53,8 @@
 			id = #{id}
 	</update>
 	
+	<select id="selectOneMemberCount" resultType="_int">
+		select count(*) from member where id = #{id}
+	</select>
+	
 </mapper>
