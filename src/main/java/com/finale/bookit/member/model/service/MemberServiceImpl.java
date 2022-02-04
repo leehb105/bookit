@@ -1,5 +1,7 @@
 package com.finale.bookit.member.model.service;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +43,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int insertAddress(Address address) {
 		return memberDao.insertAddress(address);
+	}
+
+	@Override
+	public int memberUpdate(Map<String, Object> param) {
+		return memberDao.memberUpdate(param);
 	}
 
 	

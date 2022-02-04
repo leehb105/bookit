@@ -43,10 +43,10 @@
                <div class="col-4">
                    <div class="profile-head"><br /><br />
                     <h3>
-                        홍길동 님 안녕하세요
+                        [${loginMember.name}]님 안녕하세요
                     </h3>
                     <h5>
-                        길동이이잉
+                        ${loginMember.nickname}
                     </h5>
                     <p class="proile-rate">나의 평점 : <span>38점</span></p>
                     <p class="proile-point">나의 북토리 : <span>10000원</span></p>

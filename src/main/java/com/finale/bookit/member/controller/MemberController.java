@@ -8,6 +8,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -290,4 +291,34 @@ public class MemberController {
 	public void editProfile() {
 		
 	}
+	
+	@PostMapping("/memberUpdate.do")
+	public String memberUpdate(
+			@RequestParam String nickname,
+			@RequestParam String email,
+			@RequestParam String phone,
+			@SessionAttribute Member loginMember,
+			RedirectAttributes redirectAttr) {
+		String id = loginMember.getId();
+		Map<String, Object> param = new HashMap<>();
+		param.put("id", id);
+		param.put("nickname", nickname);
+		param.put("email", email);
+		param.put("phone", phone);
+		
+		int result = memberService.memberUpdate(param);
+		redirectAttr.addFlashAttribute("msg", result > 0 ? "정보 수정 성공!" : "정보 수정 실패!");
+		
+		return "redirect:/member/mypageMain.do";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

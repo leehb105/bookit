@@ -36,4 +36,15 @@
 		)
 	</insert>	
 	
+	<update id="memberUpdate">
+		update
+			member
+		set
+			nickname = #{nickname},
+			email = #{email},
+			phone = #{phone}
+		where
+			id = #{id}
+	</update>
+	
 </mapper>
