@@ -4,6 +4,26 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="chat">
+
+
+	<update id="updateRead_Check">
+		update
+			chat_history
+		set
+			read_check = 0
+		where
+			chat_room_id = #{id}
+	</update>
+	
+	<select id="selectChatAlarm" resultMap="chatHistory">
+		select
+			*
+		from
+			chat_history
+		where
+			chat_room_id = #{roomId} and read_check = 1 and sender_id != #{writer} 
+	</select>
+	
 	
 	
 	<select id="selectChatHistory" resultMap="chatHistory">

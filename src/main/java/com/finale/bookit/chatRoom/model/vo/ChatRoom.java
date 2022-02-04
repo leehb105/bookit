@@ -25,6 +25,8 @@ public class ChatRoom implements Serializable {
 	
 	   private String roomId;
 	   private String memberId;
+	   private int read_count;
+	   
 	  // private Set<WebSocketSession> sessions = new HashSet<>();
 	   //WebSocketSession은 Spring에서 Websocket Connection이 맺어진 세션
 	    

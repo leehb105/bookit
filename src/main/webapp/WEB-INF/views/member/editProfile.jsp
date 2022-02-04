@@ -6,9 +6,36 @@
 
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
+<script>
+$(() => {
+	$(memberUpdateFrm).submit((e) => {
+    	// nickname
+    	if(!/^[가-힣]{2,}$/.test($(nickname).val())){
+    		alert("이름은 한글 2글자 이상이어야 합니다.");
+    		return false;
+    	}
+    	/* // password
+    	if(!/^[a-zA-Z0-9]{8,16}$/.test($(password).val())){
+    		alert("비밀번호는 숫자와 영문 조합으로 8~16자리만 사용 가능합니다.")
+    		return false;
+    	} */
+    	// email
+    	if(!/^[\w]{3,}@[\w]+(\.[\w]+){1,3}$/.test($(email).val())){
+    		alert("올바르지 않은 이메일 형식입니다.")
+    		return false;
+    	}
+    	// phone
+    	if(!/^010[0-9]{8}$/.test($(phone).val())){
+    		alert("유효한 전화번호가 아닙니다.");
+    		return false;
+    	}
+    	return true;
+    });
+});
+</script>
 
 	<div class="container member-profile">
-    	<form method="get" action="${pageContext.request.contextPath}/member/editProfile.do">
+    	<form name="memberUpdateFrm" method="POST" action="${pageContext.request.contextPath}/member/memberUpdate.do">
                <!-- <div class="row">
 				<div class="col-2">
 				</div>
@@ -34,7 +61,6 @@
                        <a href="${pageContext.request.contextPath}/inquire/inquireList.do">1:1 문의내역</a><br/>
                        <p>신고내역</p>
                        <a href="">나의 신고목록</a><br/>
-                       <p><a href="${pageContext.request.contextPath}/chat/chatMain.do">채팅 내역</a></p>
                    </div>
                </div>
                <div class="col-1">
@@ -51,12 +77,20 @@
                     
 	                        
 	                <div class="col-6">
-	                    <div class="row">
+	                	<div class="row">
 	                        <div class="col-md-4"><br /><br />
-	                            <label>아이디</label>
+	                            <label>이름</label>
 	                        </div>
 	                        <div class="col-md-4"><br /><br />
-	                            <p>honggd</p>
+	                            <p>${loginMember.name}</p>
+	                        </div>
+	                    </div>
+	                    <div class="row">
+	                        <div class="col-md-4">
+	                            <label>아이디</label>
+	                        </div>
+	                        <div class="col-md-4">
+	                            <p>${loginMember.id}</p>
 	                        </div>
 	                    </div>
 	                    <div class="row">
@@ -64,7 +98,7 @@
 	                            <label>닉네임</label>
 	                        </div>
 	                        <div class="col-md-4">
-	                            <p>길동이이잉</p>
+	                            <input type="text" name="nickname" id="nickname" value="${loginMember.nickname}" required>
 	                        </div>
 	                    </div>
 	                    <div class="row">
@@ -72,7 +106,7 @@
 	                            <label>비밀번호</label>
 	                        </div>
 	                        <div class="col-md-4">
-	                            <p>1234</p>
+	                            <input type="password" name="password" id="password" value="${loginMember.password}" required>
 	                        </div>
 	                    </div>
 	                    <div class="row">
@@ -80,7 +114,7 @@
 	                            <label>비밀번호 확인</label>
 	                        </div>
 	                        <div class="col-md-4">
-	                            <p>1234</p>
+	                            <input type="password" name="passwordCheck" id="passwordCheck" value="${loginMember.password}" required>
 	                        </div>
 	                    </div>
 	                    <div class="row">
@@ -88,7 +122,7 @@
 	                            <label>이메일</label>
 	                        </div>
 	                        <div class="col-md-4">
-	                            <p>h@gmail.com</p>
+	                            <input type="email" name="email" id="email" value="${loginMember.email}" required>
 	                        </div>
 	                    </div>
 	                    <div class="row">
@@ -104,7 +138,7 @@
 	                            <label>연락처</label>
 	                        </div>
 	                        <div class="col-md-4">
-	                            <p>01012341234</p>
+	                            <input type="tel" name="phone" id="phone" maxlength="11" value="${loginMember.phone}">
 	                        </div>
 	                    </div>
                             <input type="submit" class="btn roberto-btn w-10 mt-30" value="수정">

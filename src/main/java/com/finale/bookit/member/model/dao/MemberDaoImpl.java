@@ -1,5 +1,7 @@
 package com.finale.bookit.member.model.dao;
 
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -26,6 +28,11 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public int insertAddress(Address address) {
 		return session.insert("member.insertAddress", address);
+	}
+
+	@Override
+	public int memberUpdate(Map<String, Object> param) {
+		return session.update("member.memberUpdate", param);
 	}
 
 }

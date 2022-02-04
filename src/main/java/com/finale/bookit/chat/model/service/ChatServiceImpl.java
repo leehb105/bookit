@@ -1,5 +1,7 @@
 package com.finale.bookit.chat.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,12 @@ public class ChatServiceImpl implements ChatService {
 	public int insertChatHistory(Chat msg) {
 		// TODO Auto-generated method stub
 		return dao.insertChatHistory(msg);
+	}
+
+	@Override
+	public List<Chat> selectChatAlarm(Chat param) {
+		// TODO Auto-generated method stub
+		return dao.selectChatAlarm(param);
 	}
 
 }
