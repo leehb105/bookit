@@ -328,19 +328,6 @@ CREATE TABLE chat_history (
 );
 
 CREATE TABLE address (
-	member_id	varchar2(20)		NOT NULL,
-	jibun_address varchar2(100)		NOT NULL,
-	road_address varchar2(100)		NULL,
-	detail_address	varchar2(100)	NULL,
-	extra_address	varchar2(100)	NULL,
-	latitude	float(126)			NULL,
-	longitude	float(126)			NULL
-
-	,constraint pk_address_member_id PRIMARY KEY(member_id)
-	,constraint fk_address_member_id FOREIGN key(member_id) REFERENCES member(id)
-);
-
-CREATE TABLE address (
 	member_id		varchar2(20)		NOT NULL,
 	postcode		varchar2(10)		NULL,
 	road_address	varchar2(100)		NULL,
@@ -355,7 +342,7 @@ CREATE TABLE address (
 	longitude		float				NOT NULL
 
 	,CONSTRAINT  pk_address_member_id PRIMARY KEY(member_id)
-	,CONSTRAINT  fk_address_member_id FOREIGN key(member_id) REFERENCES member(id)
+	,CONSTRAINT  fk_address_member_id FOREIGN key(member_id) REFERENCES member(id) ON DELETE cascade
 );
 COMMENT ON COLUMN address.postcode IS '우편번호';
 COMMENT ON COLUMN address.road_address IS '도로명 주소';
@@ -374,10 +361,12 @@ CREATE OR REPLACE VIEW member_view
 AS
 SELECT
 	m.*,
-	a.road_address || ' (' || a.extra_address || ')' AS road_address,
+	a.road_address || nvl2(a.extra_address, ' (' || a.extra_address || ')', '') AS road_address,
 	a.depth1 || ' ' || a.depth2 || ' ' || a.depth3 || ' ' || a.bunji1 || '-' || a.bunji2 || ' ' || a.detail_address AS jibun_address
 FROM MEMBER m LEFT JOIN address a
 	ON m.id = a.member_id;
+
+SELECT * FROM member_view;
 
 CREATE TABLE wishlist (
 	member_id	varchar2(20)		NOT NULL,

@@ -25,7 +25,7 @@
 	
 	<insert id="insertAddress">
 		insert into
-			address2
+			address
 		values(
 			#{memberId},
 			#{postcode},
