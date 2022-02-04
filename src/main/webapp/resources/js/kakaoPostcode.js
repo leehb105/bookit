@@ -20,6 +20,10 @@ function execKakaoPostcode() {
 			document.getElementById('postcode').value = data.zonecode;
 			document.getElementById("roadAddress").value = data.roadAddress;
 			document.getElementById("jibunAddress").value = data.jibunAddress;
+			document.getElementById("region_1depth").value = data.sido;
+			document.getElementById("region_2depth").value = data.sigungu;
+			document.getElementById("region_3depth").value = data.bname + (!!data.bname1 ? ' ' + data.bname1 : '');
+			
 			
 
 			// 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
@@ -45,7 +49,8 @@ function execKakaoPostcode() {
 					// 지도 중심을 변경한다.
 					map.setCenter(coords);
 					// 마커를 결과값으로 받은 위치로 옮긴다.
-					marker.setPosition(coords)
+					marker.setPosition(coords);
+					marker.setMap(map);
 				}
 			});
 		}

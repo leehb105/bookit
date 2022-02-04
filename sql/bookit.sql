@@ -339,23 +339,53 @@ CREATE TABLE chat_history (
 
 CREATE TABLE address (
 	member_id	varchar2(20)		NOT NULL,
-	postcode	varchar2(10)		NOT NULL,
 	jibun_address varchar2(100)		NOT NULL,
-	road_address varchar2(100)		NOT NULL,
-	detail_address	varchar2(100)		NULL,
-	extra_address	varchar2(100)		NULL,
-	latitude	float(126)		NULL,
-	longitude	float(126)		NULL
+	road_address varchar2(100)		NULL,
+	detail_address	varchar2(100)	NULL,
+	extra_address	varchar2(100)	NULL,
+	latitude	float(126)			NULL,
+	longitude	float(126)			NULL
 
 	,constraint pk_address_member_id PRIMARY KEY(member_id)
 	,constraint fk_address_member_id FOREIGN key(member_id) REFERENCES member(id)
 );
 
+CREATE TABLE address (
+	member_id		varchar2(20)		NOT NULL,
+	postcode		varchar2(10)		NULL,
+	road_address	varchar2(100)		NULL,
+	extra_address	varchar2(100)		NULL,
+	depth1			varchar2(20)		NOT NULL,
+	depth2			varchar2(30)		NOT NULL,
+	depth3			varchar2(50)		NOT NULL,
+	bunji1			varchar2(10)		NULL,
+	bunji2			varchar2(10)		NULL,
+	detail_address	varchar2(100)		NULL,
+	latitude		float				NOT NULL,
+	longitude		float				NOT NULL
+
+	,CONSTRAINT  pk_address_member_id PRIMARY KEY(member_id)
+	,CONSTRAINT  fk_address_member_id FOREIGN key(member_id) REFERENCES member(id)
+);
+COMMENT ON COLUMN address.postcode IS '우편번호';
+COMMENT ON COLUMN address.road_address IS '도로명 주소';
+COMMENT ON COLUMN address.extra_address IS '도로명 주소에 붙는 건물명';
+COMMENT ON COLUMN address.depth1 IS '도/광역시';
+COMMENT ON COLUMN address.depth2 IS '시/군 + 구';
+COMMENT ON COLUMN address.depth3 IS '동/읍/면 + 리';
+COMMENT ON COLUMN address.bunji1 IS '번지1';	-- int가 맞지만 혹시 몰라 string으로
+COMMENT ON COLUMN address.bunji2 IS '번지2';		-- int가 맞지만 혹시 몰라 string으로
+COMMENT ON COLUMN address.detail_address IS '사용자가 입력한 상세 주소';
+COMMENT ON COLUMN address.latitude IS '위도';
+COMMENT ON COLUMN address.longitude IS '경도';
+
 GRANT CREATE VIEW TO spring;
 CREATE OR REPLACE VIEW member_view
 AS
 SELECT
-	*
+	m.*,
+	a.road_address || ' (' || a.extra_address || ')' AS road_address,
+	a.depth1 || ' ' || a.depth2 || ' ' || a.depth3 || ' ' || a.bunji1 || '-' || a.bunji2 || ' ' || a.detail_address AS jibun_address
 FROM MEMBER m LEFT JOIN address a
 	ON m.id = a.member_id;
 
