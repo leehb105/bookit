@@ -25,14 +25,20 @@
 	
 	<insert id="insertAddress">
 		insert into
-			address(member_id, postcode, jibun_address, road_address, detail_address, extra_address)
+			address2
 		values(
 			#{memberId},
 			#{postcode},
-			#{jibunAddress},
 			#{roadAddress},
+			#{extraAddress},
+			#{depth1},
+			#{depth2},
+			#{depth3},
+			#{bunji1},
+			#{bunji2},
 			#{detailAddress},
-			#{extraAddress}
+			#{latitude},
+			#{longitude}
 		)
 	</insert>	
 	

@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/member.css" />
+<link rel="stylesheet" href="${ pageContext.request.contextPath}/resources/css/member.css" />
+<link rel="stylesheet" href="${ pageContext.request.contextPath}/resources/css/kakaoMap.css" />
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
 
@@ -9,11 +10,11 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-
+<script type="text/javascript"
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6572b946baab53e064d0fc558f5af389&libraries=services,clusterer,drawing"></script>
 
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/kakaoPostcode.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrit6="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
@@ -66,18 +67,37 @@
                            <div class="form-group">
 							  <label for="postcode">주소</label>
 							  <div class="row">
-								<input type="text" onclick="execDaumPostcode()" name="postcode" id="postcode" class="form-control col-6" placeholder="우편번호" readonly required>
-								<input type="button" onclick="execDaumPostcode()" class="btn roberto-btn w-10 col-4" value="우편번호 찾기"><br>
+								<input type="text" name="postcode" id="postcode" class="form-control col-6" placeholder="우편번호" readonly>
+								<input type="button" onclick="execKakaoPostcode()" class="btn roberto-btn w-10 col-4" value="우편번호 찾기"><br>
 							  </div>
 							  <div class="row">
-							    <input type="text" name="roadAddress" id="roadAddress" class="form-control col-6" placeholder="도로명주소" readonly required>
-							    <input type="text" name="jibunAddress" id="jibunAddress" class="form-control col-6" placeholder="지번주소" readonly required>
+							    <input type="text" name="roadAddress" id="roadAddress" class="form-control col-9" placeholder="도로명주소" readonly>
+						 	    <input type="text" name="extraAddress" id="extraAddress" class="form-control col-3" placeholder="건물명" readonly>
+							  </div>
+							  <div class="row">
+							    <input type="text" name="jibunAddress" id="jibunAddress" class="form-control col-12" placeholder="지번주소" readonly required>
+							    <!--
+							    	depth1 = 광역시/도,
+							    	depth2 = 시/군 + 구
+							    	depth3 = 동/읍/면 + 리
+							     -->
+							    <input type="hidden" name="depth1" id="region_1depth" readonly> 
+							    <input type="hidden" name="depth2" id="region_2depth" readonly>
+							    <input type="hidden" name="depth3" id="region_3depth" readonly>
+							    <input type="hidden" name="bunji1" id="main_address" readonly>
+							    <input type="hidden" name="bunji2" id="sub_address" readonly>
 							  </div>
 							  <span id="guide" style="color:#999;display:none"></span>
 						      <div class="row">
-						  	    <input type="text" name="detailAddress" id="detailAddress" class="form-control col-8" placeholder="상세주소">
-						 	    <input type="text" name="extraAddress" id="extraAddress" class="form-control col-4" placeholder="참고항목" readonly>
+						  	    <input type="hidden" name="detailAddress" id="detailAddress" class="form-control col-8" placeholder="상세주소">
+						 	    <input type="hidden" name="latitude" id="latitude" readonly>
+						 	    <input type="hidden" name="longitude" id="longitude" readonly>
 						      </div>
+						      <div class="map_wrapper">
+								<div id="map" style="width:600px;height:300px;margin-top:10px;display:none"></div>
+									<span id="centerAddr"></span>
+						      </div>
+
                            </div>
                            <div class="col-md-12 text-center mb-3">
                               <button type="submit" class="btn roberto-btn w-100">가입하기</button>
@@ -93,6 +113,12 @@
 			</div>
 		</div>
       </div>   
+
+<script src="${pageContext.request.contextPath}/resources/js/kakaoMap.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/kakaoPostcode.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript"
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6572b946baab53e064d0fc558f5af389&libraries=services,clusterer,drawing"></script>
          
 
 <br /><br /><br /><br /><br /><br />
