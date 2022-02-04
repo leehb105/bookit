@@ -2,11 +2,12 @@
     pageEncoding="UTF-8"%>
 
 <link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/member.css" />
-<jsp:include page="/WEB-INF/views/common/header.jsp"/> 
 
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<jsp:include page="/WEB-INF/views/common/header.jsp"/> 
 
 
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
@@ -28,10 +29,10 @@
 							<h1>로그인</h1>
 						 </div>
 					</div>
-                   <form action="${pageContext.request.contextPath}/member/memberLogin.do" method="post" name="login" id="login">
+                   <form action="" method="post" name="login" id="login" novalidate="novalidate">
                        <div class="form-group">
                           <label for="id">아이디</label>
-                          <input type="text" name="id"  class="form-control" id="id" aria-describedby="emailHelp" placeholder="아이디를 입력하세요">
+                          <input type="text" name="id" class="form-control" id="id" aria-describedby="idHelp" placeholder="아이디를 입력하세요">
                                                     
                        </div>
                        <div class="form-group">
@@ -55,12 +56,16 @@
                              </a>
                           </p>
                        </div>
-                       <div class="col-md-12 mb-3">
+                       <div class="col-md-12 mb-3" id="kakaologin">
+                       <div class="kakaobtn">
                           <p class="text-center">
-                             <a href="javascript:void();" class="kakao btn mybtn"><i class="fa fa-comment">
+                          	 <input type="hidden" name="kakaoemail" id="kakaoemail" />
+							 <input type="hidden" name="kakaonickname" id="kakaonickname" />
+                             <a href="javascript:kakaoLogin();" class="kakao btn mybtn"><i class="fa fa-comment">
                              </i> Signup using KaKao
                              </a>
                           </p>
+                       </div>
                        </div>
                        <div class="form-group">
                           <p class="text-center">Bookit이 처음이신가요? <a href="${pageContext.request.contextPath}/member/memberEnroll.do" id="signup">회원가입</a></p>
@@ -75,6 +80,41 @@
          
 
 <br /><br /><br /><br /><br /><br />
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+  <script>
+  //카카오로그인
+  function kakaoLogin() {
+
+    $.ajax({
+        url: '/bookit/member/login/getKakaoAuthUrl',
+        type: 'get',
+        async: false,
+        dataType: 'text',
+        success: function (res) {
+            location.href = res;
+        }
+    });
+
+  }
+
+  $(document).ready(function() {
+
+      var kakaoInfo = '${kakaoInfo}';
+
+      if(kakaoInfo != ""){
+          var data = JSON.parse(kakaoInfo);
+
+          alert("카카오로그인 성공 \n accessToken : " + data['accessToken']);
+          alert(
+          "user : \n" + "email : "
+          + data['email']  
+          + "\n nickname : " 
+          + data['nickname']);
+      }
+  });  
+
+  </script>
+
 <script>
 /* $("#signup").click(function() {
 	$("#first").fadeOut("fast", function() {
@@ -88,7 +128,7 @@
 	});
 	}); */
 
-	        /*   $(function() {
+	           /* $(function() {
 	           $('#login').validate({
 	             rules: {
 	               
@@ -117,8 +157,8 @@
 	               form.submit();
 	             }
 	           });
-	         });
-	          */
+	         }); */
+	         
 
 
 </script>
