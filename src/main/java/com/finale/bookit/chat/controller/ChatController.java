@@ -41,11 +41,14 @@ public class ChatController {
 	
 	@GetMapping("chat/chatAlarm")
 	@ResponseBody
-	public List<ChatRoom> chatAlarm() {
+	public List<ChatRoom> chatAlarm(@RequestParam String loginMember) {
+
 		
 		for(ChatRoom room : list) {
 			String id = room.getRoomId();
-			List<Chat> ChatAlarm = chatService.selectChatAlarm(id);
+			Chat param = new Chat(id,loginMember,null);
+			
+			List<Chat> ChatAlarm = chatService.selectChatAlarm(param);
 			
 			log.debug("ChatAlarm = {}",ChatAlarm);
 			if(!ChatAlarm.isEmpty()) {

@@ -24,9 +24,9 @@ public class ChatDaoImpl implements ChatDao {
 
 
 	@Override
-	public List<Chat> selectChatAlarm(String id) {
+	public List<Chat> selectChatAlarm(Chat param) {
 		// TODO Auto-generated method stub
-		return session.selectList("chat.selectChatAlarm", id);
+		return session.selectList("chat.selectChatAlarm", param);
 	}
 	
 	
