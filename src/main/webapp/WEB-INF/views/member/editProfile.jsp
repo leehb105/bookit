@@ -6,9 +6,36 @@
 
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
+<script>
+$(() => {
+	$(memberUpdateFrm).submit((e) => {
+    	// nickname
+    	if(!/^[가-힣]{2,}$/.test($(nickname).val())){
+    		alert("이름은 한글 2글자 이상이어야 합니다.");
+    		return false;
+    	}
+    	/* // password
+    	if(!/^[a-zA-Z0-9]{8,16}$/.test($(password).val())){
+    		alert("비밀번호는 숫자와 영문 조합으로 8~16자리만 사용 가능합니다.")
+    		return false;
+    	} */
+    	// email
+    	if(!/^[\w]{3,}@[\w]+(\.[\w]+){1,3}$/.test($(email).val())){
+    		alert("올바르지 않은 이메일 형식입니다.")
+    		return false;
+    	}
+    	// phone
+    	if(!/^010[0-9]{8}$/.test($(phone).val())){
+    		alert("유효한 전화번호가 아닙니다.");
+    		return false;
+    	}
+    	return true;
+    });
+});
+</script>
 
 	<div class="container member-profile">
-    	<form method="get" action="${pageContext.request.contextPath}/member/editProfile.do">
+    	<form name="memberUpdateFrm" method="POST" action="${pageContext.request.contextPath}/member/memberUpdate.do">
                <!-- <div class="row">
 				<div class="col-2">
 				</div>
@@ -79,7 +106,7 @@
 	                            <label>비밀번호</label>
 	                        </div>
 	                        <div class="col-md-4">
-	                            <input type="password" name="password" id="password" required>
+	                            <input type="password" name="password" id="password" value="${loginMember.password}" required>
 	                        </div>
 	                    </div>
 	                    <div class="row">
@@ -87,7 +114,7 @@
 	                            <label>비밀번호 확인</label>
 	                        </div>
 	                        <div class="col-md-4">
-	                            <input type="password" name="passwordCheck" id="passwordCheck" required>
+	                            <input type="password" name="passwordCheck" id="passwordCheck" value="${loginMember.password}" required>
 	                        </div>
 	                    </div>
 	                    <div class="row">
