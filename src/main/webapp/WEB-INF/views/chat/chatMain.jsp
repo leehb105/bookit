@@ -80,7 +80,7 @@
 
 var socket = new SockJS("${pageContext.request.contextPath}/endpoint");
 var id;
-var loginMember;
+var loginMember = "${loginMember.id}";
 var tf = 0;
 
 
@@ -200,6 +200,7 @@ $(document).ready(function() {
 	client.connect({});
 	
 	
+	console.log(loginMember);
 
 	
 	
@@ -234,12 +235,22 @@ $(document).ready(function() {
 			
 	});
 	
+	$("input[type=text]").on('keyup',function(e){
+		if(e.key==='Enter' || e.keyCode===13){
+			$("#button-send").trigger('click');
+			
+		}
+	});
+	
 	
 	// 채팅 알람 표시해주는 비동기 통신
 	
 	$.ajax({
 		url: "${pageContext.request.contextPath}/chat/chatAlarm",
 		method: "GET",
+		data:{
+			loginMember : loginMember
+		},
 		success(chatAlarm){
 			var len = chatAlarm.length;
 			var str = '';
@@ -249,7 +260,6 @@ $(document).ready(function() {
 				
 				if(chatAlarm[i].read_count === 1){
 
-					console.log("알람이 있따");
 					str="<svg id='exclamation' xmlns='http://www.w3.org/2000/svg' fill='currentColor' class='bi bi-exclamation-circle' viewBox='0 0 16 16'>";
 					str += "<path d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/>";
 					str +=	"<path d='M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z'/>";

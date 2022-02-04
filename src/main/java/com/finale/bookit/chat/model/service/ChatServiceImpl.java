@@ -24,9 +24,9 @@ public class ChatServiceImpl implements ChatService {
 	}
 
 	@Override
-	public List<Chat> selectChatAlarm(String id) {
+	public List<Chat> selectChatAlarm(Chat param) {
 		// TODO Auto-generated method stub
-		return dao.selectChatAlarm(id);
+		return dao.selectChatAlarm(param);
 	}
 
 }

@@ -8,6 +8,6 @@ public interface ChatDao {
 
 	int insertChatHistory(Chat msg);
 
-	List<Chat> selectChatAlarm(String id);
+	List<Chat> selectChatAlarm(Chat param);
 
 }
