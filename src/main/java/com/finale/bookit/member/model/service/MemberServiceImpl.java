@@ -55,5 +55,10 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectOneMemberCount(id);
 	}
 
+	@Override
+	public int selectOneMemberNicknameCount(String nickname) {
+		return memberDao.selectOneMemberNicknameCount(nickname);
+	}
+
 	
 }

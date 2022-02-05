@@ -61,10 +61,12 @@
                            <div class="form-group">
                               <label for="exampleInputEmail1">이메일</label>
                               <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="이메일을 입력하세요">
+							  <span id="emailHelp"></span>                         
                            </div>
                            <div class="form-group">
                               <label for="exampleInputEmail1">휴대폰</label>
                               <input type="tel" name="phone" id="phone" class="form-control" aria-describedby="emailHelp" placeholder="숫자만 입력하세요">
+                           	  <span id="phoneHelp"></span>
                            </div>
                            <div class="form-group">
 							  <label for="postcode">주소</label>
@@ -129,21 +131,27 @@ $("#id").focusout(function() {
 	var id = $("#id").val();
 	var advice = $("#idHelp");
 	var idRegExp = /^[a-z0-9]{4,12}$/;
+	var checkEng = /[a-z]/;
+	var checkNum = /[0-9]/;
 
 	if(id == "") {
 		idHelp.innerText = "필수 입력사항입니다";
-		advice.css({
-			"color": "red",
-			"font-size": "12px"
-		});
+		advice.css({"color": "red","font-size": "12px"});
+		return false;
+	}
+	else if(!checkEng.test(id)) {
+		idHelp.innerText = "영문자를 포함해주세요.";
+		advice.css({"color": "red", "font-size": "12px"});
+		return false;
+	}
+	else if(!checkNum.test(id)) {
+		idHelp.innerText = "숫자를 포함해주세요.";
+		advice.css({"color": "red", "font-size": "12px"});
 		return false;
 	}
 	else if(!idRegExp.test(id)) {
 		idHelp.innerText = "영문 숫자 포함 4~12자리로 입력하세요.";
-		advice.css({
-			"color": "red",
-			"font-size": "12px"
-		});
+		advice.css({"color": "red", "font-size": "12px"});
 		return false;
 	}
 	else if(idRegExp.test(id)) {
@@ -155,21 +163,14 @@ $("#id").focusout(function() {
 			},
 			dataType: "json",
 			success: function(data){
-				console.log(data);
 				if(data == 0) {
 					idHelp.innerText = "사용가능한 아이디입니다.";
-					advice.css({
-						"color": "blue",
-						"font-size": "12px"
-					});
+					advice.css({"color": "blue", "font-size": "12px"});
 					return true;
 				} 
 				else {
 					idHelp.innerText = "사용중인 아이디입니다.";
-					advice.css({
-						"color": "red",
-						"font-size": "12px"
-					});
+					advice.css({"color": "red", "font-size": "12px"});
 					return false;
 				}
 			},
@@ -177,7 +178,131 @@ $("#id").focusout(function() {
 		});
 	}
 });
+$("#password").focusout(function() {
+	var password = $("#password").val();
+	var advice = $("#passwordHelp");
+	var passwordRegExp = /^[a-z0-9]{8,16}$/;
+	var checkEng = /[a-z]/;
+	var checkNum = /[0-9]/;
+	
+	if (password == "") {
+		passwordHelp.innerText = "비밀번호를 입력해 주세요.";
+		advice.css({"color": "red", "font-size": "12px"});
+		return false;
+	}
+	else if(!checkEng.test(password)) {
+		passwordHelp.innerText = "영문자를 포함해주세요.";
+		advice.css({"color": "red", "font-size": "12px"});
+		return false;
+	}
+	else if(!checkNum.test(password)) {
+		passwordHelp.innerText = "숫자를 포함해주세요.";
+		advice.css({"color": "red", "font-size": "12px"});
+		return false;
+	}
+	else if(!passwordRegExp.test(password)) {
+		passwordHelp.innerText = "영문 숫자 포함 8~16자리로 입력하세요.";
+		advice.css({"color": "red", "font-size": "12px"});
+		return false;
+	}
+	else if(passwordRegExp.test(password)) {
+		passwordHelp.innerText = "사용 가능합니다.";
+		advice.css({"color": "blue", "font-size": "12px"});
+		return true;
+	}
+});
+$("#passwordCheck").focusout(function() {
+	var password = $("#password").val();
+	var passwordCheck = $("#passwordCheck").val();
+	var advice = $("#passwordCheckHelp");
+	
+	if (password == "") {
+		passwordCheckHelp.innerText = "비밀번호를 입력해 주세요.";
+		advice.css({"color": "red", "font-size": "12px"});
+		return false;
+	}
+	else if (password != passwordCheck) {
+		passwordCheckHelp.innerText = "비밀번호가 일치하지 않습니다.";
+		advice.css({"color": "red", "font-size": "12px"});
+		return false;
+	}
+	else if (password == passwordCheck) {
+		passwordCheckHelp.innerText = "비밀번호가 일치합니다.";
+		advice.css({"color": "blue", "font-size": "12px"});
+		return true;
+	}
+});
+$("#nickname").focusout(function() {
+	var nickname = $("#nickname").val();
+	var advice = $("#nicknameHelp");
+	var nicknameRegExp = /^[가-힣|a-z|A-Z]{2,}$/;
 
+	if(nickname == "") {
+		nicknameHelp.innerText = "필수 입력사항입니다";
+		advice.css({"color": "red","font-size": "12px"});
+		return false;
+	}
+	else if(!nicknameRegExp.test(nickname)) {
+		nicknameHelp.innerText = "한글 또는 영문으로 2글자 이상 입력해주세요.";
+		advice.css({"color": "red", "font-size": "12px"});
+		return false;
+	}
+	else if(nicknameRegExp.test(nickname)) {
+		$.ajax({
+			url: `${pageContext.request.contextPath}/member/checkDuplicateNickname.do`,
+			type: "POST",
+			data: {
+				nickname : nickname
+			},
+			dataType: "json",
+			success: function(data){
+				if(data == 0) {
+					nicknameHelp.innerText = "사용가능한 닉네임입니다.";
+					advice.css({"color": "blue", "font-size": "12px"});
+					return true;
+				} 
+				else {
+					nicknameHelp.innerText = "사용중인 닉네임입니다.";
+					advice.css({"color": "red", "font-size": "12px"});
+					return false;
+				}
+			},
+			error: console.log
+		});
+	}
+});
+$("#email").focusout(function() {
+	var email = $("#email").val();
+	var advice = $("#emailHelp");
+	var emailRegExp = /^[\w]{2,}@[\w]+(\.[\w]+){1,3}$/;
+	
+	if (!emailRegExp.test(email)) {
+		emailHelp.innerText = "올바르지 않은 이메일 형식입니다.";
+		advice.css({"color": "red", "font-size": "12px"});
+		return false;
+	}
+	else if(emailRegExp.test(email)) {
+		emailHelp.innerText = "사용 가능합니다.";
+		advice.css({"color": "blue", "font-size": "12px"});
+		return true;
+	}
+});
+$("#phone").focusout(function() {
+	var phone = $("#phone").val();
+	var advice = $("#phoneHelp");
+	var phoneRegExp = /^010[0-9]{8}$/;
+	
+	if (!phoneRegExp.test(phone)) {
+		phoneHelp.innerText = "올바르지 않은 전화번호입니다.";
+		advice.css({"color": "red", "font-size": "12px"});
+		return false;
+	}
+	else if(phoneRegExp.test(phone)) {
+		phoneHelp.innerText = "사용 가능합니다.";
+		advice.css({"color": "blue", "font-size": "12px"});
+		return true;
+	}
+});
 	/* $(function() {
 	  
 	  $("form[name='registration']").validate({
