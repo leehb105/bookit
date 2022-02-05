@@ -19,4 +19,6 @@ public interface MemberService {
 
 	int selectOneMemberCount(String id);
 
+	int selectOneMemberNicknameCount(String nickname);
+
 }

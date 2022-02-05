@@ -10,8 +10,8 @@
 $(() => {
 	$(memberUpdateFrm).submit((e) => {
     	// nickname
-    	if(!/^[가-힣]{2,}$/.test($(nickname).val())){
-    		alert("닉네임은 한글 2글자 이상이어야 합니다.");
+    	if(!/^[가-힣|a-z|A-Z]{2,}$/.test($(nickname).val())){
+    		alert("닉네임은 한글 또는 영문으로 2글자 이상 입력해주세요.");
     		return false;
     	}
     	/* // password

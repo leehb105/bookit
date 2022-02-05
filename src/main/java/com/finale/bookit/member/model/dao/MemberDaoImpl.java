@@ -40,4 +40,9 @@ public class MemberDaoImpl implements MemberDao {
 		return session.selectOne("member.selectOneMemberCount", id);
 	}
 
+	@Override
+	public int selectOneMemberNicknameCount(String nickname) {
+		return session.selectOne("member.selectOneMemberNicknameCount", nickname);
+	}
+
 }

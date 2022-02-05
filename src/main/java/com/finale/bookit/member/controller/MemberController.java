@@ -312,9 +312,17 @@ public class MemberController {
 	
 	@ResponseBody
 	@PostMapping("/checkDuplicateId.do")
-	public int checkDuplicateId(@RequestParam String id, RedirectAttributes redirectAttr) {
+	public int checkDuplicateId(@RequestParam String id) {
 		log.debug("id = {}", id);
 		int result = memberService.selectOneMemberCount(id);
+		return result;
+	}
+	
+	@ResponseBody
+	@PostMapping("/checkDuplicateNickname.do")
+	public int checkDuplicateNickname(@RequestParam String nickname) {
+		log.debug("nickname = {}", nickname);
+		int result = memberService.selectOneMemberNicknameCount(nickname);
 		return result;
 	}
 	

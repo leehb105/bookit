@@ -17,4 +17,6 @@ public interface MemberDao {
 
 	int selectOneMemberCount(String id);
 
+	int selectOneMemberNicknameCount(String nickname);
+
 }

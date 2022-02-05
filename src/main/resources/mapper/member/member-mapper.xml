@@ -57,4 +57,8 @@
 		select count(*) from member where id = #{id}
 	</select>
 	
+	<select id="selectOneMemberNicknameCount" resultType="_int">
+		select count(*) from member where nickname = #{nickname}
+	</select>
+	
 </mapper>
