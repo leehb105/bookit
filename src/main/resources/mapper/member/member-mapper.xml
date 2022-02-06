@@ -33,8 +33,17 @@
 		select
 			*
 		from
-			member
+			member_view
 		where id = #{id}
+	</select>
+	
+	<select id="selectAddress" resultType="_int">
+		select
+			count(*)	
+		from
+			address
+		where
+			member_id = #{memberId}
 	</select>
 	
 	<insert id="insertAddress">
@@ -55,6 +64,25 @@
 			#{longitude}
 		)
 	</insert>	
+	
+	<update id="updateAddress">
+		update
+			address
+		set
+			postcode = #{postcode},
+			road_address = #{roadAddress},
+			extra_address = #{extraAddress},
+			depth1 = #{depth1},
+			depth2 = #{depth2},
+			depth3 = #{depth3},
+			bunji1 = #{bunji1},
+			bunji2 = #{bunji2},
+			detail_address = #{detailAddress},
+			latitude = #{latitude},
+			longitude = #{longitude}
+		where
+			member_id = #{memberId}
+	</update>
 	
 	<update id="memberUpdate">
 		update

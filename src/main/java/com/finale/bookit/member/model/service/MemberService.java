@@ -14,9 +14,13 @@ public interface MemberService {
 
 	Member selectOneMember(String id);
 
-	int insertAddress(Address address);
+	int selectAddress(Address address);
 
-	int memberUpdate(Map<String, Object> param);
+	int insertAddress(Address address);
+	
+	int updateAddress(Address address);
+
+	int memberUpdate(Map<String, Object> param, Address address);
 
 	int selectOneMemberCount(String id);
 

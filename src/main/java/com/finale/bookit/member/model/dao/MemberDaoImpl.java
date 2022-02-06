@@ -27,8 +27,18 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
+	public int selectAddress(Address address) {
+		return session.selectOne("member.selectAddress", address);
+	}
+
+	@Override
 	public int insertAddress(Address address) {
 		return session.insert("member.insertAddress", address);
+	}
+
+	@Override
+	public int updateAddress(Address address) {
+		return session.update("member.updateAddress", address);
 	}
 
 	@Override

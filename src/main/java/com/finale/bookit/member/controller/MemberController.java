@@ -188,6 +188,7 @@ public class MemberController {
 			@RequestParam String email,
 			@RequestParam String phone,
 			@SessionAttribute Member loginMember,
+			Address address,
 			RedirectAttributes redirectAttr) {
 		String id = loginMember.getId();
 		Map<String, Object> param = new HashMap<>();
@@ -196,7 +197,9 @@ public class MemberController {
 		param.put("email", email);
 		param.put("phone", phone);
 		
-		int result = memberService.memberUpdate(param);
+		log.debug("address = {}", address);
+		address.setMemberId(id);
+		int result = memberService.memberUpdate(param, address);
 		redirectAttr.addFlashAttribute("msg", result > 0 ? "정보 수정 성공!" : "정보 수정 실패!");
 		
 		return "redirect:/member/mypageMain.do";

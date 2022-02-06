@@ -50,15 +50,33 @@ public class MemberServiceImpl implements MemberService {
 	public Member selectOneMember(String id) {
 		return memberDao.selectOneMember(id);
 	}
+	
+	@Override
+	public int selectAddress(Address address) {
+		return memberDao.selectAddress(address);
+	}
 
 	@Override
 	public int insertAddress(Address address) {
 		return memberDao.insertAddress(address);
 	}
+	
+	@Override
+	public int updateAddress(Address address) {
+		return memberDao.updateAddress(address);
+	}
 
 	@Override
-	public int memberUpdate(Map<String, Object> param) {
-		return memberDao.memberUpdate(param);
+	public int memberUpdate(Map<String, Object> param, Address address) {
+		int result = memberDao.memberUpdate(param);
+		if (result > 0) {
+			if(selectAddress(address) == 0) {
+				result = insertAddress(address);
+			} else {
+				result = updateAddress(address);
+			}
+		}
+		return result;
 	}
 
 	@Override
