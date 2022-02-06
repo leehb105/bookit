@@ -1,5 +1,6 @@
 package com.finale.bookit.member.model.service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import com.finale.bookit.member.model.vo.Address;
@@ -20,5 +21,9 @@ public interface MemberService {
 	int selectOneMemberCount(String id);
 
 	int selectOneMemberNicknameCount(String nickname);
+
+	String getAccessToken(String code);
+
+	Member getUserInfo(String access_Token);
 
 }

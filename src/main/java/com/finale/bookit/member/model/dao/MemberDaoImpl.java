@@ -1,5 +1,6 @@
 package com.finale.bookit.member.model.dao;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -43,6 +44,17 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public int selectOneMemberNicknameCount(String nickname) {
 		return session.selectOne("member.selectOneMemberNicknameCount", nickname);
+	}
+
+	@Override
+	public int kakaoinsert(HashMap<String, Object> userInfo) {
+		return session.insert("member.kakaoInsert",userInfo);
+		
+	}
+
+	@Override
+	public Member findkakao(HashMap<String, Object> userInfo) {
+		return session.selectOne("member.findKakao", userInfo);
 	}
 
 }
