@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.finale.bookit.admin.model.vo.AdminInquire;
 import com.finale.bookit.inquire.model.dao.InquireDao;
 import com.finale.bookit.inquire.model.vo.Inquire;
+import com.finale.bookit.member.model.vo.Member;
 
 @Service
 public class InquireServiceImple implements InquireService {
@@ -22,8 +23,8 @@ public class InquireServiceImple implements InquireService {
 	}
 
 	@Override
-	public int selectTotalContent() {
-		return inquireDao.selectTotalContent();
+	public int selectTotalContent(Member loginMember) {
+		return inquireDao.selectTotalContent(loginMember);
 	}
 
 	@Override
@@ -41,11 +42,6 @@ public class InquireServiceImple implements InquireService {
 		return inquireDao.selectOneAdminInquire(no);
 	}
 	
-	@Override
-	public int updateCondition(int no) {
-		return inquireDao.updateCondition(no);
-	}
-
 	
 	
 	
