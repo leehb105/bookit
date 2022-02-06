@@ -31,6 +31,11 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
+	public int updateAddress(Address address) {
+		return session.update("member.updateAddress", address);
+	}
+
+	@Override
 	public int memberUpdate(Map<String, Object> param) {
 		return session.update("member.memberUpdate", param);
 	}
