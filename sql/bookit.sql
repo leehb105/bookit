@@ -361,8 +361,10 @@ CREATE OR REPLACE VIEW member_view
 AS
 SELECT
 	m.*,
+	a.LATITUDE,
+	a.LONGITUDE,
 	a.road_address || nvl2(a.extra_address, ' (' || a.extra_address || ')', '') AS road_address,
-	a.depth1 || ' ' || a.depth2 || ' ' || a.depth3 || ' ' || a.bunji1 || '-' || a.bunji2 || ' ' || a.detail_address AS jibun_address
+	a.depth1 || ' ' || a.depth2 || ' ' || a.depth3 || ' ' || a.bunji1 || nvl2(a.bunji2, '-' || a.bunji2, '') || ' ' || a.detail_address AS jibun_address
 FROM MEMBER m LEFT JOIN address a
 	ON m.id = a.member_id;
 

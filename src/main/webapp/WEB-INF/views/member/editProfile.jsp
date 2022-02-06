@@ -2,9 +2,14 @@
     pageEncoding="UTF-8"%>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage.css"/>
-
+<link rel="stylesheet" href="${ pageContext.request.contextPath}/resources/css/member.css" />
+<link rel="stylesheet" href="${ pageContext.request.contextPath}/resources/css/kakaoMap.css" />
 
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/kakaoMapEdit.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/kakaoPostcodeEdit.js"></script>
 
 <script>
 $(() => {
@@ -127,20 +132,63 @@ $(() => {
 	                    </div>
 	                    <div class="row">
 	                        <div class="col-md-4">
-	                            <label>주소</label>
-	                        </div>
-	                        <div class="col-md-4">
-	                            <p>주소...</p>
-	                        </div>
-	                    </div>
-	                    <div class="row">
-	                        <div class="col-md-4">
 	                            <label>연락처</label>
 	                        </div>
 	                        <div class="col-md-4">
 	                            <input type="tel" name="phone" id="phone" maxlength="11" value="${loginMember.phone}">
 	                        </div>
 	                    </div>
+	                    <!-- 시작  -->
+							<div>
+								지번: <input type='text' id='jibunAddr' name='jibunAddress' size=50 value='${loginMember.jibunAddress}' readonly/>
+							</div>
+							<div>
+								도로명: <input type='text' id='detailRoadAddr' name='detailRoadAddress' size=50 value='${loginMember.roadAddress}' readonly />
+							</div>
+							<div>
+								<input type='text' id='searchAddr' name='searchAddr' />
+								<input type='button' onclick="generateMap(false, 'addr')" value="검색">
+									</div>
+							<div>
+							<div id="map_wrapper">
+								<div id="map"></div>
+							</div>
+
+							<!-- 아래 폼은 hidden 처리 예정 -->
+							<div>
+								도로명: <input type='text' id='roadAddr' name='roadAddress' size=50 readonly/>
+							</div>
+							<div>
+								건물명: <input type='text' id='extraAddr' name='extraAddress' size=50 readonly/>
+							</div>
+							<div>
+								시/도: <input type='text' id='region_1depth_name' name='depth1' readonly/>
+							</div>
+							<div>
+								시/군/구: <input type='text' id='region_2depth_name' name='depth2' readonly/>
+							</div>
+							<div>
+								동/읍/면: <input type='text' id='region_3depth_name' name='depth3' readonly/>
+							</div>
+							<div>
+								번지1:<input type='text' id='main_address_no' name='bunji1' readonly/>
+							</div>
+							<div>
+								번지2:<input type='text' id='sub_address_no' name='bunji2' readonly/>
+							</div>
+					
+							<div>
+								위도:<input type='text' id='latitude' name='latitude' readonly/>
+							</div>
+							<div>
+								경도:<input type='text' id='longitude' name='longitude' readonly/>
+							</div>
+							<div>
+								<input type='text' name='detailAddress'/>
+							</div>
+					
+						</div>
+	                    <!-- 끝  -->
                             <input type="submit" class="btn roberto-btn w-10 mt-30" value="수정">
                     </div>
                             
@@ -148,9 +196,12 @@ $(() => {
             </form>           
         </div>
 
+<script type="text/javascript"
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6572b946baab53e064d0fc558f5af389&libraries=services,clusterer,drawing"></script>
+<script src="${pageContext.request.contextPath}/resources/js/kakaoMap_v2.js"></script>
+	
 
-
-
-
-
+<script>
+	generateMap(true, "coord", '${loginMember.latitude}', '${loginMember.longitude}');
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

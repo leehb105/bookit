@@ -55,10 +55,21 @@ public class MemberServiceImpl implements MemberService {
 	public int insertAddress(Address address) {
 		return memberDao.insertAddress(address);
 	}
+	
+	@Override
+	public int updateAddress(Address address) {
+		return memberDao.updateAddress(address);
+	}
 
 	@Override
-	public int memberUpdate(Map<String, Object> param) {
-		return memberDao.memberUpdate(param);
+	public int memberUpdate(Map<String, Object> param, Address address) {
+		int result = memberDao.memberUpdate(param);
+		if (result > 0) {
+			// 주소가 없는 사람한테는 현재 적용불가
+			// address 테이블에 주소가 있는지 확인하는 과정이 필요함
+			result = updateAddress(address);
+		}
+		return result;
 	}
 
 	@Override

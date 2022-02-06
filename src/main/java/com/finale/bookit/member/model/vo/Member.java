@@ -32,4 +32,9 @@ public class Member implements Serializable {
 	private String reportYn;
 	private int cash;
 	
+	private String roadAddress;
+	private String jibunAddress;
+	private float latitude;
+	private float longitude;
+	
 }

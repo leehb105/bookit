@@ -14,6 +14,8 @@ public interface MemberDao {
 
 	int insertAddress(Address address);
 
+	int updateAddress(Address address);
+
 	int memberUpdate(Map<String, Object> param);
 
 	int selectOneMemberCount(String id);
