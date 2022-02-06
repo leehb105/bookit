@@ -3,7 +3,48 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="used">
+	<select id="selectUsedContent" parameterType="Integer" resultMap="usedMap">
+	select 
+	u.used_board_no, u.title, u.used_bookstate, u.trade_method, u.category, u.content, u.writer, u.read_count, TO_CHAR(c.reg_date, 'YYYY-MM-DD  HH24:MI') reg_date,
+	(select m.nickname from member m where u.writer = m.id) nickname
+	from used_board u
+	where u.used_board_no = #{no}
+	</select>
+	<resultMap type="map" id="usedMap">
+		<id column="used_board_no" property="usedBoardNo"/>
+		<result column="title" property="title"/>
+		<result column="book_state" property="bookState"/>
+		<result column="trade_method" property="tradeMethod"/>
+		<result column="category" property="category"/>
+		<result column="content" property="content"/>
+		<result column="writer" property="writer"/>
+		<result column="delete_yn" property="deleteYn"/>
+		<result column="read_count" property="readCount"/>
+		<result column="reg_date" property="regDate"/>
+		<result column="nickname" property="nickname"/>	
+	</resultMap>
+	
 
+	<select id="selectUsedAttachment" parameterType="Integer" resultType="usedAttachment">
+		select no, original_filename, renamed_filename, used_board_no from used_attachment where used_no = #{no} order by reg_date
+	</select>
+	
+	<update id="deleteUsedContent" parameterType="Integer">
+		update used_board set delete_yn = 'Y' where used_board_no = #{used_board_no}
+	</update>
+	
+	<update id="updateUsedContent" parameterType="map">
+		update used_board set title = #{title}, category = #{category},trade_method=#{trade_method}, content = #{content} where used_board_no =#{used_board_no};
+	</update>
+	
+	<select id="getUsedList" resultType="used">
+		select used_board_no, category, title, (select m.nickname from member m where u.writer = m.id) nickname, 
+		reg_date, read_count from used_board u order by reg_date
+	</select>
+	
+	<select id="getTotalUsedContent" resultType="Integer">
+		select	count(*) from used_board
+	</select>
 	
 
 </mapper>

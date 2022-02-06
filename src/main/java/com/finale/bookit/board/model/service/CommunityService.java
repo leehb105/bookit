@@ -10,7 +10,7 @@ import com.finale.bookit.board.model.vo.Community;
 
 public interface CommunityService {
 	
-	 Community getCommunity(int no);
+	Community getCommunity(int no);
 
 	void deleteCommunityContent(int no);
 

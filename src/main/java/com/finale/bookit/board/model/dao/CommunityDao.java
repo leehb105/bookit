@@ -12,10 +12,6 @@ public interface CommunityDao {
 	
 	Map<String, Object> selectCommunityContent(int no);
 	
-	List<Comment> getCommentList(int no);
-	
-	List<Comment> getReCommentList(int refNo);
-	
 	List<CommunityAttachment> getAttachmentList(int no);
 
 	void deleteCommunityContent(int no);
@@ -26,4 +22,9 @@ public interface CommunityDao {
 
 	int getTotalCommunityContent();
 	
+	//comment 
+	
+	List<Comment> getCommentList(int no);
+	
+	List<Comment> getReCommentList(int refNo);
 }

@@ -4,16 +4,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
-
-
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage.css"/>
-<style>
-div#board-container{width:400px; margin:100px auto; text-align:center;}
-div#board-container input{margin-bottom:15px; }
-div#board-container label.custom-file-label{text-align:left;}
-</style>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/used.css"/>
 <script>
-function goUsedList(){
+function goCommunityList(){
 	location.href = "${pageContext.request.contextPath}/board/used.do";
 }
 function boardValidate(){
@@ -34,23 +27,30 @@ $(() => {
 			$label.html(file.name);
 		else
 			$label.html("파일을 선택하세요.");
-		
 	});
 });
 </script>
-<div id="board-container">
-
-	<form 
-		name="boardFrm" 
+<div class="container">
+  <form 		
+  		name="communityFrm" 
 		action="${pageContext.request.contextPath}/board/usedEnroll.do" 
 		method="post"
 		enctype="multipart/form-data" 
 		onsubmit="return boardValidate();">
-		<input type="text" class="form-control" placeholder="제목" name="title" id="title" required>
-		<input type="text" class="form-control" name="price" id="price" required>
-		
-		<!-- input:file소스 : https://getbootstrap.com/docs/4.1/components/input-group/#custom-file-input -->
-		<div class="input-group mb-3" style="padding:0px;">
+     <div class="row">
+       	<h2>글 쓰기</h2>
+        <hr>
+      <input type="submit" value="등록" >
+      <input type="button" value="취소" onclick="goUsedList();">
+    </div>
+        <input type="text" id="title" name="title" placeholder="제목">
+        
+        <select id="category" name="category">
+          <option value="sell">팝니다</option>
+          <option value="buy">삽니다</option>
+        </select>
+        <textarea id="content" name="content" placeholder="내용" style="height:250px"></textarea>
+        		<div class="input-group mb-3" style="padding:0px;" >
 		  <div class="input-group-prepend" style="padding:0px;">
 		    <span class="input-group-text">첨부파일1</span>
 		  </div>
@@ -64,16 +64,11 @@ $(() => {
 		    <span class="input-group-text">첨부파일2</span>
 		  </div>
 		  <div class="custom-file">
-		    <input type="file" class="custom-file-input" name="upFile" id="upFile2" >
+		    <input type="file" class="custom-file-input" name="upFile" id="upFile2"" >
 		    <label class="custom-file-label" for="upFile2">파일을 선택하세요</label>
 		  </div>
 		</div>
-
-	    <textarea class="form-control" name="content" placeholder="내용" required></textarea>
-		<br />
-		<input type="submit" class="btn btn-outline-success" value="저장" >
-		<input type="button" value="취소" class="btn btn-outline-danger" 
-		onclick="goUsedList();"/>
-	</form>
+  </form>
 </div>
+
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

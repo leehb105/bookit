@@ -25,16 +25,6 @@ public class CommunityDaoImpl implements CommunityDao{
 	}
 
 	@Override
-	public List<Comment> getCommentList(int no) {
-		return session.selectList("community.selectCommunityComment", no);
-	}
-
-	@Override
-	public List<Comment> getReCommentList(int refNo) {
-		return session.selectList("community.selectCommunityReComment", refNo);
-	}
-
-	@Override
 	public List<CommunityAttachment> getAttachmentList(int no) {
 		return session.selectList("community.selectCommunityAttachment", no);
 	}
@@ -62,7 +52,15 @@ public class CommunityDaoImpl implements CommunityDao{
 		return session.selectOne("community.getTotalCommunityContent");
 	}
 
+	@Override
+	public List<Comment> getCommentList(int no) {
+		return session.selectList("community.selectCommunityComment", no);
+	}
 
+	@Override
+	public List<Comment> getReCommentList(int refNo) {
+		return session.selectList("community.selectCommunityReComment", refNo);
+	}
 
 
 	

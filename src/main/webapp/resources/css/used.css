@@ -1,0 +1,84 @@
+* {
+  box-sizing: border-box;
+}
+input[type=text] {
+  width: 78%;
+  padding: 7px;
+  margin-left: 3px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+
+}
+
+#category {
+  width: 120px;;
+  padding: 7px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+
+}
+
+textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+input[type=submit] {
+  background-color: #8de610;
+  color: white;
+  padding: 7px 18px;
+  border: none;
+  border-radius: 4px;
+  margin: 8px;
+  cursor: pointer;
+   margin: 50px 10px;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+input[type=button]:hover {
+  background-color: #820e0e;
+}
+
+input[type=button] {
+  background-color: #d41128;
+  color: white;
+  padding: 7px 18px;
+  border: none;
+  border-radius: 4px;
+  margin: 8px;
+  cursor: pointer;
+  float: right;
+  text-align: right;
+  margin: 50px 10px;
+}
+h2 {
+  margin: 50px 10px;
+    display: flex;
+  justify-content: space-between;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .col-25, .col-75, input[type=submit] {
+    width: 100%;
+    margin-top: 0;
+  }
+}
