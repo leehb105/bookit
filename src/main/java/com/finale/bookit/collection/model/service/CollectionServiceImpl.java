@@ -1,6 +1,7 @@
 package com.finale.bookit.collection.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,13 +18,23 @@ public class CollectionServiceImpl implements CollectionService {
 	private CollectionDao collectionDao;
 	
 	@Override
-	public List<BookCollection> selectAllCollection() {
-		return collectionDao.selectAllCollection();
+	public List<BookCollection> selectAllCollection(Map<String, Object> param) {
+		return collectionDao.selectAllCollection(param);
 	}
 
 	@Override
-	public BookCollection selectOneCollection(int no) {
-		return collectionDao.selectOneCollection(no);
+	public List<BookCollection> selectCollectionDetail(int no) {
+		return collectionDao.selectCollectionDetail(no);
+	}
+
+	@Override
+	public int collectionDetailDelete(String no) {
+		return collectionDao.collectionDetailDelete(no);
+	}
+
+	@Override
+	public int selectTotalCollection() {
+		return collectionDao.selectTotalCollection();
 	}
 
 }

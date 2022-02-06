@@ -1,13 +1,18 @@
 package com.finale.bookit.collection.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.finale.bookit.collection.model.vo.BookCollection;
 
 public interface CollectionDao {
 
-	List<BookCollection> selectAllCollection();
+	List<BookCollection> selectAllCollection(Map<String, Object> param);
 
-	BookCollection selectOneCollection(int no);
+	List<BookCollection> selectCollectionDetail(int no);
+
+	int collectionDetailDelete(String no);
+
+	int selectTotalCollection();
 
 }

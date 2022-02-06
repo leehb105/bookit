@@ -3,9 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/mypage.css" />
 
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
@@ -28,11 +27,30 @@ $(() => {
 }
 </style>
 
-   	<input style="margin: 100px 0 0 950px" type="button" value="문의등록" id="btn-add" class="btn btn-outline-success" onclick="goInquireForm();"/>
-    <div class="container mb-100">
+<div class="container member-profile">
+	<div class="container mb-100">
     	<div class="row mb-50">
-            <div class="col-lg-8 col-md-10 ml-auto mr-auto">
-            <h5>1:1 문의 목록</h5>
+			<div class="col-2">
+				<div class="profile-work">
+					<a href="${pageContext.request.contextPath}/member/mypageMain.do"><p>마이페이지HOME</p></a>
+					<a href="${pageContext.request.contextPath}/member/editProfile.do">정보수정</a><br />
+					<p>북토리 관리</p>
+					<a href="">결제 내역</a><br /> <a href="">거래 내역</a><br /> <a href="">북토리충전</a>
+					<p>나의 게시글</p>
+					<a href="">게시글 작성목록</a><br /> <a href="">리뷰 작성목록</a><br />
+					<p>1:1 문의</p>
+					<a href="${pageContext.request.contextPath}/inquire/inquireForm.do">1:1문의하기</a><br />
+					<a href="${pageContext.request.contextPath}/inquire/inquireList.do">1:1문의내역</a><br />
+					<p>신고내역</p>
+					<a href="${pageContext.request.contextPath}/report/reportList.do">나의 신고목록</a><br />
+				</div>
+			</div>
+    	
+            <div class="col-lg-9 col-md-10 ml-auto mr-auto">
+	    		<div class="section-heading text-center">
+					<h5>1:1 문의내역</h5>
+				</div>
+				<input type="button" value="문의등록" id="btn-add" class="btn btn-outline-success float-right mb-30" onclick="goInquireForm();"/>
                 <div class="table-responsive">
 	                <table class="table" style="text-align: center;">
 	                    <thead>
@@ -48,12 +66,7 @@ $(() => {
 	                    	<c:forEach items="${inquireList}" var="inquireList">
 		                        <tr data-no="${inquireList.no}" class="selectInquire">
 		                            <td>${inquireList.no}</td>
-		                            <sec:authorize access="isAuthenticated()">
-			                            <td>${loginMember.id}</td>		                            
-		                            </sec:authorize>
-		                            <%-- <sec:authorize access="hasRole('ADMIN')">
-		                            	<td>${inquireList.memberId}</td>
-		                            </sec:authorize> --%>
+		                            <td>${inquireList.memberId}</td>
 		                            <td>[${inquireList.category}] ${inquireList.title}</td>
 		                            <td><fmt:formatDate value="${inquireList.regDate}" pattern="yyyy/MM/dd"/></td>
 		                            <td>
@@ -67,8 +80,9 @@ $(() => {
 	                    </tbody>
 	                </table>
                 </div>
+				${pagebar}
 			</div>
 		</div>
-	${pagebar}
 	</div>
+</div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

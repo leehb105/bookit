@@ -4,10 +4,43 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bookCollection">
 	<select id="selectAllCollection" resultType="bookCollection">
-		select * from book_collection order by no desc
+		select
+		    b.*,
+		    m.nickname
+		from 
+		    book_collection b left join member m
+    		on b.member_id = m.id
+    	order by 
+    		dbms_random.random
 	</select>
 	
-	<select id="selectOneCollection" resultType="bookCollection">
-		select * from book_collection where no = #{no}
+	<select id="selectCollectionDetail" resultType="bookCollection">
+		select
+		    b.*,
+		    l.no list_no,
+	        l.book_collection_no,
+    		l.isbn13,
+		    f.title,
+		    f.author,
+		    f.publisher,
+		    f.cover,
+		    m.nickname
+		from
+		    book_collection b left join book_collection_list l
+		    on b.no = l.book_collection_no
+		    left join book_info f
+		    on l.isbn13 = f.isbn13
+		    left join member m
+    		on b.member_id = m.id
+		where
+			b.no = #{no}
+	</select>
+	
+	<delete id="collectionDetailDelete">
+		delete from book_collection_list where no = #{no}
+	</delete>
+	
+	<select id="selectTotalCollection" resultType="_int">
+		select count(*) from book_collection
 	</select>
 </mapper>
