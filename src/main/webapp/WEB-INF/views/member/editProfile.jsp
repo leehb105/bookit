@@ -7,8 +7,6 @@
 
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
 <script>
 $(() => {
 	$(memberUpdateFrm).submit((e) => {
@@ -137,7 +135,7 @@ $(() => {
 	                        </div>
 	                    </div>
 	                    <!-- 시작  -->
-	                    
+	                   	<div> 
 							<div>
 								지번: <input type='text' id='jibunAddr' name='jibunAddress' size=50 value='${loginMember.jibunAddress}' readonly/>
 							</div>
@@ -148,10 +146,10 @@ $(() => {
 								<input type='text' id='searchAddr' name='searchAddr' />
 								<input type='button' onclick="generateMap(false, 'addr')" value="검색">
 							</div>
-							<div>
-								<div id="map_wrapper">
-									<div id="map"></div>
-								</div>
+
+							<div id="map_wrapper">
+								<div id="map"></div>
+							</div>
 
 								<!-- 아래 폼은 hidden 처리 예정 -->
 							<div class='hidden'>

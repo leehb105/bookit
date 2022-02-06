@@ -3,15 +3,17 @@
 
 <link rel="stylesheet" href="${ pageContext.request.contextPath}/resources/css/member.css" />
 <link rel="stylesheet" href="${ pageContext.request.contextPath}/resources/css/kakaoMap.css" />
+<style>
+	#map {
+		width: 500px;
+	}
+</style>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
 
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-<script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6572b946baab53e064d0fc558f5af389&libraries=services,clusterer,drawing"></script>
 
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -68,41 +70,62 @@
                               <input type="tel" name="phone" id="phone" class="form-control" aria-describedby="emailHelp" placeholder="숫자만 입력하세요">
                            	  <span id="phoneHelp"></span>
                            </div>
-                           <div class="form-group">
-							  <label for="postcode">주소</label>
-							  <div class="row">
-								<input type="text" name="postcode" id="postcode" class="form-control col-6" placeholder="우편번호" readonly>
-								<input type="button" onclick="execKakaoPostcode()" class="btn roberto-btn w-10 col-4" value="우편번호 찾기"><br>
-							  </div>
-							  <div class="row">
-							    <input type="text" name="roadAddress" id="roadAddress" class="form-control col-9" placeholder="도로명주소" readonly>
-						 	    <input type="text" name="extraAddress" id="extraAddress" class="form-control col-3" placeholder="건물명" readonly>
-							  </div>
-							  <div class="row">
-							    <input type="text" name="jibunAddress" id="jibunAddress" class="form-control col-12" placeholder="지번주소" readonly required>
-							    <!--
-							    	depth1 = 광역시/도,
-							    	depth2 = 시/군 + 구
-							    	depth3 = 동/읍/면 + 리
-							     -->
-							    <input type="hidden" name="depth1" id="region_1depth" readonly> 
-							    <input type="hidden" name="depth2" id="region_2depth" readonly>
-							    <input type="hidden" name="depth3" id="region_3depth" readonly>
-							    <input type="hidden" name="bunji1" id="main_address" readonly>
-							    <input type="hidden" name="bunji2" id="sub_address" readonly>
-							  </div>
-							  <span id="guide" style="color:#999;display:none"></span>
-						      <div class="row">
-						  	    <input type="hidden" name="detailAddress" id="detailAddress" class="form-control col-8" placeholder="상세주소">
-						 	    <input type="hidden" name="latitude" id="latitude" readonly>
-						 	    <input type="hidden" name="longitude" id="longitude" readonly>
-						      </div>
-						      <div class="map_wrapper">
-								<div id="map" style="width:600px;height:300px;margin-top:10px;display:none"></div>
-									<span id="centerAddr"></span>
-						      </div>
+                           
+                           <!-- 시작  -->
+	                   	<div> 
+							<div>
+								지번: <input type='text' id='jibunAddr' name='jibunAddress' size=50 readonly/>
+							</div>
+							<div>
+								도로명: <input type='text' id='detailRoadAddr' name='detailRoadAddress' size=50 readonly />
+							</div>
+							<div>
+								<input type='text' id='searchAddr' name='searchAddr' />
+								<input type='button' onclick="generateMap(false, 'addr')" value="검색">
+							</div>
 
-                           </div>
+							<div id="map_wrapper">
+								<div id="map"></div>
+							</div>
+
+								<!-- 아래 폼은 hidden 처리 예정 -->
+							<div class='hidden'>
+								<div>
+									도로명: <input type='text' id='roadAddr' name='roadAddress' size=50 readonly/>
+								</div>
+								<div>
+									건물명: <input type='text' id='extraAddr' name='extraAddress' size=50 readonly/>
+								</div>
+								<div>
+									시/도: <input type='text' id='region_1depth_name' name='depth1' readonly/>
+								</div>
+								<div>
+									시/군/구: <input type='text' id='region_2depth_name' name='depth2' readonly/>
+								</div>
+								<div>
+									동/읍/면: <input type='text' id='region_3depth_name' name='depth3' readonly/>
+								</div>
+								<div>
+									번지1:<input type='text' id='main_address_no' name='bunji1' readonly/>
+								</div>
+								<div>
+									번지2:<input type='text' id='sub_address_no' name='bunji2' readonly/>
+								</div>
+						
+								<div>
+									위도:<input type='text' id='latitude' name='latitude' readonly required/>
+								</div>
+								<div>
+									경도:<input type='text' id='longitude' name='longitude' readonly required/>
+								</div>
+								<div>
+									<input type='text' name='detailAddress'/>
+								</div>
+					
+							</div>
+						</div>
+	                    <!-- 끝  -->
+                           
                            <div class="col-md-12 text-center mb-3">
                               <button type="submit" class="btn roberto-btn w-100">가입하기</button>
                            </div>
@@ -335,5 +358,13 @@ $("#phone").focusout(function() {
 	  });
 	});
  */
+</script>
+<script type="text/javascript"
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6572b946baab53e064d0fc558f5af389&libraries=services,clusterer,drawing"></script>
+<script src="${pageContext.request.contextPath}/resources/js/kakaoMap_v2.js"></script>
+	
+
+<script>
+	generateMap(true, "coord", '${loginMember.latitude}', '${loginMember.longitude}');
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
