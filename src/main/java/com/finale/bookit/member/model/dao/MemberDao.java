@@ -1,5 +1,6 @@
 package com.finale.bookit.member.model.dao;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import com.finale.bookit.member.model.vo.Address;
@@ -18,5 +19,9 @@ public interface MemberDao {
 	int selectOneMemberCount(String id);
 
 	int selectOneMemberNicknameCount(String nickname);
+
+	int kakaoinsert(HashMap<String, Object> userInfo);
+
+	Member findkakao(HashMap<String, Object> userInfo);
 
 }

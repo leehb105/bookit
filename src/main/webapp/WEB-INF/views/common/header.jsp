@@ -109,7 +109,7 @@
                                 </div>
 
                                 <!-- Login -->
-                              <c:if test="${empty loginMember}">
+                              <c:if test="${empty loginMember && empty sessionScope.kakaoE}">
                                 <div class="book-now-btn ml-3 ml-lg-5">
                                     <a href="${pageContext.request.contextPath}/member/memberLogin.do">로그인/회원가입<i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
                                 </div>
@@ -118,6 +118,17 @@
                               	<div style="padding-right:10px">
                               		
 	                            	<a href="${pageContext.request.contextPath}/member/mypageMain.do">${loginMember.name}님</a>
+	                            	<a href="#"><i class="fa fa-heart fa-lg"></i></a>
+	                              		
+                              	</div>
+                              	
+								<a href="${pageContext.request.contextPath}/member/memberLogout.do" class="btn roberto-btn mb-15 w-10">로그아웃</a>
+						  	  	
+						  	  </c:if>
+						  	  <c:if test="${!empty sessionScope.kakaoE}">
+                              	<div style="padding-right:10px">
+                              		
+	                            	<a href="${pageContext.request.contextPath}/member/mypageMain.do">${sessionScope.kakaoN}님</a>
 	                            	<a href="#"><i class="fa fa-heart fa-lg"></i></a>
 	                              		
                               	</div>
