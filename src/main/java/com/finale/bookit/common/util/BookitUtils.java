@@ -70,7 +70,7 @@ public class BookitUtils {
 			  </ul>
 			</nav>
 		 */
-		pagebar.append("<nav>\r\n"
+		pagebar.append("<nav\r\n"
 				+ "			  <ul class=\"pagination justify-content-center pagination-sm\">\r\n"
 				+ "			    ");
 		
