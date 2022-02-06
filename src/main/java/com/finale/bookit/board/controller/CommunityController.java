@@ -80,7 +80,6 @@ public class CommunityController {
 	
 	@PostMapping("/communityEnroll.do")
 	public void communityEnroll() {
-		
 	}
 	
 	@GetMapping("/communityDelete.do")
