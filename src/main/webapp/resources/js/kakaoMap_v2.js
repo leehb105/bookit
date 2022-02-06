@@ -119,6 +119,7 @@ function generateMap(isInitial, searchType, lat, lng) {
 	var coords = new kakao.maps.LatLng(lat, lng);
 	if (searchType === 'addr') {
 		searchAddrFromAddress(address);
+		$('.hidden input').each((i, e) => {e.value = ''});
 	} else if (searchType === 'coord') {
 		searchDetailAddrFromCoords(coords, function (result, status) {
 		if (status === kakao.maps.services.Status.OK) {
