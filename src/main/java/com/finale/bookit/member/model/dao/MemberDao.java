@@ -12,6 +12,8 @@ public interface MemberDao {
 
 	Member selectOneMember(String id);
 
+	int selectAddress(Address address);
+
 	int insertAddress(Address address);
 
 	int updateAddress(Address address);

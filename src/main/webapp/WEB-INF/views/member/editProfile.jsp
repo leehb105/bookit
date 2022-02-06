@@ -148,7 +148,7 @@ $(() => {
 							<div>
 								<input type='text' id='searchAddr' name='searchAddr' />
 								<input type='button' onclick="generateMap(false, 'addr')" value="검색">
-									</div>
+							</div>
 							<div>
 							<div id="map_wrapper">
 								<div id="map"></div>

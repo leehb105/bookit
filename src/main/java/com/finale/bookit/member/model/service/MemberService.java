@@ -14,6 +14,8 @@ public interface MemberService {
 
 	Member selectOneMember(String id);
 
+	int selectAddress(Address address);
+
 	int insertAddress(Address address);
 	
 	int updateAddress(Address address);

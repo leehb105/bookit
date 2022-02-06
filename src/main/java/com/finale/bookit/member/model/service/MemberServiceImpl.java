@@ -50,6 +50,11 @@ public class MemberServiceImpl implements MemberService {
 	public Member selectOneMember(String id) {
 		return memberDao.selectOneMember(id);
 	}
+	
+	@Override
+	public int selectAddress(Address address) {
+		return memberDao.selectAddress(address);
+	}
 
 	@Override
 	public int insertAddress(Address address) {
@@ -65,9 +70,11 @@ public class MemberServiceImpl implements MemberService {
 	public int memberUpdate(Map<String, Object> param, Address address) {
 		int result = memberDao.memberUpdate(param);
 		if (result > 0) {
-			// 주소가 없는 사람한테는 현재 적용불가
-			// address 테이블에 주소가 있는지 확인하는 과정이 필요함
-			result = updateAddress(address);
+			if(selectAddress(address) == 0) {
+				result = insertAddress(address);
+			} else {
+				result = updateAddress(address);
+			}
 		}
 		return result;
 	}
