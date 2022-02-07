@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.finale.bookit.member.model.dao.MemberDao;
 import com.finale.bookit.member.model.vo.Address;
 import com.finale.bookit.member.model.vo.Member;
+import com.finale.bookit.member.model.vo.MemberEntity;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -32,12 +33,12 @@ public class MemberServiceImpl implements MemberService {
 	private MemberDao memberDao;
 	
 	@Override
-	public int insertMember(Member member) {
+	public int insertMember(MemberEntity member) {
 		return memberDao.insertMember(member);
 	}
 	
 	@Override
-	public int insertMember(Member member, Address address) {
+	public int insertMember(MemberEntity member, Address address) {
 		int result = memberDao.insertMember(member);
 		if (result > 0) {
 			result = insertAddress(address);
@@ -47,7 +48,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public Member selectOneMember(String id) {
+	public MemberEntity selectOneMember(String id) {
 		return memberDao.selectOneMember(id);
 	}
 	
@@ -150,7 +151,7 @@ public class MemberServiceImpl implements MemberService {
 
 	//카카오 유저정보조회
 	@Override
-	public Member getUserInfo(String access_Token) {
+	public MemberEntity getUserInfo(String access_Token) {
 //	    요청하는 클라이언트마다 가진 정보가 다를 수 있기에 HashMap타입으로 선언
         HashMap<String, Object> userInfo = new HashMap<String, Object>();
         String reqURL = "https://kapi.kakao.com/v2/user/me";
@@ -193,7 +194,7 @@ public class MemberServiceImpl implements MemberService {
             e.printStackTrace();
         }
 
- 		Member result = memberDao.findkakao(userInfo);
+        MemberEntity result = memberDao.findkakao(userInfo);
  		// 위 코드는 먼저 정보가 저장되있는지 확인하는 코드.
  		System.out.println("S:" + result);
  		if(result==null) {
@@ -208,6 +209,7 @@ public class MemberServiceImpl implements MemberService {
  			// 정보가 이미 있기 때문에 result를 리턴함.
  		}
 	}
+
 
 	
 }

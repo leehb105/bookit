@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+    
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%-- spring-webmvc의존 : security의 xss대비 csrf토큰 생성 --%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/member.css" />
 
@@ -27,9 +35,17 @@
 					 <div class="logo mb-3">
 						 <div class="col-md-12 text-center">
 							<h1>로그인</h1>
+								<c:if test="${param.error != null}">
+									<span class="text-danger"> 아이디 또는 비밀번호가 일치하지 않습니다.</span>
+								</c:if>
 						 </div>
 					</div>
-                   <form action="" method="post" name="login" id="login" novalidate="novalidate">
+                   <form:form 
+                   		action="${pageContext.request.contextPath}/member/memberLogin.do" 
+                   		method="POST" 
+                   		name="login" 
+                   		id="login" 
+                   		novalidate="novalidate">
                        <div class="form-group">
                           <label for="id">아이디</label>
                           <input type="text" name="id" class="form-control" id="id" aria-describedby="idHelp" placeholder="아이디를 입력하세요">
@@ -49,13 +65,13 @@
                              <span class="span-or">or</span>
                           </div>
                        </div>
-                       <!-- <div class="col-md-12 mb-3">
+                       <div class="col-md-12 mb-3">
                           <p class="text-center">
                              <a href="javascript:void();" class="google btn mybtn"><i class="fa fa-google-plus">
                              </i> Signup using Google
                              </a>
                           </p>
-                       </div> -->
+                       </div>
                        <div class="col-md-12 mb-3" id="kakaologin">
                        <div class="kakaobtn">
                           <p class="text-center">
@@ -70,7 +86,7 @@
                        <div class="form-group">
                           <p class="text-center">Bookit이 처음이신가요? <a href="${pageContext.request.contextPath}/member/memberEnroll.do" id="signup">회원가입</a></p>
                        </div>
-                    </form>
+                    </form:form>
                  
 				</div>
 			</div>

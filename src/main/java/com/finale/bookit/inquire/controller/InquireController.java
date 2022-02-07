@@ -20,7 +20,7 @@ import com.finale.bookit.admin.model.vo.AdminInquire;
 import com.finale.bookit.common.util.BookitUtils;
 import com.finale.bookit.inquire.model.service.InquireService;
 import com.finale.bookit.inquire.model.vo.Inquire;
-import com.finale.bookit.member.model.vo.Member;
+import com.finale.bookit.member.model.vo.MemberEntity;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,7 +36,7 @@ public class InquireController {
 	@GetMapping("/inquireList.do")
 	public void inquireList(
 			@RequestParam(defaultValue = "1") int cPage,
-			@SessionAttribute(required = false) Member loginMember,
+			@SessionAttribute(required = false) MemberEntity loginMember,
 			HttpServletRequest request,
 			Model model) {
 		

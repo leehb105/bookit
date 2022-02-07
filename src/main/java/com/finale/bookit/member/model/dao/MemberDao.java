@@ -4,13 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.finale.bookit.member.model.vo.Address;
-import com.finale.bookit.member.model.vo.Member;
+import com.finale.bookit.member.model.vo.MemberEntity;
 
 public interface MemberDao {
 
-	int insertMember(Member member);
+	int insertMember(MemberEntity member);
 
-	Member selectOneMember(String id);
+	MemberEntity selectOneMember(String id);
 
 	int selectAddress(Address address);
 
@@ -26,6 +26,6 @@ public interface MemberDao {
 
 	int kakaoinsert(HashMap<String, Object> userInfo);
 
-	Member findkakao(HashMap<String, Object> userInfo);
+	MemberEntity findkakao(HashMap<String, Object> userInfo);
 
 }

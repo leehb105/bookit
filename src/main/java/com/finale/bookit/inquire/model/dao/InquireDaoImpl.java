@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.finale.bookit.admin.model.vo.AdminInquire;
 import com.finale.bookit.inquire.model.vo.Inquire;
-import com.finale.bookit.member.model.vo.Member;
+import com.finale.bookit.member.model.vo.MemberEntity;
 
 @Repository
 public class InquireDaoImpl implements InquireDao {
@@ -28,7 +28,7 @@ public class InquireDaoImpl implements InquireDao {
 	}
 
 	@Override
-	public int selectTotalContent(Member loginMember) {
+	public int selectTotalContent(MemberEntity loginMember) {
 		return session.selectOne("inquire.selectTotalContent", loginMember);
 	}
 

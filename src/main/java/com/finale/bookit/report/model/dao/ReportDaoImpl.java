@@ -8,7 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.finale.bookit.member.model.vo.Member;
+import com.finale.bookit.member.model.vo.MemberEntity;
 import com.finale.bookit.report.model.vo.ReportBoard;
 import com.finale.bookit.report.model.vo.ReportUser;
 
@@ -28,7 +28,7 @@ public class ReportDaoImpl implements ReportDao {
 	}
 	
 	@Override
-	public int selectTotalReportUser(Member loginMember) {
+	public int selectTotalReportUser(MemberEntity loginMember) {
 		return session.selectOne("report.selectTotalReportUser", loginMember);
 	}
 
@@ -42,7 +42,7 @@ public class ReportDaoImpl implements ReportDao {
 	}
 	
 	@Override
-	public int selectTotalReportBoard(Member loginMember) {
+	public int selectTotalReportBoard(MemberEntity loginMember) {
 		return session.selectOne("report.selectTotalReportBoard", loginMember);
 	}
 
