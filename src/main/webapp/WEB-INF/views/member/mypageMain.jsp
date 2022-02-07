@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
+<script src="${pageContext.request.contextPath}/resources/js/curreny.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage.css"/>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>    
@@ -53,7 +54,7 @@
 	                        ${loginMember.nickname}
 	                    </h5>
 	                    <p class="proile-rate">나의 평점 : <span>38점</span></p>
-	                    <p class="proile-point">나의 북토리 : <span>${loginMember.cash}</span></p>
+	                    <p class="proile-point">나의 북토리 : <span><fmt:formatNumber type="number" maxFractionDigits="3" value="${loginMember.cash}" />토리</span></p>
 	                    <button class="profile-edit-btn">프로필 수정</button>
                     </c:if>
                     <c:if test="${!empty sessionScope.kakaoE}">
@@ -64,7 +65,7 @@
 	                        ${sessionScope.kakaoN}
 	                    </h5>
 	                    <p class="proile-rate">나의 평점 : <span>38점</span></p>
-	                    <p class="proile-point">나의 북토리 : <span>${sessionScope.kakaoCash}</span></p>
+	                    <p class="proile-point">나의 북토리 : <span><fmt:formatNumber type="number" maxFractionDigits="3" value="${sessionScope.kakaoCash}" />토리</span></p>
 	                    <button class="profile-edit-btn">프로필 수정</button>
                     </c:if>
                     <!-- <input type="submit" class="profile-edit-btn" value="Edit Profile"/> -->

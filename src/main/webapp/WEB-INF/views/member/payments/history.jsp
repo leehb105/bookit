@@ -18,7 +18,8 @@
 </div>
 
 <p>
-<span>내 북토리: </span><span id="myCash">${loginMember.cash}원</span><button type="button" onclick="location.href='${pageContext.request.contextPath}/member/payments/charge.do'">북토리 충전</button>
+<span>내 북토리:<fmt:formatNumber type="number" maxFractionDigits="3" value="${loginMember.cash}" />토리</span>
+<button type="button" class="btn btn-success" onclick="location.href='${pageContext.request.contextPath}/member/payments/charge.do'">북토리 충전</button>
 </p>
 
 <table class="table table-condensed">
@@ -33,8 +34,8 @@
     <c:forEach items="${list}" var="history">
 		  <tr>
 			  <td><fmt:formatDate value="${history.chargeDate}" pattern="yyyy.MM.dd HH:mm"/></td>
-			  <td>${history.chargeCash}</td>
-			  <td>${history.bonusCash}</td>
+			  <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${history.chargeCash}" />원</td>
+			  <td>${history.bonusCash}토리</td>
 		  </tr>      
       </c:forEach>
     </tbody>

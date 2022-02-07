@@ -14,9 +14,9 @@
 					</a>
 					<a href="${pageContext.request.contextPath}/member/editProfile.do">정보 수정</a><br />
 					<p>북토리 관리</p>
-					<a href="">결제 내역</a><br />
+					<a href="${pageContext.request.contextPath}/member/payments/history.do">결제 내역</a><br />
 					<a href="">거래 내역</a><br />
-					<a href="">북토리 충전</a>
+					<a href="${pageContext.request.contextPath}/member/payments/charge.do">북토리 충전</a>
 					<p>나의 게시글</p>
 					<a href="">게시글 작성목록</a><br />
 					<a href="">리뷰 작성목록</a><br />
