@@ -326,39 +326,9 @@ $("#phone").focusout(function() {
 		return true;
 	}
 });
-	/* $(function() {
-	  
-	  $("form[name='registration']").validate({
-	    rules: {
-	      id: "required",
-	      name: "required",
-	      nickname: "required",
-	      email: {
-	        required: true,
-	        email: true
-	      },
-	      password: {
-	        required: true
-	      }
-	    },
-	    
-	    messages: {
-	      id: "아이디를 입력하세요",
-	      name: "이름을 입력하세요",
-	      nickname: "닉네임을 입력하세요",
-	      password: {
-	        required: "비밀번호를 입력하세요"
-	      },
-	      email: "이메일을 입력하세요"
-	    },
-	  
-	    submitHandler: function(form) {
-	      form.submit();
-	    }
-	  });
-	});
- */
+
 </script>
+
 <script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6572b946baab53e064d0fc558f5af389&libraries=services,clusterer,drawing"></script>
 <script src="${pageContext.request.contextPath}/resources/js/kakaoMap_v2.js"></script>
