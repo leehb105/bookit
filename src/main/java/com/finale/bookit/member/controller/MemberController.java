@@ -1,19 +1,11 @@
 package com.finale.bookit.member.controller;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -35,9 +27,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.finale.bookit.member.model.service.MemberService;
 import com.finale.bookit.member.model.vo.Address;
 import com.finale.bookit.member.model.vo.Member;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.finale.bookit.member.model.vo.MemberEntity;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -80,7 +70,7 @@ public class MemberController {
 			RedirectAttributes redirectAttr
 	) {
 		
-		Member member = memberService.selectOneMember(id);
+		MemberEntity member = memberService.selectOneMember(id);
 		log.info("member = {}", member);
 		log.info("encodedPassword = {}", bcryptPasswordEncoder.encode(password));
 
@@ -120,7 +110,7 @@ public class MemberController {
 	public String kakao(@RequestParam(value = "code", required = false) String code) throws Exception {
 		System.out.println("#########" + code);
 		String access_Token = memberService.getAccessToken(code);
-		Member userInfo = memberService.getUserInfo(access_Token);
+		MemberEntity userInfo = memberService.getUserInfo(access_Token);
 		System.out.println("###access_Token#### : " + access_Token);
 
 		session.invalidate();
