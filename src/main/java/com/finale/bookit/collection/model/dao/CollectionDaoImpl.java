@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.finale.bookit.collection.model.vo.BookCollection;
+import com.finale.bookit.collection.model.vo.BookCollectionList;
 
 @Repository
 public class CollectionDaoImpl implements CollectionDao {
@@ -25,8 +26,12 @@ public class CollectionDaoImpl implements CollectionDao {
 	}
 
 	@Override
-	public List<BookCollection> selectCollectionDetail(int no) {
-		return session.selectList("bookCollection.selectCollectionDetail", no);
+	public List<BookCollection> selectCollectionDetail(Map<String, Object> param) {
+		int no = (int) param.get("no");
+		int offset = (int) param.get("offset");
+		int limit = (int) param.get("limit");
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return session.selectList("bookCollection.selectCollectionDetail", no, rowBounds);
 	}
 
 	@Override
@@ -37,6 +42,16 @@ public class CollectionDaoImpl implements CollectionDao {
 	@Override
 	public int selectTotalCollection() {
 		return session.selectOne("bookCollection.selectTotalCollection");
+	}
+
+	@Override
+	public List<BookCollectionList> selectAllBookList(int no) {
+		return session.selectList("bookCollection.selectAllBookList", no);
+	}
+
+	@Override
+	public int selectTotalBookList(int no) {
+		return session.selectOne("bookCollection.selectTotalBookList", no);
 	}
 
 }
