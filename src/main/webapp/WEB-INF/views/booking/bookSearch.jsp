@@ -62,8 +62,9 @@
                                             <input type="hidden" value="${book.categoryName}">
                                             <!-- index: [1][5] -->
                                             <input type="hidden" value="${book.description}">
+                                            <!-- <input type="hidden"> -->
                                         </div>
-                                        <button type="button" onclick="setBookInfo(this)">버튼</button>
+                                        <button type="button" class="btn roberto-btn" onclick="setBookInfo(this)">선택</button>
                                     </div>
 					            </c:forEach>                                    
                             </div>                         
@@ -87,7 +88,7 @@
 <script>
     //부모창으로 값 전달
     function setBookInfo(btn){
-        console.log(btn);
+        // console.log(btn);
         // console.log(document.getElementById('title').innerText);
         // console.log(this.document.getElementById('title'));
         const div = btn.parentNode;
@@ -96,18 +97,15 @@
         
 
         // //json 데이터 전달
-        // localStorage.setItem("book", JSON.stringify(book));
+        localStorage.setItem("book", JSON.stringify(book));
         // opener.document.getElementById('testInput').value = book;
+        opener.getJson();
 
         
     }
 
     function toJson(div){
-        console.log(div);
-        // console.log(div.getElementById);
         //json생성
-        // const div2 = div.childNode;
-        // console.log(div2.getElementById('title'));
         let book = {
             "cover": div.children[0].children[0].children[0].src,
             "title": div.children[1].children[0].innerText,

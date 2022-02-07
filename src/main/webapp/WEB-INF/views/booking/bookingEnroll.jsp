@@ -20,7 +20,7 @@
             <div class="row">
                 <div class="col-12">
                     <!-- Form -->
-                    <div class="roberto-contact-form">
+                    <div class="roberto-contact-form mb-30">
                         <!-- <form action="${pageContext.request.contextPath}/booking/bookSearch.do" method="get">        -->
                         <form method="get" id="searchFrm">       
                             <div class="col-12 wow fadeInUp form-inline form-group" data-wow-delay="100ms">
@@ -38,59 +38,6 @@
                     </div>
                 </div>
             </div>
-           
-            <!-- 모달 -->
-            <div class="modal hidden">
-                <div class="bg"></div>
-                <div class="modalBox" >
-                    <div class="roberto-news-area mt-30">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-12">
-                                    <!-- <button type="button" class="closeBtn btn roberto-btn">닫기</button> -->
-                                    <!-- Section Heading -->
-                                    <div class="section-heading text-left wow fadeInUp" data-wow-delay="100ms">
-                                        <h5><span style="color: #1cc3b2;" id="query"></span> 총 <span id="totalResults"></span>개의 도서가 검색되었습니다.</h5>
-                                        <hr class="my-2">
-                                    </div>
-                                </div>
-                            </div>
-                
-                            <div class="row">
-                                <div class="col-12">
-                                    <!-- Form -->
-                                    <div class="roberto-contact-form">
-                                        <form action="${pageContext.request.contextPath}/booking/bookSearch.do" method="get">    
-                                            <div class="col-12 wow fadeInUp form-inline form-group" data-wow-delay="100ms" id="resultArea">
-                                                <c:forEach var="book" items="${list }">                   
-                                                    <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp w-75" data-wow-delay="100ms">
-                                                        <!-- List Cover -->
-                                                        <div class="post-thumbnail w-25">
-                                                            <!-- <input type="hidden" name="bno" value="${booking.boardNo}"> -->
-                                                            <a href="#"><img src="${book.cover }" alt=""></a>
-                                                        </div>
-                                                        <!-- List Content -->
-                                                        <div class="post-content">
-                                                            <!-- List Meta -->
-                                                            <!-- List Title -->
-                                                            <a href="${pageContext.request.contextPath}/booking/bookingEnroll.do" class="post-title">${book.title }제목란</a>
-                                                            <!-- List Author, publisher, pubdate -->
-                                                            <p>${book.author} 저 | ${book.publisher} | <fmt:formatDate value="${book.pubdate }" pattern="yyyy년 MM월"/></p>
-                                                            
-                                                        </div>
-                                                    </div>
-                                                </c:forEach>                                    
-                                            </div>                         
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                  
-                </div>
-            </div>
         </div>
 
         <!-- 검색결과 -->
@@ -101,39 +48,38 @@
                     <div class="single-room-details-area mb-50">
                         <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
                             
-                            <form action="" class="nl-form">
+                            <!-- <form action="" class="nl-form">
                                 <input type="text" class="form-control" id="testInput">
         
-                            </form>
+                            </form> -->
                             
-                            
-                            <img src="${booking.bookInfo.cover}" class="d-block w-40" alt="">
-                            <div class="post-content">
+                            <img src="${pageContext.request.contextPath}/resources/img/book-photo.png" class="d-block w-40 mx-5" alt="" id="cover">
+                            <div class="post-content mx-5">
                                 <!-- booking Title -->
-                                <a href="#" class="post-title">${booking.bookInfo.title }</a>
+                                <a href="#" class="title"></a>
                                 <!-- 분류 -->
-                                <p>${booking.bookInfo.categoryName}</p>
+                                <p class="categoryName"></p>
                                 <!-- 저자, 출판사, 출판일 -->
                                 <table class="table table-borderless table-sm">
                                     <tr>
                                         <td>저자</td>
-                                        <td>${booking.bookInfo.author}</td>
+                                        <td class="author"></td>
                                     </tr>
                                     <tr>
                                         <td>출판사</td>
-                                        <td>${booking.bookInfo.publisher}</td>
+                                        <td class="publisher"></td>
                                     </tr>
                                     <tr>
                                         <td>출판일</td>
-                                        <td><fmt:formatDate value="${booking.bookInfo.pubdate }" pattern="yyyy년 MM월"/></td>
+                                        <td class="pubdate"><fmt:formatDate value="" pattern="yyyy년 MM월"/></td>
                                     </tr>
                                     <tr>
                                         <td>ISBN</td>
-                                        <td>${booking.bookInfo.isbn13}</td>
+                                        <td class="isbn"></td>
                                     </tr>
                                     <tr>
                                         <td>쪽수</td>
-                                        <td>${booking.bookInfo.itemPage} 쪽</td>
+                                        <td class="itemPage"></td>
                                     </tr>
                                 </table>
                                 
@@ -204,6 +150,48 @@
         $("#searchFrm").submit();
 
     }
+
+    window.getJson = function(){
+        // console.log('자식창에서 열었음');
+
+        book = JSON.parse(localStorage.getItem("book"));
+        // console.log(isEmptyObj(book));
+        if(isEmptyObj(book)){
+            // console.log("null입니다.");
+            alert("책정보 없음 - 도서를 다시 선택해주세요.");
+        }else if(!checkAllElement(book)){
+            alert("해당 도서는 등록할 수 없습니다.");
+        }else{
+            document.getElementById('cover').src = book.cover;
+            document.getElementById('title').html(book.title);
+            document.getElementById('author').text(book.author);
+
+
+        }
+    }
+
+
+    //json 객체 비어있는지 검사
+    function isEmptyObj(obj){
+        if(obj.constructor === Object
+            && Object.keys(obj).length === 0)  {
+            return true;
+        }
+        
+        return false;
+    }
+
+    function checkAllElement(obj){
+        //json객체 검사 시 비어있는 항목이 있는 경우 false 반환
+        for(let i in obj){
+            // console.log(obj[i]);
+            if(obj[i] == ""){
+                return false;
+            }
+        }        
+        return true;
+    }
+    
 
     
 
