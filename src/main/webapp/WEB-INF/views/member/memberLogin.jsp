@@ -49,13 +49,13 @@
                              <span class="span-or">or</span>
                           </div>
                        </div>
-                       <div class="col-md-12 mb-3">
+                       <!-- <div class="col-md-12 mb-3">
                           <p class="text-center">
                              <a href="javascript:void();" class="google btn mybtn"><i class="fa fa-google-plus">
                              </i> Signup using Google
                              </a>
                           </p>
-                       </div>
+                       </div> -->
                        <div class="col-md-12 mb-3" id="kakaologin">
                        <div class="kakaobtn">
                           <p class="text-center">
@@ -113,53 +113,7 @@
       }
   });  
 
-  </script>
-
-<script>
-/* $("#signup").click(function() {
-	$("#first").fadeOut("fast", function() {
-	$("#second").fadeIn("fast");
-	});
-	});
-
-	$("#login").click(function() {
-	$("#second").fadeOut("fast", function() {
-	$("#first").fadeIn("fast");
-	});
-	}); */
-
-	           /* $(function() {
-	           $('#login').validate({
-	             rules: {
-	               
-	               id: {
-	                 required: true,
-	                 
-	               },
-	               password: {
-	                 required: true,
-	                 
-	               }
-	             },
-	              messages: {
-	               id: {
-	            	   required: "아이디를 입력해주세요",
-	            	   
-	               },
-	              
-	               password: {
-	                 required: "비밀번호를 입력해주세요",
-	                
-	               }
-	               
-	             },
-	             submitHandler: function(form) {
-	               form.submit();
-	             }
-	           });
-	         }); */
-	         
-
-
 </script>
+
+
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

@@ -110,6 +110,7 @@ public class MemberController {
 				"https://kauth.kakao.com/oauth/authorize"
 				+ "?client_id=8a451c649411be3540e7cd703568efbf"
 				+ "&redirect_uri=http://localhost:9090/bookit/member/kakao"
+//				+ "&redirect_uri=" + request.getContextPath() + "/member/kakao"
 				+ "&response_type=code";
 		
 		return reqUrl;
@@ -126,8 +127,8 @@ public class MemberController {
 		// 위 코드는 session객체에 담긴 정보를 초기화 하는 코드.
 		session.setAttribute("kakaoN", userInfo.getName());
 		session.setAttribute("kakaoE", userInfo.getId());
+		session.setAttribute("kakaoCash", userInfo.getCash());
 		// 위 2개의 코드는 닉네임과 이메일을 session객체에 담는 코드
-		// jsp에서 ${sessionScope.kakaoN} 이런 형식으로 사용할 수 있다.
 	    
 		
 		return "redirect:/";
@@ -140,6 +141,7 @@ public class MemberController {
 	public String memberLogout(SessionStatus sessionStatus, ModelMap model) {
 		
 		model.clear(); // 관리되는 model속성 완전 제거
+		session.invalidate();
 		
 		// 현재 세션객체의 사용완료 설정 - 세션속성등 내부 초기화, 세션객체는 재사용
 		if(!sessionStatus.isComplete())
