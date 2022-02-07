@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.finale.bookit.collection.model.service.CollectionService;
 import com.finale.bookit.collection.model.vo.BookCollection;
+import com.finale.bookit.collection.model.vo.BookCollectionList;
 import com.finale.bookit.common.util.BookitUtils;
 import com.finale.bookit.member.model.vo.MemberEntity;
 
@@ -57,10 +58,34 @@ public class CollectionController {
 
 	// 해당 회원의 컬렉션 상세페이지
 	@GetMapping("/collectionDetail.do")
-	public void collectionDetail(@RequestParam int no, Model model) {
-		List<BookCollection> collectionDetailList = collectionService.selectCollectionDetail(no);
+	public void collectionDetail(
+			@RequestParam(defaultValue = "1") int cPage,
+			HttpServletRequest request,
+			@RequestParam int no, 
+			Model model) {
+		// 페이지 당 게시글 갯수
+		int limit = 4;
+		int offset = (cPage - 1) * limit;
+		Map<String, Object> param = new HashMap<>();
+		param.put("offset", offset);
+		param.put("limit", limit);
+		param.put("no", no);
+		
+		List<BookCollection> collectionDetailList = collectionService.selectCollectionDetail(param);
 		log.debug("collectionDetailList = {}", collectionDetailList);
+		
+		// 비어있는 경우를 위한 리스트 (위의 리스트는 join 쿼리로 행이 무조건 한 개 존재함)
+		List<BookCollectionList> bookList = collectionService.selectAllBookList(no);
+		log.debug("bookList = {}", bookList);
+		
+		// 페이지 영역
+		int totalContent = collectionService.selectTotalBookList(no);
+		String url = request.getRequestURI() + "?no=" + no;
+		String pagebar = BookitUtils.getPagebar(cPage, limit, totalContent, url);
+		
 		model.addAttribute("collectionDetailList", collectionDetailList);
+		model.addAttribute("bookList", bookList);
+		model.addAttribute("pagebar", pagebar);
 	}
 	
 	// 컬렉션 모음집 내의 책 삭제

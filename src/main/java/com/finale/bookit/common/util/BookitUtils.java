@@ -40,7 +40,13 @@ public class BookitUtils {
 	 */
 	public static String getPagebar(int cPage, int numPerPage, int totalContent, String url) {
 		StringBuilder pagebar = new StringBuilder(); 
-		url = url + "?cPage="; // pageNo 추가전 상태
+		
+		if(url.startsWith("/bookit/collection/collectionDetail.do?no=")) {
+			url = url + "&cPage="; // 컬렉션 내부에서의 페이징
+		}
+		else {
+			url = url + "?cPage="; // pageNo 추가전 상태			
+		}
 		
 		final int pagebarSize = 5;
 		final int totalPage = (int) Math.ceil((double) totalContent / numPerPage);
