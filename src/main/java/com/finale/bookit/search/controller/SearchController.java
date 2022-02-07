@@ -4,7 +4,9 @@ package com.finale.bookit.search.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.finale.bookit.booking.model.vo.BookInfo;
 import com.finale.bookit.common.util.BookitUtils;
@@ -34,6 +37,7 @@ public class SearchController {
 	private SearchService searchService;
 
 	@GetMapping("/booking/bookSearch.do")
+//	@ResponseBody
 	public void searchBookByTitle(@RequestParam String title, Model model) {
 		log.debug("title = {}" ,title);
 //		BookInfo bookInfo = searchService.search("개미 3");
@@ -84,7 +88,12 @@ public class SearchController {
         
 //        BookInfo test = new Gson().fromJson(json, BookInfo.class);
 //        log.debug("test = {}", test);
-
+//        Map<String, Object> map = new HashedMap();
+//        map.put("query", query);
+//        map.put("totalResults", totalResults);
+//        map.put("list", list);
+        
+//        return map;
         model.addAttribute("list", list);
         model.addAttribute("totalResults", totalResults);
         model.addAttribute("query", query);

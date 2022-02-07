@@ -68,17 +68,11 @@
 
 
 
-
-<!-- **** All JS Files ***** -->
-    <!-- jQuery 2.2.4 -->
-    <script src="${pageContext.request.contextPath}/resources/roberto/js/jquery.min.js"></script>
-    <!-- Popper -->
-    <script src="${pageContext.request.contextPath}/resources/roberto/js/popper.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="${pageContext.request.contextPath}/resources/roberto/js/bootstrap.min.js"></script>
-    <!-- All Plugins -->
-    <script src="${pageContext.request.contextPath}/resources/roberto/js/roberto.bundle.js"></script>
-    <!-- Active -->
-    <script src="${pageContext.request.contextPath}/resources/roberto/js/default-assets/active.js"></script>
 </body>
+
+
+<script>
+    
+
+</script>
 </html>

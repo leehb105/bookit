@@ -21,35 +21,79 @@
                 <div class="col-12">
                     <!-- Form -->
                     <div class="roberto-contact-form">
-                        <form action="${pageContext.request.contextPath}/booking/bookSearch.do" method="get">       
+                        <!-- <form action="${pageContext.request.contextPath}/booking/bookSearch.do" method="get">        -->
+                        <form method="get" id="searchFrm">       
                             <div class="col-12 wow fadeInUp form-inline form-group" data-wow-delay="100ms">
                                 <div class="col-lg-6">
                                     <input type="text" class="form-control" name="title" placeholder="책 이름을 입력하세요">
                                 </div>
                                 <div class="col-lg-3">
-                                    <button type="submit" class="btn roberto-btn" formtarget="_blank">책 검색</button>
+                                    <button type="button" class="btn roberto-btn" id="searchBtn" onclick="openSearchWindow()">책 검색</button>
+                                    <!-- <button type="submit" class="btn roberto-btn" formtarget="_blank">책 검색</button> -->
+                                    <!-- <button type="button" class="btn roberto-btn" id="searchBtn">책 검색</button> -->
+                                    <!-- <button type="button" class="btn roberto-btn" data-toggle="modal" data-target="#exampleModal">책 검색</button> -->
                                 </div>                                    
                             </div>                         
                         </form>
                     </div>
                 </div>
             </div>
+           
+            <!-- 모달 -->
+            <div class="modal hidden">
+                <div class="bg"></div>
+                <div class="modalBox" >
+                    <div class="roberto-news-area mt-30">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    <!-- <button type="button" class="closeBtn btn roberto-btn">닫기</button> -->
+                                    <!-- Section Heading -->
+                                    <div class="section-heading text-left wow fadeInUp" data-wow-delay="100ms">
+                                        <h5><span style="color: #1cc3b2;" id="query"></span> 총 <span id="totalResults"></span>개의 도서가 검색되었습니다.</h5>
+                                        <hr class="my-2">
+                                    </div>
+                                </div>
+                            </div>
+                
+                            <div class="row">
+                                <div class="col-12">
+                                    <!-- Form -->
+                                    <div class="roberto-contact-form">
+                                        <form action="${pageContext.request.contextPath}/booking/bookSearch.do" method="get">    
+                                            <div class="col-12 wow fadeInUp form-inline form-group" data-wow-delay="100ms" id="resultArea">
+                                                <c:forEach var="book" items="${list }">                   
+                                                    <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp w-75" data-wow-delay="100ms">
+                                                        <!-- List Cover -->
+                                                        <div class="post-thumbnail w-25">
+                                                            <!-- <input type="hidden" name="bno" value="${booking.boardNo}"> -->
+                                                            <a href="#"><img src="${book.cover }" alt=""></a>
+                                                        </div>
+                                                        <!-- List Content -->
+                                                        <div class="post-content">
+                                                            <!-- List Meta -->
+                                                            <!-- List Title -->
+                                                            <a href="${pageContext.request.contextPath}/booking/bookingEnroll.do" class="post-title">${book.title }제목란</a>
+                                                            <!-- List Author, publisher, pubdate -->
+                                                            <p>${book.author} 저 | ${book.publisher} | <fmt:formatDate value="${book.pubdate }" pattern="yyyy년 MM월"/></p>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </c:forEach>                                    
+                                            </div>                         
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                  
+                </div>
+            </div>
         </div>
-    </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+        <!-- 검색결과 -->
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-12 col-lg-8">
@@ -123,8 +167,117 @@
 
     <!-- Rooms Area End -->
 <script>
- 
+    // 검색 input
+    const $title = $('input[name=title]');
 
+    //책 검색 버튼 비활성화
+    window.onload = function(){
+        $('#searchBtn').attr("disabled", true);
+    }
+
+    //검색창 입력시 검색 버튼 활성화
+    $(function(){
+        $title.on('input', function(){
+            // console.log($title);
+            if($title.val() != ''){
+                $('#searchBtn').attr("disabled", false);
+            }else{
+                //입력값 없을 시 다시 버튼 비활성화
+                $('#searchBtn').attr("disabled", true);
+            }
+        });
+    });
+
+    let childWin;
+    // const searchFrm = document.getElementById('searchFrm');
+
+    function openSearchWindow(){
+        // window.name = "부모창 이름"; 
+        window.name = "parentForm";
+
+        let url = `${pageContext.request.contextPath}/booking/bookSearch.do`;
+        var option = "width=570, height=350, resizable = no, scrollbars = no";
+        
+        childWin = window.open('', "result", option);
+        $("#searchFrm").attr("action", url);
+        $("#searchFrm").attr("target", "result");
+        $("#searchFrm").submit();
+
+    }
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // //모달 오픈
+    // const open = () => {
+    //     document.querySelector(".modal").classList.remove("hidden");
+    // }
+
+    // //모달 클로즈
+    // const close = () => {
+    //     document.querySelector(".modal").classList.add("hidden");
+    // }
+
+    // document.querySelector(".btn").addEventListener("click", open);
+    // // document.querySelector(".closeBtn").addEventListener("click", close);
+    // document.querySelector(".bg").addEventListener("click", close);
+
+    
+    //책 검색 클릭
+    // document.getElementById('searchBtn').onclick = (() =>{
+
+    //     //모달 창 내부 초기화
+    //     $(() =>{
+    //         $('#query').text("\"\"");
+    //         $('#totalResults').text(0); 
+    //     });
+    //     // console.log($div.find())
+
+    //     // console.log('test');
+
+    //     // $.ajax({
+    //     //     url: `${pageContext.request.contextPath}/booking/bookSearch.do`,
+    //     //     method: "GET",
+    //     //     data: $('input[name=title]').serialize(),
+    //     //     success(result){
+    //     //         console.log(result);
+    //     //         console.log(result.query);
+    //     //         $('#query').text("\"" + result.query + "\"");
+    //     //         $('#totalResults').text(result.totalResults);
+
+    //     //         for(let i = 0; i < result.totalResults; i++){
+    //     //             $('#resultArea').append(
+    //     //                 "<div class='single-blog-post d-flex align-items-center mb-50 wow fadeInUp w-75' data-wow-delay='100ms'>" +
+    //     //                     "<div class='post-thumbnail w-25'>" +
+    //     //                         "<a href='#'><img src='" + result.list[i].cover +"' alt=''></a>" +
+    //     //                     "</div>" +
+    //     //                     "<div class='post-content'>" +
+    //     //                         "<a href='' class='post-title'>" + + "</a>" +
+    //     //                         "<p>${book.author} 저 | ${book.publisher} | <fmt:formatDate value='${book.pubdate }' pattern='yyyy년 MM월'/></p>" +
+                                
+    //     //                     "</div>" +
+    //     //                 "</div>"
+    //     //             );
+    //     //         }
+
+
+    //     //     },
+    //     //     error: console.log()
+    //     // });
+    // });
 
 
 

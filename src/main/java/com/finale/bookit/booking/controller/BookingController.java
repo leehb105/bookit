@@ -65,7 +65,7 @@ public class BookingController {
         model.addAttribute("pagebar", pagebar);
     }
 
-    @GetMapping("bookingDetail.do")
+    @GetMapping("/bookingDetail.do")
     public void bookingDetail(@RequestParam(value = "bno") int bno, Model model) {
     	Map<String, Object> param = new HashMap<>();
     	param.put("bno", bno);
@@ -80,12 +80,12 @@ public class BookingController {
     	model.addAttribute("newDate", newDate);
     }
     
-    @GetMapping("bookingEnroll.do")
+    @GetMapping("/bookingEnroll.do")
     public void bookingEnroll() {
     	
     }
     	
-//    @GetMapping("bookSearch.do")
+//    @GetMapping("/bookSearch.do")
 //    public void bookSearch(@RequestParam String bookTitle, Model model) {
 //    	log.debug("bookTitle = {}", bookTitle);
 //    	Map<String, Object> param = new HashMap<>();

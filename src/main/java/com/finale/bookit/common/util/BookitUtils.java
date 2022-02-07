@@ -149,8 +149,8 @@ public class BookitUtils {
 	
 	public static int getTotalResults(int totalResults) {
 		int itemsPerPage = 30;
-		//검색갯수가 요청 갯수보다 많으면
-		if(totalResults - itemsPerPage >= 30) {
+		//검색결과갯수가 요청 갯수보다 많으면
+		if(totalResults > itemsPerPage) {
 			return itemsPerPage;
 		}else {
 			return totalResults;
