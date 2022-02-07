@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage.css"/>
 
@@ -42,15 +45,28 @@
                </div>
                <div class="col-4">
                    <div class="profile-head"><br /><br />
-                    <h3>
-                        [${loginMember.name}]님 안녕하세요
-                    </h3>
-                    <h5>
-                        ${loginMember.nickname}
-                    </h5>
-                    <p class="proile-rate">나의 평점 : <span>38점</span></p>
-                    <p class="proile-point">나의 북토리 : <span>10000원</span></p>
-                    <button class="profile-edit-btn">프로필 수정</button>
+                    <c:if test="${!empty loginMember}">
+	                    <h3>
+	                        [${loginMember.name}]님 안녕하세요
+	                    </h3>
+	                    <h5>
+	                        ${loginMember.nickname}
+	                    </h5>
+	                    <p class="proile-rate">나의 평점 : <span>38점</span></p>
+	                    <p class="proile-point">나의 북토리 : <span>${loginMember.cash}</span></p>
+	                    <button class="profile-edit-btn">프로필 수정</button>
+                    </c:if>
+                    <c:if test="${!empty sessionScope.kakaoE}">
+	                    <h3>
+	                        [${sessionScope.kakaoN}]님 안녕하세요
+	                    </h3>
+	                    <h5>
+	                        ${sessionScope.kakaoN}
+	                    </h5>
+	                    <p class="proile-rate">나의 평점 : <span>38점</span></p>
+	                    <p class="proile-point">나의 북토리 : <span>${sessionScope.kakaoCash}</span></p>
+	                    <button class="profile-edit-btn">프로필 수정</button>
+                    </c:if>
                     <!-- <input type="submit" class="profile-edit-btn" value="Edit Profile"/> -->
                    </div>
                </div>
