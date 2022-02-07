@@ -3,7 +3,21 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
-	<insert id="insertMember"> 
+
+	<select id="findKakao" resultType="member">
+		select * from member where name=#{nickname} and id=#{email}
+	</select>
+	<insert id="kakaoInsert">
+		insert into 
+			member(id, name, nickname)
+			values(
+				#{email}, 
+				#{nickname},
+				#{nickname}
+			)
+	</insert>
+	
+	<insert id="insertMember">
 		insert into 
 			member(id, password, email, nickname, name, phone) 
 		values( 
@@ -19,7 +33,74 @@
 		select
 			*
 		from
-			member
+			member_view
 		where id = #{id}
 	</select>
+	
+	<select id="selectAddress" resultType="_int">
+		select
+			count(*)	
+		from
+			address
+		where
+			member_id = #{memberId}
+	</select>
+	
+	<insert id="insertAddress">
+		insert into
+			address
+		values(
+			#{memberId},
+			#{postcode},
+			#{roadAddress},
+			#{extraAddress},
+			#{depth1},
+			#{depth2},
+			#{depth3},
+			#{bunji1},
+			#{bunji2},
+			#{detailAddress},
+			#{latitude},
+			#{longitude}
+		)
+	</insert>	
+	
+	<update id="updateAddress">
+		update
+			address
+		set
+			postcode = #{postcode},
+			road_address = #{roadAddress},
+			extra_address = #{extraAddress},
+			depth1 = #{depth1},
+			depth2 = #{depth2},
+			depth3 = #{depth3},
+			bunji1 = #{bunji1},
+			bunji2 = #{bunji2},
+			detail_address = #{detailAddress},
+			latitude = #{latitude},
+			longitude = #{longitude}
+		where
+			member_id = #{memberId}
+	</update>
+	
+	<update id="memberUpdate">
+		update
+			member
+		set
+			nickname = #{nickname},
+			email = #{email},
+			phone = #{phone}
+		where
+			id = #{id}
+	</update>
+	
+	<select id="selectOneMemberCount" resultType="_int">
+		select count(*) from member where id = #{id}
+	</select>
+	
+	<select id="selectOneMemberNicknameCount" resultType="_int">
+		select count(*) from member where nickname = #{nickname}
+	</select>
+	
 </mapper>

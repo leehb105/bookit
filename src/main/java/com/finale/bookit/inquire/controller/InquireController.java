@@ -13,12 +13,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.finale.bookit.admin.model.vo.AdminInquire;
 import com.finale.bookit.common.util.BookitUtils;
 import com.finale.bookit.inquire.model.service.InquireService;
 import com.finale.bookit.inquire.model.vo.Inquire;
+import com.finale.bookit.member.model.vo.MemberEntity;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,21 +36,24 @@ public class InquireController {
 	@GetMapping("/inquireList.do")
 	public void inquireList(
 			@RequestParam(defaultValue = "1") int cPage,
+			@SessionAttribute(required = false) MemberEntity loginMember,
 			HttpServletRequest request,
 			Model model) {
 		
+		String id = loginMember.getId();
 		// 페이지 당 게시글 갯수
-		int limit = 4;
+		int limit = 5;
 		int offset = (cPage - 1) * limit;
 		Map<String, Object> param = new HashMap<>();
 		param.put("offset", offset);
 		param.put("limit", limit);
+		param.put("id", id);
 		
 		List<Inquire> inquireList = inquireService.selectAllInquire(param);
 		log.debug("inquireList = {}", inquireList);
 		
 		// 페이지 영역
-		int totalContent = inquireService.selectTotalContent();
+		int totalContent = inquireService.selectTotalContent(loginMember);
 		String url = request.getRequestURI();
 		String pagebar = BookitUtils.getPagebar(cPage, limit, totalContent, url);
 		

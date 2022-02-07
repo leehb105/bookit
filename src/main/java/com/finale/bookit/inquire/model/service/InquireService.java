@@ -5,12 +5,13 @@ import java.util.Map;
 
 import com.finale.bookit.admin.model.vo.AdminInquire;
 import com.finale.bookit.inquire.model.vo.Inquire;
+import com.finale.bookit.member.model.vo.MemberEntity;
 
 public interface InquireService {
 
 	List<Inquire> selectAllInquire(Map<String, Object> param);
 
-	int selectTotalContent();
+	int selectTotalContent(MemberEntity loginMember);
 
 	int insertInquire(Inquire inquire);
 
@@ -18,7 +19,6 @@ public interface InquireService {
 
 	AdminInquire selectOneAdminInquire(int no);
 
-	int updateCondition(int no);
 
 
 }

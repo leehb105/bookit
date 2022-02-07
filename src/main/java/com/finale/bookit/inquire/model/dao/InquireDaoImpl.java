@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.finale.bookit.admin.model.vo.AdminInquire;
 import com.finale.bookit.inquire.model.vo.Inquire;
+import com.finale.bookit.member.model.vo.MemberEntity;
 
 @Repository
 public class InquireDaoImpl implements InquireDao {
@@ -19,15 +20,16 @@ public class InquireDaoImpl implements InquireDao {
 
 	@Override
 	public List<Inquire> selectAllInquire(Map<String, Object> param) {
+		String id = (String)param.get("id");
 		int offset = (int) param.get("offset");
 		int limit = (int) param.get("limit");
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		return session.selectList("inquire.selectAllInquire", null, rowBounds);
+		return session.selectList("inquire.selectAllInquire", id, rowBounds);
 	}
 
 	@Override
-	public int selectTotalContent() {
-		return session.selectOne("inquire.selectTotalContent");
+	public int selectTotalContent(MemberEntity loginMember) {
+		return session.selectOne("inquire.selectTotalContent", loginMember);
 	}
 
 	@Override
@@ -44,11 +46,5 @@ public class InquireDaoImpl implements InquireDao {
 	public AdminInquire selectOneAdminInquire(int no) {
 		return session.selectOne("inquire.selectOneAdminInquire", no);
 	}
-	
-	@Override
-	public int updateCondition(int no) {
-		return session.update("inquire.updateCondition", no);
-	}
-	
 	
 }

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="community">
+	<select id="selectCommunityContent" parameterType="Integer" resultMap="communityMap">
+	select 
+	c.category, c.title, TO_CHAR(c.reg_date, 'YYYY-MM-DD  HH24:MI') reg_date , c.read_count, c.like_count, c.member_id, c.content, 
+	(select count(*) from community_comment where community_no = c.community_no) comment_count, (select m.nickname from member m where c.member_id = m.id) nickname
+	from community  c
+	where c.community_no = #{no}
+	</select>
+
+	
+	<resultMap type="map" id="communityMap">
+		<id column="community_no" property="communityNo"/>
+		<result column="title" property="title"/>
+		<result column="member_id" property="memberId"/>
+		<result column="content" property="content"/>
+		<result column="reg_date" property="regDate"/>
+		<result column="read_count" property="readCount"/>
+		<result column="like_count" property="likeCount"/>
+		<result column="category" property="category"/>
+		<result column="report_yn" property="reportYn"/>
+		<result column="delete_yn" property="deleteYn"/>
+		<result column="comment_count" property="commentCount"/>
+		<result column="nickname" property="nickname"/>	
+	</resultMap>
+	
+	<!-- 
+		<resultMap type="member" id="membeMap">
+		<id column="id" property="id"/>
+		<result column="nickname" property="nickname"/>
+		</resultMap>
+	-->
+	
+	<select id="selectCommunityComment" parameterType="Integer" resultType="comment">
+		select c.content, c.reg_date, c.writer, m.nickname, c.is_parent, c.no 
+		from community_comment c join member m on m.id = c.writer
+		where c.delete_yn = 'N' 
+		and c.community_no = #{no}
+		and c.comment_level = 1 
+		order by c.reg_date
+	</select>
+	<select id="selectCommunityReComment" parameterType="Integer" resultType="comment">
+		select content, reg_date, writer, comment_ref from community_comment where delete_yn = 'N' and comment_ref = #{ref} and comment_level = 2 order by reg_date
+	</select>
+	
+	<!--  
+		<resultMap type="map" id="commentMap">
+		<id column="no" property="no"/>
+		<result column="community_no" property="communityNo"/>
+		<result column="writer" property="writer"/>
+		<result column="content" property="content"/>
+		<result column="reg_date" property="regDate"/>
+		<result column="delete_yn" property="deleteYn"/>
+		<result column="comment_level" property="commentLevel"/>
+		<result column="comment_ref" property="commentRef"/>
+	</resultMap>
+	-->
+	
+	<select id="selectCommunityAttachment" parameterType="Integer" resultType="communityAttachment">
+		select no, original_filename, renamed_filename, community_no from community_attachment where community_no = #{no} order by reg_date
+	</select>
+	
+	<update id="deleteCommunityContent" parameterType="Integer">
+		update community set delete_yn = 'Y' where community_no = #{communiy_no}
+	</update>
+	
+	<update id="updateCommunityContent" parameterType="map">
+		update community set title = #{title}, content = #{content}, category = #{category}, member_id = #{memberId}  where community_no = #{no}
+	</update>
+	
+	<select id="getCommunityList" resultType="community">
+		select community_no, category, title, (select m.nickname from member m where c.member_id = m.id) nickname, 
+		reg_date, read_count, like_count from community c order by reg_date
+	</select>
+	
+	<select id="getTotalCommunityContent" resultType="Integer">
+		select	count(*) from community
+	</select>
+
+</mapper>
+

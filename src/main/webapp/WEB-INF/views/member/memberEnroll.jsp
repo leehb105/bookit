@@ -1,7 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/member.css" />
+<link rel="stylesheet" href="${ pageContext.request.contextPath}/resources/css/member.css" />
+<link rel="stylesheet" href="${ pageContext.request.contextPath}/resources/css/kakaoMap.css" />
+<style>
+	#map {
+		width: 500px;
+	}
+</style>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
 
@@ -9,11 +15,10 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-
-
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
-<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrit6="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
 <br /><br />
 
@@ -34,16 +39,17 @@
                            <div class="form-group">
                               <label for="exampleInputEmail1">아이디</label>
                               <input type="text"  name="id" class="form-control" id="id" aria-describedby="emailHelp" placeholder="아이디를 입력하세요">
+                              <span id="idHelp"></span>
                            </div>
                            <div class="form-group">
                               <label for="exampleInputEmail1">비밀번호</label>
                               <input type="password" name="password" id="password" class="form-control" aria-describedby="idHelp" placeholder="비밀번호를 입력하세요">
-                              <!-- <span id="idHelp">영문, 숫자가 하나 이상 포함된 8-16자리의 암호를 입력하세요.</span> -->
+                              <span id="passwordHelp"></span>
                            </div>
                            <div class="form-group">
                               <label for="exampleInputEmail1">비밀번호 확인</label>
                               <input type="password" id="passwordCheck" class="form-control" aria-describedby="passwordHelp" placeholder="비밀번호를 한번 더 입력하세요">
-                              <!-- <span id="passwordHelp">8-16자리의 암호를 입력하세요.영문, 숫자가 하나 이상 포함되어야하며, 영문 중 하나 이상은 반듯이 대문자여야 합니다.</span> -->
+                              <span id="passwordCheckHelp"></span>
                            </div>
                            <div class="form-group">
                               <label for="exampleInputEmail1">이름</label>
@@ -52,15 +58,74 @@
                            <div class="form-group">
                               <label for="exampleInputEmail1">닉네임</label>
                               <input type="text"  name="nickname" class="form-control" id="nickname" aria-describedby="emailHelp" placeholder="닉네임을 입력하세요">
+                              <span id="nicknameHelp"></span>
                            </div>
                            <div class="form-group">
                               <label for="exampleInputEmail1">이메일</label>
                               <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="이메일을 입력하세요">
+							  <span id="emailHelp"></span>                         
                            </div>
                            <div class="form-group">
                               <label for="exampleInputEmail1">휴대폰</label>
                               <input type="tel" name="phone" id="phone" class="form-control" aria-describedby="emailHelp" placeholder="숫자만 입력하세요">
+                           	  <span id="phoneHelp"></span>
                            </div>
+                           
+                           <!-- 시작  -->
+	                   	<div> 
+							<div>
+								지번: <input type='text' id='jibunAddr' name='jibunAddress' size=50 readonly/>
+							</div>
+							<div>
+								도로명: <input type='text' id='detailRoadAddr' name='detailRoadAddress' size=50 readonly />
+							</div>
+							<div>
+								<input type='text' id='searchAddr' name='searchAddr' />
+								<input type='button' onclick="generateMap(false, 'addr')" value="검색">
+							</div>
+
+							<div id="map_wrapper">
+								<div id="map"></div>
+							</div>
+
+								<!-- 아래 폼은 hidden 처리 예정 -->
+							<div class='hidden'>
+								<div>
+									도로명: <input type='text' id='roadAddr' name='roadAddress' size=50 readonly/>
+								</div>
+								<div>
+									건물명: <input type='text' id='extraAddr' name='extraAddress' size=50 readonly/>
+								</div>
+								<div>
+									시/도: <input type='text' id='region_1depth_name' name='depth1' readonly/>
+								</div>
+								<div>
+									시/군/구: <input type='text' id='region_2depth_name' name='depth2' readonly/>
+								</div>
+								<div>
+									동/읍/면: <input type='text' id='region_3depth_name' name='depth3' readonly/>
+								</div>
+								<div>
+									번지1:<input type='text' id='main_address_no' name='bunji1' readonly/>
+								</div>
+								<div>
+									번지2:<input type='text' id='sub_address_no' name='bunji2' readonly/>
+								</div>
+						
+								<div>
+									위도:<input type='text' id='latitude' name='latitude' readonly required/>
+								</div>
+								<div>
+									경도:<input type='text' id='longitude' name='longitude' readonly required/>
+								</div>
+								<div>
+									<input type='text' name='detailAddress'/>
+								</div>
+					
+							</div>
+						</div>
+	                    <!-- 끝  -->
+                           
                            <div class="col-md-12 text-center mb-3">
                               <button type="submit" class="btn roberto-btn w-100">가입하기</button>
                            </div>
@@ -75,43 +140,201 @@
 			</div>
 		</div>
       </div>   
+
+<script src="${pageContext.request.contextPath}/resources/js/kakaoMap.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/kakaoPostcode.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript"
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6572b946baab53e064d0fc558f5af389&libraries=services,clusterer,drawing"></script>
          
 
 <br /><br /><br /><br /><br /><br />
 <script>
+$("#id").focusout(function() {
+	var id = $("#id").val();
+	var advice = $("#idHelp");
+	var idRegExp = /^[a-z0-9]{4,12}$/;
+	var checkEng = /[a-z]/;
+	var checkNum = /[0-9]/;
 
+	if(id == "") {
+		idHelp.innerText = "필수 입력사항입니다";
+		advice.css({"color": "red","font-size": "12px"});
+		return false;
+	}
+	else if(!checkEng.test(id)) {
+		idHelp.innerText = "영문자를 포함해주세요.";
+		advice.css({"color": "red", "font-size": "12px"});
+		return false;
+	}
+	else if(!checkNum.test(id)) {
+		idHelp.innerText = "숫자를 포함해주세요.";
+		advice.css({"color": "red", "font-size": "12px"});
+		return false;
+	}
+	else if(!idRegExp.test(id)) {
+		idHelp.innerText = "영문 숫자 포함 4~12자리로 입력하세요.";
+		advice.css({"color": "red", "font-size": "12px"});
+		return false;
+	}
+	else if(idRegExp.test(id)) {
+		$.ajax({
+			url: `${pageContext.request.contextPath}/member/checkDuplicateId.do`,
+			type: "POST",
+			data: {
+				id : id
+			},
+			dataType: "json",
+			success: function(data){
+				if(data == 0) {
+					idHelp.innerText = "사용가능한 아이디입니다.";
+					advice.css({"color": "blue", "font-size": "12px"});
+					return true;
+				} 
+				else {
+					idHelp.innerText = "사용중인 아이디입니다.";
+					advice.css({"color": "red", "font-size": "12px"});
+					return false;
+				}
+			},
+			error: console.log
+		});
+	}
+});
+$("#password").focusout(function() {
+	var password = $("#password").val();
+	var advice = $("#passwordHelp");
+	var passwordRegExp = /^[a-z0-9]{8,16}$/;
+	var checkEng = /[a-z]/;
+	var checkNum = /[0-9]/;
+	
+	if (password == "") {
+		passwordHelp.innerText = "비밀번호를 입력해 주세요.";
+		advice.css({"color": "red", "font-size": "12px"});
+		return false;
+	}
+	else if(!checkEng.test(password)) {
+		passwordHelp.innerText = "영문자를 포함해주세요.";
+		advice.css({"color": "red", "font-size": "12px"});
+		return false;
+	}
+	else if(!checkNum.test(password)) {
+		passwordHelp.innerText = "숫자를 포함해주세요.";
+		advice.css({"color": "red", "font-size": "12px"});
+		return false;
+	}
+	else if(!passwordRegExp.test(password)) {
+		passwordHelp.innerText = "영문 숫자 포함 8~16자리로 입력하세요.";
+		advice.css({"color": "red", "font-size": "12px"});
+		return false;
+	}
+	else if(passwordRegExp.test(password)) {
+		passwordHelp.innerText = "사용 가능합니다.";
+		advice.css({"color": "blue", "font-size": "12px"});
+		return true;
+	}
+});
+$("#passwordCheck").focusout(function() {
+	var password = $("#password").val();
+	var passwordCheck = $("#passwordCheck").val();
+	var advice = $("#passwordCheckHelp");
+	
+	if (password == "") {
+		passwordCheckHelp.innerText = "비밀번호를 입력해 주세요.";
+		advice.css({"color": "red", "font-size": "12px"});
+		return false;
+	}
+	else if (password != passwordCheck) {
+		passwordCheckHelp.innerText = "비밀번호가 일치하지 않습니다.";
+		advice.css({"color": "red", "font-size": "12px"});
+		return false;
+	}
+	else if (password == passwordCheck) {
+		passwordCheckHelp.innerText = "비밀번호가 일치합니다.";
+		advice.css({"color": "blue", "font-size": "12px"});
+		return true;
+	}
+});
+$("#nickname").focusout(function() {
+	var nickname = $("#nickname").val();
+	var advice = $("#nicknameHelp");
+	var nicknameRegExp = /^[가-힣|a-z|A-Z]{2,}$/;
 
-	/* $(function() {
-	  
-	  $("form[name='registration']").validate({
-	    rules: {
-	      id: "required",
-	      name: "required",
-	      nickname: "required",
-	      email: {
-	        required: true,
-	        email: true
-	      },
-	      password: {
-	        required: true
-	      }
-	    },
-	    
-	    messages: {
-	      id: "아이디를 입력하세요",
-	      name: "이름을 입력하세요",
-	      nickname: "닉네임을 입력하세요",
-	      password: {
-	        required: "비밀번호를 입력하세요"
-	      },
-	      email: "이메일을 입력하세요"
-	    },
-	  
-	    submitHandler: function(form) {
-	      form.submit();
-	    }
-	  });
-	});
- */
+	if(nickname == "") {
+		nicknameHelp.innerText = "필수 입력사항입니다";
+		advice.css({"color": "red","font-size": "12px"});
+		return false;
+	}
+	else if(!nicknameRegExp.test(nickname)) {
+		nicknameHelp.innerText = "한글 또는 영문으로 2글자 이상 입력해주세요.";
+		advice.css({"color": "red", "font-size": "12px"});
+		return false;
+	}
+	else if(nicknameRegExp.test(nickname)) {
+		$.ajax({
+			url: `${pageContext.request.contextPath}/member/checkDuplicateNickname.do`,
+			type: "POST",
+			data: {
+				nickname : nickname
+			},
+			dataType: "json",
+			success: function(data){
+				if(data == 0) {
+					nicknameHelp.innerText = "사용가능한 닉네임입니다.";
+					advice.css({"color": "blue", "font-size": "12px"});
+					return true;
+				} 
+				else {
+					nicknameHelp.innerText = "사용중인 닉네임입니다.";
+					advice.css({"color": "red", "font-size": "12px"});
+					return false;
+				}
+			},
+			error: console.log
+		});
+	}
+});
+$("#email").focusout(function() {
+	var email = $("#email").val();
+	var advice = $("#emailHelp");
+	var emailRegExp = /^[\w]{2,}@[\w]+(\.[\w]+){1,3}$/;
+	
+	if (!emailRegExp.test(email)) {
+		emailHelp.innerText = "올바르지 않은 이메일 형식입니다.";
+		advice.css({"color": "red", "font-size": "12px"});
+		return false;
+	}
+	else if(emailRegExp.test(email)) {
+		emailHelp.innerText = "사용 가능합니다.";
+		advice.css({"color": "blue", "font-size": "12px"});
+		return true;
+	}
+});
+$("#phone").focusout(function() {
+	var phone = $("#phone").val();
+	var advice = $("#phoneHelp");
+	var phoneRegExp = /^010[0-9]{8}$/;
+	
+	if (!phoneRegExp.test(phone)) {
+		phoneHelp.innerText = "올바르지 않은 전화번호입니다.";
+		advice.css({"color": "red", "font-size": "12px"});
+		return false;
+	}
+	else if(phoneRegExp.test(phone)) {
+		phoneHelp.innerText = "사용 가능합니다.";
+		advice.css({"color": "blue", "font-size": "12px"});
+		return true;
+	}
+});
+
+</script>
+
+<script type="text/javascript"
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6572b946baab53e064d0fc558f5af389&libraries=services,clusterer,drawing"></script>
+<script src="${pageContext.request.contextPath}/resources/js/kakaoMap_v2.js"></script>
+	
+
+<script>
+	generateMap(true, "coord", '${loginMember.latitude}', '${loginMember.longitude}');
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

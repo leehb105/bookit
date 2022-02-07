@@ -102,17 +102,6 @@ CREATE TABLE community (
 CREATE SEQUENCE seq_community_community_no nocache;
 
 CREATE TABLE charge_history (
-	no	number		NOT NULL,
-	charge_cash	number		NOT NULL,
-	bonus_cash	number		NOT NULL,
-	charge_date	date	DEFAULT current_date	NOT NULL,
-	member_id	varchar2(20)		NOT NULL
-
-	,CONSTRAINT pk_charge_history_no PRIMARY KEY(no)
-	,CONSTRAINT fk_charge_history_member_id FOREIGN KEY(member_id) REFERENCES member(id)
-);
-
-CREATE TABLE charge_history (
 	imp_uid varchar2(16)		NOT NULL,
 	merchant_uid varchar2(20)	NOT NULL,
 	pg_tid varchar2(20)			NOT NULL,
@@ -127,17 +116,7 @@ CREATE TABLE charge_history (
 	,CONSTRAINT ck_charge_history_charge_cash CHECK (charge_cash IN (2000, 5000, 10000, 20000))
 );
 
-CREATE OR REPLACE TRIGGER trig_member
-	AFTER
-	INSERT ON charge_history
-	FOR EACH ROW
-BEGIN 
-	UPDATE
-		MEMBER
-	SET cash = cash + :NEW.charge_cash + :NEW.bonus_cash
-	WHERE id = :NEW.member_id;
-END;
-/;
+
 
 CREATE TABLE rent (
 	rent_no	number		NOT NULL,
@@ -258,6 +237,7 @@ CREATE TABLE authority (
 	,constraint pk_authority_authority PRIMARY KEY(authority, member_id) -- 기본키 복합키로 변경했습니다.
 	,constraint fk_authority_member_id FOREIGN key(member_id) REFERENCES member(id)
 );
+select * from authority;
 
 CREATE TABLE board_id (
 	board_id	varchar2(20)		NOT NULL,
@@ -348,18 +328,48 @@ CREATE TABLE chat_history (
 	,constraint fk_chat_history_chat_room_id FOREIGN key(chat_room_id, sender_id) REFERENCES chat_room(chat_room_id, chat_member_id)
 );
 
-
 CREATE TABLE address (
-	member_id	varchar2(20)		NOT NULL,
-	land_lot	varchar2(100)		NULL,
-	road_name	varchar2(100)		NULL,
+	member_id		varchar2(20)		NOT NULL,
+	postcode		varchar2(10)		NULL,
+	road_address	varchar2(100)		NULL,
+	extra_address	varchar2(100)		NULL,
+	depth1			varchar2(20)		NOT NULL,
+	depth2			varchar2(30)		NOT NULL,
+	depth3			varchar2(50)		NOT NULL,
+	bunji1			varchar2(10)		NULL,
+	bunji2			varchar2(10)		NULL,
 	detail_address	varchar2(100)		NULL,
-	latitude	float(126)		NULL,
-	longitude	float(126)		NULL
+	latitude		float				NOT NULL,
+	longitude		float				NOT NULL
 
-	,constraint pk_address_member_id PRIMARY KEY(member_id)
-	,constraint fk_address_member_id FOREIGN key(member_id) REFERENCES member(id)
+	,CONSTRAINT  pk_address_member_id PRIMARY KEY(member_id)
+	,CONSTRAINT  fk_address_member_id FOREIGN key(member_id) REFERENCES member(id) ON DELETE cascade
 );
+COMMENT ON COLUMN address.postcode IS '우편번호';
+COMMENT ON COLUMN address.road_address IS '도로명 주소';
+COMMENT ON COLUMN address.extra_address IS '도로명 주소에 붙는 건물명';
+COMMENT ON COLUMN address.depth1 IS '도/광역시';
+COMMENT ON COLUMN address.depth2 IS '시/군 + 구';
+COMMENT ON COLUMN address.depth3 IS '동/읍/면 + 리';
+COMMENT ON COLUMN address.bunji1 IS '번지1';	-- int가 맞지만 혹시 몰라 string으로
+COMMENT ON COLUMN address.bunji2 IS '번지2';		-- int가 맞지만 혹시 몰라 string으로
+COMMENT ON COLUMN address.detail_address IS '사용자가 입력한 상세 주소';
+COMMENT ON COLUMN address.latitude IS '위도';
+COMMENT ON COLUMN address.longitude IS '경도';
+
+GRANT CREATE VIEW TO spring;
+CREATE OR REPLACE VIEW member_view
+AS
+SELECT
+	m.*,
+	a.LATITUDE,
+	a.LONGITUDE,
+	a.road_address || nvl2(a.extra_address, ' (' || a.extra_address || ')', '') AS road_address,
+	a.depth1 || ' ' || a.depth2 || ' ' || a.depth3 || ' ' || a.bunji1 || nvl2(a.bunji2, '-' || a.bunji2, '') || ' ' || a.detail_address AS jibun_address
+FROM MEMBER m LEFT JOIN address a
+	ON m.id = a.member_id;
+
+SELECT * FROM member_view;
 
 CREATE TABLE wishlist (
 	member_id	varchar2(20)		NOT NULL,
@@ -418,3 +428,20 @@ delete from member where id ='chart1';
 commit;
 
 select * from (select count(*) from member group by extract(day from enroll_date));
+
+
+		select
+			*
+		from
+			chat_history;
+CREATE OR REPLACE TRIGGER trig_member
+	AFTER
+	INSERT ON charge_history
+	FOR EACH ROW
+BEGIN 
+	UPDATE
+		MEMBER
+	SET cash = cash + :NEW.charge_cash + :NEW.bonus_cash
+	WHERE id = :NEW.member_id;
+END;
+/;	

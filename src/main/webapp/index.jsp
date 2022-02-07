@@ -26,12 +26,12 @@
             </div>
 
             <!-- Single Welcome Slide -->
-            <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(img/bg-img/17.jpg);" data-img-url="img/bg-img/17.jpg">
-                <!-- Welcome Content -->
+            <!-- <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(img/bg-img/17.jpg);" data-img-url="img/bg-img/17.jpg">
+                Welcome Content
                 <div class="welcome-content h-100">
                     <div class="container h-100">
                         <div class="row h-100 align-items-center">
-                            <!-- Welcome Text -->
+                            Welcome Text
                             <div class="col-12">
                                 <div class="welcome-text text-center">
                                     <h6 data-animation="fadeInUp" data-delay="200ms">Rental &amp; Resale</h6>
@@ -44,13 +44,13 @@
                 </div>
             </div>
 
-            <!-- Single Welcome Slide -->
+            Single Welcome Slide
             <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(img/bg-img/18.jpg);" data-img-url="img/bg-img/18.jpg">
-                <!-- Welcome Content -->
+                Welcome Content
                 <div class="welcome-content h-100">
                     <div class="container h-100">
                         <div class="row h-100 align-items-center">
-                            <!-- Welcome Text -->
+                            Welcome Text
                             <div class="col-12">
                                 <div class="welcome-text text-center">
                                     <h6 data-animation="fadeInDown" data-delay="200ms">Rental &amp; Resale</h6>
@@ -62,7 +62,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </section>
     <!-- Welcome Area End -->
 

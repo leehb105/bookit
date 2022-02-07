@@ -4,6 +4,20 @@
 div.alert-secondary {color:red;}
 div.alert-warning {color:blue;}
 
+.chatList button {
+	line-height: 0;
+	padding: 0;
+	
+	
+}
+#exclamation{
+	z-index: 99;
+	color: red;
+	display: inline-block;
+	width: 20px;
+	height:20px;
+	font-weight: bold;
+}
 .chat{
 	border: 0;
 	outline: 0;
@@ -24,6 +38,8 @@ div.alert-warning {color:blue;}
 }
 
 .profile-work{
+	position: relative;
+    bottom: 50px;
     padding: 10%;
     margin-left: 0%;
     border: 2px solid #1cc3b2;
@@ -85,7 +101,7 @@ form{
 }
 .chatList{
 	display: table;
-	height: 500px;
+	height: 550px;
 	width: 150px;
 	background-color: #98FB98;
 }
@@ -111,17 +127,56 @@ form{
 ========================================== detail css===================================================
 */
 
+.selfWriter {
+	margin-right:10px;
+	font-weight: bold;
+}
+.memberWriter {
+	margin-left: 10px;
+	font-weight: bold;
+}
+.selfLi {
+	text-align:right;
+	display: flex;
+	flex-direction: column;
+}
+.memberLi {
+	text-align:left;
+	display: flex;
+	flex-direction: column;
+	margin-right: auto;
+}
+.member::before{
+	content:"";
+	position:relative;
+	display:inline-block;
+	background-color:#fff;
+	left:-13px; 
+	border-top: 8px solid transparent;
+    border-bottom: 0px solid transparent;
+    border-left: 8px solid #C9DAEB;
+}
+.self::after{
+	content:"";
+	position:relative;
+	display:inline-block;
+	background-color:yellow;
+	right:-13px; 
+	border-top:8px solid transparent; 
+	border-bottom:0px solid transparent;
+	border-right:8px solid #C9DAEB;
+}
 .self {
 	text-align:right;
-	border: 1px solid #000;
+	margin-right:10px;
 	background-color : yellow;
 	padding: 1px 5px 5px;
     border-radius: 10px;
     color : black;
 }
 .member {
-	
-	border: 1px solid #000;
+	text-align:left;
+	margin-left:10px;
 	background-color : white;
 	padding: 1px 5px  5px;
     border-radius: 5px;

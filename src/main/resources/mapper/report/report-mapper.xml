@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="report">
+	
+	<select id="selectAllReportUser" resultType="reportUser">
+		select * from report_user where reporter = #{id} order by no desc
+	</select>
+	
+	<select id="selectTotalReportUser" resultType="_int">
+		select count(*) from report_user where reporter = #{id}
+	</select>
+	
+	<select id="selectAllReportBoard" resultType="reportBoard">
+		select 
+		    r.*,
+		    b.board_name
+		from 
+		    report_board r left join board_id b
+		    on r.board_id = b.board_id
+		where 
+			reporter = #{id}
+		order by
+			no desc
+	</select>
+	
+	<select id="selectTotalReportBoard" resultType="_int">
+		select count(*) from report_board where reporter = #{id}
+	</select>
+	
+	<select id="selectOneReportUser" resultType="reportUser">
+		select * from report_user where no = #{no}
+	</select>
+</mapper>

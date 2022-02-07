@@ -4,6 +4,14 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%-- spring-webmvc의존 : security의 xss대비 csrf토큰 생성 --%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
+<!-- 인증객체의 principal속성을 pageContext 속성으로 저장 -->
+<sec:authentication property="principal" var="loginMember"/>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
@@ -110,26 +118,46 @@
                                                 </ul>
                                             </li>
                                         </ul> -->
-                                    </li>
+
                                     <li><a href="#">컬렉션</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/admin/admin.do">관리자</a></li>                   
+                                    <sec:authorize access="hasRole('ADMIN')">
+                                    	 <li><a href="${pageContext.request.contextPath}/admin/admin.do">관리자</a></li>    
+                                    </sec:authorize>                  
  									</ul>
 
                                 <!-- Search -->
                                 <div class="search-btn ml-4" style="padding-right: 30px">
                                     <i class="fa fa-search" aria-hidden="true"></i>
                                 </div>
-
                                 <!-- Login -->
-                              <c:if test="${empty loginMember}">
-                                <div class="book-now-btn ml-3 ml-lg-5">
-                                    <a href="${pageContext.request.contextPath}/member/memberLogin.do">로그인/회원가입<i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
-                                </div>
-                              </c:if>
-                              <c:if test="${!empty loginMember}">
+                              <sec:authorize access="isAnonymous()">
+
+	                                <div class="book-now-btn ml-3 ml-lg-5">
+	                                    <a href="${pageContext.request.contextPath}/member/memberLogin.do">로그인/회원가입<i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+	                                </div>
+                              </sec:authorize>
+                              
+                              
+                              <sec:authorize access="isAuthenticated()">
                               	<div style="padding-right:10px">
                               		
-	                            	<a href="${pageContext.request.contextPath}/member/mypageMain.do">${loginMember.name}님</a>
+	                            	<a href="${pageContext.request.contextPath}/member/mypageMain.do">
+	                            		<sec:authentication property="principal.username"/>
+	                            		<sec:authentication property="authorities"/>
+	                            		</a>님
+	                            	<a href="#"><i class="fa fa-heart fa-lg"></i></a>
+	                            	<form:form
+	                            		method="POST"
+	                            		action="${pageContext.request.contextPath}/member/memberLogout.do">
+	                            		<button type = "submit" class="btn roberto-btn mb-15 w-10">로그아웃</button>
+	                              	</form:form>
+	                              </div>
+						  	  </sec:authorize>	
+						  	  
+						  	  <c:if test="${!empty sessionScope.kakaoE}">
+                              	<div style="padding-right:10px">
+                              		
+	                            	<a href="${pageContext.request.contextPath}/member/mypageMain.do">${sessionScope.kakaoN}님</a>
 	                            	<a href="#"><i class="fa fa-heart fa-lg"></i></a>
 	                              		
                               	</div>

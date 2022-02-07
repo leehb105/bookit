@@ -26,74 +26,24 @@
 <!-- Breadcrumb Area End -->
 
 <!-- Service Area Start -->
-<section class="roberto-service-area section-padding-100-0">
+<section class="roberto-service-area section-padding-100-0 mb-100">
     <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <!-- Section Heading -->
-                <div class="section-heading text-center wow fadeInUp" data-wow-delay="100ms">
-                    <h4>Collection</h4>
-                </div>
-            </div>
-        </div>
 
         <div class="row">
-            <!-- Single Service Area -->
-            <div class="col-12 col-md-6 col-lg-4" onclick="location.href='${pageContext.request.contextPath}/collection/collectionDetail.do';">
-                <div class="single-service-area mb-100 wow fadeInUp" data-wow-delay="300ms">
-                    <img src="${pageContext.request.contextPath}/resources/img/21.jpg" alt="">
-                    <div class="service-title d-flex align-items-center justify-content-center">
-                        <h5>OOO님의 컬렉션제목</h5>
-                    </div>
-                </div>
-            </div>
-            <!-- Single Service Area -->
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="single-service-area mb-100 wow fadeInUp" data-wow-delay="300ms">
-                    <img src="${pageContext.request.contextPath}/resources/img/21.jpg" alt="">
-                    <div class="service-title d-flex align-items-center justify-content-center">
-                        <h5>OOO님의 컬렉션제목</h5>
-                    </div>
-                </div>
-            </div>
-            <!-- Single Service Area -->
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="single-service-area mb-100 wow fadeInUp" data-wow-delay="300ms">
-                    <img src="${pageContext.request.contextPath}/resources/img/21.jpg" alt="">
-                    <div class="service-title d-flex align-items-center justify-content-center">
-                        <h5>OOO님의 컬렉션제목</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="single-service-area mb-100 wow fadeInUp" data-wow-delay="300ms">
-                    <img src="${pageContext.request.contextPath}/resources/img/21.jpg" alt="">
-                    <div class="service-title d-flex align-items-center justify-content-center">
-                        <h5>OOO님의 컬렉션제목</h5>
-                    </div>
-                </div>
-            </div>
-            <!-- Single Service Area -->
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="single-service-area mb-100 wow fadeInUp" data-wow-delay="300ms">
-                    <img src="${pageContext.request.contextPath}/resources/img/21.jpg" alt="">
-                    <div class="service-title d-flex align-items-center justify-content-center">
-                        <h5>OOO님의 컬렉션제목</h5>
-                    </div>
-                </div>
-            </div>
-            <!-- Single Service Area -->
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="single-service-area mb-100 wow fadeInUp" data-wow-delay="300ms">
-                    <img src="${pageContext.request.contextPath}/resources/img/21.jpg" alt="">
-                    <div class="service-title d-flex align-items-center justify-content-center">
-                        <h5>OOO님의 컬렉션제목</h5>
-                    </div>
-                </div>
-            </div>
+        	<c:forEach items="${collectionList}" var="collectionList">
+	            <div class="col-12 col-md-6 col-lg-4">
+					<div class="single-post-area mb-100 wow fadeInUp text-center" data-wow-delay="50ms">
+						<a href="${pageContext.request.contextPath}/collection/collectionDetail.do?no=${collectionList.no}" class="post-thumbnail">
+							<img class="w-50" src="${pageContext.request.contextPath}/resources/img/default_profile.png">
+						</a>
+						<h5 class="post-title">${collectionList.nickname}님의</h5>
+						<h6>${collectionList.collectionName}</h6>
+					</div>
+				</div>
+            </c:forEach>
         </div>
-        
     </div>
+    ${pagebar}
 </section>
 <!-- Service Area End -->
 

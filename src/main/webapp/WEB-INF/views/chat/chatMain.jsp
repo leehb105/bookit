@@ -3,6 +3,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%-- spring-webmvc의존 : security의 xss대비 csrf토큰 생성 --%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
+<!-- 인증객체의 principal속성을 pageContext 속성으로 저장 -->
+<sec:authentication property="principal" var="loginMember"/>
+
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
 
@@ -35,11 +43,13 @@
 		
 			<div class ="container-chatheader">
 				<form action="${pageContext.request.contextPath}/chatroom/create" method="post">
-				<br />
-				<h5>채팅할 회원 아이디 입력</h5>
-				<input type="text" name="name" class="name">
-				<input type="hidden" name = "loginMember" class = "loginMember" value = ${loginMember.id}>
-				<button class="btn btn-secondary">개설하기</button>
+					<br />
+					<h5>채팅할 회원 아이디 입력</h5>
+					<input type="text" name="name" class="name">
+					<input type="hidden" name = "loginMember" class = "loginMember" value = ${loginMember.id}>
+					<button class="btn btn-secondary">개설하기</button>
+					
+					
 				</form>
 			</div>
 			<br />       
@@ -47,7 +57,10 @@
         		<div class="chatList">
 
 					<c:forEach items="${list}" var ="ChatRoom">
-						<button class = "form-control btn roberto-btn w-100" onclick="detail(`${ChatRoom.roomId}`,`${loginMember.id}`)" value = ${ChatRoom.roomId}>${ChatRoom.memberId}</button>
+						<button id = ${ChatRoom.roomId} class = "form-control btn roberto-btn w-100" onclick="detail(`${ChatRoom.roomId}`,`${loginMember.id}`)" value = ${ChatRoom.roomId}>
+							${ChatRoom.memberId}	
+						</button>
+
 					</c:forEach>
 
 			    </div>
@@ -75,8 +88,11 @@
 
 var socket = new SockJS("${pageContext.request.contextPath}/endpoint");
 var id;
-var loginMember;
+var loginMember = "${loginMember.id}";
 var tf = 0;
+
+
+
 
 // 채팅방 구독하는 함수
 function connect(id,loginMember){
@@ -90,19 +106,24 @@ function connect(id,loginMember){
 		
 		
 			if(writer == loginMember){
-				str = "<li class=self>";
-				str += "<b>" + writer + " : " + message + "</b>";
-				str += "</li>";
+				str = "<li class ='selfLi'>";
+				str += "<span class = 'selfWriter'>" + writer + "</span>"
+				str += "<div class = 'self'>" + message + "</div>";
+				str += "</li>"
+				
 				$(".chat-history").append(str);
 					
 			}
 			else{
-				str = "<li class=member>";
-				str += "<b>" + writer + " : " + message + "</b>";
-				str += "</li>";
+				str = "<li class = 'memberLi'>";
+				str += "<span class = 'memberWriter'>" +writer + "</span>"
+				str += "<div class = 'member'>" + message + "</div>";
+				str += "</li>"
 				$(".chat-history").append(str);
 			}
 			
+			// 스크롤 맨아래로
+			$(".chat-history").scrollTop($(".chat-history")[0].scrollHeight);
 		});
 };
 
@@ -110,6 +131,8 @@ function connect(id,loginMember){
 function detail(roomid,loginId) {
 	id = roomid;
 	loginMember = loginId;
+	
+	
 	
 	if(tf == 0){
 		
@@ -126,8 +149,9 @@ function detail(roomid,loginId) {
 	// div 비우기
 	$(".chat-history").empty();
 	
+	// 알람표시 지우기
 
-	
+	$("#exclamation").remove();
 
 	
 	// 채팅내역 가져오는 비동기 통신
@@ -139,22 +163,24 @@ function detail(roomid,loginId) {
 		},
 		success(chatHistory){
 			
-		
+			
 			var len = chatHistory.length;
 			var str = '';
 			for(var i = 0 ; i < len ; i++){
 				
 				if(chatHistory[i].writer === loginMember){
-					str = "<li class = 'self'>";
-					str += "<b>" + chatHistory[i].writer + " : " + chatHistory[i].message + "</b>";
+					str = "<li class ='selfLi'>";
+					str += "<span class = 'selfWriter'>" + chatHistory[i].writer + "</span>"
+					str += "<div class = 'self'>" + chatHistory[i].message + "</div>";
 					str += "</li>"
 					
 					$(".chat-history").append(str);
 					str = '';
 				}
 				else{
-					str = "<li class = 'member'>";
-					str += "<b>" + chatHistory[i].writer + " : " + chatHistory[i].message + "</b>";
+					str = "<li class = 'memberLi'>";
+					str += "<span class = 'memberWriter'>" + chatHistory[i].writer + "</span>"
+					str += "<div class = 'member'>" + chatHistory[i].message + "</div>";
 					str += "</li>"
 					
 					$(".chat-history").append(str);
@@ -162,8 +188,9 @@ function detail(roomid,loginId) {
 				}
 				
 			}
-
 			
+			// 스크롤 맨아래로
+			$(".chat-history").scrollTop($(".chat-history")[0].scrollHeight);
 		},
 		error: console.log
 	});
@@ -180,7 +207,8 @@ $(document).ready(function() {
 	// 클라이언트 연결
 	client.connect({});
 	
-
+	
+	console.log(loginMember);
 
 	
 	
@@ -206,21 +234,59 @@ $(document).ready(function() {
 			// 세번째 인자는 서버로 보낼 때 추가하고 싶은 stomp 바디이다. 서버 컨트롤러에서는 mapping된 함수의 String 인자로 json stringify된 문자열을 받을 수 있다.
 			client.send("/app/chat",{},JSON.stringify({roomId : id, message : msg, writer : loginMember}));
 			msg.value = '';
-			
+			$("#msg").val('');
 			/**app은 컨트롤러쪽에서 빠져있어도됨 spring이 자동으로 해줌
 				
 			*/
-		
+			
+			
+			
 	});
 	
+	$("input[type=text]").on('keyup',function(e){
+		if(e.key==='Enter' || e.keyCode===13){
+			$("#button-send").trigger('click');
+			
+		}
+	});
+	
+	
+	// 채팅 알람 표시해주는 비동기 통신
+	
+	$.ajax({
+		url: "${pageContext.request.contextPath}/chat/chatAlarm",
+		method: "GET",
+		data:{
+			loginMember : loginMember
+		},
+		success(chatAlarm){
+			var len = chatAlarm.length;
+			var str = '';
+			var btnid;
+			for(var i = 0 ; i < len ; i++){
+				var id = chatAlarm[i].roomId;
+				
+				if(chatAlarm[i].read_count === 1){
 
+					str="<svg id='exclamation' xmlns='http://www.w3.org/2000/svg' fill='currentColor' class='bi bi-exclamation-circle' viewBox='0 0 16 16'>";
+					str += "<path d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/>";
+					str +=	"<path d='M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z'/>";
+					str += "</svg>";
+					
+					$("#"+id).append(str);
+					str = '';
+				}
+				console.log(id);
+			}
+		},
+		error: console.log
+	});
+	
 	
 	
 
 
 });
-
-
 
 
 
