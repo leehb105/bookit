@@ -24,10 +24,10 @@
                         <form action="${pageContext.request.contextPath}/booking/bookSearch.do" method="get">       
                             <div class="col-12 wow fadeInUp form-inline form-group" data-wow-delay="100ms">
                                 <div class="col-lg-6">
-                                    <input type="text" class="form-control" name="bookTitle" placeholder="책 이름을 입력하세요">
+                                    <input type="text" class="form-control" name="title" placeholder="책 이름을 입력하세요">
                                 </div>
                                 <div class="col-lg-3">
-                                    <button type="submit" class="btn roberto-btn">책 검색</button>
+                                    <button type="submit" class="btn roberto-btn" formtarget="_blank">책 검색</button>
                                 </div>                                    
                             </div>                         
                         </form>

@@ -85,15 +85,17 @@ public class BookingController {
     	
     }
     	
-    @GetMapping("bookSearch.do")
-    public void bookSearch(@RequestParam String bookTitle) {
-    	log.debug("bookTitle = {}", bookTitle);
-    	Map<String, Object> param = new HashMap<>();
-    	param.put("bookTitle", bookTitle);
-    	
-    	List<BookInfo> list = bookingService.selectBook(param);
-    	log.debug("bookInfo = {}", list);
-    }
+//    @GetMapping("bookSearch.do")
+//    public void bookSearch(@RequestParam String bookTitle, Model model) {
+//    	log.debug("bookTitle = {}", bookTitle);
+//    	Map<String, Object> param = new HashMap<>();
+//    	param.put("bookTitle", bookTitle);
+//    	
+//    	List<BookInfo> list = bookingService.selectBook(param);
+//    	log.debug("bookInfo = {}", list);
+//    	
+//    	model.addAttribute("list", list);
+//    }
     
     
 }

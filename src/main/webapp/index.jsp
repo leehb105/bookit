@@ -95,7 +95,7 @@
                                 <button type="button" class="form-control btn roberto-btn w-100" onclick="checkInputDate();">Check Availability</button>
                                 <!-- <button type="button" class="form-control btn roberto-btn w-100" >Check Availability</button> -->
                             </div>
-                            </div>
+                            <h2>${test}</h2>     
                         </div>
                     </form>
                 </div>

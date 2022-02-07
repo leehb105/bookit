@@ -3,16 +3,28 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>검색결과</title>
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/roberto/style.css">
 
-	<!-- 등록 폼 시작 -->
-    <div class="roberto-contact-form-area section-padding-100">
+
+</head>
+<body>
+    
+    <div class="roberto-news-area section-padding-100-0">
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <!-- Section Heading -->
-                    <div class="section-heading text-center wow fadeInUp" data-wow-delay="100ms">
-                        <h5>등록할 책을 검색하세요</h5>
+                    <div class="section-heading text-left wow fadeInUp" data-wow-delay="100ms">
+                        <h5><span style="color: #1cc3b2;">"${query}"</span> 총 ${totalResults}개의 도서가 검색되었습니다.</h5>
+                        <hr class="my-2">
                     </div>
                 </div>
             </div>
@@ -21,16 +33,26 @@
                 <div class="col-12">
                     <!-- Form -->
                     <div class="roberto-contact-form">
-                        <form action="#" method="get">       
+                        <form action="${pageContext.request.contextPath}/booking/bookSearch.do" method="get">    
                             <div class="col-12 wow fadeInUp form-inline form-group" data-wow-delay="100ms">
-                                <form action="${pageContext.request.contextPath}/booking/bookSearch.do" class="nl-form">
-                                    <div class="col-lg-6">
-                                        <input type="text" class="form-control" name="bookTitle" placeholder="책 이름을 입력하세요">
+                                <c:forEach var="book" items="${list }">                   
+                                    <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp w-75" data-wow-delay="100ms">
+                                        <!-- List Cover -->
+                                        <div class="post-thumbnail w-25">
+                                            <!-- <input type="hidden" name="bno" value="${booking.boardNo}"> -->
+                                            <a href="#"><img src="${book.cover }" alt=""></a>
+                                        </div>
+                                        <!-- List Content -->
+                                        <div class="post-content">
+                                            <!-- List Meta -->
+                                            <!-- List Title -->
+                                            <a href="${pageContext.request.contextPath}/booking/bookingEnroll.do" class="post-title">${book.title }제목란</a>
+                                            <!-- List Author, publisher, pubdate -->
+                                            <p>${book.author} 저 | ${book.publisher} | <fmt:formatDate value="${book.pubdate }" pattern="yyyy년 MM월"/></p>
+                                            
+                                        </div>
                                     </div>
-                                    <div class="col-lg-3">
-                                        <button type="submit" class="btn roberto-btn">책 검색</button>
-                                    </div>                                   
-                                </form> 
+					            </c:forEach>                                    
                             </div>                         
                         </form>
                     </div>
@@ -47,91 +69,16 @@
 
 
 
-
-
-
-
-
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-12 col-lg-8">
-                    <!-- Single Room Details Area -->
-                    <div class="single-room-details-area mb-50">
-                        <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
-                            
-                            <form action="" class="nl-form">
-                                <input type="text" class="form-control">
-        
-                            </form>
-                            
-                            
-                            <img src="${booking.bookInfo.cover}" class="d-block w-40" alt="">
-                            <div class="post-content">
-                                <!-- booking Title -->
-                                <a href="#" class="post-title">${booking.bookInfo.title }</a>
-                                <!-- 분류 -->
-                                <p>${booking.bookInfo.categoryName}</p>
-                                <!-- 저자, 출판사, 출판일 -->
-                                <table class="table table-borderless table-sm">
-                                    <tr>
-                                        <td>저자</td>
-                                        <td>${booking.bookInfo.author}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>출판사</td>
-                                        <td>${booking.bookInfo.publisher}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>출판일</td>
-                                        <td><fmt:formatDate value="${booking.bookInfo.pubdate }" pattern="yyyy년 MM월"/></td>
-                                    </tr>
-                                    <tr>
-                                        <td>ISBN</td>
-                                        <td>${booking.bookInfo.isbn13}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>쪽수</td>
-                                        <td>${booking.bookInfo.itemPage} 쪽</td>
-                                    </tr>
-                                </table>
-                                
-
-                            </div>
-                        </div>
-                        <!-- Room Features -->
-                        <div class="room-features-area d-flex flex-wrap mb-50">
-                            <h6>책 상태: <span>${booking.bookStatus}</span></h6>
-                            <h6>보증금: <span><fmt:formatNumber type="number" maxFractionDigits="3" value="${booking.deposit }" />원</span></h6>
-                            <h6>일 대여료: <span><fmt:formatNumber type="number" maxFractionDigits="3" value="${booking.price }" />원</span></h6>
-
-                        </div>
-
-                        <h2>대여정보</h2>
-                        <span>제공자</span>
-                        <span>${booking.member.nickname}(${booking.member.id})</span>
-                        <br>
-                        <span>작성일 ${newDate}</span>
-
-                        <p>${booking.content}</p>
-                    </div>
-
-                    
-                </div>
-
-                
-            </div>
-        </div>
-    </div>
-
-    <!-- Rooms Area End -->
-<script>
- 
-
-
-
-
-</script>
-	
-
-<!-- Partner Area End -->
-<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+<!-- **** All JS Files ***** -->
+    <!-- jQuery 2.2.4 -->
+    <script src="${pageContext.request.contextPath}/resources/roberto/js/jquery.min.js"></script>
+    <!-- Popper -->
+    <script src="${pageContext.request.contextPath}/resources/roberto/js/popper.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="${pageContext.request.contextPath}/resources/roberto/js/bootstrap.min.js"></script>
+    <!-- All Plugins -->
+    <script src="${pageContext.request.contextPath}/resources/roberto/js/roberto.bundle.js"></script>
+    <!-- Active -->
+    <script src="${pageContext.request.contextPath}/resources/roberto/js/default-assets/active.js"></script>
+</body>
+</html>
