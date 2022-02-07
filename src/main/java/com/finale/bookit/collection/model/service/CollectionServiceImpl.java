@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.finale.bookit.collection.model.dao.CollectionDao;
 import com.finale.bookit.collection.model.vo.BookCollection;
+import com.finale.bookit.collection.model.vo.BookCollectionList;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
@@ -23,8 +24,8 @@ public class CollectionServiceImpl implements CollectionService {
 	}
 
 	@Override
-	public List<BookCollection> selectCollectionDetail(int no) {
-		return collectionDao.selectCollectionDetail(no);
+	public List<BookCollection> selectCollectionDetail(Map<String, Object> param) {
+		return collectionDao.selectCollectionDetail(param);
 	}
 
 	@Override
@@ -35,6 +36,16 @@ public class CollectionServiceImpl implements CollectionService {
 	@Override
 	public int selectTotalCollection() {
 		return collectionDao.selectTotalCollection();
+	}
+
+	@Override
+	public List<BookCollectionList> selectAllBookList(int no) {
+		return collectionDao.selectAllBookList(no);
+	}
+
+	@Override
+	public int selectTotalBookList(int no) {
+		return collectionDao.selectTotalBookList(no);
 	}
 
 }

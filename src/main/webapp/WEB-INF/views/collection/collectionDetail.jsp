@@ -98,21 +98,24 @@ $(() => {
 		                	class="single-room-area d-flex align-items-center mb-50 wow fadeInUp" 
 		                	data-wow-delay="100ms">
 		                    <!-- Room Thumbnail -->
+		                    <c:set var="memberId" value="${collectionDetailList.memberId}"></c:set>
 		                    <input type="hidden" id="nickname" value="${collectionDetailList.nickname}"/>
 		                    <input type="hidden" id="collectionName" value="${collectionDetailList.collectionName}"/>
 		                   	<input type="hidden" id="bookCollectionNo" value="${collectionDetailList.bookCollectionNo}"/>
 		                   	<c:if test="${collectionDetailList.listNo ne null}">
-			                	<input type="checkbox" id="checkListNo" value="${collectionDetailList.listNo}"/>
+		                   		<c:if test="${memberId eq loginMember.id}">
+			                		<input type="checkbox" id="checkListNo" value="${collectionDetailList.listNo}"/>
+			                    </c:if>
 			                    <div class="room-thumbnail text-center">
 			                        <img class="w-25" src="${collectionDetailList.cover}" alt="">
 			                    </div>
 			                    <!-- Room Content -->
 			                    <div class="room-content">
-			                        <h2><small>${collectionDetailList.title}</small></h2>
+			                        <h5>${collectionDetailList.title}</h5>
 			                        <div class="room-feature">
-			                            <h6>저자<span>${collectionDetailList.author}</span></h6>
+			                            <h6>저자<span><small>${collectionDetailList.author}</small></span></h6>
 			                            <h6><span></span></h6>
-			                            <h6>출판사<span>${collectionDetailList.publisher}</span></h6>
+			                            <h6>출판사<span><small>${collectionDetailList.publisher}</small></span></h6>
 			                        </div>
 			                        <a 
 			                        	href="${pageContext.request.contextPath}/collection/aaaa.do?ibsn13=${collectionDetailList.isbn13}"
@@ -122,19 +125,25 @@ $(() => {
 		                    </c:if>
 		                </div>
                 </c:forEach>
+				<c:if test="${empty bookList}">
+					<p class="text-right mb-100 mr-100">추가하신 책 목록이 없습니다.</p>
+				</c:if>
             </div>
-            <div class="col-12 col-lg-2">
-				<div class="hotel-reservation--area mb-100 ml-100">
-			        <div class="form-group">
-			            <button 
-			            	data-toggle="modal" 
-                        	data-target="#addBookModal" 
-                        	class="btn roberto-btn w-100">책 추가
-                        </button>
-                        <button class="btn roberto-btn w-100 mt-30" onclick="deleteBook();">선택 삭제</button>
-			        </div>
+            <c:if test="${memberId eq loginMember.id}">
+	            <div class="col-12 col-lg-2">
+					<div class="hotel-reservation--area mb-100 ml-100">
+				        <div class="form-group">
+				            <button 
+				            	data-toggle="modal" 
+	                        	data-target="#addBookModal" 
+	                        	class="btn roberto-btn w-100">책 추가
+	                        </button>
+	                        <button class="btn roberto-btn w-100 mt-30" onclick="deleteBook();">선택 삭제</button>
+				        </div>
+					</div>
 				</div>
-			</div>
+			</c:if>
+			
 			<!-- Modal -->
 			<div class="modal fade" id="addBookModal" tabindex="-1" role="dialog" aria-labelledby="addBookModalModalLabel" aria-hidden="true">
 			  <div class="modal-dialog" role="document">
@@ -161,6 +170,7 @@ $(() => {
         </div>
     </div>
 </div>
+<div class="mb-100">${pagebar}</div>
 
 
 <!-- Rooms Area End -->
