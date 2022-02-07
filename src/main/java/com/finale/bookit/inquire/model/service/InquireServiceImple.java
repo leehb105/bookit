@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.finale.bookit.admin.model.vo.AdminInquire;
 import com.finale.bookit.inquire.model.dao.InquireDao;
 import com.finale.bookit.inquire.model.vo.Inquire;
-import com.finale.bookit.member.model.vo.Member;
+import com.finale.bookit.member.model.vo.MemberEntity;
 
 @Service
 public class InquireServiceImple implements InquireService {
@@ -23,7 +23,7 @@ public class InquireServiceImple implements InquireService {
 	}
 
 	@Override
-	public int selectTotalContent(Member loginMember) {
+	public int selectTotalContent(MemberEntity loginMember) {
 		return inquireDao.selectTotalContent(loginMember);
 	}
 

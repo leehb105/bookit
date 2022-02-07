@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.finale.bookit.member.model.vo.Member;
+import com.finale.bookit.member.model.vo.MemberEntity;
 import com.finale.bookit.report.model.dao.ReportDao;
 import com.finale.bookit.report.model.vo.ReportBoard;
 import com.finale.bookit.report.model.vo.ReportUser;
@@ -23,7 +23,7 @@ public class ReportServiceImpl implements ReportService {
 	}
 	
 	@Override
-	public int selectTotalReportUser(Member loginMember) {
+	public int selectTotalReportUser(MemberEntity loginMember) {
 		return reportDao.selectTotalReportUser(loginMember);
 	}
 
@@ -33,7 +33,7 @@ public class ReportServiceImpl implements ReportService {
 	}
 	
 	@Override
-	public int selectTotalReportBoard(Member loginMember) {
+	public int selectTotalReportBoard(MemberEntity loginMember) {
 		return reportDao.selectTotalReportBoard(loginMember);
 	}
 

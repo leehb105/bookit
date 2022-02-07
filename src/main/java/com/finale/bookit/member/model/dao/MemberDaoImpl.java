@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.finale.bookit.member.model.vo.Address;
-import com.finale.bookit.member.model.vo.Member;
+import com.finale.bookit.member.model.vo.MemberEntity;
 
 @Repository
 public class MemberDaoImpl implements MemberDao {
@@ -17,12 +17,12 @@ public class MemberDaoImpl implements MemberDao {
 	private SqlSessionTemplate session;
 	
 	@Override
-	public int insertMember(Member member) {
+	public int insertMember(MemberEntity member) {
 		return session.insert("member.insertMember", member);
 	}
 
 	@Override
-	public Member selectOneMember(String id) {
+	public MemberEntity selectOneMember(String id) {
 		return session.selectOne("member.selectOneMember", id);
 	}
 
@@ -63,7 +63,7 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public Member findkakao(HashMap<String, Object> userInfo) {
+	public MemberEntity findkakao(HashMap<String, Object> userInfo) {
 		return session.selectOne("member.findKakao", userInfo);
 	}
 

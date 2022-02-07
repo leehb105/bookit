@@ -4,15 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.finale.bookit.member.model.vo.Address;
-import com.finale.bookit.member.model.vo.Member;
+import com.finale.bookit.member.model.vo.MemberEntity;
 
 public interface MemberService {
 
-	int insertMember(Member member);
+	int insertMember(MemberEntity member);
 
-	int insertMember(Member member, Address address);
+	int insertMember(MemberEntity member, Address address);
 
-	Member selectOneMember(String id);
+	MemberEntity selectOneMember(String id);
 
 	int selectAddress(Address address);
 
@@ -28,6 +28,6 @@ public interface MemberService {
 
 	String getAccessToken(String code);
 
-	Member getUserInfo(String access_Token);
+	MemberEntity getUserInfo(String access_Token);
 
 }

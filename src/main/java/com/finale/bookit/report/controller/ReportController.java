@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.finale.bookit.common.util.BookitUtils;
-import com.finale.bookit.member.model.vo.Member;
+import com.finale.bookit.member.model.vo.MemberEntity;
 import com.finale.bookit.report.model.service.ReportService;
 import com.finale.bookit.report.model.vo.ReportBoard;
 import com.finale.bookit.report.model.vo.ReportUser;
@@ -34,7 +34,7 @@ public class ReportController {
 	@GetMapping("/reportList.do")
 	public void reportList(
 			@RequestParam(defaultValue = "1") int cPage,
-			@SessionAttribute(required = false) Member loginMember,
+			@SessionAttribute(required = false) MemberEntity loginMember,
 			HttpServletRequest request,
 			Model model) {
 		

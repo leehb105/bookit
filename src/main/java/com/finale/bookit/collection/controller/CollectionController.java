@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import com.finale.bookit.collection.model.service.CollectionService;
 import com.finale.bookit.collection.model.vo.BookCollection;
 import com.finale.bookit.common.util.BookitUtils;
-import com.finale.bookit.member.model.vo.Member;
+import com.finale.bookit.member.model.vo.MemberEntity;
 
 import lombok.extern.slf4j.Slf4j;
 

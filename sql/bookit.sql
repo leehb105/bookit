@@ -116,17 +116,7 @@ CREATE TABLE charge_history (
 	,CONSTRAINT ck_charge_history_charge_cash CHECK (charge_cash IN (2000, 5000, 10000, 20000))
 );
 
-CREATE OR REPLACE TRIGGER trig_member
-	AFTER
-	INSERT ON charge_history
-	FOR EACH ROW
-BEGIN 
-	UPDATE
-		MEMBER
-	SET cash = cash + :NEW.charge_cash + :NEW.bonus_cash
-	WHERE id = :NEW.member_id;
-END;
-/;
+
 
 CREATE TABLE rent (
 	rent_no	number		NOT NULL,
@@ -247,6 +237,7 @@ CREATE TABLE authority (
 	,constraint pk_authority_authority PRIMARY KEY(authority, member_id) -- 기본키 복합키로 변경했습니다.
 	,constraint fk_authority_member_id FOREIGN key(member_id) REFERENCES member(id)
 );
+select * from authority;
 
 CREATE TABLE board_id (
 	board_id	varchar2(20)		NOT NULL,
@@ -443,4 +434,14 @@ select * from (select count(*) from member group by extract(day from enroll_date
 			*
 		from
 			chat_history;
-	
+CREATE OR REPLACE TRIGGER trig_member
+	AFTER
+	INSERT ON charge_history
+	FOR EACH ROW
+BEGIN 
+	UPDATE
+		MEMBER
+	SET cash = cash + :NEW.charge_cash + :NEW.bonus_cash
+	WHERE id = :NEW.member_id;
+END;
+/;	
