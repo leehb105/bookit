@@ -8,7 +8,7 @@
 		select
 		    *
 		from
-		    member m join authority a
+		    member_view m join authority a
 		        on m.id = a.member_id
 		where
 		    m.id = #{username}
@@ -27,6 +27,10 @@
 		<result column="enroll_date" property="enrollDate"/>
 		<result column="report_yn" property="reportYn"/>
 		<result column="cash" property="cash"/>
+		<result column="road_address" property="roadAddress"/>
+		<result column="jibun_address" property="jibunAddress"/>
+		<result column="latitude" property="latitude"/>
+		<result column="longitude" property="longitude"/>
 	
 		<collection 
 			property="authorities" 
