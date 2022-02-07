@@ -31,7 +31,6 @@
 		<result column="pubdate" property="pubdate"/>
 		<result column="item_page" property="itemPage"/>
 		<result column="category_name" property="categoryName"/>
-		<result column="toc" property="toc"/>
 		<result column="cover" property="cover"/>
 		<result column="description" property="description"/>
 	</resultMap>

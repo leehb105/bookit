@@ -66,6 +66,7 @@ public class SearchController {
         	book.setTitle(items.getJSONObject(i).getString("title"));
         	book.setAuthor(items.getJSONObject(i).getString("author"));
         	book.setPublisher(items.getJSONObject(i).getString("publisher"));
+        	book.setPubdate(BookitUtils.getFormatDate(items.getJSONObject(i).getString("pubDate")));      	
         	book.setCategoryName(items.getJSONObject(i).getString("categoryName"));
         	
         	int itemPage = 0;
@@ -82,7 +83,7 @@ public class SearchController {
         	book.setDescription(items.getJSONObject(i).getString("description"));
 
         	list.add(book);
-//        	log.debug("book = {}", book);
+        	log.debug("book = {}", book);
         	
         }
         

@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:authentication property="principal" var="loginMember"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 	<c:if test="${!empty loginMember}">
 		<div class="button-area mt-40">
@@ -19,7 +21,7 @@
 	</c:if>
 
 	<!-- Booking Area Start -->
-    <div class="roberto-news-area section-padding-100-0">
+    <div class="roberto-news-area section-padding-30-0">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-8">

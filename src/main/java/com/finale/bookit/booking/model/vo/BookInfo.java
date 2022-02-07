@@ -21,7 +21,6 @@ public class BookInfo implements Serializable{
     private Date pubdate;
     private int itemPage;
     private String categoryName;
-    private String toc;
     private String cover;
     private String description;
 

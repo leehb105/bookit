@@ -2,6 +2,7 @@ package com.finale.bookit.common.util;
 
 import java.io.File;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -144,6 +145,17 @@ public class BookitUtils {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
 		String newDate = sdf.format(date);
 		
+		return newDate;
+	}
+	public static Date getFormatDate(String date) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date newDate = null;
+		try {
+			newDate = sdf.parse(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
 		return newDate;
 	}
 	

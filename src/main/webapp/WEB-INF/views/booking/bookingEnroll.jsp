@@ -102,7 +102,7 @@
                         <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
                             
                             <form action="" class="nl-form">
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" id="testInput">
         
                             </form>
                             
