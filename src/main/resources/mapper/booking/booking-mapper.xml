@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="booking">
+    <select id="selectBookInfo" resultMap="bookingMap">
+       select
+		    b.*,
+		    bi.*,
+		    br.*
+		from
+		    booking b join book_info bi ON
+		    b.isbn13 = bi.isbn13
+		    JOIN BOOKING_RESERVATION br ON
+		    b.board_no = br.board_no
+		WHERE
+			bi.title LIKE '%' || #{bookTitle} || '%' 
+			AND
+			br.start_date NOT BETWEEN #{checkIn} AND #{checkOut}
+			AND
+			br.end_date NOT BETWEEN #{checkIn} AND #{checkOut}
+		order by b.reg_date desc
+    </select>
+    
+	<resultMap type="bookInfo" id="bookInfoMap">
+		<id column="isbn13" property="isbn13"/>
+		<result column="title" property="title"/>
+		<result column="author" property="author"/>
+		<result column="publisher" property="publisher"/>
+		<result column="pubdate" property="pubdate"/>
+		<result column="item_page" property="itemPage"/>
+		<result column="category_name" property="categoryName"/>
+		<result column="cover" property="cover"/>
+		<result column="description" property="description"/>
+	</resultMap>
+	
+	<resultMap type="bookReservation" id="bookReservationMap">
+		<id column="res_no" property="resNo"/>
+		<result column="board_no" property="boardNo"/>
+		<result column="start_date" property="startDate"/>
+		<result column="end_date" property="endDate"/>
+	</resultMap>
+	
+	<resultMap type="member" id="memberMap">
+		<id column="id" property="id"/>
+		<result column="nickname" property="nickname"/>
+	</resultMap>
+	
+	<resultMap type="booking" id="bookingMap">
+		<id column="board_no" property="boardNo"/>
+		<result column="content" property="content"/>
+		<result column="book_status" property="bookStatus"/>
+		<result column="price" property="price"/>
+		<result column="deposit" property="deposit"/>
+		<result column="writer" property="writer"/>
+		<result column="delete_yn" property="deleteYn"/>
+		<result column="isbn13" property="isbn13"/>
+		<result column="reg_date" property="regDate"/>
+		<association property="bookInfo" resultMap="bookInfoMap"/>
+		<association property="member" resultMap="memberMap"/>
+		<collection property="bookReservation" resultMap="bookReservationMap"/>
+	</resultMap>
+
+	<select id="selectTotalBookingCount" resultType="int">
+        select
+            count(*)
+        from
+            booking
+    </select>
+
+	<select id="selectBooking" resultMap="bookingMap">
+		select
+		    b.*,
+		    bi.*,
+		    br.*,
+		    m.id,
+		    m.nickname
+		from
+		    booking b join book_info bi ON
+		    b.isbn13 = bi.isbn13
+		    JOIN BOOKING_RESERVATION br ON
+		    b.board_no = br.board_no
+		    JOIN MEMBER m ON 
+		    b.writer = m.id
+		WHERE
+			b.board_no = #{bno}
+	</select>
+
+	<select id="selectBook" resultType="bookInfo">
+		SELECT
+			*
+		FROM	
+			BOOK_INFO
+		WHERE
+			title LIKE '%' || #{bookTitle} || '%' 
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>

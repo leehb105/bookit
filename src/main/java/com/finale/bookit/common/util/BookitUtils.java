@@ -2,6 +2,7 @@ package com.finale.bookit.common.util;
 
 import java.io.File;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -144,6 +145,35 @@ public class BookitUtils {
 				+ "const paging = (pageNo) => { location.href = `" + url + "${pageNo}`;  };"
 				+ "</script>");
 		return pagebar.toString();
+	}
+	
+	public static String getFormatDate(Date date) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
+		String newDate = sdf.format(date);
+		
+		return newDate;
+	}
+	public static Date getFormatDate(String date) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date newDate = null;
+		try {
+			newDate = sdf.parse(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		return newDate;
+	}
+	
+	public static int getTotalResults(int totalResults) {
+		int itemsPerPage = 30;
+		//검색결과갯수가 요청 갯수보다 많으면
+		if(totalResults > itemsPerPage) {
+			return itemsPerPage;
+		}else {
+			return totalResults;
+		}
+		
 	}
 
 }

@@ -72,23 +72,30 @@
         <div class="book-search-form-area">
             <div class="container-fluid">
                 <div class="book-search-form">
-                    <form action="#" method="post">
+                    <form
+                        action="${pageContext.request.contextPath}/booking/bookingList.do"
+                        method="get"
+                        id="resfrm">
                         <div class="row justify-content-between align-items-end">
                             <div class="col-6 col-md-2 col-lg-3">
                                 <label for="checkIn">대여 시작일</label>
-                                <input type="date" class="form-control" id="checkIn" name="checkin-date">
+                                <!-- <input type="date" class="form-control" id="checkIn" name="checkIn"> -->
+                                <input type="text" class="input-small form-control" name="checkIn" id="checkIn" autocomplete="off" placeholder="대여 시작일">
                             </div>
                             <div class="col-6 col-md-2 col-lg-3">
                                 <label for="checkOut">대여 종료일</label>
-                                <input type="date" class="form-control" id="checkOut" name="checkout-date">
+                                <!-- <input type="date" class="form-control" id="checkOut" name="checkOut"> -->
+                                <input type="text" class="input-small form-control" name="checkOut" id="checkOut" autocomplete="off" placeholder="대여 종료일">
                             </div>
                             <div class="col-6 col-md-2 col-lg-3">
                             	<label for="bookTitle">책 제목</label>
-                            	<input type="text" class="form-control" id="bookTitle" placeholder="책 제목을 입력하세요 ...">
+                            	<input type="text" class="form-control" id="bookTitle" name="bookTitle" placeholder="책 제목을 입력하세요" autofocus>
                             </div>
                             <div class="col-12 col-md-3">
-                                <button type="submit" class="form-control btn roberto-btn w-100">Check Availability</button>
+                                <button type="button" class="form-control btn roberto-btn w-100" onclick="checkInputDate();">Check Availability</button>
+                                <!-- <button type="button" class="form-control btn roberto-btn w-100" >Check Availability</button> -->
                             </div>
+                            <h2>${test}</h2>     
                         </div>
                     </form>
                 </div>
@@ -523,5 +530,162 @@
         </div>
     </div> -->
     <!-- Partner Area End -->
+
+<script>
+//datdpicker 한글설정
+    $(function() {
+        $.fn.datepicker.dates['ko'] = {
+            days: ["일요일","월요일","화요일","수요일","목요일","금요일","토요일"],
+            daysShort: ["일", "월", "화", "수", "목", "금", "토"],
+            daysMin: ["일", "월", "화", "수", "목", "금", "토"],
+            months: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+            monthsShort: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+            today: "오늘",
+            clear: "초기화",
+            format: "yyyy-mm-dd",
+            titleFormat: "yyyy년 MM월", /* Leverages same syntax as 'format' */
+            weekStart: 0
+        };
+    });
+
+
+    $(function() {
+        //대여시작일 설정
+        $('#checkIn').datepicker({
+            format: 'yyyy-mm-dd' //달력 날짜 형태
+            ,language : "ko"	//달력의 언어 선택, 그에 맞는 js로 교체해줘야한다.
+            ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
+            ,showMonthAfterYear:true // 월- 년 순서가아닌 년도 - 월 순서
+            ,changeYear: true //option값 년 선택 가능
+            ,changeMonth: true //option값  월 선택 가능                
+            ,buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
+            ,buttonText: "선택" //버튼 호버 텍스트              
+            ,yearSuffix: "년" //달력의 년도 부분 뒤 텍스트
+            ,autoclose : true	//사용자가 날짜를 클릭하면 자동 캘린더가 닫히는 옵션
+            ,title: "대여 시작일"	//캘린더 상단에 보여주는 타이틀
+            // ,showWeekDays : true // 위에 요일 보여주는 옵션 기본값 : true
+            ,clearBtn : true //날짜 선택한 값 초기화 해주는 버튼 보여주는 옵션 기본값 false 보여주려면 true
+            // ,todayBtn : true //'오늘'버튼 활성화
+            ,todayHighlight : true //오늘날짜 하이라이트 효과
+            ,startDate : new Date() //오늘날짜 이전의 날짜는 선택 불가
+
+        })
+        .on("show", function(e) {
+            //이벤트의 종류
+            //show : datePicker가 보이는 순간 호출
+            //hide : datePicker가 숨겨지는 순간 호출
+            //clearDate: clear 버튼 누르면 호출
+            //changeDate : 사용자가 클릭해서 날짜가 변경되면 호출 (개인적으로 가장 많이 사용함)
+            //changeMonth : 월이 변경되면 호출
+            //changeYear : 년이 변경되는 호출
+            //changeCentury : 한 세기가 변경되면 호출 ex) 20세기에서 21세기가 되는 순간
+            
+            console.log(e);// 찍어보면 event 객체가 나온다.
+            //간혹 e 객체에서 date 를 추출해야 하는 경우가 있는데 
+            // e.date를 찍어보면 Thu Jun 27 2019 00:00:00 GMT+0900 (한국 표준시)
+        });//datepicker end
+
+    });
+
+    $(function() {
+        //대여 종료일 설정
+        $('#checkOut').datepicker({
+            format: 'yyyy-mm-dd' //달력 날짜 형태
+            ,language : 'ko'	//달력의 언어 선택, 그에 맞는 js로 교체해줘야한다.
+            ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
+            ,showMonthAfterYear:true // 월- 년 순서가아닌 년도 - 월 순서
+            ,changeYear: true //option값 년 선택 가능
+            ,changeMonth: true //option값  월 선택 가능                
+            ,buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
+            ,buttonText: "선택" //버튼 호버 텍스트              
+            ,yearSuffix: "년" //달력의 년도 부분 뒤 텍스트 
+            ,autoclose : true	//사용자가 날짜를 클릭하면 자동 캘린더가 닫히는 옵션
+            ,title: "대여 종료일"	//캘린더 상단에 보여주는 타이틀
+            // ,showWeekDays : true // 위에 요일 보여주는 옵션 기본값 : true
+            ,minDate: 0 //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+            ,clearBtn : true //날짜 선택한 값 초기화 해주는 버튼 보여주는 옵션 기본값 false 보여주려면 true
+            // ,todayBtn : true //'오늘'버튼 활성화
+            ,todayHighlight : true //오늘날짜 하이라이트 효과
+            ,startDate : new Date() //오늘날짜 이전의 날짜는 선택 불가
+
+        })
+        .on("show", function(e) {
+            //이벤트의 종류
+            //show : datePicker가 보이는 순간 호출
+            //hide : datePicker가 숨겨지는 순간 호출
+            //clearDate: clear 버튼 누르면 호출
+            //changeDate : 사용자가 클릭해서 날짜가 변경되면 호출 (개인적으로 가장 많이 사용함)
+            //changeMonth : 월이 변경되면 호출
+            //changeYear : 년이 변경되는 호출
+            //changeCentury : 한 세기가 변경되면 호출 ex) 20세기에서 21세기가 되는 순간
+            
+            console.log(e);// 찍어보면 event 객체가 나온다.
+            //간혹 e 객체에서 date 를 추출해야 하는 경우가 있는데 
+            // e.date를 찍어보면 Thu Jun 27 2019 00:00:00 GMT+0900 (한국 표준시)
+        });//datepicker end
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+    function checkInputDate() {
+
+        const resfrm = document.getElementById("resfrm");
+        resfrm.submit();
+
+    //     const checkIn = document.getElementById("checkIn");
+    //     const checkOut = document.getElementById("checkOut");
+    //     const $bookTitle = $(bookTitle);
+    //     const resfrm = document.getElementById("resfrm");
+    //     // console.log(checkIn);
+    //     // console.log(checkOut);
+    //     // console.log(new Date());
+
+    //     //날짜 객체 생성
+    //     let startDate = new Date(checkIn.value);
+    //     let endDate = new Date(checkOut.value);
+
+    //     if(startDate < new Date()){
+    //         alert("오늘보다 이전 날짜는 선택할 수 없습니다.");
+    //         //대여시작일 오늘날짜로 변경
+    //         checkIn.value = getFormatDate();
+    //     }else if (checkIn.value == '' || checkOut.value == '') {
+    //         alert("대여 기간을 선택하세요.");
+    //         //대여시작일 오늘날짜로 변경
+    //         checkIn.value = getFormatDate();
+    //     }else if(startDate.getTime() > endDate.getTime()){
+    //         alert("대여시작일이 예약 마지막일보다 후일 수 없습니다. ");
+    //         //마지막일 초기화
+    //         checkOut.value = '';
+    //     }
+    //     else if($bookTitle.val() == ''){
+    //         alert("대여할 책의 제목을 입력하세요.");
+    //         //커서 이동
+    //         $bookTitle.focus();
+    //     }else{
+    //         //체크 완료후 제출
+    //         resfrm.submit();
+    //     }
+    // }
+    // //오늘날짜 포멧함수
+    // function getFormatDate(){
+    //     const date = new Date();
+    //     //날짜 포멧 ex) 2022-01-01
+    //     const today = date.getFullYear() + '-' + (("00"+(date.getMonth()+1).toString()).slice(-2)) + '-' + (("00"+date.getDate().toString()).slice(-2));
+    //     return today;
+    }
+
+
+
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
  
