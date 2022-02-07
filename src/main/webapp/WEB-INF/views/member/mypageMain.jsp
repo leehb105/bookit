@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
+<script src="${pageContext.request.contextPath}/resources/js/curreny.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage.css"/>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>    
@@ -49,7 +51,8 @@
                         ${loginMember.nickname}
                     </h5>
                     <p class="proile-rate">나의 평점 : <span>38점</span></p>
-                    <p class="proile-point">나의 북토리 : <span>10000원</span></p>
+                    <p class="proile-point">나의 북토리 : <span><fmt:formatNumber type="number" maxFractionDigits="3" value="${loginMember.cash}" />토리</span></p>
+
                     <button class="profile-edit-btn">프로필 수정</button>
                     <!-- <input type="submit" class="profile-edit-btn" value="Edit Profile"/> -->
                    </div>
