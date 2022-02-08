@@ -48,9 +48,9 @@ $(() => {
         <input type="text" id="title" name="title" placeholder="제목" style="margin-left: 6%;" required>
         
         <select id="category" name="category" >
-          <option value="chat" >사담</option>
-          <option value="meet" >독서모임</option>
-          <option value="recommend" >도서추천</option>
+          <option value="사담" >사담</option>
+          <option value="독서모임" >독서모임</option>
+          <option value="도서추천" >도서추천</option>
         </select>
         <textarea id="content" name="content" placeholder="내용" style="height:250px"></textarea>
         		<div class="input-group mb-3" style="padding:0px;" >
