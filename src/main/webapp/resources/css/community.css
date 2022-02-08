@@ -1,6 +1,7 @@
 * {
   box-sizing: border-box;
 }
+
 input[type=text] {
   width: 78%;
   padding: 7px;
@@ -30,6 +31,7 @@ textarea {
   border-radius: 4px;
   resize: vertical;
 }
+
 
 input[type=submit] {
   background-color: #8de610;
