@@ -53,8 +53,7 @@ public class RoomController {
         return "forward:/WEB-INF/views/chat/chatMain.jsp";
 	}
 	
-	 //채팅방 개설
-    @PostMapping(value = "/create")
+	@PostMapping(value = "/create")
     public String create(@RequestParam("writer") String writer,@AuthenticationPrincipal Member loginMember,RedirectAttributes rttr){
 
     	String memberId = service.selectIdByNickName(writer);
