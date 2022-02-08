@@ -103,4 +103,12 @@
 		select count(*) from member where nickname = #{nickname}
 	</select>
 	
+	<insert id="insertAuthority">
+		insert into 
+			authority(member_id) 
+		values(
+			#{id}
+		)
+	</insert>
+	
 </mapper>

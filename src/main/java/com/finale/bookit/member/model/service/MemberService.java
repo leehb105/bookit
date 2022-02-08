@@ -30,4 +30,6 @@ public interface MemberService {
 
 	MemberEntity getUserInfo(String access_Token);
 
+	int insertAuthority(String id);
+
 }

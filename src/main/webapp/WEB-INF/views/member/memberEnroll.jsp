@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%-- spring-webmvc의존 : security의 xss대비 csrf토큰 생성 --%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 
 <link rel="stylesheet" href="${ pageContext.request.contextPath}/resources/css/member.css" />
 <link rel="stylesheet" href="${ pageContext.request.contextPath}/resources/css/kakaoMap.css" />
@@ -35,7 +43,10 @@
                               <h1 >회원가입</h1>
                            </div>
                         </div>                        
-                        <form action="${pageContext.request.contextPath}/member/memberEnroll.do" method="post" name="registration">
+                        <form:form
+                        	action="${pageContext.request.contextPath}/member/memberEnroll.do" 
+                        	method="post" 
+                        	name="registration">
                            <div class="form-group">
                               <label for="exampleInputEmail1">아이디</label>
                               <input type="text"  name="id" class="form-control" id="id" aria-describedby="emailHelp" placeholder="아이디를 입력하세요">
@@ -134,7 +145,7 @@
                                  <p class="text-center"><a href="${pageContext.request.contextPath}/member/memberLogin.do" id="login">이미 Bookit 회원이신가요?</a></p>
                               </div>
                            </div>
-                        </form>
+                        </form:form>
                             </div>
                      </div>
 			</div>
