@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,7 +50,7 @@ public class MemberController {
 	@GetMapping("/memberLogin.do")
 	public String memberLogin(
 			@RequestHeader(name="Referer", required=false) String referer,
-			@SessionAttribute(required=false) String next, 
+			@SessionAttribute(required=false) String next,
 			Model model
 	) {
 		log.info("referer = {}", referer);
