@@ -23,8 +23,13 @@
                 <div class="col-12">
                     <!-- Section Heading -->
                     <div class="section-heading text-left wow fadeInUp" data-wow-delay="100ms">
-                        <h5><span style="color: #1cc3b2;">"${query}"</span> 총 ${totalResults}개의 도서가 검색되었습니다.</h5>
-                        <hr class="my-2">
+                        <c:if test="${totalResults ne 0}">
+                            <h5><span style="color: #1cc3b2;">"${query}"</span> 총 ${totalResults}개의 도서가 검색되었습니다.</h5>
+                            <hr class="my-2">
+                        </c:if>
+                        <c:if test="${totalResults eq 0}">
+                            <h5><span style="color: #1cc3b2;">"${query}"</span>의 검색 결과가 없습니다.</h5>
+                        </c:if>
                     </div>
                 </div>
             </div>

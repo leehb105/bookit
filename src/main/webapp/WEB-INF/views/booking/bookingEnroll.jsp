@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="col-12">
                     <!-- Section Heading -->
-                    <div class="section-heading text-center wow fadeInUp" data-wow-delay="100ms">
+                    <div class="section-heading text-left wow fadeInUp" data-wow-delay="100ms">
                         <h5>등록할 책을 검색하세요</h5>
                     </div>
                 </div>
@@ -20,7 +20,7 @@
             <div class="row">
                 <div class="col-12">
                     <!-- Form -->
-                    <div class="roberto-contact-form mb-30">
+                    <div class="roberto-contact-form mb-50">
                         <!-- <form action="${pageContext.request.contextPath}/booking/bookSearch.do" method="get">        -->
                         <form method="get" id="searchFrm">       
                             <div class="col-12 wow fadeInUp form-inline form-group" data-wow-delay="100ms">
@@ -28,7 +28,7 @@
                                     <input type="text" class="form-control" name="title" placeholder="책 이름을 입력하세요">
                                 </div>
                                 <div class="col-lg-3">
-                                    <button type="button" class="btn roberto-btn" id="searchBtn" onclick="openSearchWindow()">책 검색</button>
+                                    <button type="button" class="btn roberto-btn" id="searchBtn" onclick="openSearchWindow();">책 검색</button>
                                     <!-- <button type="submit" class="btn roberto-btn" formtarget="_blank">책 검색</button> -->
                                     <!-- <button type="button" class="btn roberto-btn" id="searchBtn">책 검색</button> -->
                                     <!-- <button type="button" class="btn roberto-btn" data-toggle="modal" data-target="#exampleModal">책 검색</button> -->
@@ -45,7 +45,7 @@
             <div class="row align-items-center">
                 <div class="col-12 col-lg-12">
                     <!-- Single Room Details Area -->
-                    <div class="single-room-details-area mb-50">
+                    <div class="single-room-details-area mb-50 wow fadeInUp">
                         <h5>책 정보</h5>
                         <hr class="my-2">
                         <div class="single-blog-post d-flex align-items-center mt-5 mb-50 wow fadeInUp" data-wow-delay="100ms">
@@ -90,18 +90,38 @@
                             </div>
                         </div>
                         <!-- Room Features -->
-                        <div class="room-features-area d-flex flex-wrap mb-50">
-                            <h6>책 상태: </h6>
-                            <!-- <span>책 상태: </span> -->
-                            <select class="selectpicker">
-                                <option>Mustard</option>
-                                <option>Ketchup</option>
-                                <option>Relish</option>
-                            </select>
-
+                        <div class="room-features-area d-flex flex-wrap mb-50 ">
+                            <table class="table text-center">
+                                <tr>
+                                    <td>상태</td>
+                                    <td>보증금</td>
+                                    <td>일당 대여료</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <select class="form-select" id="status">
+                                            <option value="0" disabled selected>선택</option>
+                                            <option value="1">최상</option>
+                                            <option value="2">상</option>
+                                            <option value="3">중</option>
+                                            <option value="4">하</option>
+                                            <option value="5">최하</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline form-group">
+                                            <input type="number" class="form-control" placeholder="보증금을 입력하세요" id="deposit" min="1" step="500" onKeyup="this.value=this.value.replace(/[^0-9]/g,'500');" required> &nbsp; <span> 원</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline form-group">
+                                            <input type="number" class="form-control" placeholder="일일 대여료를 입력하세요" id="price" min="1" step="500" onKeyup="this.value=this.value.replace(/[^0-9]/g,'500');" required> &nbsp; <span> 원</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                    
                             
-                            <h6>보증금: <span><fmt:formatNumber type="number" maxFractionDigits="3" value="${booking.deposit }" />원</span></h6>
-                            <h6>일 대여료: <span><fmt:formatNumber type="number" maxFractionDigits="3" value="${booking.price }" />원</span></h6>
+                            </table>
 
                         </div>
 
@@ -130,6 +150,7 @@
     //책 검색 버튼 비활성화
     window.onload = function(){
         $('#searchBtn').attr("disabled", true);
+        setInitBookInfo();
     }
 
     //검색창 입력시 검색 버튼 활성화
@@ -155,6 +176,7 @@
         let url = `${pageContext.request.contextPath}/booking/bookSearch.do`;
         var option = "width=570, height=350, resizable = no, scrollbars = no";
         
+        //새탭으로 열기
         childWin = window.open('', "result", option);
         $("#searchFrm").attr("action", url);
         $("#searchFrm").attr("target", "result");
@@ -162,25 +184,17 @@
 
     }
 
+    //자식창에서 호출할 json 페이지적용 함수
     window.getJson = function(){
-        // console.log('자식창에서 열었음');
 
         book = JSON.parse(localStorage.getItem("book"));
-        // console.log(isEmptyObj(book));
         if(isEmptyObj(book)){
-            // console.log("null입니다.");
             alert("책정보 없음 - 도서를 다시 선택해주세요.");
         }else if(!checkAllElement(book)){
             alert("해당 도서는 등록할 수 없습니다.");
         }else{
             const date = new Date(book.pubdate);
-            // console.log(book.pubdate);
-            // console.log(date);
             const newDate = date.getFullYear() + '년 ' + (date.getMonth()+1) + '월';
-            // console.log(date);
-            // const date = book.pubdate.getFullYear() + '년' + (book.getMonth()+1) + '월';
-            // console.log(date, typeof date);
-            // console.log(date.getFullYear());
 
             document.getElementById('cover').src = book.cover;
             document.getElementById('title').innerHTML = book.title;
@@ -191,11 +205,29 @@
             document.getElementById('itemPage').innerHTML = book.itemPage + ' 쪽';
             document.getElementById('categoryName').innerHTML = book.categoryName;
             document.getElementById('description').innerHTML = book.description;
-
-
         }
     }
+    function setInitBookInfo(){
+        //검색도서 적용 전 초기 서식
+        document.getElementById('title').innerHTML = '책의 제목입력이 필요합니다.';
+        document.getElementById('author').innerHTML = '저자 입력이 필요합니다.';
+        document.getElementById('publisher').innerHTML = '출판사 입력이 필요합니다.';
+        document.getElementById('pubdate').innerHTML = '출판일 입력이 필요합니다.';
+        document.getElementById('isbn').innerHTML = 'ISBN 입력이 필요합니다.';
+        document.getElementById('itemPage').innerHTML = '페이지 입력이 필요합니다.';
+        document.getElementById('categoryName').innerHTML = '카테고리 입력이 필요합니다.';
+    }
 
+    document.addEventListener('keydown', function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            // console.log('엔터 눌림');
+            if($title.val() != ''){
+                // console.log('if문 진입');
+                openSearchWindow();
+            }
+        };
+    }, true);
 
     //json 객체 비어있는지 검사
     function isEmptyObj(obj){
@@ -217,7 +249,46 @@
         }        
         return true;
     }
+
+    //보증금 0원에 대한 처리
+    document.getElementById('deposit').addEventListener('keyup', function(){
+        const deposit = document.getElementById('deposit');
+        // console.log(Number(deposit.value), typeof Number(deposit.value));
+        // console.log(deposit.value.length);
+
+        if(deposit.value.length > 0){
+            if(Number(deposit.value) <= 0){
+                alert('보증금은 0원 보다 많아야 합니다.');
+                deposit.value = 500;
+            }
+        }
+        
+
+    });
+
+
+    //일일요금 0원에 대한 처리
+    document.getElementById('price').addEventListener('keyup', function(){
+        const price = document.getElementById('price');
+
+        if(price.value.length > 0){
+            if(Number(price.value) <= 0){
+                alert('일일대여로는 0원 보다 많아야 합니다.');
+                price.value = 500;
+            }
+        }
+
+    });
     
+    //책상태 입력에 대한 처리
+    function checkBookStatus(){
+        const status = $('#status option:selected').val();
+        // console.log(status, typeof status);
+        if(status == '0'){
+            alert('책 상태를 선택해주세요');
+        }
+
+    }
 
     
 
