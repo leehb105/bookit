@@ -5,7 +5,7 @@
 <mapper namespace="used">
 	<select id="selectUsedContent" parameterType="Integer" resultMap="usedMap">
 	select 
-	u.used_board_no, u.title, u.used_bookstate, u.trade_method, u.price, u.category, u.content, u.writer, u.read_count, TO_CHAR(c.reg_date, 'YYYY-MM-DD  HH24:MI') reg_date,
+	u.used_board_no, u.title, u.used_bookstate, u.trade_method, u.category, u.content, u.writer, u.read_count, TO_CHAR(c.reg_date, 'YYYY-MM-DD  HH24:MI') reg_date,
 	(select m.nickname from member m where u.writer = m.id) nickname
 	from used_board u
 	where u.used_board_no = #{no}
@@ -15,7 +15,6 @@
 		<result column="title" property="title"/>
 		<result column="book_state" property="bookState"/>
 		<result column="trade_method" property="tradeMethod"/>
-		<result column="price" property="price"/>
 		<result column="category" property="category"/>
 		<result column="content" property="content"/>
 		<result column="writer" property="writer"/>

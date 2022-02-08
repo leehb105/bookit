@@ -18,5 +18,7 @@ public interface ChatRoomService {
 
 	int updateRead_check(String id);
 
+	String selectIdByNickName(String writer);
+
 	
 }

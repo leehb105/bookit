@@ -56,4 +56,10 @@ public class ChatRoomDaoImpl implements ChatRoomDao {
 		// TODO Auto-generated method stub
 		return session.update("chat.updateRead_Check", id);
 	}
+
+	@Override
+	public String selectIdByNickName(String writer) {
+		// TODO Auto-generated method stub
+		return session.selectOne("chat.selectIdByNickName", writer);
+	}
 }

@@ -79,6 +79,16 @@
 			chat_room_id = #{id}
 	</select>
 	
+	<select id="selectIdByNickName" resultType="string">
+		select
+			id
+		from
+			member
+		where
+			nickname = #{writer}
+	
+	</select>
+	
 	<resultMap type="chatroom" id="chatRoomMap">
 		<id column="chat_room_id" property="roomId"/>
 		<result column="chat_member_id" property="memberId"/>

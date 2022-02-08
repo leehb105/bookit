@@ -48,18 +48,20 @@ public class ChatController {
 	@ResponseBody
 	public List<ChatRoom> chatAlarm(@RequestParam String loginMember) {
 
-		
-		for(ChatRoom room : list) {
-			String id = room.getRoomId();
-			Chat param = new Chat(id,loginMember,null);
-			
-			List<Chat> ChatAlarm = chatService.selectChatAlarm(param);
-			
-			log.debug("ChatAlarm = {}",ChatAlarm);
-			if(!ChatAlarm.isEmpty()) {
-				room.setRead_count(1);
+		if(list != null) {
+			for(ChatRoom room : list) {
+				String id = room.getRoomId();
+				Chat param = new Chat(id,loginMember,null);
+				
+				List<Chat> ChatAlarm = chatService.selectChatAlarm(param);
+				
+				log.debug("ChatAlarm = {}",ChatAlarm);
+				if(!ChatAlarm.isEmpty()) {
+					room.setRead_count(1);
+				}
 			}
 		}
+
 		
 		log.debug("for check = {}",list);
 		

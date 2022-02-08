@@ -33,8 +33,6 @@ public class Used implements Serializable{
 	
 	private boolean deleteYn;
 	
-	private int price;
-	
 	private Date regDate;
 	
 	private int readCount;

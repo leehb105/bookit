@@ -16,7 +16,6 @@ import com.finale.bookit.board.model.dao.CommunityDao;
 import com.finale.bookit.board.model.vo.Comment;
 import com.finale.bookit.board.model.vo.Community;
 import com.finale.bookit.board.model.vo.CommunityAttachment;
-import com.finale.bookit.board.model.vo.CommunityTest;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -144,16 +143,6 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public int getTotalCommunityContent() {
 		return communityDao.getTotalCommunityContent();
-	}
-
-	@Override
-	public int insertCommunity(CommunityTest communityTest) {
-		return communityDao.insertCommunity(communityTest);
-	}
-
-	@Override
-	public CommunityAttachment selectOneCommunityAttachment(int no) {
-		return communityDao.selectOneCommunityAttachment(no);
 	}
 
 }

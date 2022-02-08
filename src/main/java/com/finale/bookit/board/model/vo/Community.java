@@ -41,7 +41,6 @@ public class Community implements Serializable {
 	
 	private String nickname;
 	
-	
 	// private Member member;
 	
 	private List<Comment> comment;
