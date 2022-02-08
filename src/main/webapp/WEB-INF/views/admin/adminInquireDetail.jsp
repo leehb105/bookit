@@ -3,6 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:authentication property="principal" var="loginMember"/>
+
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/mypage.css" />
@@ -47,7 +51,7 @@ function adminInquireValidate(){
                                     <!-- Comment Meta -->
                                     <div class="comment-meta">
                                         <a href="#" class="post-date"><fmt:formatDate value="${inquire.regDate}" pattern="yyyy/MM/dd"/></a>
-                                        <h6>${loginMember.id}</h6>
+                                        <h6>${inquire.memberId}</h6>
                                         <pre class="mt-30">${inquire.content}</pre>
                                     </div>
                                 </div>
@@ -81,15 +85,15 @@ function adminInquireValidate(){
 	                        <h2>문의 답변</h2>
 	
 	                        <!-- Form -->
-	                        <form 
+	                        <form:form 
 	                        	action="${pageContext.request.contextPath}/admin/inquireAdminReply.do"
 	                        	method="post"
 	                        	onsubmit="return adminInquireValidate();">
 	                            <div class="row">
 	                                <input type="hidden" name="inquireNo" value="${inquire.no}"/>
 	                                <input type="hidden" name="condition" value="0"/>
-	                                <input type="hidden" name="adminId" value="admin1234"/>
-	                                <input type="hidden" name="adminName" value="관리자이올시다"/>
+	                                <input type="hidden" name="adminId" value="${loginMember.id}"/>
+	                                <input type="hidden" name="adminName" value="${loginMember.nickname}"/>
 	                                <div class="col-12">
 	                                    <textarea 
 	                                    	name="content" class="form-control mb-30" 
@@ -99,7 +103,7 @@ function adminInquireValidate(){
 	                                    <input type="submit" class="btn roberto-btn btn-3 mt-15" value="답변 등록">
 	                                </div>
 	                            </div>
-	                        </form>
+	                        </form:form>
 	                    </div>
                     </c:if>
                 </div>

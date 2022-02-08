@@ -109,6 +109,10 @@
 	<delete id="deleteUser">
 		delete from member where id = #{reportee}
 	</delete>
+	
+	<select id="selectTotalReportBoard" resultType="_int">
+		select count(*) from report_board
+	</select>
 </mapper>
 
 
