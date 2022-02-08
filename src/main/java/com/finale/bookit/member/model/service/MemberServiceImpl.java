@@ -210,6 +210,12 @@ public class MemberServiceImpl implements MemberService {
  		}
 	}
 
+	@Override
+	public int insertAuthority(String id) {
+		// TODO Auto-generated method stub
+		return memberDao.insertAuthority(id);
+	}
+
 
 	
 }

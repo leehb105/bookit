@@ -59,6 +59,7 @@
                        <div class="col-md-12 text-center ">
                           <input type="submit" class="btn roberto-btn w-100" value="로그인">
                        </div>
+                       </form:form>
                        <div class="col-md-12 ">
                           <div class="login-or">
                              <hr class="hr-or">
@@ -86,7 +87,7 @@
                        <div class="form-group">
                           <p class="text-center">Bookit이 처음이신가요? <a href="${pageContext.request.contextPath}/member/memberEnroll.do" id="signup">회원가입</a></p>
                        </div>
-                    </form:form>
+
                  
 				</div>
 			</div>

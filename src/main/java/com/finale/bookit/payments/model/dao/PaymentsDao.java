@@ -7,5 +7,5 @@ import com.finale.bookit.payments.model.vo.KakaoPay;
 public interface PaymentsDao {
 	int insertCash(KakaoPay info);
 
-	List<KakaoPay> selectHistoryList();
+	List<KakaoPay> selectHistoryList(String memberId);
 }

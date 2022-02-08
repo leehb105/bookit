@@ -3,6 +3,7 @@ package com.finale.bookit.chatRoom.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,13 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.finale.bookit.admin.model.vo.Chart;
 import com.finale.bookit.chat.model.vo.Chat;
 import com.finale.bookit.chatRoom.model.service.ChatRoomService;
 import com.finale.bookit.chatRoom.model.vo.ChatRoom;
+import com.finale.bookit.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -53,25 +53,24 @@ public class RoomController {
         return "forward:/WEB-INF/views/chat/chatMain.jsp";
 	}
 	
-	 //채팅방 개설
-    @PostMapping(value = "/create")
-    public String create(@RequestParam("name") String name,@RequestParam("loginMember") String loginMember,RedirectAttributes rttr){
+	@PostMapping(value = "/create")
+    public String create(@RequestParam("writer") String writer,@AuthenticationPrincipal Member loginMember,RedirectAttributes rttr){
 
-    
-        
+    	String memberId = service.selectIdByNickName(writer);
+    	String loginMemberId = loginMember.getId();
+    	
         StringBuilder sb = new StringBuilder();
-        sb.append(name);
+        sb.append(memberId);
         sb.append(",");
-        sb.append(loginMember);
+        sb.append(loginMemberId);
         
         String chatParticipants = sb.toString();
         log.debug("chatParticipants = {}",chatParticipants);
         
         int result = service.createChatRoom(chatParticipants);
         
-    
         
-        return "redirect:/chatroom/list?loginMember="+loginMember;
+        return "redirect:/chatroom/list?loginMember="+loginMemberId;
     }
     
     

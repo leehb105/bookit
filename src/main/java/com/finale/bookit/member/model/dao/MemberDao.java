@@ -28,4 +28,6 @@ public interface MemberDao {
 
 	MemberEntity findkakao(HashMap<String, Object> userInfo);
 
+	int insertAuthority(String id);
+
 }

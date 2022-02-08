@@ -37,6 +37,8 @@ public interface AdminService {
 
 	int deleteUser(String reportee);
 
+	int selectTotalReportBoard();
+
 
 
 }

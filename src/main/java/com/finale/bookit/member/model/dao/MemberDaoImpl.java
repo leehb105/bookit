@@ -67,4 +67,10 @@ public class MemberDaoImpl implements MemberDao {
 		return session.selectOne("member.findKakao", userInfo);
 	}
 
+	@Override
+	public int insertAuthority(String id) {
+		// TODO Auto-generated method stub
+		return session.insert("member.insertAuthority", id);
+	}
+
 }

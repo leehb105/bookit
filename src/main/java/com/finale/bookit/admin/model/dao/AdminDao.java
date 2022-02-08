@@ -37,5 +37,7 @@ public interface AdminDao {
 
 	int deleteUser(String reportee);
 
+	int selectTotalReportBoard();
+
 
 }

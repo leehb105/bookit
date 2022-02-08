@@ -36,10 +36,10 @@ public class ReportController {
 	@GetMapping("/reportUserList.do")
 	public void reportUserList(
 			@RequestParam(defaultValue = "1") int cPage,
-			@SessionAttribute(required = false) MemberEntity loginMember, 
+			@AuthenticationPrincipal Member loginMember,
 			HttpServletRequest request, 
 			Model model) {
-
+		
 		String id = loginMember.getId();
 		// 페이지 당 게시글 갯수
 		int limit = 5;
@@ -64,10 +64,10 @@ public class ReportController {
 	@GetMapping("/reportBoardList.do")
 	public void reportBoardList(
 			@RequestParam(defaultValue = "1") int cPage, 
-			@SessionAttribute(required = false) MemberEntity loginMember,
+			@AuthenticationPrincipal Member loginMember,
 			HttpServletRequest request,
 			Model model) {
-		log.debug("loginMember = {}", loginMember);
+		
 		String id = loginMember.getId();
 		// 페이지 당 게시글 갯수
 		int limit = 5;

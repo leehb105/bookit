@@ -84,4 +84,9 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.deleteUser(reportee);
 	}
 
+	@Override
+	public int selectTotalReportBoard() {
+		return adminDao.selectTotalReportBoard();
+	}
+
 }
