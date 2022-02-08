@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.finale.bookit.board.model.vo.Comment;
 import com.finale.bookit.board.model.vo.Community;
 import com.finale.bookit.board.model.vo.CommunityAttachment;
+import com.finale.bookit.board.model.vo.CommunityTest;
 
 @Repository
 public class CommunityDaoImpl implements CommunityDao{
@@ -60,6 +61,16 @@ public class CommunityDaoImpl implements CommunityDao{
 	@Override
 	public List<Comment> getReCommentList(int refNo) {
 		return session.selectList("community.selectCommunityReComment", refNo);
+	}
+
+	@Override
+	public int insertCommunity(CommunityTest communityTest) {
+		return session.insert("community.insertCommunity", communityTest);
+	}
+
+	@Override
+	public CommunityAttachment selectOneCommunityAttachment(int no) {
+		return session.selectOne("community.selectOneCommunityAttachment", no);
 	}
 
 

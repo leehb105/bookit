@@ -6,6 +6,7 @@ import java.util.Map;
 import com.finale.bookit.board.model.vo.Comment;
 import com.finale.bookit.board.model.vo.Community;
 import com.finale.bookit.board.model.vo.CommunityAttachment;
+import com.finale.bookit.board.model.vo.CommunityTest;
 
 public interface CommunityDao {
 
@@ -27,4 +28,8 @@ public interface CommunityDao {
 	List<Comment> getCommentList(int no);
 	
 	List<Comment> getReCommentList(int refNo);
+
+	int insertCommunity(CommunityTest communityTest);
+
+	CommunityAttachment selectOneCommunityAttachment(int no);
 }

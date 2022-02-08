@@ -79,6 +79,29 @@
 	<select id="getTotalCommunityContent" resultType="Integer">
 		select	count(*) from community
 	</select>
+	
+		<insert id="insertCommunity" parameterType="communityTest">
+		insert into
+			community(community_no, category, title, member_id, content)
+		values(
+			SEQ_COMMUNITY_COMMUNITY_NO.nextval,
+			#{category},
+			#{title},
+			#{memberId},
+			#{content}
+		)
+	</insert>
+	
+	<insert id="insertCommunityAttachment">
+		insert into
+			communityAttachment(no, community_no, original_filename, renamed_filename)
+		values(
+			seq_community_attachment_no.nextval,
+			#{communityNo},
+			#{originalFilename},
+			#{renamedFilename}
+		)
+	</insert>
 
 </mapper>
 

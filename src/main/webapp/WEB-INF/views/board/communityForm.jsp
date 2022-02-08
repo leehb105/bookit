@@ -35,20 +35,22 @@ $(() => {
   		name="communityFrm" 
 		action="${pageContext.request.contextPath}/board/communityEnroll.do" 
 		method="post"
-		enctype="multipart/form-data" 
+		
+
 		onsubmit="return boardValidate();">
-     <div class="row">
-       	<h2>글 쓰기</h2>
+     <div class="row" style="margin-left: 2%;">
+       	<h2>글쓰기</h2>
         <hr>
-      <input type="submit" value="등록" >
-      <input type="button" value="취소" onclick="goCommunityList();">
+      <input type="submit" value="등록" style="margin-left: 70%;">
+      <input type="button" value="취소" onclick="goRequestList();">
     </div>
-        <input type="text" id="title" name="title" placeholder="제목">
+    <div name="form-body" style="margin-left: 2%;">
+        <input type="text" id="title" name="title" placeholder="제목" style="margin-left: 6%;" required>
         
-        <select id="category" name="category">
-          <option value="chat">잡담</option>
-          <option value="meet">독서모임</option>
-          <option value="recommendation">독서추천</option>
+        <select id="category" name="category" >
+          <option value="chat" >사담</option>
+          <option value="meet" >독서모임</option>
+          <option value="recommend" >도서추천</option>
         </select>
         <textarea id="content" name="content" placeholder="내용" style="height:250px"></textarea>
         		<div class="input-group mb-3" style="padding:0px;" >
@@ -60,16 +62,8 @@ $(() => {
 		    <label class="custom-file-label" for="upFile1">파일을 선택하세요</label>
 		  </div>
 		</div>
-		<div class="input-group mb-3" style="padding:0px;">
-		  <div class="input-group-prepend" style="padding:0px;">
-		    <span class="input-group-text">첨부파일2</span>
-		  </div>
-		  <div class="custom-file">
-		    <input type="file" class="custom-file-input" name="upFile" id="upFile2"" >
-		    <label class="custom-file-label" for="upFile2">파일을 선택하세요</label>
-		  </div>
 		</div>
   </form>
-</div>
+  </div>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
