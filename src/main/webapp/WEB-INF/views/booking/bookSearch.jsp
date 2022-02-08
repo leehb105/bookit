@@ -50,10 +50,10 @@
                                             <!-- List Meta -->
                                             <!-- List Title -->
                                             <!-- index: [1][0] -->
-                                            <a href="${pageContext.request.contextPath}/booking/bookingEnroll.do" class="post-title" id="title">${book.title }제목란</a>
+                                            <a href="${pageContext.request.contextPath}/booking/bookingEnroll.do" class="post-title" id="title">${book.title }</a>
                                             <!-- List Author, publisher, pubdate -->
                                             <!-- index: [1][1] -->
-                                            <p><span id="author">${book.author}</span> 저 | <span id="publisher">${book.publisher}</span> | <span id="pubdate"><input type="hidden" value="${book.pubdate }"><fmt:formatDate value="${book.pubdate }" pattern="yyyy년 MM월"/></span></p>
+                                            <p><span id="author">${book.author}</span> 저 | <span id="publisher">${book.publisher}</span> | <span id="pubdate"><input type="hidden" value="<fmt:formatDate value='${book.pubdate }' pattern='yyyy-MM-dd'/>"><fmt:formatDate value="${book.pubdate }" pattern="yyyy년 MM월"/></span></p>
                                             <!-- index: [1][2][0] -->
                                             <p>ISBN | <span id="isbn">${book.isbn13}</span></p>
                                             <!-- index: [1][3] -->
@@ -100,22 +100,34 @@
         localStorage.setItem("book", JSON.stringify(book));
         // opener.document.getElementById('testInput').value = book;
         opener.getJson();
+        window.close();
 
         
     }
 
     function toJson(div){
+
+        const cover = div.children[0].children[0].children[0].src;
+        const title = div.children[1].children[0].innerText;
+        const author = div.children[1].children[1].children[0].innerText;
+        const publisher = div.children[1].children[1].children[1].innerText;
+        const pubdate = div.children[1].children[1].children[2].children[0].value;
+        const isbn = div.children[1].children[2].children[0].innerText;
+        const itemPage = div.children[1].children[3].value;
+        const categoryName = div.children[1].children[4].value;
+        const description = div.children[1].children[5].value;
+        // console.log(pubdate, typeof pubdate);
         //json생성
         let book = {
-            "cover": div.children[0].children[0].children[0].src,
-            "title": div.children[1].children[0].innerText,
-            "author": div.children[1].children[1].children[0].innerText,
-            "publisher": div.children[1].children[1].children[1].innerText,
-            "pubdate": div.children[1].children[1].children[2].children[0].value,
-            "isbn": div.children[1].children[2].children[0].innerText,
-            "itemPage": div.children[1].children[3].value,
-            "categoryName": div.children[1].children[4].value,
-            "description": div.children[1].children[5].value,
+            "cover": cover,
+            "title": title,
+            "author": author,
+            "publisher": publisher,
+            "pubdate": pubdate,
+            "isbn": isbn,
+            "itemPage": itemPage,
+            "categoryName": categoryName,
+            "description":description,
         };
 
         return book;

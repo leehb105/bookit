@@ -43,10 +43,12 @@
         <!-- 검색결과 -->
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-12 col-lg-8">
+                <div class="col-12 col-lg-12">
                     <!-- Single Room Details Area -->
                     <div class="single-room-details-area mb-50">
-                        <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
+                        <h5>책 정보</h5>
+                        <hr class="my-2">
+                        <div class="single-blog-post d-flex align-items-center mt-5 mb-50 wow fadeInUp" data-wow-delay="100ms">
                             
                             <!-- <form action="" class="nl-form">
                                 <input type="text" class="form-control" id="testInput">
@@ -56,39 +58,48 @@
                             <img src="${pageContext.request.contextPath}/resources/img/book-photo.png" class="d-block w-40 mx-5" alt="" id="cover">
                             <div class="post-content mx-5">
                                 <!-- booking Title -->
-                                <a href="#" class="title"></a>
+                                <a href="#" id="title"></a>
+                                <p></p>
                                 <!-- 분류 -->
-                                <p class="categoryName"></p>
+                                <p id="categoryName"></p>
                                 <!-- 저자, 출판사, 출판일 -->
                                 <table class="table table-borderless table-sm">
                                     <tr>
                                         <td>저자</td>
-                                        <td class="author"></td>
+                                        <td id="author"></td>
                                     </tr>
                                     <tr>
                                         <td>출판사</td>
-                                        <td class="publisher"></td>
+                                        <td id="publisher"></td>
                                     </tr>
                                     <tr>
                                         <td>출판일</td>
-                                        <td class="pubdate"><fmt:formatDate value="" pattern="yyyy년 MM월"/></td>
+                                        <td id="pubdate"><fmt:formatDate value="" pattern="yyyy년 MM월"/></td>
                                     </tr>
                                     <tr>
                                         <td>ISBN</td>
-                                        <td class="isbn"></td>
+                                        <td id="isbn"></td>
                                     </tr>
                                     <tr>
                                         <td>쪽수</td>
-                                        <td class="itemPage"></td>
+                                        <td id="itemPage"></td>
                                     </tr>
                                 </table>
-                                
+                                <input type="hidden" value="" id="description">
 
                             </div>
                         </div>
                         <!-- Room Features -->
                         <div class="room-features-area d-flex flex-wrap mb-50">
-                            <h6>책 상태: <span>${booking.bookStatus}</span></h6>
+                            <h6>책 상태: </h6>
+                            <!-- <span>책 상태: </span> -->
+                            <select class="selectpicker">
+                                <option>Mustard</option>
+                                <option>Ketchup</option>
+                                <option>Relish</option>
+                            </select>
+
+                            
                             <h6>보증금: <span><fmt:formatNumber type="number" maxFractionDigits="3" value="${booking.deposit }" />원</span></h6>
                             <h6>일 대여료: <span><fmt:formatNumber type="number" maxFractionDigits="3" value="${booking.price }" />원</span></h6>
 
@@ -162,9 +173,24 @@
         }else if(!checkAllElement(book)){
             alert("해당 도서는 등록할 수 없습니다.");
         }else{
+            const date = new Date(book.pubdate);
+            // console.log(book.pubdate);
+            // console.log(date);
+            const newDate = date.getFullYear() + '년 ' + (date.getMonth()+1) + '월';
+            // console.log(date);
+            // const date = book.pubdate.getFullYear() + '년' + (book.getMonth()+1) + '월';
+            // console.log(date, typeof date);
+            // console.log(date.getFullYear());
+
             document.getElementById('cover').src = book.cover;
-            document.getElementById('title').html(book.title);
-            document.getElementById('author').text(book.author);
+            document.getElementById('title').innerHTML = book.title;
+            document.getElementById('author').innerHTML = book.author;
+            document.getElementById('publisher').innerHTML = book.publisher;
+            document.getElementById('pubdate').innerHTML = newDate;
+            document.getElementById('isbn').innerHTML = book.isbn;
+            document.getElementById('itemPage').innerHTML = book.itemPage + ' 쪽';
+            document.getElementById('categoryName').innerHTML = book.categoryName;
+            document.getElementById('description').innerHTML = book.description;
 
 
         }

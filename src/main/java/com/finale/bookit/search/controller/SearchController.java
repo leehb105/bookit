@@ -50,7 +50,7 @@ public class SearchController {
         
         String query = json.getString("query");
         int totalResults = BookitUtils.getTotalResults(json.getInt("totalResults"));
-        
+        log.debug("totalResults = {}", totalResults);
         
         //도서 검색 결과 배열 파싱
         JSONArray items = json.getJSONArray("item");
@@ -82,7 +82,12 @@ public class SearchController {
         	book.setCover(items.getJSONObject(i).getString("cover"));
         	book.setDescription(items.getJSONObject(i).getString("description"));
 
-        	list.add(book);
+        	if(!book.getAuthor().equals("")) {
+        		list.add(book);        		
+        	}else {
+        		totalResults--;
+        	}
+        	
         	log.debug("book = {}", book);
         	
         }

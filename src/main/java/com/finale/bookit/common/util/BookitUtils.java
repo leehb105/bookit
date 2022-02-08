@@ -155,7 +155,7 @@ public class BookitUtils {
 	}
 	public static Date getFormatDate(String date) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date newDate = null;
+		Date newDate = new Date();
 		try {
 			newDate = sdf.parse(date);
 		} catch (ParseException e) {
