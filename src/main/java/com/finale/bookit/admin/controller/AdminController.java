@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,7 @@ import com.finale.bookit.admin.model.vo.AdminInquire;
 import com.finale.bookit.admin.model.vo.Chart;
 import com.finale.bookit.common.util.BookitUtils;
 import com.finale.bookit.inquire.model.vo.Inquire;
+import com.finale.bookit.member.model.vo.Member;
 import com.finale.bookit.member.model.vo.MemberEntity;
 import com.finale.bookit.report.model.vo.ReportBoard;
 import com.finale.bookit.report.model.vo.ReportUser;
@@ -146,7 +148,7 @@ public class AdminController {
 		else
 			redirectAttr.addFlashAttribute("msg", result > 0 ? "신고가 접수되었습니다." : "다시 시도하세요.");
 		
-		return "redirect:/admin/adminReportList.do";
+		return "redirect:/admin/adminReportUserList.do";
 	}
 	
 	// 게시글 신고 상태 변경(승인 = 1, 반려 = 2)
@@ -163,11 +165,11 @@ public class AdminController {
 		else
 			redirectAttr.addFlashAttribute("msg", result > 0 ? "신고가 접수되었습니다." : "다시 시도하세요.");
 		
-		return "redirect:/admin/adminReportList.do";
+		return "redirect:/admin/adminReportBoardList.do";
 	}
 	
-	// 신고 목록
-	@GetMapping("/adminReportList.do")
+	// 사용자 신고 목록
+	@GetMapping("/adminReportUserList.do")
 	public void reportList(
 			@RequestParam(defaultValue = "1") int cPage,
 			HttpServletRequest request,
@@ -182,10 +184,7 @@ public class AdminController {
 		
 		// 사용자 신고 목록
 		List<ReportUser> reportUserList = adminService.selectAllReportUser(param);
-		// 게시글 신고 목록
-		List<ReportBoard> reportBoardList = adminService.selectAllReportBoard(param);
 		log.debug("reportUserList = {}", reportUserList);
-		log.debug("reportBoardList = {}", reportBoardList);
 		
 		// 페이지 영역
 		int totalContent = adminService.selectTotalReport();
@@ -193,6 +192,30 @@ public class AdminController {
 		String pagebar = BookitUtils.getPagebar(cPage, limit, totalContent, url);
 		
 		model.addAttribute("reportUserList", reportUserList);
+		model.addAttribute("pagebar", pagebar);
+	}
+	
+	// 게시글 신고 목록
+	@GetMapping("/adminReportBoardList.do")
+	public void reportBoardList(
+			@RequestParam(defaultValue = "1") int cPage, 
+			HttpServletRequest request,
+			Model model) {
+		
+		// 페이지 당 게시글 갯수
+		int limit = 5;
+		int offset = (cPage - 1) * limit;
+		Map<String, Object> param = new HashMap<>();
+		param.put("offset", offset);
+		param.put("limit", limit);
+
+		List<ReportBoard> reportBoardList = adminService.selectAllReportBoard(param);
+		log.debug("reportBoardList = {}", reportBoardList);
+		// 페이지 영역
+		int totalContent = adminService.selectTotalReportBoard();
+		String url = request.getRequestURI();
+		String pagebar = BookitUtils.getPagebar(cPage, limit, totalContent, url);
+
 		model.addAttribute("reportBoardList", reportBoardList);
 		model.addAttribute("pagebar", pagebar);
 	}

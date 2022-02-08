@@ -94,4 +94,9 @@ public class AdminDaoImpl implements AdminDao {
 		return session.delete("admin.deleteUser", reportee);
 	}
 
+	@Override
+	public int selectTotalReportBoard() {
+		return session.selectOne("admin.selectTotalReportBoard");
+	}
+
 }
