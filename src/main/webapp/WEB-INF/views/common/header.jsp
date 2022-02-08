@@ -143,7 +143,6 @@
                               		
 	                            	<a href="${pageContext.request.contextPath}/member/mypageMain.do">
 	                            		<sec:authentication property="principal.username"/>
-	                            		<sec:authentication property="authorities"/>
 	                            		</a>님
 	                            	<a href="#"><i class="fa fa-heart fa-lg"></i></a>
 	                            	<form:form

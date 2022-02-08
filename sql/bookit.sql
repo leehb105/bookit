@@ -238,7 +238,7 @@ CREATE TABLE authority (
 	,constraint fk_authority_member_id FOREIGN key(member_id) REFERENCES member(id)
 );
 select * from authority;
-
+alter table authority modify(authority varchar2(20) default 'ROLE_USER');
 CREATE TABLE board_id (
 	board_id	varchar2(20)		NOT NULL,
 	board_name	varchar2(20)		NOT NULL
