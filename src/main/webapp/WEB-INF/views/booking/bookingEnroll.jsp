@@ -12,7 +12,7 @@
                 <div class="col-12">
                     <!-- Section Heading -->
                     <div class="section-heading text-left wow fadeInUp" data-wow-delay="100ms">
-                        <h5>등록할 책을 검색하세요</h5>
+                        <h3>등록할 책을 검색하세요</h3>
                     </div>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                         <form method="get" id="searchFrm">       
                             <div class="col-12 wow fadeInUp form-inline form-group" data-wow-delay="100ms">
                                 <div class="col-lg-6">
-                                    <input type="text" class="form-control" name="title" placeholder="책 이름을 입력하세요">
+                                    <input type="text" class="form-control" name="title" id="title" placeholder="책 이름을 입력하세요">
                                 </div>
                                 <div class="col-lg-3">
                                     <button type="button" class="btn roberto-btn" id="searchBtn" onclick="openSearchWindow();">책 검색</button>
@@ -46,7 +46,7 @@
                 <div class="col-12 col-lg-12">
                     <!-- Single Room Details Area -->
                     <div class="single-room-details-area mb-50 wow fadeInUp">
-                        <h5>책 정보</h5>
+                        <h3>책 정보 입력</h3>
                         <hr class="my-2">
                         <div class="single-blog-post d-flex align-items-center mt-5 mb-50 wow fadeInUp" data-wow-delay="100ms">
                             
@@ -125,11 +125,9 @@
 
                         </div>
 
-                        <h2>대여정보</h2>
-                        <span>제공자</span>
-                        <span>${booking.member.nickname}(${booking.member.id})</span>
-                        <br>
-                        <span>작성일 ${newDate}</span>
+                        <h3>대여정보 입력</h3>
+                        <hr class="my-2">
+                        <textarea class="form-control" aria-label="With textarea" rows="7" placeholder="대여 정보에 관한 내용을 입력해주세요 :-)"></textarea>
 
                         <p>${booking.content}</p>
                     </div>
@@ -207,8 +205,9 @@
             document.getElementById('description').innerHTML = book.description;
         }
     }
+
+    //검색도서 적용 전 초기 서식
     function setInitBookInfo(){
-        //검색도서 적용 전 초기 서식
         document.getElementById('title').innerHTML = '책의 제목입력이 필요합니다.';
         document.getElementById('author').innerHTML = '저자 입력이 필요합니다.';
         document.getElementById('publisher').innerHTML = '출판사 입력이 필요합니다.';
@@ -217,8 +216,9 @@
         document.getElementById('itemPage').innerHTML = '페이지 입력이 필요합니다.';
         document.getElementById('categoryName').innerHTML = '카테고리 입력이 필요합니다.';
     }
-
-    document.addEventListener('keydown', function(event) {
+    
+    //도서 검색창 엔터 이벤트
+    document.getElementById('title').addEventListener('keydown', function(event) {
         if (event.keyCode === 13) {
             event.preventDefault();
             // console.log('엔터 눌림');
