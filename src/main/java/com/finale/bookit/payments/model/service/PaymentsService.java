@@ -8,6 +8,6 @@ public interface PaymentsService {
 	
 	int insertCash(KakaoPay info);
 
-	List<KakaoPay> selectHistoryList();
+	List<KakaoPay> selectHistoryList(String memberId);
 
 }

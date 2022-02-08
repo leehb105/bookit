@@ -3,6 +3,7 @@ package com.finale.bookit.payments.controller;
 import java.beans.PropertyEditor;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import com.finale.bookit.member.model.vo.Member;
 import com.finale.bookit.payments.model.service.PaymentsService;
 import com.finale.bookit.payments.model.vo.KakaoPay;
 
@@ -63,8 +66,11 @@ public class KakaoPayController {
 //	https://despacito-pasito.tistory.com/8
 	@PostMapping(value="/member/payments/charge.do", produces="application/text; charset=UTF-8")
 	@ResponseBody
-	public String chargeComplete(@RequestBody KakaoPay body, Model model) {
+	public String chargeComplete(@RequestBody KakaoPay body, @AuthenticationPrincipal Member member, Model model) {
 		log.debug("kakaoPay = {} ", body.toString());
+		log.debug("member = {}", member);
+		int chargeAmount = ((int)body.getChargeCash()) + this.getBonusCash((int)body.getChargeCash());
+		member.setCash(member.getCash() + chargeAmount);
 		
 		// 충전금액 위변조 검증을 위한 토큰 획득
 		final String token = this.getToken();
@@ -73,17 +79,20 @@ public class KakaoPayController {
 		if(this.isCounterfeited(body, token))
 			return "결제 실패(사유: 위변조 시도)";
 
-		body.setBonusCash((int) (body.getChargeCash() * 0.03));
+		body.setBonusCash(this.getBonusCash((int)body.getChargeCash()));
 		int result = paymentsService.insertCash(body);
+		if(result < 0) return "Error"; 
+		model.addAttribute("cash", member.getCash());
+		log.debug("memberCash = {}", member.getCash());
 		
 		return String.valueOf(body.getChargeCash() + body.getBonusCash());
 	
 	}
 	
 	@GetMapping(value="/member/payments/history.do")
-	public void history(Authentication authentication, Model model) {
-		log.debug("authentication = {}", authentication);
-		List<KakaoPay> list = paymentsService.selectHistoryList();
+	public void history(@AuthenticationPrincipal Member member, Model model) {
+		
+		List<KakaoPay> list = paymentsService.selectHistoryList(member.getId());
 		
 		model.addAttribute("list", list);
 	}
@@ -130,4 +139,14 @@ public class KakaoPayController {
 
 		return (amount != body.getChargeCash() || !impUid.equals(body.getImpUid()));
 	}
+
+	private int getBonusCash(int chargeCash) {
+		final HashMap<Integer, Integer> bonusMap = new HashMap<>();
+		bonusMap.put(2000, 50);
+		bonusMap.put(5000, 150);
+		bonusMap.put(10000, 300);
+		bonusMap.put(20000, 60);
+		return bonusMap.get(chargeCash);
+	}
+
 }

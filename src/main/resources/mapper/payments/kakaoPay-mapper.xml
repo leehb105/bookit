@@ -23,9 +23,8 @@
 			*
 		from
 			charge_history
-<!--  where
+		where
 			member_id = #{memberId}
--->
 		order by
 			charge_date desc
 	</select>
