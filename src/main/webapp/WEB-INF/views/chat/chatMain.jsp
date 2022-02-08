@@ -41,6 +41,8 @@
 			</div>
 		<div class ="container-chat">
 		
+		
+		
 			<div class ="container-chatheader">
 				<form action="${pageContext.request.contextPath}/chatroom/create" method="post">
 					<br />
