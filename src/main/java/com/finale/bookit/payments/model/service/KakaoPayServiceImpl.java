@@ -20,8 +20,8 @@ public class KakaoPayServiceImpl implements PaymentsService {
 	}
 
 	@Override
-	public List<KakaoPay> selectHistoryList() {
-		return paymentsDao.selectHistoryList();
+	public List<KakaoPay> selectHistoryList(String memberId) {
+		return paymentsDao.selectHistoryList(memberId);
 	}
 
 }
