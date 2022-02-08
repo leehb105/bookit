@@ -51,4 +51,10 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 		return dao.updateRead_Check(id);
 	}
 
+	@Override
+	public String selectIdByNickName(String writer) {
+		// TODO Auto-generated method stub
+		return dao.selectIdByNickName(writer);
+	}
+
 }

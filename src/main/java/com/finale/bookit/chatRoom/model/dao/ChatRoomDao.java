@@ -17,4 +17,6 @@ public interface ChatRoomDao {
 
 	int updateRead_Check(String id);
 
+	String selectIdByNickName(String writer);
+
 }
