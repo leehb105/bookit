@@ -16,7 +16,6 @@
 /*글쓰기버튼*/
 input#btn-add{float:right; margin: 0 0 15px;}
 .title {cursor: pointer;}
-
 .writer{
 		cursor: pointer;
 	}
@@ -67,11 +66,9 @@ input#btn-add{float:right; margin: 0 0 15px;}
 
 <script>
 var writer;
-
 function searchCommunity(){
 	location.href = "${pageContext.request.contextPath}/board/communitySearch.do";
 }
-
 function goCommunityForm(){
 	location.href = "${pageContext.request.contextPath}/board/communityForm.do";
 }

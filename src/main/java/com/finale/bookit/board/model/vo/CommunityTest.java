@@ -13,18 +13,18 @@ import lombok.ToString;
 @ToString(callSuper=true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Comment implements Serializable{
-
-	private int no;
+public class CommunityTest implements Serializable {
+	
+	private int communityNo;
+	
+	private String title;
+	
 	private String content;
-	private int commentRef;
-	private Date regDate;
-	private String writer;
-	private boolean DeleteYn;
-	private int commentLevel;
-	private String nickname;
-	private String isParent;
-	private int commentCount;
-	private List<Comment> reComments;
+	
+	private String category;
+	
+	private String memberId;
+	
+	private List<CommunityAttachment> files;
 	
 }

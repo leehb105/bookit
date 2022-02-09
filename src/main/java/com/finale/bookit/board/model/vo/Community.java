@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import com.finale.bookit.member.model.vo.MemberEntity;
+import com.finale.bookit.member.model.vo.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -40,6 +40,7 @@ public class Community implements Serializable {
 	private String memberId;
 	
 	private String nickname;
+	
 	
 	// private Member member;
 	
