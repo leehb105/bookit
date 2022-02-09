@@ -79,6 +79,7 @@
 	<select id="getTotalCommunityContent" resultType="Integer">
 		select	count(*) from community
 	</select>
+<<<<<<< HEAD
 	
 		<insert id="insertCommunity" parameterType="communityTest">
 		insert into
@@ -127,5 +128,59 @@
 		update community_comment set content = #{content}, reg_date = sysdate where no = #{no} 
 	</update>
 	
+=======
+<<<<<<< HEAD
+
+=======
+	
+		<insert id="insertCommunity" parameterType="communityTest">
+		insert into
+			community(community_no, category, title, member_id, content)
+		values(
+			SEQ_COMMUNITY_COMMUNITY_NO.nextval,
+			#{category},
+			#{title},
+			#{memberId},
+			#{content}
+		)
+	</insert>
+	
+	<insert id="insertCommunityAttachment" parameterType="communityAttachment">
+		insert into
+			community_attachment(no, community_no, original_filename, renamed_filename)
+		values(
+			seq_community_attachment_no.nextval,
+			#{communityNo},
+			#{originalFilename},
+			#{renamedFilename}
+		)
+	</insert>
+	
+	<select id="writerCheck" resultType="String" parameterType="Integer">
+		select member_id from community where no=#{no} 
+	</select>
+	
+	
+	<!-- 댓글 -->
+	<insert id="insertComment">
+		insert into community_comment (community_no, no, content, writer) values(
+			#{communityNo},
+			SEQ_COMMUNITY_COMMUNITY_NO.nextval,
+			#{content},
+			#{writer}
+		)
+	</insert>
+	<select id="readComment" resultType="comment">
+		select * from community_comment where no = #{no}
+	</select> 
+	<delete id="deleteComment">
+		delete from community_comment where no = #{no}
+	</delete>
+	<update id="updateComment">
+		update community_comment set content = #{content}, reg_date = sysdate where no = #{no} 
+	</update>
+	
+>>>>>>> branch 'didwpsl' of https://github.com/jinmae1/bookit.git
+>>>>>>> branch 'didwpsl' of https://github.com/jinmae1/bookit.git
 </mapper>
 
