@@ -1,8 +1,11 @@
 package com.finale.bookit.member.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -22,8 +25,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.finale.bookit.common.util.BookitUtils;
 //import com.fasterxml.jackson.core.JsonParser;
 import com.finale.bookit.member.model.service.MemberService;
 import com.finale.bookit.member.model.vo.Address;
@@ -43,6 +48,9 @@ public class MemberController {
 	
 	@Autowired
 	private HttpSession session;
+	
+	@Autowired
+	private ServletContext application;
 	
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
@@ -182,12 +190,27 @@ public class MemberController {
 			@RequestParam String nickname,
 			@RequestParam String email,
 			@RequestParam String phone,
-			@SessionAttribute Member loginMember,
+			@RequestParam(name="profileImg", required=false) MultipartFile profileImg,
+			@AuthenticationPrincipal Member loginMember,
 			Address address,
-			RedirectAttributes redirectAttr) {
+			RedirectAttributes redirectAttr) throws IllegalStateException, IOException {
+		log.debug("profileImg = {}", profileImg);
+		String saveDirectory = application.getRealPath("/resources/img/profile");
+		if(!profileImg.isEmpty()) {
+			String originalFilename = profileImg.getOriginalFilename();
+			String renamedFilename = BookitUtils.rename(originalFilename);
+			File dest = new File(saveDirectory, renamedFilename);
+			profileImg.transferTo(dest);
+			
+			loginMember.setProfileImage(renamedFilename);
+		}
+		
 		String id = loginMember.getId();
+		String img = loginMember.getProfileImage();
 		Map<String, Object> param = new HashMap<>();
+		log.debug("loginMember = {}", loginMember);
 		param.put("id", id);
+		param.put("img", img);
 		param.put("nickname", nickname);
 		param.put("email", email);
 		param.put("phone", phone);
