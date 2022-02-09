@@ -124,14 +124,31 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
-	public void deleteCommunityContent(int no) {
-		communityDao.deleteCommunityContent(no);
+	public void deleteCommunityContent(int no, String memberId) throws Exception {
+		String writer = communityDao.writerCheck(no);
+		
+		if(memberId.equals(writer)) {
+			communityDao.deleteCommunityContent(no);
+		}else {
+			throw new Exception("Unauthorized!");
+		}
+		
+	
 		
 	}
 
 	@Override
-	public void updateCommunityContent(Map<String, Object> param) {
-		communityDao.updateCommunityContent(param);
+	public void updateCommunityContent(String memberId, Map<String, Object> param) throws Exception {
+		
+		int no = Integer.parseInt((String)param.get("no"));
+		
+		String writer = communityDao.writerCheck(no);
+		if(memberId == writer) {
+			communityDao.updateCommunityContent(param);
+		}else {
+			throw new Exception("Unauthorized!");
+		}
+		
 		
 	}
 
@@ -144,5 +161,3 @@ public class CommunityServiceImpl implements CommunityService {
 	public int getTotalCommunityContent() {
 		return communityDao.getTotalCommunityContent();
 	}
-
-}

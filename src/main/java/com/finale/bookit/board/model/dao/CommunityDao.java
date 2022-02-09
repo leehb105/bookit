@@ -27,4 +27,4 @@ public interface CommunityDao {
 	List<Comment> getCommentList(int no);
 	
 	List<Comment> getReCommentList(int refNo);
-}
+

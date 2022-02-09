@@ -12,9 +12,9 @@ public interface CommunityService {
 	
 	Community getCommunity(int no);
 
-	void deleteCommunityContent(int no);
+	void deleteCommunityContent(int no, String string) throws Exception;
 
-	void updateCommunityContent(Map<String, Object> param);
+	void updateCommunityContent(String memberId, Map<String, Object> param) throws Exception;
 
 	List<Community> getCommunityList(Map<String, Object> param);
 
