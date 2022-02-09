@@ -32,9 +32,9 @@ public class Member extends MemberEntity implements Serializable, UserDetails {
 	
 	@Builder
 	public Member(String id, String password, String email, String nickname, String name, String phone, boolean enabled,
-			Date enrollDate, String reportYn, int cash, String roadAddress, String jibunAddress, float latitude,
+			Date enrollDate, String reportYn, int cash, String profileImage, String roadAddress, String jibunAddress, float latitude,
 			float longitude, List<SimpleGrantedAuthority> authorities) {
-		super(id, password, email, nickname, name, phone, enabled, enrollDate, reportYn, cash, roadAddress,
+		super(id, password, email, nickname, name, phone, enabled, enrollDate, reportYn, cash, profileImage, roadAddress,
 				jibunAddress, latitude, longitude);
 		this.authorities = authorities;
 	}

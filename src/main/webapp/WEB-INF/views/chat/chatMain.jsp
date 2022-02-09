@@ -44,15 +44,14 @@
 		
 		
 			<div class ="container-chatheader">
-				<form action="${pageContext.request.contextPath}/chatroom/create" method="post">
+				<form:form action="${pageContext.request.contextPath}/chatroom/create" method="post">
 					<br />
-					<h5>채팅할 회원 아이디 입력</h5>
-					<input type="text" name="name" class="name">
-					<input type="hidden" name = "loginMember" class = "loginMember" value = ${loginMember.id}>
+					<h5>채팅할 회원 닉네임 입력</h5>
+					<input type="text" name="writer" class="writer">
 					<button class="btn btn-secondary">개설하기</button>
 					
 					
-				</form>
+				</form:form>
 			</div>
 			<br />       
         	<div class="container-chatmain">
