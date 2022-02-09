@@ -58,6 +58,21 @@ public class RoomController {
 
     	String memberId = service.selectIdByNickName(writer);
     	String loginMemberId = loginMember.getId();
+    	List<ChatRoom> list = service.findAllRooms(loginMemberId);
+    	if(list != null) {
+	        for(ChatRoom room : list) {
+	        	String sbId = room.getMemberId();
+	        	
+	        	sbId = sbId.replace(loginMemberId, "");
+	        	sbId = sbId.replace(",","");
+	        	
+	        	if(sbId.equals(memberId)) {
+	        		System.out.println("이미 채팅방이 존재합니다!!!!!!!");
+	        		return "redirect:/chatroom/list?loginMember="+loginMemberId;
+	        		}
+	        }
+    	}
+    	
     	
         StringBuilder sb = new StringBuilder();
         sb.append(memberId);
