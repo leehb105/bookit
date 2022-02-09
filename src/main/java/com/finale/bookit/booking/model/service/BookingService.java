@@ -14,4 +14,8 @@ public interface BookingService {
 	public Booking selectBooking(Map<String, Object> param);
 
 	public List<BookInfo> selectBook(Map<String, Object> param);
+
+	public int selectCountByIsbn(String isbn13);
+
+	public int insertBookInfo(BookInfo bookInfo);
 }

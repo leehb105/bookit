@@ -33,5 +33,15 @@ public class BookkingDaoImpl implements BookingDao{
 	public List<BookInfo> selectBook(Map<String, Object> param) {
 		return session.selectList("booking.selectBook", param);
 	}
+
+	@Override
+	public int selectCountByIsbn(String isbn13) {
+		return session.selectOne("booking.selectCountByIsbn", isbn13);
+	}
+
+	@Override
+	public int insertBookInfo(BookInfo bookInfo) {
+		return session.insert("booking.insertBookInfo", bookInfo);
+	}
 	
 }
