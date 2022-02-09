@@ -11,6 +11,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="게시판" name="title"/>
 </jsp:include>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <style>
 /*글쓰기버튼*/
 input#btn-add{float:right; margin: 0 0 15px;}
@@ -20,13 +21,19 @@ input#btn-add{float:right; margin: 0 0 15px;}
 		cursor: pointer;
 	}
 	
+	#modal_no_btn {
+		margin-left: 50px;
+	}
+	.modal_chat form{
+		display: inline-block;
+	}
 	.modal_chat{
 		display:none;
 		position: relative;
 		width: 100%;
 		height: 100%;
 		z-index: 1;
-		bottom: 350px;
+		bottom: 400px;
 		margin-bottom: -170px;
 	}
 	
@@ -57,6 +64,7 @@ input#btn-add{float:right; margin: 0 0 15px;}
 	}
 	
 </style>
+
 <script>
 var writer;
 
@@ -84,7 +92,7 @@ $(() => {
 		$(".modal_chat").css("display","block");
 	});
 	
-	$(".modal_no_btn").click((e) => {
+	$("#modal_no_btn").click((e) => {
 		
 		$(".modal_chat").css("display","none");
 		$(".modal_content p").remove();
@@ -142,22 +150,25 @@ $(() => {
 	${pagebar}
 	</div>
 	<div class="modal_chat">
-   
+   		
 	    <div class="modal_content">
 	        <h3>채팅방 생성</h3>
-	       
+	        <hr />
+
 	       <form:form
 	       		action="${pageContext.request.contextPath}/chatroom/create" 
                 method="POST">
 				<input type="hidden" name = "writer" id = "input_writer"/>
-	       		<button class="modal_yes_btn" value="Y">네</button>
+	       		<button class="btn btn-primary" id="modal_yes_btn">네</button>
 	       </form:form>
-	        <button type="button" class="modal_no_btn" value="N">아니요</button>
+	        <button type="button" class="btn btn-danger" id="modal_no_btn">아니요</button>
 	       
 	    </div>
 	   
 	    <div class="modal_layer"></div>
 	</div>
+
+	
 </section> 
 
 
