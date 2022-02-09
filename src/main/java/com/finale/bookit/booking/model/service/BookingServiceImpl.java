@@ -35,4 +35,15 @@ public class BookingServiceImpl implements BookingService {
 		return bookingDao.selectBook(param);
 	}
 
+	@Override
+	public int selectCountByIsbn(String isbn13) {
+		return bookingDao.selectCountByIsbn(isbn13);
+	}
+
+	@Override
+	public int insertBookInfo(BookInfo bookInfo) {
+		return bookingDao.insertBookInfo(bookInfo);
+	}
+	
+
 }

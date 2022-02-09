@@ -97,9 +97,29 @@
 	</select>
 	
 	
+	<select id="selectCountByIsbn" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			BOOK_INFO
+		WHERE
+			ISBN13 = #{isbn13}
+		
+	</select>
 	
-	
-	
+	<insert id="insertBookInfo">
+		INSERT INTO book_info values(
+			#{isbn13},
+			#{title},
+			#{author},
+			#{publisher},
+			#{pubdate},
+			#{itemPage},
+			#{categoryName},
+			#{cover},
+			#{description}			
+		)
+	</insert>
 	
 	
 	

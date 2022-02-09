@@ -13,8 +13,12 @@ import lombok.extern.log4j.Log4j;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.Mapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -81,10 +85,63 @@ public class BookingController {
     }
     
     @GetMapping("/bookingEnroll.do")
-    public void bookingEnroll() {
+    public void bookingEnroll() { }
+    	
+    @PostMapping("/bookingEnroll.do")
+    public void bookingEnroll(
+    		@RequestParam String status, 
+    		@RequestParam int deposit, 
+    		@RequestParam int price, 
+    		@RequestParam String content, 
+    		@RequestParam String isbn, 
+    		RedirectAttributes attributes) {
+    	
+    	
+//    	log.debug("status = {}", status);
+//    	log.debug("deposit = {}", deposit);
+//    	log.debug("price = {}", price);
+//    	log.debug("content = {}", content);
+    	
+    	Booking booking = new Booking();
+    	booking.setBookStatus(status);
+    	booking.setDeposit(deposit);
+    	booking.setPrice(price);
+    	booking.setContent(content);
+    	
+    	BookInfo bookInfo = new BookInfo();
+    	bookInfo.setIsbn13(isbn);
+    	
+    	booking.setBookInfo(bookInfo);
+    	
+    	log.debug("booking = {} ", booking);
+    	
+//    	int result = bookingService.insertBooking();
     	
     }
+    
+    @PostMapping("/bookInfoEnroll.do")
+    @ResponseBody
+    public String bookInfoEnroll(@RequestBody BookInfo bookInfo) {
     	
+    	log.debug("bookInfo = {}", bookInfo);
+    	
+    	int count = bookingService.selectCountByIsbn(bookInfo.getIsbn13());
+    	log.debug("count = {}", count);
+    	
+    	//등록되지 않은 책이라면
+    	if(count == 0) {
+    		int result = bookingService.insertBookInfo(bookInfo);
+    		log.debug("result = {}", result);
+    	}
+    	
+    	return "success";
+//    	int result = bookingService.insertBooking();
+    	
+    }
+    
+    
+    
+    
 //    @GetMapping("/bookSearch.do")
 //    public void bookSearch(@RequestParam String bookTitle, Model model) {
 //    	log.debug("bookTitle = {}", bookTitle);

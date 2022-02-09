@@ -129,7 +129,7 @@
             "author": author,
             "publisher": publisher,
             "pubdate": pubdate,
-            "isbn": isbn,
+            "isbn13": isbn,
             "itemPage": itemPage,
             "categoryName": categoryName,
             "description":description,

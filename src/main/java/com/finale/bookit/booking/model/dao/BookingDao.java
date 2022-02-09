@@ -15,4 +15,8 @@ public interface BookingDao {
 	Booking selectBooking(Map<String, Object> param);
 
 	List<BookInfo> selectBook(Map<String, Object> param);
+
+	int selectCountByIsbn(String isbn13);
+
+	int insertBookInfo(BookInfo bookInfo);
 }
