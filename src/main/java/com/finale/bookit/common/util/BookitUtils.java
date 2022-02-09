@@ -1,9 +1,16 @@
 package com.finale.bookit.common.util;
 
-import java.io.File;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletWebRequest;
+
+import com.finale.bookit.member.model.vo.Member;
 
 public class BookitUtils {
 
@@ -140,4 +147,7 @@ public class BookitUtils {
 		return pagebar.toString();
 	}
 
+	
+	
+	
 }

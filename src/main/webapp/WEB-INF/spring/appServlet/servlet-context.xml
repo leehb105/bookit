@@ -23,6 +23,13 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	<!-- 다중 업로드 API -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="52428800"/>
+		<beans:property name="maxInMemorySize" value="1000000" />
+		<beans:property name="defaultEncoding" value="utf-8" />
+	</beans:bean>
+	
 	<!-- basepackage하위의 클래스를 대상으로 annotation 활성화 : @Component @Autowired -->
 	<context:component-scan base-package="com.finale.bookit" />
 	

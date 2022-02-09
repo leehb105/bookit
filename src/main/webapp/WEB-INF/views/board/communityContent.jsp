@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="게시판 상세보기" name="title"/>
 </jsp:include>
@@ -10,6 +11,8 @@
 <script src="https://kit.fontawesome.com/01809a491f.js" crossorigin="anonymous"></script>
 <script>
 
+
+console.log("${reComments}");
 function like(){
 	document.getElementById('full').style.display = 'inline-block';
 	document.getElementById('empty').style.display = 'none';
@@ -26,7 +29,7 @@ function goCommunityList(){
 }
 
 console.log("${community.comment[0].no}")
-console.log("${community.file}")
+console.log("delete :", "${community.comment[0].deleteYn}")
 
 </script>
 <style>
@@ -52,18 +55,7 @@ div#board-container label.custom-file-label{text-align:left;}
 	<p>${community.likeCount}</p>
 	
 	<hr>
-	
-		<table id="tbl-board" class="table table-striped table-hover">
-		<c:forEach items="${community.comment}" var="comment">
-			<tr data-no="${comment.no}">
-				<td>${comment.no}</td>
-				<td>${comment.nickname}</td>
-				<td><fmt:formatDate value="${comment.regDate}" pattern="yy/MM/dd HH:mm"/></td>
-				<td>${comment.content}</td>
-				
-			</tr>
-		</c:forEach>	
-	</table>
+
 	
 	<div class = "likeBan" >
 	<h3 id="empty" style="diaplay: inline-block;"><a href="#" onclick="like();" ><i class="far fa-heart" ></i></a></h3>
@@ -71,8 +63,8 @@ div#board-container label.custom-file-label{text-align:left;}
 	<h3><a href="#"><i class="fas fa-ban" style="diaplay: inline-block;"></i></a></h3>
 </div>
 	<br>
-	<br>
-	<input type="text" placeholder="내용을 입력해주세요">
-	<input type="submit" value="등록" onclick="insertComment();">
+
 </div>
+
+
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

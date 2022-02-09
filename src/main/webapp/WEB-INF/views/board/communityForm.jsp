@@ -19,7 +19,7 @@ function boardValidate(){
 }
 
 $(() => {
-	$("[name=upFile]").change((e) => {
+	$("[name=upFiles]").change((e) => {
 		const file = $(e.target).prop('files')[0];
 		const $label = $(e.target).next();
 		
@@ -35,7 +35,7 @@ $(() => {
   		name="communityFrm" 
 		action="${pageContext.request.contextPath}/board/communityEnroll.do" 
 		method="post"
-		
+		enctype="multipart/form-data" 
 
 		onsubmit="return boardValidate();">
      <div class="row" style="margin-left: 2%;">
@@ -46,6 +46,8 @@ $(() => {
     </div>
     <div name="form-body" style="margin-left: 2%;">
         <input type="text" id="title" name="title" placeholder="제목" style="margin-left: 6%;" required>
+     
+        
         
         <select id="category" name="category" >
           <option value="사담" >사담</option>
@@ -55,11 +57,11 @@ $(() => {
         <textarea id="content" name="content" placeholder="내용" style="height:250px"></textarea>
         		<div class="input-group mb-3" style="padding:0px;" >
 		  <div class="input-group-prepend" style="padding:0px;">
-		    <span class="input-group-text">첨부파일1</span>
+		    <span class="input-group-text">첨부파일</span>
 		  </div>
 		  <div class="custom-file">
-		    <input type="file" class="custom-file-input" name="upFile" id="upFile1" multiple>
-		    <label class="custom-file-label" for="upFile1">파일을 선택하세요</label>
+		    <input type="file" class="custom-file-input" name="upFiles" id="upFiles" multiple>
+		    <label class="custom-file-label" for="upFiles">파일을 선택하세요</label>
 		  </div>
 		</div>
 		</div>

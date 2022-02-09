@@ -125,14 +125,31 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
-	public void deleteCommunityContent(int no) {
-		communityDao.deleteCommunityContent(no);
+	public void deleteCommunityContent(int no, String memberId) throws Exception {
+		String writer = communityDao.writerCheck(no);
+		
+		if(memberId.equals(writer)) {
+			communityDao.deleteCommunityContent(no);
+		}else {
+			throw new Exception("Unauthorized!");
+		}
+		
+	
 		
 	}
 
 	@Override
-	public void updateCommunityContent(Map<String, Object> param) {
-		communityDao.updateCommunityContent(param);
+	public void updateCommunityContent(String memberId, Map<String, Object> param) throws Exception {
+		
+		int no = Integer.parseInt((String)param.get("no"));
+		
+		String writer = communityDao.writerCheck(no);
+		if(memberId == writer) {
+			communityDao.updateCommunityContent(param);
+		}else {
+			throw new Exception("Unauthorized!");
+		}
+		
 		
 	}
 
@@ -148,7 +165,23 @@ public class CommunityServiceImpl implements CommunityService {
 
 	@Override
 	public int insertCommunity(CommunityTest communityTest) {
-		return communityDao.insertCommunity(communityTest);
+		int result = communityDao.insertCommunity(communityTest);
+		log.debug("communityNo = {}", communityTest.getCommunityNo());
+		List<CommunityAttachment> attachments = communityTest.getFiles();
+		if(attachments != null) {
+			for(CommunityAttachment attach : attachments) {
+				// fk컬럼 boardNo값 설정
+				attach.setCommunityNo(communityTest.getCommunityNo());
+				result = insertCommunityAttachment(attach);
+			}
+		}
+		
+		return result; 
+	
+	}
+	
+	public int insertCommunityAttachment(CommunityAttachment attach) {
+		return communityDao.insertCommunityAttachment(attach);
 	}
 
 	@Override

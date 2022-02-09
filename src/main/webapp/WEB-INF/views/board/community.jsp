@@ -43,7 +43,7 @@ $(() => {
 		</tr>
 		<c:forEach items="${list}" var="community">
 			<tr data-no="${community.communityNo}">
-				<td>${community.communityNo}</td>
+				<td cals>${community.communityNo}</td>
 				<td>${community.category}</td>
 				<td>${community.title}</td>
 				<td>${community.nickname}</td>

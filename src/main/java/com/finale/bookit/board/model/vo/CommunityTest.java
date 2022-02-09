@@ -15,6 +15,8 @@ import lombok.ToString;
 @AllArgsConstructor
 public class CommunityTest implements Serializable {
 	
+	private int communityNo;
+	
 	private String title;
 	
 	private String content;
@@ -22,4 +24,7 @@ public class CommunityTest implements Serializable {
 	private String category;
 	
 	private String memberId;
+	
+	private List<CommunityAttachment> files;
+	
 }
