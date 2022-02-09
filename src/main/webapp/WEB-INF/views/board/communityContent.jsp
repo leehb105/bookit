@@ -11,7 +11,6 @@
 <script src="https://kit.fontawesome.com/01809a491f.js" crossorigin="anonymous"></script>
 <script>
 
-<<<<<<< HEAD
 
 console.log("${reComments}");
 function like(){
@@ -24,43 +23,14 @@ function dislike(){
 	document.getElementById('full').style.display = 'none';
 	document.getElementById('empty').style.display = 'inline-block';
 }
-=======
-<<<<<<< HEAD
-console.log("TEST");
-console.log("${community}");
-=======
-
-console.log("${reComments}");
-function like(){
-	document.getElementById('full').style.display = 'inline-block';
-	document.getElementById('empty').style.display = 'none';
-	
-}
-
-function dislike(){
-	document.getElementById('full').style.display = 'none';
-	document.getElementById('empty').style.display = 'inline-block';
-}
->>>>>>> branch 'didwpsl' of https://github.com/jinmae1/bookit.git
->>>>>>> branch 'didwpsl' of https://github.com/jinmae1/bookit.git
 
 function goCommunityList(){
 	location.href = "${pageContext.request.contextPath}/board/community.do";
 }
-<<<<<<< HEAD
 
 console.log("${community.comment[0].no}")
 console.log("delete :", "${community.comment[0].deleteYn}")
 
-=======
-<<<<<<< HEAD
-=======
-
-console.log("${community.comment[0].no}")
-console.log("delete :", "${community.comment[0].deleteYn}")
-
->>>>>>> branch 'didwpsl' of https://github.com/jinmae1/bookit.git
->>>>>>> branch 'didwpsl' of https://github.com/jinmae1/bookit.git
 </script>
 <style>
 div#board-container{width:400px;}
@@ -74,13 +44,6 @@ div#board-container label.custom-file-label{text-align:left;}
       <input type="button" value="취소" onclick="goCommunityList();">
     <p>${community.category}</p>  
 	<p>${community.title}</p>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-	<p>${community.nickname}"</p>
-	<p>${community.content}</p>
-=======
->>>>>>> branch 'didwpsl' of https://github.com/jinmae1/bookit.git
 	<!-- 프로필 이미지 -->
 	<p>${community.nickname}</p>
 	<p>${community.regDate}</p>
@@ -101,10 +64,6 @@ div#board-container label.custom-file-label{text-align:left;}
 </div>
 	<br>
 
-<<<<<<< HEAD
-=======
->>>>>>> branch 'didwpsl' of https://github.com/jinmae1/bookit.git
->>>>>>> branch 'didwpsl' of https://github.com/jinmae1/bookit.git
 </div>
 
 

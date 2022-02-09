@@ -29,4 +29,11 @@ public interface CommunityDao {
 	
 	List<Comment> getReCommentList(int refNo);
 
+	int insertCommunity(CommunityTest communityTest);
+
+	CommunityAttachment selectOneCommunityAttachment(int no);
+	
+	String writerCheck(int no);
+
+	int insertCommunityAttachment(CommunityAttachment attach);
 }

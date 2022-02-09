@@ -36,14 +36,7 @@ $(() => {
 		action="${pageContext.request.contextPath}/board/communityEnroll.do" 
 		method="post"
 		enctype="multipart/form-data" 
-<<<<<<< HEAD
 
-=======
-<<<<<<< HEAD
-=======
-
->>>>>>> branch 'didwpsl' of https://github.com/jinmae1/bookit.git
->>>>>>> branch 'didwpsl' of https://github.com/jinmae1/bookit.git
 		onsubmit="return boardValidate();">
      <div class="row" style="margin-left: 2%;">
        	<h2>글쓰기</h2>
@@ -51,20 +44,9 @@ $(() => {
       <input type="submit" value="등록" style="margin-left: 70%;">
       <input type="button" value="취소" onclick="goRequestList();">
     </div>
-<<<<<<< HEAD
     <div name="form-body" style="margin-left: 2%;">
         <input type="text" id="title" name="title" placeholder="제목" style="margin-left: 6%;" required>
      
-=======
-<<<<<<< HEAD
-        <input type="text" id="title" name="title" placeholder="제목">
-=======
-    <div name="form-body" style="margin-left: 2%;">
-        <input type="text" id="title" name="title" placeholder="제목" style="margin-left: 6%;" required>
-     
-        
->>>>>>> branch 'didwpsl' of https://github.com/jinmae1/bookit.git
->>>>>>> branch 'didwpsl' of https://github.com/jinmae1/bookit.git
         
         
         <select id="category" name="category" >
