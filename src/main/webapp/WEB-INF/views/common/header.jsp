@@ -139,18 +139,18 @@
                               
                               
                               <sec:authorize access="isAuthenticated()">
-                              	<div style="padding-right:10px">
+                              	<div style="padding-right:20px">
                               		
 	                            	<a href="${pageContext.request.contextPath}/member/mypageMain.do">
 	                            		<sec:authentication property="principal.username"/>
-	                            		</a>님
+	                            		</a>님 &nbsp
 	                            	<a href="#"><i class="fa fa-heart fa-lg"></i></a>
+		                            </div>
 	                            	<form:form
 	                            		method="POST"
 	                            		action="${pageContext.request.contextPath}/member/memberLogout.do">
 	                            		<button type = "submit" class="btn roberto-btn mb-15 w-10">로그아웃</button>
 	                              	</form:form>
-	                              </div>
 						  	  </sec:authorize>	
 						  	  
 						  	  <c:if test="${!empty sessionScope.kakaoE}">

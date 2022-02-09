@@ -91,6 +91,7 @@
 			nickname = #{nickname},
 			email = #{email},
 			phone = #{phone}
+			<!-- profile_img = #{img} -->
 		where
 			id = #{id}
 	</update>
