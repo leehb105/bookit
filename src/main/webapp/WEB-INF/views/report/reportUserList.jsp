@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:authentication property="principal" var="loginMember"/>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/mypage.css" />
 	
@@ -11,18 +13,28 @@
 <script>
 	// 사용자 신고 modal에 띄울 내용 담기
 	$(document).ready(function() {
+		$(".modal").css({"display": "none"});
+		
 		$("#reportUserDetailModal").on('show.bs.modal', function(event) {
 			var reporter = $(event.relatedTarget).data('reporter');
 			var reportee = $(event.relatedTarget).data('reportee');
 			var reason = $(event.relatedTarget).data('reason');
 			var detail = $(event.relatedTarget).data('detail');
-
+			
 			$(".modal-body #reporter").val(reporter);
 			$(".modal-body #reportee").val(reportee);
 			$(".modal-body #reason").val(reason);
 			$(".modal-body #detail").val(detail);
 		});
+		
 	});
+	// textarea 높이 조절
+	function adjustHeight() {
+	  var textEle = $('textarea');
+	  textEle[0].style.height = 'auto';
+	  var textEleHeight = textEle.prop('scrollHeight');
+	  textEle.css('height', textEleHeight);
+	};
 </script>
 <style>
 .selectReport:hover {
@@ -37,6 +49,10 @@
 }
 .modal-body input {
 	border: none;
+}
+textarea {
+	border: none;
+	resize: none;
 }
 </style>
 
@@ -103,14 +119,18 @@
 									</c:if>
 								</tr>
 							</c:forEach>
+							<c:if test="${empty reportUserList}">
+								<tr>
+									<td colspan="6"><p>신고하신 내역이 없습니다.</p></td>
+								</tr>
+							</c:if>
 						</tbody>
 					</table>
 					${pagebar}
 
 					<!-- 사용자 신고 상세보기 Modal -->
-					<div class="modal fade" id="reportUserDetailModal" tabindex="-1"
-						role="dialog" aria-labelledby="reportUserDetailModalLabel"
-						aria-hidden="true">
+					<div class="modal fade" id="reportUserDetailModal" tabindex="-1" 
+						role="dialog" aria-labelledby="reportUserDetailModalLabel" aria-hidden="true">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
@@ -133,8 +153,8 @@
 										<input type="text" id="reason" value="" />
 									</div>
 									<div>
-										<p>상세내용</p>
-										<input type="text" id="detail" value="" />
+										<p style="transform: translate(0px, -30px);">상세내용</p>
+										<textarea id="detail" cols="30" onkeyup="adjustHeight();"></textarea>
 									</div>
 								</div>
 								<div class="modal-footer">

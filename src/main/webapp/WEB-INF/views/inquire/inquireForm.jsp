@@ -3,6 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:authentication property="principal" var="loginMember"/>
 
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/mypage.css" />
@@ -48,7 +51,7 @@
 
 				<!-- Form -->
 				<div class="roberto-contact-form">
-					<form
+					<form:form
 						action="${pageContext.request.contextPath}/inquire/inquireEnroll.do"
 						method="post" onsubmit="return inquireValidate();">
 						<div class="row">
@@ -76,7 +79,7 @@
 								<button type="submit" class="btn roberto-btn mt-15">문의접수</button>
 							</div>
 						</div>
-					</form>
+					</form:form>
 				</div>
 			</div>
 		</div>
