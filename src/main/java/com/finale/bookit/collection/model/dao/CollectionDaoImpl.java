@@ -54,4 +54,9 @@ public class CollectionDaoImpl implements CollectionDao {
 		return session.selectOne("bookCollection.selectTotalBookList", no);
 	}
 
+	@Override
+	public int insertBook(Map<String, Object> param) {
+		return session.insert("bookCollection.insertBook", param);
+	}
+
 }
