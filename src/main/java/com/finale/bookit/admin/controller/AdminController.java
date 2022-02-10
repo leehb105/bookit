@@ -1,22 +1,20 @@
 package com.finale.bookit.admin.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.finale.bookit.admin.model.service.AdminService;
@@ -24,8 +22,6 @@ import com.finale.bookit.admin.model.vo.AdminInquire;
 import com.finale.bookit.admin.model.vo.Chart;
 import com.finale.bookit.common.util.BookitUtils;
 import com.finale.bookit.inquire.model.vo.Inquire;
-import com.finale.bookit.member.model.vo.Member;
-import com.finale.bookit.member.model.vo.MemberEntity;
 import com.finale.bookit.report.model.vo.ReportBoard;
 import com.finale.bookit.report.model.vo.ReportUser;
 
@@ -70,7 +66,17 @@ public class AdminController {
 	@GetMapping("/admin.do")
 	public void adminPage() {}
 	
-	@GetMapping("/chart.do")
+	
+	
+	@GetMapping("/chart/cashChart.do")
+	public void cashChart() {
+		
+	}
+	@GetMapping("/chart/addressChart.do")
+	public void addressChart() {
+		
+	}
+	@GetMapping("/chart/chart.do")
 	public void chart(Model model) {
 		
 		List<Chart> chart = adminService.selectChart();
@@ -221,12 +227,19 @@ public class AdminController {
 	}
 	
 	// 회원 삭제
-	@PostMapping("/deleteUser.do")
-	public String deleteUser(@RequestParam String reportee, RedirectAttributes redirectAttr) {
-		int result = adminService.deleteUser(reportee);
-		redirectAttr.addFlashAttribute("msg", result > 0 ? "회원이 삭제되었습니다." : "다시 시도하세요.");
+	@PostMapping("/enableUser.do")
+	public String enableUser(@RequestParam String reportee, RedirectAttributes redirectAttr,
+			@RequestHeader(name="Referer", required=false) String referer) {
+		log.debug("referer = {}", referer);
+		int result = adminService.enableUser(reportee);
+		redirectAttr.addFlashAttribute("msg", result > 0 ? "회원의 이용을 정지하였습니다." : "다시 시도하세요.");
 		
-		return "redirect:/admin/adminReportList.do";
+		if(referer.contains("User")) {
+			return "redirect:/admin/adminReportUserList.do";			
+		}
+		else {
+			return "redirect:/admin/adminReportBoardList.do";
+		}
 	}
 	
 	

@@ -48,4 +48,9 @@ public class CollectionServiceImpl implements CollectionService {
 		return collectionDao.selectTotalBookList(no);
 	}
 
+	@Override
+	public int insertBook(Map<String, Object> param) {
+		return collectionDao.insertBook(param);
+	}
+
 }

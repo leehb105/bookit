@@ -17,7 +17,7 @@
 		
 	<!-- 정적파일은 security체크하지 않음 -->
 	<http pattern="/resources/**" security="none"/>
-	
+
 	<!-- 특별한 설정에서 일반적인 설정순으로 작성 -->
 	<http auto-config="true">
 		<intercept-url pattern="/" access="permitAll"/>
@@ -30,7 +30,7 @@
 		<intercept-url pattern="/member/**" access="permitAll"/>
 		
 		
-		<intercept-url pattern="/**" access="isAuthenticated()"/> <!-- =hasRole('USER') -->
+		<intercept-url pattern="/**" access="permitAll"/> <!-- =hasRole('USER') -->
 	
 	
 		<!-- 

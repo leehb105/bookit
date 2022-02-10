@@ -1,7 +1,45 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
+
+<script>
+// 컬렉션 불러오기(랜덤으로 3개). 475번줄 collection-area
+$(document).ready(function(){
+	var header = "${_csrf.headerName}";
+	var token = "${_csrf.token}";
+	console.log(header);
+	console.log(token);
+	$.ajax({
+		url: `${pageContext.request.contextPath}/collectionList.do`,
+		method: "POST",
+		dataType : 'json',
+		beforeSend : function(xhr){
+            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+        },
+		success(collectionList){
+        	console.log(collectionList);
+			for(var i = 0; i < 3; i++){
+				var no = collectionList[i].no;
+				$(".collection-area").append(
+					'<div class="col-12 col-md-6 col-lg-4">'
+						+ '<div class="single-post-area mb-100 wow fadeInUp text-center" data-wow-delay="100ms">'
+							+ '<a href="${pageContext.request.contextPath}/collection/collectionDetail.do?no=' + no + '" class="post-thumbnail">'
+							+ ' <img class="w-50" src="' + collectionList[i].profileImage + '"'
+							+ ' onerror="this.src=`${pageContext.request.contextPath}/resources/img/profile/default_profile.png`"/>'
+							+ '</a>'
+							+ '<h5 class="post-title">' + collectionList[i].nickname + '님의<br /></h5>'
+							+ '<h6>' + collectionList[i].collectionName + '</h6>'
+						+ '</div>'
+					+ '</div>');
+			}
+		},
+		error: console.log
+	});
+});
+</script>
 
     <!-- Welcome Area Start -->
     <section class="welcome-area">
@@ -421,74 +459,27 @@
     </section>
     Projects Area End
 
-    Blog Area Start
+    <!-- Blog Area Start -->
     <section class="roberto-blog-area section-padding-100-0">
         <div class="container">
             <div class="row">
-                Section Heading
+                <!-- Section Heading -->
                 <div class="col-12">
                     <div class="section-heading text-center wow fadeInUp" data-wow-delay="100ms">
-                        <h6>Our Blog</h6>
-                        <h2>Latest News &amp; Event</h2>
+                        <h2>Book Collections</h2>
+                        <button class="btn btn-link float-right" onclick="location.href='${pageContext.request.contextPath}/collection/collectionList.do';">More Collections</button>
                     </div>
                 </div>
             </div>
 
-            <div class="row">
-                Single Post Area
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="single-post-area mb-100 wow fadeInUp" data-wow-delay="300ms">
-                        <a href="#" class="post-thumbnail"><img src="img/bg-img/2.jpg" alt=""></a>
-                        Post Meta
-                        <div class="post-meta">
-                            <a href="#" class="post-date">Jan 02, 2019</a>
-                            <a href="#" class="post-catagory">Event</a>
-                        </div>
-                        Post Title
-                        <a href="#" class="post-title">Learn How To Motivate Yourself</a>
-                        <p>How many free autoresponders have you tried? And how many emails did you get through using them?</p>
-                        <a href="index.html" class="btn continue-btn"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
-                    </div>
-                </div>
-
-                Single Post Area
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="single-post-area mb-100 wow fadeInUp" data-wow-delay="500ms">
-                        <a href="#" class="post-thumbnail"><img src="img/bg-img/3.jpg" alt=""></a>
-                        Post Meta
-                        <div class="post-meta">
-                            <a href="#" class="post-date">Jan 02, 2019</a>
-                            <a href="#" class="post-catagory">Event</a>
-                        </div>
-                        Post Title
-                        <a href="#" class="post-title">What If Let You Run The Hubble</a>
-                        <p>My point here is that if you have no clue for the answers above you probably are not operating a followup.</p>
-                        <a href="index.html" class="btn continue-btn"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
-                    </div>
-                </div>
-
-                Single Post Area
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="single-post-area mb-100 wow fadeInUp" data-wow-delay="700ms">
-                        <a href="#" class="post-thumbnail"><img src="img/bg-img/4.jpg" alt=""></a>
-                        Post Meta
-                        <div class="post-meta">
-                            <a href="#" class="post-date">Jan 02, 2019</a>
-                            <a href="#" class="post-catagory">Event</a>
-                        </div>
-                        Post Title
-                        <a href="#" class="post-title">Six Pack Abs The Big Picture</a>
-                        <p>Some good steps to take to ensure you are getting what you need out of a autoresponder includeâ¦</p>
-                        <a href="index.html" class="btn continue-btn"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
-                    </div>
-                </div>
-
+            <div class="row collection-area">
+                <!-- 스크립트로 컬렉션 리스트 불러오는 곳 -->
             </div>
         </div>
     </section>
-    Blog Area End
+    <!-- Blog Area End -->
 
-    Call To Action Area Start
+    <!-- Call To Action Area Start
     <section class="roberto-cta-area">
         <div class="container">
             <div class="cta-content bg-img bg-overlay jarallax" style="background-image: url(img/bg-img/1.jpg);">

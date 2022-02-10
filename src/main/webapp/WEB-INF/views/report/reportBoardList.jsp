@@ -11,6 +11,8 @@
 <script>
 	// 게시글 신고 modal에 띄울 내용 담기
 	$(document).ready(function() {
+		$(".modal").css({"display": "none"});
+		
 		$("#reportBoardDetailModal").on('show.bs.modal', function(event) {
 			var reporter = $(event.relatedTarget).data('reporter');
 			var boardName = $(event.relatedTarget).data('boardname');
@@ -23,6 +25,24 @@
 			$(".modal-body #boardNo").val(boardNo);
 			$(".modal-body #reason").val(reason);
 			$(".modal-body #detail").val(detail);
+		});
+	});
+	// textarea 높이 조절
+	function adjustHeight() {
+	  var textEle = $('textarea');
+	  textEle[0].style.height = 'auto';
+	  var textEleHeight = textEle.prop('scrollHeight');
+	  textEle.css('height', textEleHeight);
+	};
+	// 신고한 게시글로 이동
+	$(() => {
+		$(".btn-link[data-no]").click((e) => {
+			const $td = $(e.target);
+			const boardname = $td.data("boardname");
+			const no = $td.data("no");
+			console.log(boardname);
+			console.log(no);
+			location.href = `${pageContext.request.contextPath}/board/\${boardname}Content.do?no=\${no}`;
 		});
 	});
 </script>
@@ -39,6 +59,10 @@
 }
 .modal-body input {
 	border: none;
+}
+textarea {
+	border: none;
+	resize: none;
 }
 </style>
 
@@ -72,8 +96,8 @@
 						<thead>
 							<tr>
 								<th>번호</th>
-								<th>신고자ID</th>
 								<th>게시판NO</th>
+								<th>신고자ID</th>
 								<th>사유</th>
 								<th>신고일</th>
 								<th>상태</th>
@@ -81,19 +105,21 @@
 						</thead>
 						<tbody>
 							<c:forEach items="${reportBoardList}" var="reportBoardList">
-								<tr class="selectReport" 
-									data-toggle="modal"
-									data-target="#reportBoardDetailModal"
-									data-no="${reportBoardList.no}"
-									data-reporter="${reportBoardList.reporter}"
-									data-boardname="${reportBoardList.boardName}"
-									data-boardno="${reportBoardList.boardNo}"
-									data-reason="${reportBoardList.reason}"
-									data-detail="${reportBoardList.detail}">
+								<tr class="selectReport">
 									<td>${reportBoardList.no}</td>
+									<td class="btn-link" data-no="${reportBoardList.no}" data-boardname="${reportBoardList.boardName}">
+										${reportBoardList.boardName}-${reportBoardList.boardNo}
+									</td>
 									<td>${reportBoardList.reporter}</td>
-									<td>${reportBoardList.boardName}-${reportBoardList.boardNo}</td>
-									<td>${reportBoardList.reason}</td>
+									<td data-toggle="modal"
+										data-target="#reportBoardDetailModal"
+										data-no="${reportBoardList.no}"
+										data-reporter="${reportBoardList.reporter}"
+										data-boardname="${reportBoardList.boardName}"
+										data-boardno="${reportBoardList.boardNo}"
+										data-reason="${reportBoardList.reason}"
+										data-detail="${reportBoardList.detail}">${reportBoardList.reason}
+									</td>
 									<td><fmt:formatDate value="${reportBoardList.regDate}" pattern="yyyy/MM/dd" /></td>
 									<td>
 										<c:choose>
@@ -104,6 +130,11 @@
 									</td>
 								</tr>
 							</c:forEach>
+							<c:if test="${empty reportBoardList}">
+								<tr>
+									<td colspan="6"><p>신고하신 내역이 없습니다.</p></td>
+								</tr>
+							</c:if>
 						</tbody>
 					</table>
 					${pagebar}
@@ -138,8 +169,8 @@
 										<input type="text" id="reason" value="" />
 									</div>
 									<div>
-										<p>상세내용</p>
-										<input type="text" id="detail" value="" />
+										<p style="transform: translate(0px, -30px);">상세내용</p>
+										<textarea id="detail" cols="30" onkeyup="adjustHeight();"></textarea>
 									</div>
 								</div>
 								<div class="modal-footer">

@@ -61,18 +61,24 @@
 	});
 	
 	// 회원 삭제
-	function deleteUser(){
+	function enableUser(){
 		var reportee = $("input[id=reportee]").val();
-		let f = document.createElement('form:form');
+		let f = document.createElement('form');
 
 		let obj1 = document.createElement('input');
 		obj1.setAttribute('type', 'hidden');
 		obj1.setAttribute('name', 'reportee');
 		obj1.setAttribute('value', reportee);
+		
+		csrf = document.createElement('input');
+		csrf.setAttribute('type', 'hidden');
+		csrf.setAttribute('name', '${_csrf.parameterName}');
+		csrf.setAttribute('value', '${_csrf.token}');
 
 		f.appendChild(obj1);
+		f.appendChild(csrf);
 		f.setAttribute('method', 'post');
-		f.setAttribute('action', '${pageContext.request.contextPath}/admin/deleteUser.do');
+		f.setAttribute('action', '${pageContext.request.contextPath}/admin/enableUser.do');
 		document.body.appendChild(f);
 		f.submit();
 	}
@@ -143,6 +149,7 @@ textarea {
 									data-reportee="${reportUserList.reportee}"
 									data-reason="${reportUserList.reason}"
 									data-detail="${reportUserList.detail}">
+									<c:set var="condition" value="${reportUserList.condition}"/>
 									<td>${reportUserList.no}</td>
 									<td>${reportUserList.reporter}</td>
 									<td>${reportUserList.reportee}</td>
@@ -197,7 +204,7 @@ textarea {
 									<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 									<button type="button" name="success" class="btn btn-success" onclick="reportUserUpdateCondition(1);">승인</button>
 									<button type="button" name="danger" class="btn btn-danger" onclick="reportUserUpdateCondition(2);">반려</button>
-									<button type="button" name="danger" class="btn btn-info" onclick="deleteUser();">회원정지</button>
+									<button type="button" name="danger" class="btn btn-info" onclick="enableUser();">회원정지</button>
 								</div>
 							</div>
 						</div>

@@ -80,8 +80,8 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public int deleteUser(String reportee) {
-		return adminDao.deleteUser(reportee);
+	public int enableUser(String reportee) {
+		return adminDao.enableUser(reportee);
 	}
 
 	@Override

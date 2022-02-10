@@ -17,10 +17,10 @@
                    <div class="profile-work">
                        <a href="#"><p>회원목록</p></a>
                        <b>통계</b><br />	
- 				 	   <a href="${pageContext.request.contextPath}/admin/chart.do">-가입 회원</a><br />
- 				 	   <a href="#">-회원 주소</a><br />
+ 				 	   <a href="${pageContext.request.contextPath}/admin/chart/chart.do">-가입 회원</a><br />
+ 				 	   <a href="${pageContext.request.contextPath}/admin/chart/addressChart.do">-회원 주소</a><br />
  				 	   <a href="#">-리뷰 작성</a><br />
- 				 	   <a href="#">-북토리 충전</a>
+ 				 	   <a href="${pageContext.request.contextPath}/admin/chart/cashChart.do">-북토리 충전</a>
                    </div>
                </div>
            </div>

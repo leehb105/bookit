@@ -27,6 +27,7 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+
 	<!-- basepackage하위의 클래스를 대상으로 annotation 활성화 : @Component @Autowired -->
 	<context:component-scan base-package="com.finale.bookit" />
 	

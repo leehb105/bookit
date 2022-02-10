@@ -2,11 +2,13 @@ package com.finale.bookit.collection.model.vo;
 
 import java.io.Serializable;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class BookCollection extends BookCollectionEntity implements Serializable {/**
 	 * 
 	 */
@@ -20,10 +22,12 @@ public class BookCollection extends BookCollectionEntity implements Serializable
 	private String author;
 	private String publisher;
 	private String cover;
+	private String profileImage;
 	
-	public BookCollection(int no, String collectionName, String memberNickname, String listNo, String bookCollectionNo,
-			String isbn13, String title, String author, String publisher, String cover) {
-		super(no, collectionName, memberNickname);
+	public BookCollection(int no, String collectionName, String memberId, String nickname, String listNo,
+			String bookCollectionNo, String isbn13, String title, String author, String publisher, String cover, String profileImage) {
+		super(no, collectionName, memberId);
+		this.nickname = nickname;
 		this.listNo = listNo;
 		this.bookCollectionNo = bookCollectionNo;
 		this.isbn13 = isbn13;
@@ -31,12 +35,8 @@ public class BookCollection extends BookCollectionEntity implements Serializable
 		this.author = author;
 		this.publisher = publisher;
 		this.cover = cover;
+		this.profileImage = profileImage;
 	}
-	
-	
-	
-	
-	
 	
 
 }

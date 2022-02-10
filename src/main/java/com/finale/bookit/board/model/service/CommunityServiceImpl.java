@@ -16,6 +16,7 @@ import com.finale.bookit.board.model.dao.CommunityDao;
 import com.finale.bookit.board.model.vo.Comment;
 import com.finale.bookit.board.model.vo.Community;
 import com.finale.bookit.board.model.vo.CommunityAttachment;
+import com.finale.bookit.board.model.vo.CommunityTest;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -124,14 +125,31 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
-	public void deleteCommunityContent(int no) {
-		communityDao.deleteCommunityContent(no);
+	public void deleteCommunityContent(int no, String memberId) throws Exception {
+		String writer = communityDao.writerCheck(no);
+		
+		if(memberId.equals(writer)) {
+			communityDao.deleteCommunityContent(no);
+		}else {
+			throw new Exception("Unauthorized!");
+		}
+		
+	
 		
 	}
 
 	@Override
-	public void updateCommunityContent(Map<String, Object> param) {
-		communityDao.updateCommunityContent(param);
+	public void updateCommunityContent(String memberId, Map<String, Object> param) throws Exception {
+		
+		int no = Integer.parseInt((String)param.get("no"));
+		
+		String writer = communityDao.writerCheck(no);
+		if(memberId == writer) {
+			communityDao.updateCommunityContent(param);
+		}else {
+			throw new Exception("Unauthorized!");
+		}
+		
 		
 	}
 
@@ -143,6 +161,32 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public int getTotalCommunityContent() {
 		return communityDao.getTotalCommunityContent();
+	}
+
+	@Override
+	public int insertCommunity(CommunityTest communityTest) {
+		int result = communityDao.insertCommunity(communityTest);
+		log.debug("communityNo = {}", communityTest.getCommunityNo());
+		List<CommunityAttachment> attachments = communityTest.getFiles();
+		if(attachments != null) {
+			for(CommunityAttachment attach : attachments) {
+				// fk컬럼 boardNo값 설정
+				attach.setCommunityNo(communityTest.getCommunityNo());
+				result = insertCommunityAttachment(attach);
+			}
+		}
+		
+		return result; 
+	
+	}
+	
+	public int insertCommunityAttachment(CommunityAttachment attach) {
+		return communityDao.insertCommunityAttachment(attach);
+	}
+
+	@Override
+	public CommunityAttachment selectOneCommunityAttachment(int no) {
+		return communityDao.selectOneCommunityAttachment(no);
 	}
 
 }

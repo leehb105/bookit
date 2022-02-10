@@ -20,4 +20,6 @@ public interface CollectionService {
 
 	int selectTotalBookList(int no);
 
+	int insertBook(Map<String, Object> param);
+
 }

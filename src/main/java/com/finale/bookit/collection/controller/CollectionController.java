@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.finale.bookit.collection.model.service.CollectionService;
 import com.finale.bookit.collection.model.vo.BookCollection;
@@ -97,5 +99,22 @@ public class CollectionController {
 			result = collectionService.collectionDetailDelete(checkedArr[i]);
 		}
 		return "redirect:/";
+	}
+	
+	// 컬렉션 내에 책 추가
+	@PostMapping("/insertBook.do")
+	public String insertBook(
+			@RequestParam int collectionNo,
+			@RequestParam String isbn,
+			RedirectAttributes redirectAttr) {
+		log.debug("collectionNo = {}", collectionNo);
+		log.debug("isbn = {}", isbn);
+		
+		Map<String, Object> param = new HashMap<>();
+		param.put("collectionNo", collectionNo);
+		param.put("isbn", isbn);
+		int result = collectionService.insertBook(param);
+		redirectAttr.addFlashAttribute("msg", result > 0 ? "추가되었습니다." : "다시 시도해주세요.");
+		return "redirect:/collection/collectionDetail.do?no=" + collectionNo;
 	}
 }
