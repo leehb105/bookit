@@ -44,6 +44,11 @@ public class BookingServiceImpl implements BookingService {
 	public int insertBookInfo(BookInfo bookInfo) {
 		return bookingDao.insertBookInfo(bookInfo);
 	}
+
+	@Override
+	public int insertBooking(Booking booking) {
+		return bookingDao.insertBooking(booking);
+	}
 	
 
 }

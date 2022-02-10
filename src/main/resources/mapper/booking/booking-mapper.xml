@@ -85,6 +85,9 @@
 		    b.writer = m.id
 		WHERE
 			b.board_no = #{bno}
+		AND
+			b.delete_yn = 'N'
+			
 	</select>
 
 	<select id="selectBook" resultType="bookInfo">
@@ -121,6 +124,19 @@
 		)
 	</insert>
 	
+	<insert id="insertBooking" parameterType="booking">
+		INSERT INTO booking values(
+			seq_booking_board_no.nextval,
+			#{content},
+			#{bookStatus},
+			#{price},
+			#{deposit},
+			#{writer},
+			default,
+			#{bookInfo.isbn13},
+			default
+		)
+	</insert>
 	
 	
 	

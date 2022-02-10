@@ -43,5 +43,11 @@ public class BookkingDaoImpl implements BookingDao{
 	public int insertBookInfo(BookInfo bookInfo) {
 		return session.insert("booking.insertBookInfo", bookInfo);
 	}
+
+	@Override
+	public int insertBooking(Booking booking) {
+		return session.insert("booking.insertBooking", booking);
+	}
+	
 	
 }

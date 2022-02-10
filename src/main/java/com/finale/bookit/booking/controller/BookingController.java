@@ -4,9 +4,11 @@ import com.finale.bookit.booking.model.service.BookingService;
 import com.finale.bookit.booking.model.vo.BookInfo;
 import com.finale.bookit.booking.model.vo.Booking;
 import com.finale.bookit.common.util.BookitUtils;
+import com.finale.bookit.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 
 import lombok.extern.log4j.Log4j;
@@ -88,19 +90,17 @@ public class BookingController {
     public void bookingEnroll() { }
     	
     @PostMapping("/bookingEnroll.do")
-    public void bookingEnroll(
+    public String bookingEnroll(
     		@RequestParam String status, 
     		@RequestParam int deposit, 
     		@RequestParam int price, 
     		@RequestParam String content, 
     		@RequestParam String isbn, 
-    		RedirectAttributes attributes) {
-    	
-    	
-//    	log.debug("status = {}", status);
-//    	log.debug("deposit = {}", deposit);
-//    	log.debug("price = {}", price);
-//    	log.debug("content = {}", content);
+    		RedirectAttributes attributes,
+    		@AuthenticationPrincipal Member member
+	) {
+
+    	log.debug("member = {}", member);
     	
     	Booking booking = new Booking();
     	booking.setBookStatus(status);
@@ -112,11 +112,21 @@ public class BookingController {
     	bookInfo.setIsbn13(isbn);
     	
     	booking.setBookInfo(bookInfo);
+    	booking.setWriter(member.getId());
     	
     	log.debug("booking = {} ", booking);
     	
-//    	int result = bookingService.insertBooking();
+    	int result = bookingService.insertBooking(booking);
+    	String msg = "";
+    	if(result > 0) {
+    		msg = "대여 등록이 완료되었습니다.";
+    		attributes.addFlashAttribute("msg", "대여 등록이 완료되었습니다.");    		
+    	}else {
+    		msg = "글 등록에 실패하였습니다.";
+    	}
+    	attributes.addFlashAttribute("msg", msg);  
     	
+    	return "redirect:/";
     }
     
     @PostMapping("/bookInfoEnroll.do")

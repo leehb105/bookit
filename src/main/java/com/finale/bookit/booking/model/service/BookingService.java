@@ -18,4 +18,6 @@ public interface BookingService {
 	public int selectCountByIsbn(String isbn13);
 
 	public int insertBookInfo(BookInfo bookInfo);
+
+	public int insertBooking(Booking booking);
 }

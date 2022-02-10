@@ -19,4 +19,6 @@ public interface BookingDao {
 	int selectCountByIsbn(String isbn13);
 
 	int insertBookInfo(BookInfo bookInfo);
+
+	int insertBooking(Booking booking);
 }
