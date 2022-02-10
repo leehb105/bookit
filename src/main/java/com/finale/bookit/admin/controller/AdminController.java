@@ -69,7 +69,19 @@ public class AdminController {
 	
 	
 	@GetMapping("/chart/cashChart.do")
-	public void cashChart() {
+	public void cashChart(Model model) {
+		List<Chart> chart = adminService.selectCashChart();
+		int size = chart.size();
+		int[] cash = new int[size];
+		
+		for(int i = 0 ; i < size; i++) {
+			cash[i] = chart.get(i).getCount();
+		}
+		
+		
+		log.debug("CashChart = {}", chart);
+		
+		model.addAttribute("cash", cash);
 		
 	}
 	@GetMapping("/chart/addressChart.do")
@@ -226,9 +238,12 @@ public class AdminController {
 		model.addAttribute("pagebar", pagebar);
 	}
 	
-	// 회원 삭제
+	// 회원 정지 (enabled = 0)
 	@PostMapping("/enableUser.do")
-	public String enableUser(@RequestParam String reportee, RedirectAttributes redirectAttr,
+	public String enableUser(@RequestParam String reportee,
+			@RequestParam String boardNo,
+			@RequestParam String boardName,
+			RedirectAttributes redirectAttr,
 			@RequestHeader(name="Referer", required=false) String referer) {
 		log.debug("referer = {}", referer);
 		int result = adminService.enableUser(reportee);
@@ -238,6 +253,7 @@ public class AdminController {
 			return "redirect:/admin/adminReportUserList.do";			
 		}
 		else {
+			// 게시글 작성자는 어떻게 하지
 			return "redirect:/admin/adminReportBoardList.do";
 		}
 	}

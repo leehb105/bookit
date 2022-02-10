@@ -7,3 +7,9 @@ canvas#myChart {
 .container-chart {
 	display: inline-block;
 }
+
+#chart-category-second{
+	left: 300px;
+    position: absolute;
+    top: 150px;
+}
