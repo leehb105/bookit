@@ -27,6 +27,7 @@
 		<result column="enroll_date" property="enrollDate"/>
 		<result column="report_yn" property="reportYn"/>
 		<result column="cash" property="cash"/>
+		<result column="profile_image" property="profileImage"/>
 		<result column="road_address" property="roadAddress"/>
 		<result column="jibun_address" property="jibunAddress"/>
 		<result column="latitude" property="latitude"/>

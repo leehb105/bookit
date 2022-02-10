@@ -49,11 +49,11 @@ $(() => {
 
 <jsp:include page="/WEB-INF/views/member/common/sidebar.jsp"/>    
                <div class="col-1"></div>
-	                    <div class="col-3">
-                    <form:form name="memberUpdateFrm" method="POST" action="${pageContext.request.contextPath}/member/memberUpdate.do" enctype="multipart/form-data">
+	               <div class="col-3">
+                        <form name="memberUpdateFrm" method="POST" action="${pageContext.request.contextPath}/member/memberUpdate.do?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
 	                       	<a href="${pageContext.request.contextPath}/member/mypageMain.do">마이페이지</a> > 정보수정
 	                        <div class="profile-img"><br /><br />
-	                            <img class="mb-3" src="" onerror="this.src='${pageContext.request.contextPath}/resources/img/profile/default_profile.png'" alt=""/>
+	                            <img class="mb-3" src="${pageContext.request.contextPath}/resources/img/profile/${loginMember.profileImage}" onerror="this.src='${pageContext.request.contextPath}/resources/img/profile/default_profile.png'" alt=""/>
 	                       		<div class="file btn btn-lg">
 	                          		사진 변경<input type="file" id="profileImg" name="profileImg"/>
 	                       		</div> 
@@ -72,7 +72,6 @@ $(() => {
 	                    </div>
 		                <div class="col-6">
 		                	<c:if test="${!empty loginMember}">
-		                	<%-- <form:form name="memberUpdateFrm" method="POST" action="${pageContext.request.contextPath}/member/memberUpdate.do"> --%>
 			                	<div class="row">
 			                        <div class="col-md-4"><br /><br />
 			                            <label>이름</label>
@@ -146,7 +145,7 @@ $(() => {
 										<div id="map"></div>
 									</div>
 		
-										<!-- 아래 폼은 hidden 처리 예정 -->
+									<!-- 아래 폼은 hidden 처리 예정 -->
 									<div class='hidden'>
 										<div>
 											도로명: <input type='text' id='roadAddr' name='roadAddress' size=50 readonly/>
@@ -183,14 +182,14 @@ $(() => {
 									</div>
 								</div>
 			                    <!-- 끝  -->
-			                    <%-- <form:form name="memberUpdateFrm" method="POST" action="${pageContext.request.contextPath}/member/memberUpdate.do"> --%>
 	                            <input type="submit" class="btn roberto-btn w-10 mt-30" value="수정">
 							</c:if>
+							<c:if test="${!empty sessionScope.kakaoE}">
+							<p>SNS 계정으로 로그인한 회원입니다.</p>
+							</c:if>
 							
-							
-				</form:form>
-	                    </div>
-                         
+						</form>
+	               </div> 
                </div>          
         </div>
 

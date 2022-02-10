@@ -206,11 +206,11 @@ public class MemberController {
 		}
 		
 		String id = loginMember.getId();
-		String img = loginMember.getProfileImage();
+		String profileImage = loginMember.getProfileImage();
 		Map<String, Object> param = new HashMap<>();
 		log.debug("loginMember = {}", loginMember);
 		param.put("id", id);
-		param.put("img", img);
+		param.put("profileImage", profileImage);
 		param.put("nickname", nickname);
 		param.put("email", email);
 		param.put("phone", phone);
