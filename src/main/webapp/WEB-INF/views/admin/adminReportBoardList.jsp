@@ -63,7 +63,7 @@
 	});
 	
 	// 회원 삭제
-	function deleteUser(){
+	function enableUser(){
 		var reportee = $("input[id=reportee]").val();
 		let f = document.createElement('form:form');
 
@@ -71,10 +71,16 @@
 		obj1.setAttribute('type', 'hidden');
 		obj1.setAttribute('name', 'reportee');
 		obj1.setAttribute('value', reportee);
+		
+		csrf = document.createElement('input');
+		csrf.setAttribute('type', 'hidden');
+		csrf.setAttribute('name', '${_csrf.parameterName}');
+		csrf.setAttribute('value', '${_csrf.token}');
 
 		f.appendChild(obj1);
+		f.appendChild(csrf);
 		f.setAttribute('method', 'post');
-		f.setAttribute('action', '${pageContext.request.contextPath}/admin/deleteUser.do');
+		f.setAttribute('action', '${pageContext.request.contextPath}/admin/enableUser.do');
 		document.body.appendChild(f);
 		f.submit();
 	}
@@ -85,6 +91,17 @@
 	  var textEleHeight = textEle.prop('scrollHeight');
 	  textEle.css('height', textEleHeight);
 	};
+	// 신고한 게시글로 이동
+	$(() => {
+		$(".btn-link[data-no]").click((e) => {
+			const $td = $(e.target);
+			const boardname = $td.data("boardname");
+			const no = $td.data("no");
+			console.log(boardname);
+			console.log(no);
+			location.href = `${pageContext.request.contextPath}/board/\${boardname}Content.do?no=\${no}`;
+		});
+	});
 </script>
 <style>
 .selectReport:hover {
@@ -136,19 +153,21 @@ textarea {
 					</thead>
 					<tbody>
 						<c:forEach items="${reportBoardList}" var="reportBoardList">
-							<tr class="selectReport" 
-								data-toggle="modal"
-								data-target="#reportBoardDetailModal"
-								data-no="${reportBoardList.no}"
-								data-reporter="${reportBoardList.reporter}"
-								data-boardname="${reportBoardList.boardName}"
-								data-boardno="${reportBoardList.boardNo}"
-								data-reason="${reportBoardList.reason}"
-								data-detail="${reportBoardList.detail}">
+							<tr class="selectReport">
 								<td>${reportBoardList.no}</td>
 								<td>${reportBoardList.reporter}</td>
-								<td><a href="">${reportBoardList.boardName}-${reportBoardList.boardNo}</a></td>
-								<td>${reportBoardList.reason}</td>
+								<td class="btn-link" data-no="${reportBoardList.no}" data-boardname="${reportBoardList.boardName}">
+									${reportBoardList.boardName}-${reportBoardList.boardNo}
+								</td>
+								<td data-toggle="modal"
+									data-target="#reportBoardDetailModal"
+									data-no="${reportBoardList.no}"
+									data-reporter="${reportBoardList.reporter}"
+									data-boardname="${reportBoardList.boardName}"
+									data-boardno="${reportBoardList.boardNo}"
+									data-reason="${reportBoardList.reason}"
+									data-detail="${reportBoardList.detail}">${reportBoardList.reason}
+								</td>
 								<td><fmt:formatDate value="${reportBoardList.regDate}" pattern="yyyy/MM/dd" /></td>
 								<td>
 									<c:choose>
@@ -202,7 +221,7 @@ textarea {
 								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 								<button type="button" name="success" class="btn btn-success" onclick="reportBoardUpdateCondition(1);">승인</button>
 								<button type="button" name="danger" class="btn btn-danger" onclick="reportBoardUpdateCondition(2);">반려</button>
-								<button type="button" name="danger" class="btn btn-info" onclick="deleteUser();">회원정지</button>
+								<button type="button" name="danger" class="btn btn-info" onclick="enableUser();">회원정지</button>
 							</div>
 						</div>
 					</div>
