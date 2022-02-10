@@ -77,6 +77,11 @@ $(() => {
 		                            </td>
 		                        </tr>
 	                        </c:forEach>
+	                        <c:if test="${empty inquireList}">
+								<tr>
+									<td colspan="5"><p>문의하신 내역이 없습니다.</p></td>
+								</tr>
+							</c:if>
 	                    </tbody>
 	                </table>
                 </div>
