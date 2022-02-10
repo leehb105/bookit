@@ -106,9 +106,9 @@
 		select count(*) from report_user
 	</select>
 	
-	<delete id="deleteUser">
-		delete from member where id = #{reportee}
-	</delete>
+	<update id="enableUser">
+		update member set enabled = 0 where id = #{reportee}
+	</update>
 	
 	<select id="selectTotalReportBoard" resultType="_int">
 		select count(*) from report_board

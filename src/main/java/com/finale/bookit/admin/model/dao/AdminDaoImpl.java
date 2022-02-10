@@ -90,8 +90,8 @@ public class AdminDaoImpl implements AdminDao {
 	}
 
 	@Override
-	public int deleteUser(String reportee) {
-		return session.delete("admin.deleteUser", reportee);
+	public int enableUser(String reportee) {
+		return session.update("admin.enableUser", reportee);
 	}
 
 	@Override
