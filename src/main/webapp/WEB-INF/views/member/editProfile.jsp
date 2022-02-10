@@ -49,11 +49,11 @@ $(() => {
 
 <jsp:include page="/WEB-INF/views/member/common/sidebar.jsp"/>    
                <div class="col-1"></div>
-	                    <div class="col-3">
-                    <form:form name="memberUpdateFrm" method="POST" action="${pageContext.request.contextPath}/member/memberUpdate.do" enctype="multipart/form-data">
+	              	<div class="col-3">
+                  <form name="memberUpdateFrm" method="POST" action="${pageContext.request.contextPath}/member/memberUpdate.do?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
 	                       	<a href="${pageContext.request.contextPath}/member/mypageMain.do">마이페이지</a> > 정보수정
 	                        <div class="profile-img"><br /><br />
-	                            <img class="mb-3" src="" onerror="this.src='${pageContext.request.contextPath}/resources/img/profile/default_profile.png'" alt=""/>
+	                            <img class="mb-3" src="${pageContext.request.contextPath}/resources/img/profile/${loginMember.profileImage}" onerror="this.src='${pageContext.request.contextPath}/resources/img/profile/default_profile.png'" alt=""/>
 	                       		<div class="file btn btn-lg">
 	                          		사진 변경<input type="file" id="profileImg" name="profileImg"/>
 	                       		</div> 
@@ -188,7 +188,7 @@ $(() => {
 							</c:if>
 							
 							
-				</form:form>
+				</form>
 	                    </div>
                          
                </div>          

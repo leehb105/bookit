@@ -23,7 +23,7 @@
               <div class="col-3">
                   <div class="profile-img">
                   	<br /><br />
-                      <img src="${pageContext.request.contextPath}/resources/img/default_profile.png" alt=""/>
+                      <img src="${loginMember.profileImage}" alt=""/>
                       <!-- <div class="file btn btn-lg">
                          	사진 변경<input type="file" name="file"/>
                       </div> -->
