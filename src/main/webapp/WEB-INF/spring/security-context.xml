@@ -30,7 +30,7 @@
 		<intercept-url pattern="/member/**" access="permitAll"/>
 		
 		
-		<intercept-url pattern="/**" access="isAuthenticated()"/> <!-- =hasRole('USER') -->
+		<intercept-url pattern="/**" access="permitAll"/> <!-- =hasRole('USER') -->
 	
 	
 		<!-- 
