@@ -3,6 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%-- spring-webmvc의존 : security의 xss대비 csrf토큰 생성 --%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
+
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/community.css"/>
 <script>
@@ -33,10 +39,9 @@ $(() => {
 <div class="container">
   <form 		
   		name="communityFrm" 
-		action="${pageContext.request.contextPath}/board/communityEnroll.do" 
+		action="${pageContext.request.contextPath}/board/communityEnroll?${_csrf.parameterName}=${_csrf.token}" 
 		method="post"
 		enctype="multipart/form-data" 
-
 		onsubmit="return boardValidate();">
      <div class="row" style="margin-left: 2%;">
        	<h2>글쓰기</h2>
