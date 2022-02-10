@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="booking">
-    <select id="selectBookInfo" resultMap="bookingMap">
+    <select id="selectBookingList" resultMap="bookingMap">
        select
 		    b.*,
 		    bi.*,
@@ -20,6 +20,8 @@
 			br.start_date NOT BETWEEN #{checkIn} AND #{checkOut}
 			AND
 			br.end_date NOT BETWEEN #{checkIn} AND #{checkOut}
+			AND
+			b.delete_yn = 'N'
 		order by b.reg_date desc
     </select>
     
@@ -85,8 +87,6 @@
 		    b.writer = m.id
 		WHERE
 			b.board_no = #{bno}
-		AND
-			b.delete_yn = 'N'
 			
 	</select>
 
@@ -137,7 +137,6 @@
 			default
 		)
 	</insert>
-	
 	
 	
 </mapper>

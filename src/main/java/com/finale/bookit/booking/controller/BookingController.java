@@ -57,7 +57,7 @@ public class BookingController {
         param.put("checkIn", checkIn);
         param.put("checkOut", checkOut);
         log.debug("title = {}", bookTitle);
-        List<Booking> list = bookingService.selectBookInfo(param);
+        List<Booking> list = bookingService.selectBookingList(param);
 //        String cover = list.get(0).getBookInfo().getCover();
 //        log.debug("cover = {}", cover);
         int total = bookingService.selectTotalBookingCount();

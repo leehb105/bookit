@@ -16,8 +16,8 @@ public class BookingServiceImpl implements BookingService {
 	private BookingDao bookingDao;
 
 	@Override
-	public List<Booking> selectBookInfo(Map<String, Object> param) {
-		return bookingDao.selectBookInfo(param);
+	public List<Booking> selectBookingList(Map<String, Object> param) {
+		return bookingDao.selectBookingList(param);
 	}
 
 	@Override

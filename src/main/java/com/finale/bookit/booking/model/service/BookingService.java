@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface BookingService {
-	public List<Booking> selectBookInfo(Map<String, Object> param);
+	public List<Booking> selectBookingList(Map<String, Object> param);
 
 	int selectTotalBookingCount();
 
