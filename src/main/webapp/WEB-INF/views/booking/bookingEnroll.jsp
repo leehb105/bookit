@@ -104,11 +104,11 @@
                                         <td>
                                             <select class="form-select" id="status" name="status">
                                                 <option value="0" disabled selected>선택</option>
-                                                <option value="1">최상</option>
-                                                <option value="2">상</option>
-                                                <option value="3">중</option>
-                                                <option value="4">하</option>
-                                                <option value="5">최하</option>
+                                                <option value="최상">최상</option>
+                                                <option value="상">상</option>
+                                                <option value="중">중</option>
+                                                <option value="하">하</option>
+                                                <option value="최하">최하</option>
                                             </select>
                                         </td>
                                         <td>
@@ -310,6 +310,28 @@
         return true;
 
     }
+    // function numToBookStatus(value){
+    //     let status;
+    //     switch(value){
+    //         case 1 :
+    //             status = '최상';
+    //             break;
+    //         case 2 :
+    //             status = '상';
+    //             break;
+    //         case 3 :
+    //             status = '중';
+    //             break;
+    //         case 4 :
+    //             status = '하';
+    //             break;
+    //         case 5 :
+    //             status = '최하';
+    //             break;
+    //     }
+    //     return status;
+    // }
+
 
     //글내용 글자갯수 제한 코드
     $(document).ready(function() {

@@ -20,8 +20,8 @@ public class BookkingDaoImpl implements BookingDao{
     }
 
     @Override
-    public List<Booking> selectBookInfo(Map<String, Object> param) {
-        return session.selectList("booking.selectBookInfo", param);
+    public List<Booking> selectBookingList(Map<String, Object> param) {
+        return session.selectList("booking.selectBookingList", param);
     }
 
 	@Override
@@ -43,5 +43,11 @@ public class BookkingDaoImpl implements BookingDao{
 	public int insertBookInfo(BookInfo bookInfo) {
 		return session.insert("booking.insertBookInfo", bookInfo);
 	}
+
+	@Override
+	public int insertBooking(Booking booking) {
+		return session.insert("booking.insertBooking", booking);
+	}
+	
 	
 }

@@ -16,8 +16,8 @@ public class BookingServiceImpl implements BookingService {
 	private BookingDao bookingDao;
 
 	@Override
-	public List<Booking> selectBookInfo(Map<String, Object> param) {
-		return bookingDao.selectBookInfo(param);
+	public List<Booking> selectBookingList(Map<String, Object> param) {
+		return bookingDao.selectBookingList(param);
 	}
 
 	@Override
@@ -43,6 +43,11 @@ public class BookingServiceImpl implements BookingService {
 	@Override
 	public int insertBookInfo(BookInfo bookInfo) {
 		return bookingDao.insertBookInfo(bookInfo);
+	}
+
+	@Override
+	public int insertBooking(Booking booking) {
+		return bookingDao.insertBooking(booking);
 	}
 	
 

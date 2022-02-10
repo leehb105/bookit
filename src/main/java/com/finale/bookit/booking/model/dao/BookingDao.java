@@ -10,7 +10,7 @@ public interface BookingDao {
 
     int selectTotalBookingCount();
 
-    List<Booking> selectBookInfo(Map<String, Object> param);
+    List<Booking> selectBookingList(Map<String, Object> param);
 
 	Booking selectBooking(Map<String, Object> param);
 
@@ -19,4 +19,6 @@ public interface BookingDao {
 	int selectCountByIsbn(String isbn13);
 
 	int insertBookInfo(BookInfo bookInfo);
+
+	int insertBooking(Booking booking);
 }
