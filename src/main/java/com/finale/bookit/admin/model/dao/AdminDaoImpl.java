@@ -99,4 +99,9 @@ public class AdminDaoImpl implements AdminDao {
 		return session.selectOne("admin.selectTotalReportBoard");
 	}
 
+	@Override
+	public List<Chart> selectCashChart() {
+		return session.selectList("admin.selectCashChart");
+	}
+
 }

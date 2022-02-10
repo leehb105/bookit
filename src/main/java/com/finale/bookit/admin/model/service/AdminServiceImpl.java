@@ -89,4 +89,9 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.selectTotalReportBoard();
 	}
 
+	@Override
+	public List<Chart> selectCashChart() {
+		return adminDao.selectCashChart();
+	}
+
 }

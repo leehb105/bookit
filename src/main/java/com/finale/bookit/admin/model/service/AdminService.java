@@ -39,6 +39,8 @@ public interface AdminService {
 
 	int selectTotalReportBoard();
 
+	List<Chart> selectCashChart();
+
 
 
 

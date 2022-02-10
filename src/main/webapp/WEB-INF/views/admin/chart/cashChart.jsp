@@ -16,7 +16,7 @@
                    <div class="profile-work">
                        <a href="#"><p>회원목록</p></a>
                        <p>통계</p>	
- 				 	   <a href="${pageContext.request.contextPath}/admin/chart.do">-가입 회원</a><br />
+ 				 	   <a href="${pageContext.request.contextPath}/admin/chart/chart.do">-가입 회원</a><br />
  				 	   <a href="${pageContext.request.contextPath}/admin/chart/addressChart.do">-회원 주소</a><br />
  				 	   <a href="#">-리뷰 작성</a><br />
  				 	   <a href="${pageContext.request.contextPath}/admin/chart/cashChart.do">-북토리 충전</a>
@@ -44,8 +44,8 @@ $(document).ready(function() {
 	const data = {
 	  labels: labels,
 	  datasets: [{
-	    label: '북토리 충전 금액',
-	    data: [65, 59, 80, 81, 56, 55, 40],
+	    label: '2022년 북토리 충전 금액',
+	    data: [${cash[0]},${cash[1]}],
 	    backgroundColor: [
 	      'rgba(255, 99, 132, 0.2)',
 	      'rgba(255, 159, 64, 0.2)',
