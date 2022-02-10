@@ -20,4 +20,6 @@ public interface CollectionDao {
 
 	int selectTotalBookList(int no);
 
+	int insertBook(Map<String, Object> param);
+
 }

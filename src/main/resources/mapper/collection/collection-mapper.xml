@@ -34,6 +34,8 @@
     		on b.member_id = m.id
 		where
 			b.no = #{no}
+		order by
+    		l.regDate desc
 	</select>
 	
 	<delete id="collectionDetailDelete">
@@ -51,4 +53,9 @@
 	<select id="selectTotalBookList" resultType="_int">
 		select count(*) from book_collection_list where book_collection_no = #{no}
 	</select>
+	
+	<insert id="insertBook">
+		insert into book_collection_list
+		values (seq_book_collection_list_no.nextval, #{collectionNo}, #{isbn}, default)
+	</insert>
 </mapper>

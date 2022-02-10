@@ -1,6 +1,7 @@
 package com.finale.bookit.collection.model.vo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,5 +19,6 @@ public class BookCollectionList implements Serializable{
 	private int no;
 	private int bookCollectionNo;
 	private String isbn13;
+	private Date regDate;
 	
 }
