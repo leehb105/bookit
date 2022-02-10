@@ -18,6 +18,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +28,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -184,19 +184,22 @@ public class CommunityController {
 		}
 	}
 
-	@PostMapping("/communityEnroll.do")
+	@PostMapping("/communityEnroll")
 	public ModelAndView communityEnroll(CommunityTest communityDto, Model model,
 			@RequestParam(name = "upFile", required = false)MultipartFile[] upFile, HttpServletRequest request,
-			RedirectAttributes redirectAttr) throws IllegalStateException, IOException {
+			RedirectAttributes redirectAttr,@AuthenticationPrincipal Member loginMember) throws IllegalStateException, IOException {
 
+		/*
 		// 현재 로그인한 유저 정보 가져오기
 		HttpSession session = request.getSession();
 
 		String attrName = "loginMember";
 		Member member = (Member) session.getAttribute(attrName);
-		log.info("member {}", member);
+		*/
+		
+		log.info("member {}", loginMember);
 
-		communityDto.setMemberId(member.getId());
+		communityDto.setMemberId(loginMember.getId());
 
 		log.info("communityDto {}", communityDto);
 
@@ -208,22 +211,24 @@ public class CommunityController {
 
 		// 1. 첨부파일을 서버컴퓨터 저장 : rename
 		// 2. 저장된 파일의 정보 -> Attachment객체 -> attachment insert
-		for (int i = 0; i < upFile.length; i++) {
-			MultipartFile upFiles = upFile[i];
-			if (!upFiles.isEmpty()) {
-				// 1. 저장경로 | renamedFilename
-				String originalFilename = upFiles.getOriginalFilename();
-				String renamedFilename = BookitUtils.rename(originalFilename);
-				File dest = new File(saveDirectory, renamedFilename);
-				upFiles.transferTo(dest);
 
-				// 2
-				CommunityAttachment attach = new CommunityAttachment();
-				attach.setOriginalFilename(originalFilename);
-				attach.setRenamedFilename(renamedFilename);
-				attachments.add(attach);
+			for (int i = 0; i < upFile.length; i++) {
+				MultipartFile upFiles = upFile[i];
+				if (!upFiles.isEmpty()) {
+					// 1. 저장경로 | renamedFilename
+					String originalFilename = upFiles.getOriginalFilename();
+					String renamedFilename = BookitUtils.rename(originalFilename);
+					File dest = new File(saveDirectory, renamedFilename);
+					upFiles.transferTo(dest);
+	
+					// 2
+					CommunityAttachment attach = new CommunityAttachment();
+					attach.setOriginalFilename(originalFilename);
+					attach.setRenamedFilename(renamedFilename);
+					attachments.add(attach);
+				}
 			}
-		}
+		
 
 		if (!attachments.isEmpty())
 			communityDto.setFiles(attachments);
