@@ -70,7 +70,17 @@ public class AdminController {
 	@GetMapping("/admin.do")
 	public void adminPage() {}
 	
-	@GetMapping("/chart.do")
+	
+	
+	@GetMapping("/chart/cashChart.do")
+	public void cashChart() {
+		
+	}
+	@GetMapping("/chart/addressChart.do")
+	public void addressChart() {
+		
+	}
+	@GetMapping("/chart/chart.do")
 	public void chart(Model model) {
 		
 		List<Chart> chart = adminService.selectChart();
