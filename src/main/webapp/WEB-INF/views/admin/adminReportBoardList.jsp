@@ -15,7 +15,7 @@
 <script>
 	// 게시글 신고 처리 상태 변경 함수(condition값, no값 넘겨주기)
 	function reportBoardUpdateCondition(condition) {
-		var no = $("input[id=no1]").val();
+		var no = $("input[id=no]").val();
 		let f = document.createElement('form');
 
 		let obj1 = document.createElement('input');
@@ -64,13 +64,19 @@
 	
 	// 회원 삭제
 	function enableUser(){
-		var reportee = $("input[id=reportee]").val();
+		var boardNo = $("input[id=boardNo]").val();
+		var boardName = $("input[id=boardName]").val();
 		let f = document.createElement('form:form');
 
 		let obj1 = document.createElement('input');
 		obj1.setAttribute('type', 'hidden');
-		obj1.setAttribute('name', 'reportee');
-		obj1.setAttribute('value', reportee);
+		obj1.setAttribute('name', 'boardNo');
+		obj1.setAttribute('value', boardNo);
+		
+		let obj2 = document.createElement('input');
+		obj2.setAttribute('type', 'hidden');
+		obj2.setAttribute('name', 'boardName');
+		obj2.setAttribute('value', boardName);
 		
 		csrf = document.createElement('input');
 		csrf.setAttribute('type', 'hidden');
@@ -78,6 +84,7 @@
 		csrf.setAttribute('value', '${_csrf.token}');
 
 		f.appendChild(obj1);
+		f.appendChild(obj2);
 		f.appendChild(csrf);
 		f.setAttribute('method', 'post');
 		f.setAttribute('action', '${pageContext.request.contextPath}/admin/enableUser.do');
@@ -215,7 +222,7 @@ textarea {
 									<p style="transform: translate(0px, -30px);">상세내용</p>
 										<textarea id="detail" cols="30" onkeyup="adjustHeight();"></textarea>
 								</div>
-								<input type="hidden" id="no1" value="" />
+								<input type="hidden" id="no" value="" />
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

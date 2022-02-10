@@ -238,9 +238,12 @@ public class AdminController {
 		model.addAttribute("pagebar", pagebar);
 	}
 	
-	// 회원 삭제
+	// 회원 정지 (enabled = 0)
 	@PostMapping("/enableUser.do")
-	public String enableUser(@RequestParam String reportee, RedirectAttributes redirectAttr,
+	public String enableUser(@RequestParam String reportee,
+			@RequestParam String boardNo,
+			@RequestParam String boardName,
+			RedirectAttributes redirectAttr,
 			@RequestHeader(name="Referer", required=false) String referer) {
 		log.debug("referer = {}", referer);
 		int result = adminService.enableUser(reportee);
@@ -250,6 +253,7 @@ public class AdminController {
 			return "redirect:/admin/adminReportUserList.do";			
 		}
 		else {
+			// 게시글 작성자는 어떻게 하지
 			return "redirect:/admin/adminReportBoardList.do";
 		}
 	}
