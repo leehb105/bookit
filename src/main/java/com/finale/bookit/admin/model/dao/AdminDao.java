@@ -39,5 +39,7 @@ public interface AdminDao {
 
 	int selectTotalReportBoard();
 
+	List<Chart> selectCashChart();
+
 
 }

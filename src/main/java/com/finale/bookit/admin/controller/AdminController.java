@@ -69,7 +69,19 @@ public class AdminController {
 	
 	
 	@GetMapping("/chart/cashChart.do")
-	public void cashChart() {
+	public void cashChart(Model model) {
+		List<Chart> chart = adminService.selectCashChart();
+		int size = chart.size();
+		int[] cash = new int[size];
+		
+		for(int i = 0 ; i < size; i++) {
+			cash[i] = chart.get(i).getCount();
+		}
+		
+		
+		log.debug("CashChart = {}", chart);
+		
+		model.addAttribute("cash", cash);
 		
 	}
 	@GetMapping("/chart/addressChart.do")
