@@ -6,6 +6,8 @@ import java.util.List;
 import com.finale.bookit.admin.model.vo.AdminInquire;
 import com.finale.bookit.admin.model.vo.Chart;
 import com.finale.bookit.inquire.model.vo.Inquire;
+import com.finale.bookit.member.model.vo.Member;
+import com.finale.bookit.member.model.vo.MemberEntity;
 import com.finale.bookit.report.model.vo.ReportBoard;
 import com.finale.bookit.report.model.vo.ReportUser;
 
@@ -40,6 +42,10 @@ public interface AdminService {
 	int selectTotalReportBoard();
 
 	List<Chart> selectCashChart();
+
+	List<MemberEntity> selectAllMembers(Map<String, Object> param);
+
+	int getTotalMember();
 
 
 
