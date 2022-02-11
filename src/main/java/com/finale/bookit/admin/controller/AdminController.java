@@ -22,6 +22,8 @@ import com.finale.bookit.admin.model.vo.AdminInquire;
 import com.finale.bookit.admin.model.vo.Chart;
 import com.finale.bookit.common.util.BookitUtils;
 import com.finale.bookit.inquire.model.vo.Inquire;
+import com.finale.bookit.member.model.vo.Member;
+import com.finale.bookit.member.model.vo.MemberEntity;
 import com.finale.bookit.report.model.vo.ReportBoard;
 import com.finale.bookit.report.model.vo.ReportUser;
 
@@ -64,7 +66,30 @@ public class AdminController {
 	}
 	
 	@GetMapping("/admin.do")
-	public void adminPage() {}
+	public void adminPage(@RequestParam(defaultValue = "1") int cPage,Model model,HttpServletRequest request) {
+		
+		int limit = 10;
+		int offset = (cPage - 1) * limit;
+		
+		Map<String, Object> param = new HashMap<>();
+		param.put("offset", offset);
+		param.put("limit", limit);
+		
+		
+		List<MemberEntity> memberList = adminService.selectAllMembers(param);
+		
+		model.addAttribute("memberList", memberList);
+		
+		
+		
+		
+		int totalMember = adminService.getTotalMember();
+		String url = request.getRequestURI();
+		String pagebar = BookitUtils.getPagebar(cPage, limit, totalMember, url);
+		
+		model.addAttribute("pagebar", pagebar);
+		
+	}
 	
 	
 	

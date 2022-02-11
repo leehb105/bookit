@@ -10,6 +10,8 @@ import com.finale.bookit.admin.model.dao.AdminDao;
 import com.finale.bookit.admin.model.vo.AdminInquire;
 import com.finale.bookit.admin.model.vo.Chart;
 import com.finale.bookit.inquire.model.vo.Inquire;
+import com.finale.bookit.member.model.vo.Member;
+import com.finale.bookit.member.model.vo.MemberEntity;
 import com.finale.bookit.report.model.vo.ReportBoard;
 import com.finale.bookit.report.model.vo.ReportUser;
 
@@ -92,6 +94,18 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public List<Chart> selectCashChart() {
 		return adminDao.selectCashChart();
+	}
+
+	@Override
+	public List<MemberEntity> selectAllMembers(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return adminDao.selectAllMembers(param);
+	}
+
+	@Override
+	public int getTotalMember() {
+		// TODO Auto-generated method stub
+		return adminDao.getTotalMember();
 	}
 
 }
