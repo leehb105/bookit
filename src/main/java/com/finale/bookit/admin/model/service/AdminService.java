@@ -47,6 +47,8 @@ public interface AdminService {
 
 	int getTotalMember();
 
+	int deleteYn(Map<String, Object> param);
+
 
 
 

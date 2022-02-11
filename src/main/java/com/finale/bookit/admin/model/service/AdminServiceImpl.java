@@ -108,4 +108,9 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.getTotalMember();
 	}
 
+	@Override
+	public int deleteYn(Map<String, Object> param) {
+		return adminDao.deleteYn(param);
+	}
+
 }

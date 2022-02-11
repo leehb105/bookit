@@ -16,7 +16,10 @@ import com.finale.bookit.member.model.vo.MemberEntity;
 import com.finale.bookit.report.model.vo.ReportBoard;
 import com.finale.bookit.report.model.vo.ReportUser;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Repository
+@Slf4j
 public class AdminDaoImpl implements AdminDao {
 
 	@Autowired
@@ -118,6 +121,23 @@ public class AdminDaoImpl implements AdminDao {
 	public int getTotalMember() {
 		// TODO Auto-generated method stub
 		return session.selectOne("admin.getTotalMember");
+	}
+
+	@Override
+	public int deleteYn(Map<String, Object> param) {
+		String boardName = (String) param.get("boardName");
+		log.debug("boardName = {}", boardName);
+		
+		// community, used_board, request_board 분기
+		if("community".equals(boardName)) {
+			return session.update("admin.communityDeleteYn", param);
+		}
+		else if("used".equals(boardName)) {
+			return session.update("admin.usedDeleteYn", param);
+		}
+		else {
+			return session.update("admin.requestDeleteYn", param);
+		}
 	}
 
 }

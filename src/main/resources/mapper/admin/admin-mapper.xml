@@ -106,6 +106,17 @@
 		<result column="authority" property="authority"/>
 	</resultMap>
 	
+	<update id="communityDeleteYn">
+		update community set delete_yn = 'Y' where community_no = #{boardNo}
+	</update>
+	
+	<update id="usedDeleteYn">
+		update used_board set delete_yn = 'Y' where used_board_no = #{boardNo}
+	</update>
+	
+	<update id="requestDeleteYn">
+		update request_board set delete_yn = 'Y' where request_board_no = #{boardNo}
+	</update>
 	
 	<!--====================================== 관리자 통계부분=========================================================================================== -->
 		<select id="selectChart" resultMap="chartMap">
@@ -167,6 +178,7 @@
 		<result column="month" property="md"/>
 		<result column="cash" property="count"/>
 	</resultMap>
+	
 </mapper>
 
 
