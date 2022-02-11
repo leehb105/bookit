@@ -6,7 +6,7 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/mypage.css" />
 
-<jsp:include page="/WEB-INF/views/common/header.jsp" />
+<jsp:include page="/WEB-INF/views/member/common/sidebar.jsp"/>
 
 <script>
 	// 게시글 신고 modal에 띄울 내용 담기
@@ -65,26 +65,7 @@ textarea {
 	resize: none;
 }
 </style>
-
-<div class="container member-profile">
-	<div class="container mb-100 mt-100">
-		<div class="row mb-50">
-			<div class="col-2">
-				<div class="profile-work">
-					<a href="${pageContext.request.contextPath}/member/mypageMain.do"><p>마이페이지HOME</p></a>
-					<a href="${pageContext.request.contextPath}/member/editProfile.do">정보수정</a><br />
-					<p>북토리 관리</p>
-					<a href="">결제 내역</a><br /> <a href="">거래 내역</a><br /> <a href="">북토리충전</a>
-					<p>나의 게시글</p>
-					<a href="">게시글 작성목록</a><br /> <a href="">리뷰 작성목록</a><br />
-					<p>1:1 문의</p>
-					<a href="${pageContext.request.contextPath}/inquire/inquireForm.do">1:1문의하기</a><br />
-					<a href="${pageContext.request.contextPath}/inquire/inquireList.do">1:1문의내역</a><br />
-					<p>신고내역</p>
-					<a href="${pageContext.request.contextPath}/report/reportUserList.do">사용자 신고목록</a><br />
-					<a href="${pageContext.request.contextPath}/report/reportBoardList.do">게시글 신고목록</a><br />
-				</div>
-			</div>
+<!-- include header.jsp / sidebar.jsp -->
 			<div class="col-lg-8 col-md-10 ml-auto mr-auto">
 				<div class="section-heading text-center">
 					<h5>게시글 신고 목록</h5>
@@ -181,7 +162,6 @@ textarea {
 					</div>
 				</div>
 			</div>
-		</div>
 	</div>
 </div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
