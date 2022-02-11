@@ -47,5 +47,7 @@ public interface AdminDao {
 
 	int getTotalMember();
 
+	int deleteYn(Map<String, Object> param);
+
 
 }

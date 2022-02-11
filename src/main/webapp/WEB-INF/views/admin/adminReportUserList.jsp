@@ -60,7 +60,7 @@
 		});
 	});
 	
-	// 회원 삭제
+	// 회원 정지 (enabled = 0)
 	function enableUser(){
 		var reportee = $("input[id=reportee]").val();
 		let f = document.createElement('form');

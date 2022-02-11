@@ -265,25 +265,30 @@ public class AdminController {
 	
 	// 회원 정지 (enabled = 0)
 	@PostMapping("/enableUser.do")
-	public String enableUser(@RequestParam String reportee,
-			@RequestParam String boardNo,
-			@RequestParam String boardName,
-			RedirectAttributes redirectAttr,
-			@RequestHeader(name="Referer", required=false) String referer) {
-		log.debug("referer = {}", referer);
+	public String enableUser(@RequestParam String reportee, RedirectAttributes redirectAttr) {
 		int result = adminService.enableUser(reportee);
 		redirectAttr.addFlashAttribute("msg", result > 0 ? "회원의 이용을 정지하였습니다." : "다시 시도하세요.");
 		
-		if(referer.contains("User")) {
-			return "redirect:/admin/adminReportUserList.do";			
-		}
-		else {
-			// 게시글 작성자는 어떻게 하지
-			return "redirect:/admin/adminReportBoardList.do";
-		}
+		return "redirect:/admin/adminReportUserList.do";
 	}
 	
-	
+	// 게시글 열람 불가 (delete_yn = 'Y')
+	@PostMapping("/deleteYn.do")
+	public String deleteYn(
+			@RequestParam int boardNo,
+			@RequestParam String boardName,
+			RedirectAttributes redirectAttr) {
+		log.debug("boardNo = {}", boardNo);
+		log.debug("boardName = {}", boardName);
+		
+		Map<String, Object> param = new HashMap<>();
+		param.put("boardNo", boardNo);
+		param.put("boardName", boardName);
+		int result = adminService.deleteYn(param);
+		redirectAttr.addFlashAttribute("msg", result > 0 ? "게시글을 차단하였습니다." : "다시 시도하세요.");
+		
+		return "redirect:/admin/adminReportBoardList.do";
+	}
 	
 	
 	
