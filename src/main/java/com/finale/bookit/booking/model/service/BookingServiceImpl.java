@@ -3,6 +3,8 @@ package com.finale.bookit.booking.model.service;
 import com.finale.bookit.booking.model.dao.BookingDao;
 import com.finale.bookit.booking.model.vo.BookInfo;
 import com.finale.bookit.booking.model.vo.Booking;
+import com.finale.bookit.booking.model.vo.Criteria;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +23,8 @@ public class BookingServiceImpl implements BookingService {
 	}
 
 	@Override
-	public int selectTotalBookingCount() {
-		return bookingDao.selectTotalBookingCount();
+	public int selectTotalBookingCount(Map<String, Object> param) {
+		return bookingDao.selectTotalBookingCount(param);
 	}
 
 	@Override
@@ -49,6 +51,7 @@ public class BookingServiceImpl implements BookingService {
 	public int insertBooking(Booking booking) {
 		return bookingDao.insertBooking(booking);
 	}
+
 	
 
 }

@@ -3,6 +3,8 @@ package com.finale.bookit.booking.controller;
 import com.finale.bookit.booking.model.service.BookingService;
 import com.finale.bookit.booking.model.vo.BookInfo;
 import com.finale.bookit.booking.model.vo.Booking;
+import com.finale.bookit.booking.model.vo.Criteria;
+import com.finale.bookit.booking.model.vo.Paging;
 import com.finale.bookit.common.util.BookitUtils;
 import com.finale.bookit.member.model.vo.Member;
 
@@ -41,34 +43,42 @@ public class BookingController {
 //    }
     @GetMapping("/bookingList.do")
     public void bookingList(
-    		@RequestParam(defaultValue = "1") int cPage, 
+    		@RequestParam(defaultValue = "1") int pageNum, 
     		@RequestParam(value = "bookTitle") String bookTitle, 
     		@RequestParam(value = "checkIn") String checkIn, 
     		@RequestParam(value = "checkOut") String checkOut, 
     		Model model, 
     		HttpServletRequest request ){
-        int limit = 10;
-        int offset = (cPage - 1) * limit;
+        int amount = 5;
+//        int offset = (pageNum - 1) * limit;
+        Criteria cri = new Criteria();
+        cri.setPageNum(pageNum);
+        cri.setAmount(amount);
 
         Map<String, Object> param = new HashMap<>();
-        param.put("offset", offset);
-        param.put("limit", limit);
+//        param.put("offset", offset);
+//        param.put("limit", limit);
         param.put("bookTitle", bookTitle);
         param.put("checkIn", checkIn);
         param.put("checkOut", checkOut);
+        param.put("cri", cri);
+        
         log.debug("title = {}", bookTitle);
         List<Booking> list = bookingService.selectBookingList(param);
 //        String cover = list.get(0).getBookInfo().getCover();
 //        log.debug("cover = {}", cover);
-        int total = bookingService.selectTotalBookingCount();
+        int total = bookingService.selectTotalBookingCount(param);
         log.debug("total = {}", total);
         String url = request.getRequestURI();
-        String pagebar = BookitUtils.getPagebar(cPage, limit, total, url);
-        log.debug("list = {}", list);
         log.debug("url = {}", url);
 
+        log.debug("list = {}", list);
+        log.debug("url = {}", url);
+        Paging page = new Paging(cri, total);
+        log.debug("paging = {}", page);
+        
         model.addAttribute("list", list);
-        model.addAttribute("pagebar", pagebar);
+        model.addAttribute("page", page);
     }
 
     @GetMapping("/bookingDetail.do")

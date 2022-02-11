@@ -154,6 +154,77 @@ public class BookitUtils {
 		return pagebar.toString();
 	}
 	
+	//대여 목록에 대한 페이징	
+	public static String getPagebarBookingList(int cPage, int numPerPage, int totalContent, String url) {
+		
+		StringBuilder pagebar = new StringBuilder(); 
+
+		url = url + "?cPage="; // pageNo 추가전 상태			
+		
+		
+		final int pagebarSize = 5;
+		final int totalPage = (int) Math.ceil((double) totalContent / numPerPage);
+		final int pageStart = (cPage - 1) / pagebarSize * pagebarSize + 1;
+		int pageEnd = pageStart + pagebarSize - 1;
+		pageEnd = totalPage < pageEnd ? totalPage : pageEnd;
+		int pageNo = pageStart;
+
+		pagebar.append(
+					"<nav class=\"roberto-pagination wow fadeInUp mb-100\" data-wow-delay=\"600ms\">\n"
+							+ "<ul class=\"pagination\">");
+		
+		
+		// [이전]
+		if(pageNo == 1) {
+			// 이전 영역 비활성화
+		}
+		else {
+			// 이전 영역 활성화
+			pagebar.append("<li class=\"page-item\">\r\n"
+					+ "			      <a class=\"page-link\" href=\"javascript:paging(" + (pageNo - 1) + ");\" aria-label=\"Previous\">\r\n"
+					+ "			        <span aria-hidden=\"true\">&laquo;</span>\r\n"
+					+ "			        <span class=\"sr-only\">Previous</span>\r\n"
+					+ "			      </a>\r\n"
+					+ "			    </li>");
+		}
+		
+		// pageNo
+		while(pageNo <= pageEnd) {
+			if(pageNo == cPage) {
+				// 현재페이지
+				pagebar.append("<li class=\"page-item\"><a class=\"page-link\" href=\"javascript:paging(" + pageNo + ")\">" + pageNo + "</a></li>\r\n");
+			}
+			else {
+				// 현재페이지가 아닌 경우
+//				pagebar.append("<li class=\"page-item\"><a class=\"page-link\" href=\"javascript:paging(" + pageNo + ")\">" + pageNo + "</a></li>\r\n");
+			}
+			
+			pageNo++;
+		}
+		
+		
+		// [다음]
+		if(pageNo > totalPage) {
+			// 다음 페이지 비활성화
+		}
+		else {
+			// 다음 페이지 활성화
+
+			pagebar.append("<li class=\"page-item\">\n"
+					+ "				<a class=\"page-link\" href=\"javascript:paging(" + pageNo + "\")\"> >> \n"
+					+ "					<i class=\"fa fa-angle-right\"></i>\n"
+					+ "				</a>\n"
+					+ "			</li>");
+		}
+		
+		pagebar.append("			  </ul>\r\n"
+				+ "			</nav>\r\n"
+				+ "<script>"
+				+ "const paging = (pageNo) => { location.href = `" + url + "${pageNo}`;  };"
+				+ "</script>");
+		return pagebar.toString();
+	}
+	
 	public static String getFormatDate(Date date) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
 		String newDate = sdf.format(date);
