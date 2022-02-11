@@ -32,14 +32,8 @@ public class Member extends MemberEntity implements Serializable, UserDetails {
 	
 	private List<SimpleGrantedAuthority> authorities;
 	
-	@Builder
-	public Member(String id, String password, String email, String nickname, String name, String phone, boolean enabled,
-			Date enrollDate, String reportYn, int cash, String profileImage, String roadAddress, String jibunAddress, float latitude,
-			float longitude, List<SimpleGrantedAuthority> authorities) {
-		super(id, password, email, nickname, name, phone, enabled, enrollDate, reportYn, cash, profileImage, roadAddress,
-				jibunAddress, latitude, longitude);
-		this.authorities = authorities;
-	}
+	
+
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -69,6 +63,14 @@ public class Member extends MemberEntity implements Serializable, UserDetails {
 	public boolean isCredentialsNonExpired() {
 		// TODO Auto-generated method stub
 		return true;
+	}
+
+	public Member(String id, String password, String email, String nickname, String name, String phone, boolean enabled,
+			Date enrollDate, String reportYn, int cash, String authority, String profileImage, String roadAddress,
+			String jibunAddress, float latitude, float longitude, List<SimpleGrantedAuthority> authorities) {
+		super(id, password, email, nickname, name, phone, enabled, enrollDate, reportYn, cash, authority, profileImage,
+				roadAddress, jibunAddress, latitude, longitude);
+		this.authorities = authorities;
 	}
 
 

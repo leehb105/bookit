@@ -11,6 +11,8 @@ import org.springframework.stereotype.Repository;
 import com.finale.bookit.admin.model.vo.AdminInquire;
 import com.finale.bookit.admin.model.vo.Chart;
 import com.finale.bookit.inquire.model.vo.Inquire;
+import com.finale.bookit.member.model.vo.Member;
+import com.finale.bookit.member.model.vo.MemberEntity;
 import com.finale.bookit.report.model.vo.ReportBoard;
 import com.finale.bookit.report.model.vo.ReportUser;
 
@@ -102,6 +104,20 @@ public class AdminDaoImpl implements AdminDao {
 	@Override
 	public List<Chart> selectCashChart() {
 		return session.selectList("admin.selectCashChart");
+	}
+
+	@Override
+	public List<MemberEntity> selectAllMembers(Map<String, Object> param) {
+		int offset = (int) param.get("offset");
+		int limit = (int) param.get("limit");
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return session.selectList("admin.selectAllMembers",null,rowBounds);
+	}
+
+	@Override
+	public int getTotalMember() {
+		// TODO Auto-generated method stub
+		return session.selectOne("admin.getTotalMember");
 	}
 
 }
