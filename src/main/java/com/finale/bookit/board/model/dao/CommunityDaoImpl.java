@@ -84,6 +84,16 @@ public class CommunityDaoImpl implements CommunityDao{
 			return session.insert("community.insertCommunityAttachment", attach);
 		}
 
+		@Override
+		public int updateReadCount(int no) {
+			return session.update("community.updateReadCount", no);
+		}
+
+		@Override
+		public int getCommunityNoCurrval(){
+			return session.selectOne("community.getCommunityNoCurrval");
+		}
+
 
 		
 	}
