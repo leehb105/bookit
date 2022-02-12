@@ -127,11 +127,7 @@ public class CommunityServiceImpl implements CommunityService {
 
 	@Override
 	public void deleteCommunityContent(int no, String memberId ) throws Exception {
-
-
 			communityDao.deleteCommunityContent(no);
-
-		
 	}
 
 	@Override
@@ -145,8 +141,6 @@ public class CommunityServiceImpl implements CommunityService {
 		}else {
 			throw new Exception("Unauthorized!");
 		}
-		
-		
 	}
 
 	@Override

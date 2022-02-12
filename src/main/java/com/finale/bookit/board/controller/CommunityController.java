@@ -164,20 +164,23 @@ public class CommunityController {
 			e.printStackTrace();
 		}
 	}
-
-	@PostMapping("/communityUpdate.do")
-	public void communityUpdate(@RequestBody Map<String, Object> param, HttpServletRequest request, Model model) {
-
-		// 현재 로그인한 유저 정보 가져오기
-		HttpSession session = request.getSession();
-
-		String attrName = "loginMember";
-		Member member = (Member) session.getAttribute(attrName);
+	
+	@GetMapping("/communityUpdate.do")
+	public void communityUpdate(@RequestParam int no, Model model) {
 		
+		Community community = communityService.getCommunity(no);
+		
+		model.addAttribute("community", community);
+
+	};
+
+	@PostMapping("/updateCommunity.do")
+	public void updateCommunity(@RequestBody Map<String, Object> param, HttpServletRequest request, Model model, @AuthenticationPrincipal Member loginMember) {
+
 		
 		
 		try {
-			communityService.updateCommunityContent(member.getId(), param);
+			communityService.updateCommunityContent(loginMember.getId(), param);
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			e.printStackTrace();
