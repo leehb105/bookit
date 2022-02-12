@@ -40,8 +40,7 @@ public class Community implements Serializable {
 	private String memberId;
 	
 	private String nickname;
-	
-	
+
 	// private Member member;
 	
 	private List<Comment> comment;

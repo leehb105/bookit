@@ -12,8 +12,26 @@
 </jsp:include>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/community.css"/>
 <script src="https://kit.fontawesome.com/01809a491f.js" crossorigin="anonymous"></script>
+
 <script>
-console.log("${reComments}");
+function updateCommunity(){
+	location.href = "${pageContext.request.contextPath}/board/communityUpdate.do?no=${community.communityNo}";
+}
+function communityDelete(){
+	let check = confirm("정말 삭제하시겠습니까?");
+	if (check){
+		location.href='communityDelete.do?no=${community.communityNo}'
+	}
+}
+function showButton(){
+	if ("${community.memberId}" == "${loginMember.id}"){
+		
+	}else{
+		document.getElementById('delete').style.display = 'none';
+		document.getElementById('modify').style.display = 'none';
+	}
+}
+
 function like(){
 	document.getElementById('full').style.display = 'inline-block';
 	document.getElementById('empty').style.display = 'none';
@@ -26,6 +44,10 @@ function dislike(){
 function goCommunityList(){
 	location.href = "${pageContext.request.contextPath}/board/community.do";
 }
+
+
+console.log("recomments :", "${community.comment}")
+
 console.log("${community.comment[0].no}")
 console.log("delete :", "${community.comment[0].deleteYn}")
 
@@ -44,6 +66,7 @@ function adjustHeight() {
 	var textEleHeight = textEle.prop('scrollHeight');
 	textEle.css('height', textEleHeight);
 };
+
 </script>
 <style>
 div#board-container{width:400px;}
@@ -61,8 +84,9 @@ textarea {resize: none;}
 .modal-body input {width: auto;}
 </style>
 <div id="board-container" class="mx-auto text-center">
-      <input type="submit" value="수정" onclick="updateCommunity();">
-      <input type="button" value="취소" onclick="goCommunityList();">
+      <input type="submit" value="수정" id="modify" onclick="updateCommunity();">
+      <input type="button" value="삭제" id="delete" onclick="communityDelete();">
+      <input type="button" value="리스트로" onclick="goCommunityList();">
     <p>${community.category}</p>  
 	<p>${community.title}</p>
 	<!-- 프로필 이미지 -->
@@ -72,16 +96,76 @@ textarea {resize: none;}
 	<p>${community.likeCount}</p>
 	<p>${community.commentCount}</p>
 	<!-- 파일 이미지 -->
-	<p>${community.content}"</p>
+	<c:forEach items="${community.file}"  var="file" varStatus="vs">
+	<img src="${pageContext.request.contextPath}/resources/img/board/${file.renamedFilename}">
+								
+	</c:forEach>
+	<!-- 글 내용 -->
+	<p>${community.content}</p>
 	<p>${community.likeCount}</p>
-	<!-- 파일 다운로드 임시-->
+	<!-- 파일 다운로드 -->
 	<c:forEach items="${community.file}" var="file" varStatus="vs">
 	<a href="${pageContext.request.contextPath}/board/fileDownload.do?fileNo=${file.no}"
 	role="button"
 	class="btn btn-outline-success btn-block">
-	첨부파일 ${vs.count} - ${file.renamedFilename}</a>
+	첨부파일 ${vs.count} - ${file.originalFilename}</a>
 	<hr>
 	</c:forEach>
+	
+	<hr>
+	
+	<table>
+	<!-- 댓글 -->
+	<c:choose>
+		<c:when test="${community.comment ne null}" >
+
+					<c:forEach items="${community.comment}" var="comment">
+						<tr data-no="${comment.no}">
+					
+						<td>${comment.nickname}</td>
+						<td><fmt:formatDate value="${comment.regDate}" pattern="yy/MM/dd HH:mm"/></td>
+						
+						
+						<c:choose>
+						
+							<c:when test="${comment.isParent == 'Y' && comment.deleteYn ==  false}">	
+							<td>${comment.content}</td>
+								<c:forEach items="${comment.reComments}" var="reComment">
+								<tr data-no="${reComment.no}">
+									
+									<td>${reComment.nickname}</td>
+									<td><fmt:formatDate value="${reComment.regDate}" pattern="yy/MM/dd HH:mm"/></td>
+									<td>${reComment.content}</td>
+								</c:forEach>
+							</c:when>
+							
+							
+							<c:when test="${comment.isParent == 'Y' && comment.deleteYn == true && comment.commentLevel == 1}">
+							
+								<td>삭제된 댓글입니다.</td>
+								<c:forEach items="${comment.reComments}" var="reComment">
+								<tr data-no="${reComment.no}">
+									<td>${reComment.nickname}</td>
+									<td><fmt:formatDate value="${reComment.regDate}" pattern="yy/MM/dd HH:mm"/></td>
+									<td>${reComment.content}</td>
+								</c:forEach>
+							</c:when>
+						</c:choose>
+						</tr>	
+					</c:forEach>
+					
+					</c:when>
+					
+					<c:otherwise>
+						테스트
+					</c:otherwise>
+			</c:choose>
+</table>
+			<!--  댓글이 없으면 = 출력 안함 -->
+
+	
+	
+	
 	
 	<div class = "likeBan" >
 	<h3 id="empty" style="diaplay: inline-block;"><a href="#" onclick="like();" ><i class="far fa-thumbs-up"></i></a></h3>

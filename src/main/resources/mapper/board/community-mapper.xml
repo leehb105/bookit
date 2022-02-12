@@ -140,7 +140,6 @@
 		update community_comment set content = #{content}, reg_date = sysdate where no = #{no} 
 	</update>
 	
-	
 	<!-- 조회수 -->
 	<update id="updateReadCount">
 		update community set read_count = read_count + 1 where community_no = #{no}

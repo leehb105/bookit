@@ -29,7 +29,7 @@ public class CommunityDaoImpl implements CommunityDao{
 		public List<CommunityAttachment> getAttachmentList(int no) {
 			return session.selectList("community.selectCommunityAttachment", no);
 		}
-
+		
 		@Override
 		public void deleteCommunityContent(int no) {
 			session.update("community.deleteCommunityContent", no);
