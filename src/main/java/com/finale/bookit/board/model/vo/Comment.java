@@ -20,7 +20,7 @@ public class Comment implements Serializable{
 	private int commentRef;
 	private Date regDate;
 	private String writer;
-	private boolean DeleteYn;
+	private String DeleteYn;
 	private int commentLevel;
 	private String nickname;
 	private String isParent;

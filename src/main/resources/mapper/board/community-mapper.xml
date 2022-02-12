@@ -35,15 +35,19 @@
 	-->
 	
 	<select id="selectCommunityComment" parameterType="Integer" resultType="comment">
-		select c.content, c.reg_date, c.writer, m.nickname, c.is_parent, c.no 
+		select c.content, c.reg_date, c.writer, m.nickname, c.is_parent, c.no,  c.comment_level
 		from community_comment c join member m on m.id = c.writer
-		where c.delete_yn = 'N' 
-		and c.community_no = #{no}
+		where c.community_no = #{no}
 		and c.comment_level = 1 
 		order by c.reg_date
 	</select>
 	<select id="selectCommunityReComment" parameterType="Integer" resultType="comment">
-		select content, reg_date, writer, comment_ref from community_comment where delete_yn = 'N' and comment_ref = #{ref} and comment_level = 2 order by reg_date
+		select c.no, c.content, c.reg_date, c.writer, m.nickname, c.comment_ref, c.comment_level
+		from community_comment c join member m on m.id = c.writer 
+		where delete_yn = 'N' 
+		and comment_ref = #{ref} 
+		and comment_level = 2 
+		order by reg_date
 	</select>
 	
 	<!--  

@@ -21,7 +21,7 @@ public class CommunityEntity implements Serializable {
 	private int readCount;
 	private int likeCount;
 	private String category;
-	private boolean reportYn;
-	private boolean deleteYn;
+	private String reportYn;
+	private String deleteYn;
 	private String memberId;
 }
