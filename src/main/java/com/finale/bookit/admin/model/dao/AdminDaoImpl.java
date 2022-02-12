@@ -128,7 +128,7 @@ public class AdminDaoImpl implements AdminDao {
 		String boardName = (String) param.get("boardName");
 		log.debug("boardName = {}", boardName);
 		
-		// community, used_board, request_board 분기
+		// community, used, request 분기
 		if("community".equals(boardName)) {
 			return session.update("admin.communityDeleteYn", param);
 		}
