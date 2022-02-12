@@ -5,6 +5,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:authentication property="principal" var="loginMember"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="게시판 상세보기" name="title"/>
 </jsp:include>
@@ -26,6 +28,22 @@ function goCommunityList(){
 }
 console.log("${community.comment[0].no}")
 console.log("delete :", "${community.comment[0].deleteYn}")
+
+$(document).ready(function(){
+	// 페이지 로드시 모달창 출력 방지
+	$(".modal").css({"display": "none"});
+	// modal창 끄고 다시 켰을 때 내용 리셋
+	$('.modal').on('hidden.bs.modal', function (e) {
+	  $(this).find('form')[0].reset();
+	});
+});
+// modal textarea 높이 조절
+function adjustHeight() {
+	var textEle = $('textarea');
+	textEle[0].style.height = 'auto';
+	var textEleHeight = textEle.prop('scrollHeight');
+	textEle.css('height', textEleHeight);
+};
 </script>
 <style>
 div#board-container{width:400px;}
@@ -33,6 +51,14 @@ input, button, textarea {margin-bottom:15px;}
 button { overflow: hidden; }
 /* 부트스트랩 : 파일라벨명 정렬*/
 div#board-container label.custom-file-label{text-align:left;}
+textarea {resize: none;}
+.modal-body p {
+	display: inline-block;
+	width: 100px;
+	text-align: right;
+	margin-right: 30px;
+}
+.modal-body input {width: auto;}
 </style>
 <div id="board-container" class="mx-auto text-center">
       <input type="submit" value="수정" onclick="updateCommunity();">
@@ -60,11 +86,64 @@ div#board-container label.custom-file-label{text-align:left;}
 	<div class = "likeBan" >
 	<h3 id="empty" style="diaplay: inline-block;"><a href="#" onclick="like();" ><i class="far fa-thumbs-up"></i></a></h3>
 	<h3 id="full" style="display: none"><a href="#" onclick="dislike();"><i class="fas fa-thumbs-up"></i></a></h3>
-	<h3><a href="#"><i class="fas fa-ban" style="diaplay: inline-block;"></i></a></h3>
+	<h3><a href="#" data-toggle="modal" data-target="#reportBoardEnrollModal"><i class="fas fa-ban" style="display: inline-block;"></i></a></h3>
 </div>
 	<br>
 
 </div>
 
+
+<!-- 게시글 신고 등록 Modal -->
+<div class="modal fade" id="reportBoardEnrollModal" tabindex="-1"
+	role="dialog" aria-labelledby="reportBoardEnrollModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	        <div class="modal-header">
+	            <h5 class="modal-title" id="reportBoardEnrollModalLabel">신고 상세내용</h5>
+	            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	                <span aria-hidden="true">×</span>
+	            </button>
+	        </div>
+	        <form:form method="POST" action="${pageContext.request.contextPath}/report/reportBoardEnroll.do">
+	            <div class="modal-body">
+	                <div>
+	                    <p>신고자ID</p>
+	                    <input type="text" name="reporter" value="${loginMember.id}" readonly/>
+	                </div>
+	                <div>
+	                    <p>게시판</p>
+	                    <input type="text" name="boardName" value="community" readonly/>
+	                </div>
+	                <div>
+	                    <p>게시글NO</p>
+	                    <input type="text" name="boardNo" value="${community.communityNo}" readonly/>
+	                </div>
+	                <div>
+	                    <p>사유</p>
+	                    <input type="radio" name="reason" id="badword" value="욕설">
+	                    <label for="badword">욕설</label>&nbsp;
+	                    <input type="radio" name="reason" id="cheat" value="사기">
+	                    <label for="cheat">사기</label>&nbsp;
+	                    <input type="radio" name="reason" id="loop" value="도배">
+	                    <label for="loop">도배</label>&nbsp;
+	                    <input type="radio" name="reason" id="ad" value="광고">
+	                    <label for="ad">광고</label>&nbsp;
+	                    <input type="radio" name="reason" id="weird" value="음란물">
+	                    <label for="weird">음란물</label>&nbsp;
+	                </div>
+	                <div>
+	                    <p>상세내용</p>
+	                    <textarea name="detail" cols="40" onkeyup="adjustHeight();" placeholder="내용을 입력하세요"></textarea>
+	                </div>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	                <button type="submit" class="btn btn-success">신고</button>
+	            </div>
+	        </form:form>
+	    </div>
+	</div>
+</div>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
