@@ -65,15 +65,15 @@ public class CommunityController {
 
 	@GetMapping(value = "/fileDownload.do", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	@ResponseBody
-	public Resource fileDownload(@RequestParam int no, HttpServletResponse response)
+	public Resource fileDownload(@RequestParam int fileNo, HttpServletResponse response)
 			throws UnsupportedEncodingException {
 
 		try {
-			CommunityAttachment attach = communityService.selectOneCommunityAttachment(no);
+			CommunityAttachment attach = communityService.selectOneCommunityAttachment(fileNo);
 			log.debug("attach = {}", attach);
 
 			// 다운로드받을 파일 경로
-			String saveDirectory = application.getRealPath("/resources/upload/images");
+			String saveDirectory = application.getRealPath("/resources/img/board");
 			File downFile = new File(saveDirectory, attach.getRenamedFilename());
 			String location = "file:" + downFile; // file객체의 toString은 절대경로로 오버라이드되어 있다.
 			log.debug("location = {}", location);
@@ -186,7 +186,7 @@ public class CommunityController {
 
 	@PostMapping("/communityEnroll")
 	public ModelAndView communityEnroll(CommunityTest communityDto, Model model,
-			@RequestParam(name = "upFile", required = false)MultipartFile[] upFile, HttpServletRequest request,
+			@RequestParam(name = "upFiles", required = false)MultipartFile[] upFiles, HttpServletRequest request,
 			RedirectAttributes redirectAttr,@AuthenticationPrincipal Member loginMember) throws IllegalStateException, IOException {
 
 		/*
@@ -203,23 +203,23 @@ public class CommunityController {
 
 		log.info("communityDto {}", communityDto);
 
-		String saveDirectory = application.getRealPath("/resources/upload");
+		String saveDirectory = application.getRealPath("/resources/img/board");
 
 		List<CommunityAttachment> attachments = new ArrayList<>();
 
-		log.info("upFiles {}", upFile);
+		log.info("upFiles {}", upFiles);
 
 		// 1. 첨부파일을 서버컴퓨터 저장 : rename
 		// 2. 저장된 파일의 정보 -> Attachment객체 -> attachment insert
 
-			for (int i = 0; i < upFile.length; i++) {
-				MultipartFile upFiles = upFile[i];
-				if (!upFiles.isEmpty()) {
+			for (int i = 0; i < upFiles.length; i++) {
+				MultipartFile upFile = upFiles[i];
+				if (!upFile.isEmpty()) {
 					// 1. 저장경로 | renamedFilename
-					String originalFilename = upFiles.getOriginalFilename();
+					String originalFilename = upFile.getOriginalFilename();
 					String renamedFilename = BookitUtils.rename(originalFilename);
 					File dest = new File(saveDirectory, renamedFilename);
-					upFiles.transferTo(dest);
+					upFile.transferTo(dest);
 	
 					// 2
 					CommunityAttachment attach = new CommunityAttachment();

@@ -59,10 +59,15 @@
 	</resultMap>
 	-->
 	
-	<select id="selectCommunityAttachment" parameterType="Integer" resultType="communityAttachment">
-		select no, original_filename, renamed_filename, community_no from community_attachment where community_no = #{no} order by reg_date
+	<select id="selectOneCommunityAttachment" parameterType="Integer" resultType="communityAttachment">
+		select no, original_filename, renamed_filename, community_no from community_attachment where no = #{no} 
 	</select>
-	
+
+	<select id="selectCommunityAttachment" parameterType="Integer" resultType="communityAttachment">
+		select no, original_filename, renamed_filename, community_no from community_attachment where community_no = #{no} order by reg_date 
+	</select>
+
+
 	<update id="deleteCommunityContent" parameterType="Integer">
 		update community set delete_yn = 'Y' where community_no = #{communiy_no}
 	</update>
