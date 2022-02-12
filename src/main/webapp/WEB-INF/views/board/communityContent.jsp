@@ -48,13 +48,18 @@ div#board-container label.custom-file-label{text-align:left;}
 	<!-- 파일 이미지 -->
 	<p>${community.content}"</p>
 	<p>${community.likeCount}</p>
-	
+	<!-- 파일 다운로드 임시-->
+	<c:forEach items="${community.file}" var="file" varStatus="vs">
+	<a href="${pageContext.request.contextPath}/board/fileDownload.do?fileNo=${file.no}"
+	role="button"
+	class="btn btn-outline-success btn-block">
+	첨부파일 ${vs.count} - ${file.renamedFilename}</a>
 	<hr>
-
+	</c:forEach>
 	
 	<div class = "likeBan" >
-	<h3 id="empty" style="diaplay: inline-block;"><a href="#" onclick="like();" ><i class="far fa-heart" ></i></a></h3>
-	<h3 id="full" style="display: none"><a href="#" onclick="dislike();"><i class="fas fa-heart"></i></a></h3>
+	<h3 id="empty" style="diaplay: inline-block;"><a href="#" onclick="like();" ><i class="far fa-thumbs-up"></i></a></h3>
+	<h3 id="full" style="display: none"><a href="#" onclick="dislike();"><i class="fas fa-thumbs-up"></i></a></h3>
 	<h3><a href="#"><i class="fas fa-ban" style="diaplay: inline-block;"></i></a></h3>
 </div>
 	<br>
