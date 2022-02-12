@@ -51,6 +51,26 @@ public class BookkingDaoImpl implements BookingDao{
 		return session.insert("booking.insertBooking", booking);
 	}
 
+	@Override
+	public List<Booking> selectBorrowedList(String id) {
+		return session.selectList("booking.selectBorrowedList", id);
+	}
+
+	@Override
+	public List<Booking> selectLentList(String id) {
+		return session.selectList("booking.selectLentList", id);
+	}
+
+	@Override
+	public List<Booking> selectMyBookingList(Map<String, Object> param) {
+		return session.selectList("booking.selectMyBookingList", param);
+	}
+
+	@Override
+	public int selectTotalMyBookingCount(Map<String, Object> param) {
+		return session.selectOne("booking.selectTotalMyBookingCount", param);
+	}
+
 
 	
 	

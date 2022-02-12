@@ -107,8 +107,7 @@ public class BookingController {
     		@RequestParam String content, 
     		@RequestParam String isbn, 
     		RedirectAttributes attributes,
-    		@AuthenticationPrincipal Member member
-	) {
+    		@AuthenticationPrincipal Member member) {
 
     	log.debug("member = {}", member);
     	
@@ -160,23 +159,66 @@ public class BookingController {
     }
     	
     @GetMapping("/myBooking.do")
-    public void myBooking() {
+    public void myBooking(
+    		@RequestParam(defaultValue = "1") int pageNum, 
+    		Model model,
+    		@AuthenticationPrincipal Member member) {
+    	
+		int amount = 5;
+		Criteria cri = new Criteria();
+		cri.setPageNum(pageNum);
+		cri.setAmount(amount);
+		
+		Map<String, Object> param = new HashMap<>();
+
+        param.put("cri", cri);
+        param.put("id", member.getId());
+    	
+    	
+    	List<Booking> list = bookingService.selectMyBookingList(param);
+    	log.debug("list = {}", list);
+    	
+    	int total = bookingService.selectTotalMyBookingCount(param);
+    	Paging page = new Paging(cri, total);
+    	
+    	
+    	
+    	model.addAttribute("list", list);
+    	model.addAttribute("page", page);
+    	
     	
     }
     
     
     
-//    @GetMapping("/bookSearch.do")
-//    public void bookSearch(@RequestParam String bookTitle, Model model) {
-//    	log.debug("bookTitle = {}", bookTitle);
-//    	Map<String, Object> param = new HashMap<>();
-//    	param.put("bookTitle", bookTitle);
-//    	
-//    	List<BookInfo> list = bookingService.selectBook(param);
-//    	log.debug("bookInfo = {}", list);
-//    	
-//    	model.addAttribute("list", list);
-//    }
+    @GetMapping("/borrowedList.do")
+    public void borrowedList(
+    		Model model,
+    		@AuthenticationPrincipal Member member
+	) {
+    	//내가 빌린 내역
+    	log.debug("member = {}", member);
+    	String id = member.getId();
+    	List<Booking> list = bookingService.selectBorrowedList(id);
+    	log.debug("list = {}", list);
+    	
+    	
+    	
+    	
+    }
+    
+    @GetMapping("/lentList.do")
+    public void lentList(
+    		Model model,
+    		@AuthenticationPrincipal Member member
+	) {
+    	//나의 대여글
+    	log.debug("member = {}", member);
+    	String id = member.getId();
+    	List<Booking> list = bookingService.selectLentList(id);
+    	log.debug("list = {}", list);
+    }
+
     
     
 }

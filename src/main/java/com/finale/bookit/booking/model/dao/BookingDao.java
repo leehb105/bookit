@@ -23,4 +23,12 @@ public interface BookingDao {
 
 	int insertBooking(Booking booking);
 
+	List<Booking> selectBorrowedList(String id);
+
+	List<Booking> selectLentList(String id);
+
+	List<Booking> selectMyBookingList(Map<String, Object> param);
+
+	int selectTotalMyBookingCount(Map<String, Object> param);
+
 }

@@ -21,5 +21,13 @@ public interface BookingService {
 	public int insertBookInfo(BookInfo bookInfo);
 
 	public int insertBooking(Booking booking);
+
+	public List<Booking> selectBorrowedList(String id);
+
+	public List<Booking> selectLentList(String id);
+
+	public List<Booking> selectMyBookingList(Map<String, Object> param);
+
+	public int selectTotalMyBookingCount(Map<String, Object> param);
 	
 }

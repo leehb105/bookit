@@ -60,6 +60,7 @@
 		<result column="board_no" property="boardNo"/>
 		<result column="start_date" property="startDate"/>
 		<result column="end_date" property="endDate"/>
+		<result column="id" property="id"/>
 	</resultMap>
 	
 	<resultMap type="member" id="memberMap">
@@ -169,5 +170,62 @@
 		)
 	</insert>
 	
+	<select id="selectMyBookingList" resultMap="bookingMap" resultType="criteria">
+		<![CDATA[
+			SELECT
+				*
+			FROM
+				(SELECT
+					rownum rn,
+					tb1.*
+				from
+					(SELECT
+						*
+					FROM
+						booking b join book_info bi ON
+					    b.isbn13 = bi.isbn13
+					WHERE
+						writer = #{id}
+						AND
+						DELETE_YN = 'N'
+					ORDER BY
+						reg_date desc) tb1
+				WHERE 
+					ROWNUM <= #{cri.pageNum} * #{cri.amount}) tb2
+			WHERE
+				rn > (#{cri.pageNum} - 1) * #{cri.amount}
+		]]>
+	</select>
+	
+	<select id="selectBorrowedList" resultMap="bookingMap">
+		SELECT
+			*
+		FROM
+			BOOKING
+		WHERE
+			writer = #{id}
+			AND
+			DELETE_YN = 'N'
+		ORDER BY
+			REG_DATE DESC
+	</select>
+	
+	<select id="selectLentList" resultMap="bookingMap" resultType="criteria">
+		
+	</select>
+	
+	<select id="selectTotalMyBookingCount" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			BOOKING
+		WHERE
+			writer = #{id}
+			AND
+			DELETE_YN = 'N'
+		ORDER BY
+			REG_DATE DESC
+		
+	</select>
 	
 </mapper>

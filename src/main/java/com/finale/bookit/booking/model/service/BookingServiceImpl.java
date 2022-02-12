@@ -52,6 +52,26 @@ public class BookingServiceImpl implements BookingService {
 		return bookingDao.insertBooking(booking);
 	}
 
+	@Override
+	public List<Booking> selectBorrowedList(String id) {
+		return bookingDao.selectBorrowedList(id);
+	}
+
+	@Override
+	public List<Booking> selectLentList(String id) {
+		return bookingDao.selectLentList(id);
+	}
+
+	@Override
+	public List<Booking> selectMyBookingList(Map<String, Object> param) {
+		return bookingDao.selectMyBookingList(param);
+	}
+
+	@Override
+	public int selectTotalMyBookingCount(Map<String, Object> param) {
+		return bookingDao.selectTotalMyBookingCount(param);
+	}
+
 	
 
 }
