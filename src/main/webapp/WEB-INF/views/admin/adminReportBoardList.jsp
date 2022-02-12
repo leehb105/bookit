@@ -173,7 +173,7 @@ textarea {
 								<td class="btn-link" data-no="${reportBoardList.no}" data-boardname="${reportBoardList.boardName}">
 									<c:if test="${reportBoardList.boardName eq 'community'}">커뮤니티-${reportBoardList.boardNo}</c:if>
 									<c:if test="${reportBoardList.boardName eq 'used'}">중고거래-${reportBoardList.boardNo}</c:if>
-									<c:if test="${reportBoardList.boardName eq 'request_board'}">도서요청-${reportBoardList.boardNo}</c:if>
+									<c:if test="${reportBoardList.boardName eq 'request'}">도서요청-${reportBoardList.boardNo}</c:if>
 								</td>
 								<td data-toggle="modal"
 									data-target="#reportBoardDetailModal"
@@ -183,7 +183,7 @@ textarea {
 									data-boardnamekor="<c:choose>
 <c:when test="${reportBoardList.boardName eq 'community'}">커뮤니티</c:when>
 <c:when test="${reportBoardList.boardName eq 'used'}">중고거래</c:when>
-<c:when test="${reportBoardList.boardName eq 'request_board'}">도서요청</c:when>
+<c:when test="${reportBoardList.boardName eq 'request'}">도서요청</c:when>
 </c:choose>"
 									data-boardno="${reportBoardList.boardNo}"
 									data-reason="${reportBoardList.reason}"
