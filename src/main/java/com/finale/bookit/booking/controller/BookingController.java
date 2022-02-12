@@ -158,7 +158,11 @@ public class BookingController {
 //    	int result = bookingService.insertBooking();
     	
     }
-    
+    	
+    @GetMapping("/myBooking.do")
+    public void myBooking() {
+    	
+    }
     
     
     
