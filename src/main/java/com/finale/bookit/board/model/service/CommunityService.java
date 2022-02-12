@@ -22,9 +22,12 @@ public interface CommunityService {
 
 	int getTotalCommunityContent();
 
-	int insertCommunity( CommunityTest communityTest);
+	void insertCommunity(CommunityTest communityTest);
 
 	CommunityAttachment selectOneCommunityAttachment(int no);
 
+	int updateReadCount(int no);
+	
+	int getCommunityNoCurrval();
 
-}
+}	
