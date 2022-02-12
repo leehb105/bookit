@@ -145,7 +145,7 @@
 	                            	<a href="${pageContext.request.contextPath}/member/mypageMain.do">
 	                            		<sec:authentication property="principal.username"/>
 	                            		</a>님 &nbsp
-                                        <a href="${pageContext.request.contextPath}/booking/bookingBorrowedList.do"><i class="fa fa-list fa-lg"></i></a> &nbsp
+                                        <a href="${pageContext.request.contextPath}/booking/myBooking.do?pageNum=1&amout=5"><i class="fa fa-list fa-lg"></i></a> &nbsp
 	                            	<a href="#"><i class="fa fa-heart fa-lg"></i></a>
 		                            </div>
 	                            	<form:form
