@@ -45,7 +45,9 @@ function goCommunityList(){
 	location.href = "${pageContext.request.contextPath}/board/community.do";
 }
 
+
 console.log("recomments :", "${community.comment}")
+
 console.log("${community.comment[0].no}")
 console.log("delete :", "${community.comment[0].deleteYn}")
 
