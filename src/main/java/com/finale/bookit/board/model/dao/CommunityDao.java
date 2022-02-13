@@ -28,6 +28,17 @@ public interface CommunityDao {
 	List<Comment> getCommentList(int no);
 	
 	List<Comment> getReCommentList(int refNo);
+	
+	void insertComment(Comment comment);
+	
+	void insertReComment(Comment comment);
+	
+	int updateComment(Comment comment);
+	
+	int deleteComment(int no);
+	
+	void isParent(Comment comment);
+	
 
 	int insertCommunity(CommunityTest communityTest);
 
@@ -41,6 +52,4 @@ public interface CommunityDao {
 	int updateReadCount(int no);
 	
 	int getCommunityNoCurrval();
-
-
 }

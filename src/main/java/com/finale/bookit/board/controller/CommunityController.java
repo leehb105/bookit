@@ -11,7 +11,6 @@ import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -32,6 +31,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.finale.bookit.board.model.service.CommunityService;
+import com.finale.bookit.board.model.vo.Comment;
 import com.finale.bookit.board.model.vo.Community;
 import com.finale.bookit.board.model.vo.CommunityAttachment;
 import com.finale.bookit.board.model.vo.CommunityTest;
@@ -95,7 +95,7 @@ public class CommunityController {
 	}
 
 	@GetMapping("/communityContent.do")
-	public void community(@RequestParam int no, Model model) {
+	public void community(@RequestParam int no, Model model, @AuthenticationPrincipal Member member) {
 		Community community = new Community();
 
 		try {
@@ -116,14 +116,7 @@ public class CommunityController {
 	}
 
 	@GetMapping("/community.do")
-	public void communityList(@RequestParam(defaultValue = "1") int cPage, HttpServletRequest request, Model model) {
-
-		// 현재 로그인한 유저 정보 가져오기
-		HttpSession session = request.getSession();
-
-		String attrName = "loginMember";
-		Member member = (Member) session.getAttribute(attrName);
-		log.info("member {}", member);
+	public void communityList(@RequestParam(defaultValue = "1") int cPage, HttpServletRequest request, Model model, @AuthenticationPrincipal Member member) {
 
 		// 1.content영역
 		int limit = 10;
@@ -146,15 +139,7 @@ public class CommunityController {
 	}
 
 	@GetMapping("/communityDelete.do")
-	public void communityDelete(@RequestParam int no, Model model, HttpServletRequest request) {
-		log.info("no : {}", no);
-
-		// 현재 로그인한 유저 정보 가져오기
-		HttpSession session = request.getSession();
-
-		String attrName = "loginMember";
-		Member member = (Member) session.getAttribute(attrName);
-	
+	public String communityDelete(@RequestParam int no, Model model, HttpServletRequest request, @AuthenticationPrincipal Member member) {
 
 		try {
 			communityService.deleteCommunityContent(no, member.getId());
@@ -162,11 +147,11 @@ public class CommunityController {
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			e.printStackTrace();
-		}
+		}	return "redirect:/board/community.do";
 	}
 	
 	@GetMapping("/communityUpdate.do")
-	public void communityUpdate(@RequestParam int no, Model model) {
+	public void communityUpdate(@RequestParam int no, Model model,@AuthenticationPrincipal Member member) {
 		
 		Community community = communityService.getCommunity(no);
 		
@@ -175,42 +160,30 @@ public class CommunityController {
 	};
 
 	@PostMapping("/updateCommunity.do")
-	public void updateCommunity(@RequestBody Map<String, Object> param, HttpServletRequest request, Model model, @AuthenticationPrincipal Member loginMember) {
+	public String updateCommunity(@RequestBody Map<String, Object> param, HttpServletRequest request, Model model, @AuthenticationPrincipal Member loginMember) {
 
-		
-		
 		try {
 			communityService.updateCommunityContent(loginMember.getId(), param);
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			e.printStackTrace();
-		}
+		}return "redirect:/board/communityContent.do?communityNo= #{no}";
 	}
 
 	@PostMapping("/communityEnroll")
 	public ModelAndView communityEnroll(CommunityTest communityDto, Model model,
 			@RequestParam(name = "upFiles", required = false)MultipartFile[] upFiles, HttpServletRequest request,
 			RedirectAttributes redirectAttr,@AuthenticationPrincipal Member loginMember) throws IllegalStateException, IOException {
-
-		/*
-		// 현재 로그인한 유저 정보 가져오기
-		HttpSession session = request.getSession();
-
-		String attrName = "loginMember";
-		Member member = (Member) session.getAttribute(attrName);
-		*/
-		
-		log.info("member {}", loginMember);
-
+	
 		communityDto.setMemberId(loginMember.getId());
-
-		log.info("communityDto {}", communityDto);
 
 		String saveDirectory = application.getRealPath("/resources/img/board");
 
 		List<CommunityAttachment> attachments = new ArrayList<>();
 
 		log.info("upFiles {}", upFiles);
+		
+		if(upFiles.length > 0) log.info("===== file length {}", upFiles.length);
 
 		// 1. 첨부파일을 서버컴퓨터 저장 : rename
 		// 2. 저장된 파일의 정보 -> Attachment객체 -> attachment insert
@@ -248,7 +221,34 @@ public class CommunityController {
 
 	@GetMapping("/communitySearch.do")
 	public void communitySearch() {
-
+		
 	}
-
+	
+	@ResponseBody
+	@PostMapping("/commentList")
+	public List<Comment> getCommentList(@RequestParam int no) {
+		return communityService.getCommentList(no);
+	}
+	
+	@PostMapping("/updateComment")
+	public void updateComment(Comment comment, @AuthenticationPrincipal Member member) {
+		
+		try {
+			
+			String writer = member.getId();
+			comment.setWriter(writer);
+			
+		if(comment.getCommentLevel() == 2) {
+			communityService.insertReComment(comment);
+		}else {	
+			communityService.insertComment(comment);
+		}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	
+	}
+	
 }
