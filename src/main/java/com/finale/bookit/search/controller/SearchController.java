@@ -3,8 +3,11 @@ package com.finale.bookit.search.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.collections.map.HashedMap;
 import org.json.JSONArray;
@@ -20,6 +23,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.finale.bookit.booking.model.vo.BookInfo;
+import com.finale.bookit.booking.model.vo.Booking;
+import com.finale.bookit.booking.model.vo.Criteria;
+import com.finale.bookit.booking.model.vo.Paging;
 import com.finale.bookit.common.util.BookitUtils;
 import com.finale.bookit.search.model.service.SearchService;
 import com.google.gson.Gson;
@@ -38,13 +44,14 @@ public class SearchController {
 
 	@GetMapping("/booking/bookSearch.do")
 //	@ResponseBody
-	public void searchBookByTitle(@RequestParam String title, Model model) {
+	public void searchBookByTitle(
+			@RequestParam String title, 
+			Model model) {
+
 		log.debug("title = {}" ,title);
-//		BookInfo bookInfo = searchService.search("개미 3");
 		String bookInfo = searchService.searchBookByTitle(title);
 		log.debug("bookInfo = {}", bookInfo);
 		
-//		JsonParser parser = new JsonParser();
         JSONObject json = new JSONObject(bookInfo);
         log.debug("json = {}", json);
         
@@ -92,18 +99,11 @@ public class SearchController {
         	
         }
         
-//        BookInfo test = new Gson().fromJson(json, BookInfo.class);
-//        log.debug("test = {}", test);
-//        Map<String, Object> map = new HashedMap();
-//        map.put("query", query);
-//        map.put("totalResults", totalResults);
-//        map.put("list", list);
-        
-//        return map;
         model.addAttribute("list", list);
         model.addAttribute("totalResults", totalResults);
         model.addAttribute("query", query);
-		
+
+
 	}
 
 }

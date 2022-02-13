@@ -34,7 +34,7 @@
                                     <!-- <button type="button" class="btn roberto-btn" id="searchBtn">책 검색</button> -->
                                     <!-- <button type="button" class="btn roberto-btn" data-toggle="modal" data-target="#exampleModal">책 검색</button> -->
                                 </div>                                    
-                            </div>                         
+                            </div>                        
                         </form>
                     </div>
                 </div>
@@ -189,10 +189,11 @@
         window.name = "parentForm";
 
         let url = `${pageContext.request.contextPath}/booking/bookSearch.do`;
-        var option = "width=570, height=350, resizable = no, scrollbars = no";
+        var option = "width=1200, height=800, resizable = yes, scrollbars = no";
         
         //새탭으로 열기
         childWin = window.open('', "result", option);
+        // childWin = window.open(url, '_blank');
         $("#searchFrm").attr("action", url);
         $("#searchFrm").attr("target", "result");
         $("#searchFrm").submit();

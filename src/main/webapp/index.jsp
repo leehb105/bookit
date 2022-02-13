@@ -135,6 +135,8 @@ $(document).ready(function(){
                             </div>
                             <h2>${test}</h2>     
                         </div>
+                        <input type="hidden" name="pageNum" value="1">
+                        <input type="hidden" name="amount" value="1">
                     </form>
                 </div>
             </div>

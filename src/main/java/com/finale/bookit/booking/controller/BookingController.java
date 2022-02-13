@@ -3,6 +3,8 @@ package com.finale.bookit.booking.controller;
 import com.finale.bookit.booking.model.service.BookingService;
 import com.finale.bookit.booking.model.vo.BookInfo;
 import com.finale.bookit.booking.model.vo.Booking;
+import com.finale.bookit.booking.model.vo.Criteria;
+import com.finale.bookit.booking.model.vo.Paging;
 import com.finale.bookit.common.util.BookitUtils;
 import com.finale.bookit.member.model.vo.Member;
 
@@ -41,34 +43,37 @@ public class BookingController {
 //    }
     @GetMapping("/bookingList.do")
     public void bookingList(
-    		@RequestParam(defaultValue = "1") int cPage, 
+    		@RequestParam(defaultValue = "1") int pageNum, 
     		@RequestParam(value = "bookTitle") String bookTitle, 
     		@RequestParam(value = "checkIn") String checkIn, 
     		@RequestParam(value = "checkOut") String checkOut, 
     		Model model, 
     		HttpServletRequest request ){
-        int limit = 10;
-        int offset = (cPage - 1) * limit;
+        int amount = 5;
+        Criteria cri = new Criteria();
+        cri.setPageNum(pageNum);
+        cri.setAmount(amount);
 
         Map<String, Object> param = new HashMap<>();
-        param.put("offset", offset);
-        param.put("limit", limit);
         param.put("bookTitle", bookTitle);
         param.put("checkIn", checkIn);
         param.put("checkOut", checkOut);
+        param.put("cri", cri);
+        
         log.debug("title = {}", bookTitle);
         List<Booking> list = bookingService.selectBookingList(param);
-//        String cover = list.get(0).getBookInfo().getCover();
-//        log.debug("cover = {}", cover);
-        int total = bookingService.selectTotalBookingCount();
+        int total = bookingService.selectTotalBookingCount(param);
         log.debug("total = {}", total);
         String url = request.getRequestURI();
-        String pagebar = BookitUtils.getPagebar(cPage, limit, total, url);
-        log.debug("list = {}", list);
         log.debug("url = {}", url);
 
+        log.debug("list = {}", list);
+        log.debug("url = {}", url);
+        Paging page = new Paging(cri, total);
+        log.debug("paging = {}", page);
+        
         model.addAttribute("list", list);
-        model.addAttribute("pagebar", pagebar);
+        model.addAttribute("page", page);
     }
 
     @GetMapping("/bookingDetail.do")
@@ -97,8 +102,7 @@ public class BookingController {
     		@RequestParam String content, 
     		@RequestParam String isbn, 
     		RedirectAttributes attributes,
-    		@AuthenticationPrincipal Member member
-	) {
+    		@AuthenticationPrincipal Member member) {
 
     	log.debug("member = {}", member);
     	
@@ -148,21 +152,82 @@ public class BookingController {
 //    	int result = bookingService.insertBooking();
     	
     }
+    	
+    @GetMapping("/myBooking.do")
+    public void myBooking(
+    		@RequestParam(defaultValue = "1") int pageNum, 
+    		Model model,
+    		@AuthenticationPrincipal Member member) {
+    	
+		int amount = 5;
+		Criteria cri = new Criteria();
+		cri.setPageNum(pageNum);
+		cri.setAmount(amount);
+		
+		Map<String, Object> param = new HashMap<>();
+
+        param.put("cri", cri);
+        param.put("id", member.getId());
+    	
+    	
+    	List<Booking> list = bookingService.selectMyBookingList(param);
+    	log.debug("list = {}", list);
+    	
+    	int total = bookingService.selectTotalMyBookingCount(param);
+    	Paging page = new Paging(cri, total);
+    	
+    	model.addAttribute("list", list);
+    	model.addAttribute("page", page);
+    	
+    	
+    }
+    
+    @GetMapping("/lentList.do")
+    public void lentList(
+    		@RequestParam(defaultValue = "1") int pageNum, 
+    		Model model,
+    		@AuthenticationPrincipal Member member
+	) {
+    	//내가 빌려준 도서 예약 목록
+    	int amount = 5;
+		Criteria cri = new Criteria();
+		cri.setPageNum(pageNum);
+		cri.setAmount(amount);
+    	
+    	log.debug("member = {}", member);
+    	Map<String, Object> param = new HashMap<>();
+    	param.put("id", member.getId());
+    	param.put("cri", cri);
+    	
+    	List<Booking> list = bookingService.selectLentList(param);
+    	log.debug("list = {}", list);
+    	
+    	int total = bookingService.selectTotalMyLentBookingCount(param);
+    	Paging page = new Paging(cri, total);
+    	
+    	model.addAttribute("list", list);
+    	model.addAttribute("page", page);
+    }
     
     
+    @GetMapping("/borrowedList.do")
+    public void borrowedList(
+    		Model model,
+    		@AuthenticationPrincipal Member member
+	) {
+    	//내가 빌린 내역
+    	log.debug("member = {}", member);
+    	String id = member.getId();
+    	List<Booking> list = bookingService.selectBorrowedList(id);
+    	log.debug("list = {}", list);
+    	
+    	
+    	
+    	
+    }
     
     
-//    @GetMapping("/bookSearch.do")
-//    public void bookSearch(@RequestParam String bookTitle, Model model) {
-//    	log.debug("bookTitle = {}", bookTitle);
-//    	Map<String, Object> param = new HashMap<>();
-//    	param.put("bookTitle", bookTitle);
-//    	
-//    	List<BookInfo> list = bookingService.selectBook(param);
-//    	log.debug("bookInfo = {}", list);
-//    	
-//    	model.addAttribute("list", list);
-//    }
+
     
     
 }

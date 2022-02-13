@@ -98,6 +98,7 @@
                             <div class="classynav">
                                 <ul id="nav">
                                     
+                                    <li><a href="${pageContext.request.contextPath}/booking/bookingEnroll.do">대여등록</a></li>  
                                     <li><a href="${pageContext.request.contextPath}/board/used.do">중고거래</a></li>  
                                     <li><a href="${pageContext.request.contextPath}/board/community.do">커뮤니티</a></li>  
                                   <li><a href="${pageContext.request.contextPath}/board/request.do">도서요청</a></li>  
@@ -144,6 +145,7 @@
 	                            	<a href="${pageContext.request.contextPath}/member/mypageMain.do">
 	                            		<sec:authentication property="principal.username"/>
 	                            		</a>님 &nbsp
+                                        <a href="${pageContext.request.contextPath}/booking/myBooking.do?pageNum=1&amout=5"><i class="fa fa-list fa-lg"></i></a> &nbsp
 	                            	<a href="#"><i class="fa fa-heart fa-lg"></i></a>
 		                            </div>
 	                            	<form:form
@@ -157,6 +159,7 @@
                               	<div style="padding-right:10px">
                               		
 	                            	<a href="${pageContext.request.contextPath}/member/mypageMain.do">${sessionScope.kakaoN}님</a>
+	                            	<a href="#"><i class="glyphicon glyphicon-th-list"></i></a>
 	                            	<a href="#"><i class="fa fa-heart fa-lg"></i></a>
 	                              		
                               	</div>

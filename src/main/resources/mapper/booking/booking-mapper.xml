@@ -4,25 +4,43 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="booking">
-    <select id="selectBookingList" resultMap="bookingMap">
-       select
-		    b.*,
-		    bi.*,
-		    br.*
-		from
-		    booking b join book_info bi ON
-		    b.isbn13 = bi.isbn13
-		    JOIN BOOKING_RESERVATION br ON
-		    b.board_no = br.board_no
-		WHERE
-			bi.title LIKE '%' || #{bookTitle} || '%' 
-			AND
-			br.start_date NOT BETWEEN #{checkIn} AND #{checkOut}
-			AND
-			br.end_date NOT BETWEEN #{checkIn} AND #{checkOut}
-			AND
-			b.delete_yn = 'N'
-		order by b.reg_date desc
+    <select id="selectBookingList" resultMap="bookingMap" resultType="criteria">
+		<![CDATA[
+			SELECT
+				*
+			from
+				(SELECT 
+					rownum rn,
+					tb1.*
+				FROM
+					(
+					SELECT
+						b.REG_DATE, b.BOARD_NO, b.BOOK_STATUS, b.PRICE, b.DEPOSIT, b.DELETE_YN,
+					    bi.TITLE, bi.AUTHOR, bi.PUBLISHER, bi.PUBDATE, bi.CATEGORY_NAME,bi.COVER,
+					    br.RES_NO, br.START_DATE, br.END_DATE
+					from
+					    booking b join book_info bi ON
+					    b.isbn13 = bi.isbn13
+					    JOIN BOOKING_RESERVATION br ON
+						    b.board_no = br.board_no
+						WHERE
+							bi.title LIKE '%' || #{bookTitle} || '%' 
+							AND
+							br.start_date NOT BETWEEN #{checkIn} AND #{checkOut}
+							AND
+							br.end_date NOT BETWEEN #{checkIn} AND #{checkOut}
+							AND
+							b.DELETE_YN = 'N'
+						ORDER BY
+							b.reg_date DESC
+						) tb1
+					WHERE
+						rownum <= #{cri.pageNum} * #{cri.amount}
+				)
+				WHERE
+					rn > (#{cri.pageNum} - 1) * #{cri.amount}		
+		]]>
+	
     </select>
     
 	<resultMap type="bookInfo" id="bookInfoMap">
@@ -42,12 +60,15 @@
 		<result column="board_no" property="boardNo"/>
 		<result column="start_date" property="startDate"/>
 		<result column="end_date" property="endDate"/>
+		<result column="id" property="id"/>
 	</resultMap>
 	
 	<resultMap type="member" id="memberMap">
 		<id column="id" property="id"/>
 		<result column="nickname" property="nickname"/>
 	</resultMap>
+
+	
 	
 	<resultMap type="booking" id="bookingMap">
 		<id column="board_no" property="boardNo"/>
@@ -61,14 +82,25 @@
 		<result column="reg_date" property="regDate"/>
 		<association property="bookInfo" resultMap="bookInfoMap"/>
 		<association property="member" resultMap="memberMap"/>
-		<collection property="bookReservation" resultMap="bookReservationMap"/>
+		<collection property="bookReaservation" resultMap="bookReservationMap"/>
 	</resultMap>
 
-	<select id="selectTotalBookingCount" resultType="int">
-        select
-            count(*)
-        from
-            booking
+	<select id="selectTotalBookingCount" resultType="_int">
+       SELECT
+			count(DISTINCT b.BOARD_NO)
+		from
+		    booking b join book_info bi ON
+		    b.isbn13 = bi.isbn13
+		    JOIN BOOKING_RESERVATION br ON
+		    b.board_no = br.board_no
+		WHERE
+			bi.title LIKE '%' || #{bookTitle} || '%' 
+			AND
+			br.start_date NOT BETWEEN #{checkIn} AND #{checkOut}
+			AND
+			br.end_date NOT BETWEEN #{checkIn} AND #{checkOut}
+			AND
+			b.DELETE_YN = 'N'
     </select>
 
 	<select id="selectBooking" resultMap="bookingMap">
@@ -138,5 +170,104 @@
 		)
 	</insert>
 	
+	<select id="selectMyBookingList" resultMap="bookingMap" resultType="criteria">
+		<![CDATA[
+			SELECT
+				*
+			FROM
+				(SELECT
+					rownum rn,
+					tb1.*
+				from
+					(SELECT
+						*
+					FROM
+						booking b join book_info bi ON
+					    b.isbn13 = bi.isbn13
+					WHERE
+						writer = #{id}
+						AND
+						DELETE_YN = 'N'
+					ORDER BY
+						reg_date desc) tb1
+				WHERE 
+					ROWNUM <= #{cri.pageNum} * #{cri.amount}) tb2
+			WHERE
+				rn > (#{cri.pageNum} - 1) * #{cri.amount}
+		]]>
+	</select>
 	
+	<select id="selectBorrowedList" resultMap="bookingMap">
+		SELECT
+			*
+		FROM
+			BOOKING
+		WHERE
+			writer = #{id}
+			AND
+			DELETE_YN = 'N'
+		ORDER BY
+			REG_DATE DESC
+	</select>
+	
+	<select id="selectLentList" resultMap="bookingMap" resultType="criteria">
+		<![CDATA[
+		SELECT
+			*
+		FROM
+			(SELECT
+				rownum rn,
+				tb1.*
+			from
+				(SELECT
+					*
+				FROM
+					booking b join book_info bi ON
+				    b.isbn13 = bi.isbn13
+				    JOIN BOOKING_RESERVATION br ON
+				    b.board_no = br.board_no
+				WHERE
+					writer = #{id}
+					AND
+					DELETE_YN = 'N'
+					AND
+					br.id IS NOT NULL
+				ORDER BY
+					REG_DATE desc
+					,start_date desc) tb1
+			WHERE 
+				ROWNUM <= #{cri.pageNum} * #{cri.amount}) tb2
+		WHERE
+			rn > (#{cri.pageNum} - 1) * #{cri.amount}
+		]]>
+	</select>
+	
+	<select id="selectTotalMyBookingCount" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			BOOKING
+		WHERE
+			writer = #{id}
+			AND
+			DELETE_YN = 'N'
+		ORDER BY
+			REG_DATE DESC
+		
+	</select>
+	<select id="selectTotalMyLentBookingCount" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			BOOKING b JOIN BOOKING_RESERVATION br
+			ON b.BOARD_NO = br.BOARD_NO
+		WHERE
+			writer = #{id}
+			AND
+			DELETE_YN = 'N'
+			AND
+			br.id IS NOT NULL
+		ORDER BY
+			REG_DATE DESC
+	</select>
 </mapper>

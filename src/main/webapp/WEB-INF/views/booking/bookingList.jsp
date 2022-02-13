@@ -21,15 +21,16 @@
 	</c:if>
 
 	<!-- Booking Area Start -->
-    <div class="roberto-news-area section-padding-30-0">
+    <div class="roberto-news-area section-padding-30-0 mt-5">
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12 col-lg-8">
+            <div class="row">
+                <div class="col-12">
                     <!-- Single Booking List Area -->
-					<c:forEach var="booking" items="${list }">                   
-	                    <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
+					<c:forEach var="booking" items="${list }">     
+						<hr class="my-2 wow fadeInUp">              
+	                    <div class="single-blog-post d-flex align-items-center mt-30 mb-30 wow fadeInUp" data-wow-delay="100ms">
 	                        <!-- List Cover -->
-	                        <div class="post-thumbnail">
+	                        <div class="col-3">
 								<!-- <input type="hidden" name="bno" value="${booking.boardNo}"> -->
 	                            <a href="#"><img src="${booking.bookInfo.cover }" alt=""></a>
 	                        </div>
@@ -65,22 +66,72 @@
 	                        </div>
 	                    </div>
 					</c:forEach> 
-					
-					
 
+					<hr class="my-2 wow fadeInUp">
                     <!-- Pagination -->
-                    <nav class="roberto-pagination wow fadeInUp mb-100" data-wow-delay="600ms">
+                    <nav class="roberto-pagination wow fadeInUp mb-100" data-wow-delay="100ms">
                         <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Next <i class="fa fa-angle-right"></i></a></li>
+							<c:if test="${page.prev}"> 
+								<li class="page-item"><a class="page-link" href="${page.startPage - 1}"> 이전 <i class="fa fa-angle-left"></i></a></li>
+							</c:if>
+							<c:forEach var="num" begin="${page.startPage }" end="${page.endPage }">
+								<li class="page-item ${page.cri.pageNum == num ? 'active' : ''}"><a class="page-link" href="${num}">${num}</a></li>
+							</c:forEach>
+							<c:if test="${page.next}">
+								<li class="page-item"><a class="page-link" href="${page.endPage + 1}"> 다음 <i class="fa fa-angle-right"></i></a></li>
+							</c:if>
+
                         </ul>
                     </nav>
+
+					<form id='actionForm' action="${pageContext.request.contextPath}/booking/bookingList.do" method="get"> 
+						<input type="hidden" name="checkIn" value=""> 
+						<input type="hidden" name="checkOut" value=""> 
+						<input type="hidden" name="bookTitle" value=""> 
+						<input type="hidden" name="pageNum" value="${page.cri.pageNum}"> 
+						<input type="hidden" name="amount" value="${page.cri.amount}"> 
+					</form>
+
+
+					<!-- <div class="col-12">
+							${pagebar}
+
+					</div> -->
+					
                 </div>
 
     <!-- Booking Area End -->
+<script>
+	var actionForm = $('#actionForm'); 
+	$('.page-item a').on('click', function(e) { e.preventDefault(); 
+		//걸어둔 링크로 이동하는 것을 일단 막음 
+		actionForm.find('input[name="pageNum"]').val($(this).attr('href')); 
 
+		const url = new URL(window.location.href);
+		const urlParams = url.searchParams;
+		// console.log(urlParams.get('checkIn'));
+
+		const checkIn = urlParams.get('checkIn');
+		const checkOut = urlParams.get('checkOut');
+		const bookTitle = urlParams.get('bookTitle');
+
+		$('input[name=checkIn').attr('value', checkIn);
+		$('input[name=checkOut').attr('value', checkOut);
+		$('input[name=bookTitle').attr('value', bookTitle);
+
+		actionForm.submit(); 
+	});
+
+	
+
+
+
+
+
+
+
+
+</script>
 	
 
     <!-- Partner Area End -->
