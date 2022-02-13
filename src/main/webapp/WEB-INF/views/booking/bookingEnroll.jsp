@@ -34,7 +34,7 @@
                                     <!-- <button type="button" class="btn roberto-btn" id="searchBtn">책 검색</button> -->
                                     <!-- <button type="button" class="btn roberto-btn" data-toggle="modal" data-target="#exampleModal">책 검색</button> -->
                                 </div>                                    
-                            </div>                         
+                            </div>                        
                         </form>
                     </div>
                 </div>

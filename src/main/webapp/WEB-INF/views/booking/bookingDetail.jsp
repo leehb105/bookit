@@ -7,25 +7,13 @@
 
 
 	<!-- Rooms Area Start -->
-    <div class="roberto-rooms-area section-padding-100-0">
+    <div class="roberto-rooms-area section-padding-100-0 wow fadeInUp" data-wow-delay="100ms">
         <div class="container">
             <div class="row">
                 <div class="col-12 col-lg-8">
                     <!-- Single Room Details Area -->
                     <div class="single-room-details-area mb-50">
-                        <!-- Room Thumbnail Slides -->
-                        <!-- <div class="room-thumbnail-slides mb-50">
-                            <div id="room-thumbnail--slide" class="carousel slide" data-ride="carousel">
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <img src="${booking.bookInfo.cover}" class="d-block w-40" alt="">
-
-                                    </div>
-                                   
-                                </div>  
-                            </div>
-                        </div> -->
-                        <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
+                        <div class="single-blog-post d-flex align-items-center mb-50">
                             <img src="${booking.bookInfo.cover}" class="d-block w-40" alt="">
                             <div class="post-content">
                                 <!-- booking Title -->
@@ -72,16 +60,6 @@
                         <span>${booking.member.nickname}(${booking.member.id})</span>
                         <br>
                         <span>작성일 ${newDate}</span>
-                       
-
-                        <!-- <ul>
-                            <li><i class="fa fa-check"></i> Mauris molestie lectus in irdiet auctor.</li>
-                            <li><i class="fa fa-check"></i> Dictum purus at blandit molestie.</li>
-                            <li><i class="fa fa-check"></i> Neque non fermentum suscipit.</li>
-                            <li><i class="fa fa-check"></i> Donec id dui ac massa malesuada.</li>
-                            <li><i class="fa fa-check"></i> In sit amet sapien quis orci maximus.</li>
-                            <li><i class="fa fa-check"></i> Vestibulum rutrum diam vel eros tristique.</li>
-                        </ul> -->
 
                         <p>${booking.content}</p>
                     </div>
@@ -93,19 +71,6 @@
                     <!-- Hotel Reservation Area -->
                     <div class="hotel-reservation--area mt-100">
                         <form action="#" method="post">
-                            <!-- <div class="form-group mb-30">
-                                <label for="checkInDate">대여일자</label>
-                                <div class="input-daterange" id="datepicker">
-                                    <div class="row no-gutters">
-                                        <div class="col-6">
-                                            <input type="text" class="input-small form-control" name="datepicker" id="checkIn" autocomplete="off" placeholder="대여 시작일">
-                                        </div>
-                                        <div class="col-6">
-                                            <input type="text" class="input-small form-control" name="datepicker" id="checkOut" autocomplete="off" placeholder="대여 종료일">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
                             <label for="checkInDate">대여일자</label>
                             <div class="row no-gutters">
                                 <div class="col-6">

@@ -82,7 +82,7 @@
 		<result column="reg_date" property="regDate"/>
 		<association property="bookInfo" resultMap="bookInfoMap"/>
 		<association property="member" resultMap="memberMap"/>
-		<collection property="bookReservation" resultMap="bookReservationMap"/>
+		<collection property="bookReaservation" resultMap="bookReservationMap"/>
 	</resultMap>
 
 	<select id="selectTotalBookingCount" resultType="_int">
@@ -211,7 +211,35 @@
 	</select>
 	
 	<select id="selectLentList" resultMap="bookingMap" resultType="criteria">
-		
+		<![CDATA[
+		SELECT
+			*
+		FROM
+			(SELECT
+				rownum rn,
+				tb1.*
+			from
+				(SELECT
+					*
+				FROM
+					booking b join book_info bi ON
+				    b.isbn13 = bi.isbn13
+				    JOIN BOOKING_RESERVATION br ON
+				    b.board_no = br.board_no
+				WHERE
+					writer = #{id}
+					AND
+					DELETE_YN = 'N'
+					AND
+					br.id IS NOT NULL
+				ORDER BY
+					REG_DATE desc
+					,start_date desc) tb1
+			WHERE 
+				ROWNUM <= #{cri.pageNum} * #{cri.amount}) tb2
+		WHERE
+			rn > (#{cri.pageNum} - 1) * #{cri.amount}
+		]]>
 	</select>
 	
 	<select id="selectTotalMyBookingCount" resultType="int">
@@ -227,5 +255,19 @@
 			REG_DATE DESC
 		
 	</select>
-	
+	<select id="selectTotalMyLentBookingCount" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			BOOKING b JOIN BOOKING_RESERVATION br
+			ON b.BOARD_NO = br.BOARD_NO
+		WHERE
+			writer = #{id}
+			AND
+			DELETE_YN = 'N'
+			AND
+			br.id IS NOT NULL
+		ORDER BY
+			REG_DATE DESC
+	</select>
 </mapper>

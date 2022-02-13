@@ -57,8 +57,8 @@ public class BookkingDaoImpl implements BookingDao{
 	}
 
 	@Override
-	public List<Booking> selectLentList(String id) {
-		return session.selectList("booking.selectLentList", id);
+	public List<Booking> selectLentList(Map<String, Object> param) {
+		return session.selectList("booking.selectLentList", param);
 	}
 
 	@Override
@@ -69,6 +69,11 @@ public class BookkingDaoImpl implements BookingDao{
 	@Override
 	public int selectTotalMyBookingCount(Map<String, Object> param) {
 		return session.selectOne("booking.selectTotalMyBookingCount", param);
+	}
+
+	@Override
+	public int selectTotalMyLentBookingCount(Map<String, Object> param) {
+		return session.selectOne("booking.selectTotalMyLentBookingCount", param);
 	}
 
 

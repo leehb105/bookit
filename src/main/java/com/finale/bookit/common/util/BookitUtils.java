@@ -154,8 +154,8 @@ public class BookitUtils {
 		return pagebar.toString();
 	}
 	
-	//대여 목록에 대한 페이징	
-	public static String getPagebarBookingList(int cPage, int numPerPage, int totalContent, String url) {
+	//도서 검색 목록에 대한 페이징	
+	public static String getPagebarBookList(int cPage, int numPerPage, int totalContent, String url) {
 		
 		StringBuilder pagebar = new StringBuilder(); 
 
@@ -170,7 +170,7 @@ public class BookitUtils {
 		int pageNo = pageStart;
 
 		pagebar.append(
-					"<nav class=\"roberto-pagination wow fadeInUp mb-100\" data-wow-delay=\"600ms\">\n"
+					"<nav class=\"roberto-pagination mb-100\" >\n"
 							+ "<ul class=\"pagination\">");
 		
 		

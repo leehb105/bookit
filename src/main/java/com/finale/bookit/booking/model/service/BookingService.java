@@ -24,10 +24,12 @@ public interface BookingService {
 
 	public List<Booking> selectBorrowedList(String id);
 
-	public List<Booking> selectLentList(String id);
+	public List<Booking> selectLentList(Map<String, Object> param);
 
 	public List<Booking> selectMyBookingList(Map<String, Object> param);
 
 	public int selectTotalMyBookingCount(Map<String, Object> param);
+
+	public int selectTotalMyLentBookingCount(Map<String, Object> param);
 	
 }
