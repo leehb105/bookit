@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
-
+<script src="https://kit.fontawesome.com/01809a491f.js" crossorigin="anonymous"></script>
 
 	<!-- Rooms Area Start -->
     <div class="roberto-rooms-area section-padding-100-0 wow fadeInUp" data-wow-delay="100ms">
@@ -71,6 +71,17 @@
                     <!-- Hotel Reservation Area -->
                     <div class="hotel-reservation--area mt-100">
                         <form action="#" method="post">
+                        	<div>
+                        		<input type="hidden" id="bookingNo" value="${booking.boardNo}"/>
+                        		<c:if test="${wishlistCount eq 0}">
+									<h3 id="empty" style="display: inline-block;"><a href="#" onclick="like();" ><i class="far fa-heart" ></i></a></h3>
+									<h3 id="full" style="display: none"><a href="#" onclick="dislike();"><i class="fas fa-heart"></i></a></h3>
+								</c:if>
+								<c:if test="${wishlistCount eq 1}">
+									<h3 id="empty" style="display: none;"><a href="#" onclick="like();" ><i class="far fa-heart" ></i></a></h3>
+									<h3 id="full" style="display: inline-block"><a href="#" onclick="dislike();"><i class="fas fa-heart"></i></a></h3>
+								</c:if>
+							</div>
                             <label for="checkInDate">대여일자</label>
                             <div class="row no-gutters">
                                 <div class="col-6">
@@ -253,7 +264,64 @@
 //     });//datepicker end
 // });
 
-
+// 찜 추가
+function like(){
+	document.getElementById('full').style.display = 'inline-block';
+	document.getElementById('empty').style.display = 'none';
+	
+	var boardNo = $("input[id=bookingNo]").val();
+	console.log(boardNo);
+	$.ajax({
+		url: `${pageContext.request.contextPath}/wishlist/wishlistEnroll.do`,
+		type: "POST",
+		data: {
+			boardNo : boardNo
+		},
+		beforeSend : function(xhr){   
+			/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+        },
+		dataType: "json",
+		success: function(data){
+			if(data == 1) {
+				alert("찜 등록되었습니다.");
+			} 
+			else {
+				alert("다시 시도해주세요.");
+			}
+		},
+		error: console.log
+	});
+}
+// 찜 해제
+function dislike(){
+	document.getElementById('full').style.display = 'none';
+	document.getElementById('empty').style.display = 'inline-block';
+	
+	var boardNo = $("input[id=bookingNo]").val();
+	console.log(boardNo);
+	$.ajax({
+		url: `${pageContext.request.contextPath}/wishlist/wishlistCancel.do`,
+		type: "POST",
+		data: {
+			boardNo : boardNo
+		},
+		beforeSend : function(xhr){   
+			/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+        },
+		dataType: "json",
+		success: function(data){
+			if(data == 1) {
+				alert("찜 취소되었습니다.");
+			} 
+			else {
+				alert("다시 시도해주세요.");
+			}
+		},
+		error: console.log
+	});
+}
 
 
 </script>

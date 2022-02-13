@@ -23,5 +23,7 @@ public interface WishlistDao {
 
 	int selectTotalWishlist(Member loginMember);
 
+	int wishlistCancel(Map<String, Object> param);
+
 
 }

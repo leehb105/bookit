@@ -106,32 +106,6 @@ function collectionDelete(){
 		});
 	}
 }
-// 찜 등록. value값 수정 후 게시판에서 사용할 수 있게
-function wishlistEnroll() {
-	var no = $("input[id=wishlistBoardNo]").val();
-	console.log(no);
-	$.ajax({
-		url: `${pageContext.request.contextPath}/wishlist/wishlistEnroll.do`,
-		type: "POST",
-		data: {
-			no : no
-		},
-		beforeSend : function(xhr)
-        {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-        },
-		dataType: "json",
-		success: function(data){
-			if(data == 1) {
-				alert("찜 등록되었습니다.");
-			} 
-			else {
-				alert("다시 시도해주세요.");
-			}
-		},
-		error: console.log
-	});
-};
 // 찜 목록 누르면 해당 게시글로 이동
 $(() => {
 	$("td[data-no]").click((e) => {
@@ -214,7 +188,6 @@ function collectionInsert(){
 					</table>
 				</div>
 				<input type="button" value="삭제" class="btn btn-outline-danger float-right mb-30" onclick="wishlistDelete();"/>
-				<input type="button" value="등록" class="btn btn-outline-success float-right mb-30 mr-15" onclick="wishlistEnroll();"/>
 			</div>
 		</div>
 		${pagebar}

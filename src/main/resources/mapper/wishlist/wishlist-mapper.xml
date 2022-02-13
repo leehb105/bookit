@@ -7,12 +7,15 @@
 		select
 		    w.*,
 		    b.content,
-		    b.writer
+		    b.writer,
+		    b.reg_date
 		from 
 		    wishlist w left join booking b
 		    on w.board_no = b.board_no
 		where
 			member_id = #{id}
+		order by
+			b.reg_date desc
 	</select>
 	
 	<select id="selectAllCollection" resultType="bookCollection">
@@ -55,7 +58,7 @@
 	
 	<insert id="wishlistEnroll">
 		insert into wishlist
-		values (#{id}, #{no})
+		values (#{id}, #{boardNo})
 	</insert>
 	
 	<insert id="collectionInsert">
@@ -70,4 +73,8 @@
 	<select id="selectTotalWishlist" resultType="_int">
 		select count(*) from wishlist where member_id = #{id}
 	</select>
+	
+	<delete id="wishlistCancel">
+		delete from wishlist where board_no = #{boardNo} and member_id = #{id}
+	</delete>
 </mapper>
