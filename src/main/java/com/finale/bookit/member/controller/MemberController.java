@@ -187,6 +187,8 @@ public class MemberController {
 	
 	@PostMapping("/memberUpdate.do")
 	public String memberUpdate(
+			@RequestParam String password,
+			@RequestParam String newPassword,
 			@RequestParam String nickname,
 			@RequestParam String email,
 			@RequestParam String phone,
@@ -214,11 +216,23 @@ public class MemberController {
 		param.put("nickname", nickname);
 		param.put("email", email);
 		param.put("phone", phone);
+		if(!newPassword.isEmpty()) {
+			String encodedNewPassword = bcryptPasswordEncoder.encode(newPassword);			
+			param.put("encodedNewPassword", encodedNewPassword);
+		}
 		
-		log.debug("address = {}", address);
 		address.setMemberId(id);
-		int result = memberService.memberUpdate(param, address);
-		redirectAttr.addFlashAttribute("msg", result > 0 ? "정보 수정 성공!" : "정보 수정 실패!");
+		log.debug("address = {}", address);
+		
+		// 현재 비밀번호 일치하는지 확인
+		if(loginMember != null && bcryptPasswordEncoder.matches(password, loginMember.getPassword())) {
+			int result = memberService.memberUpdate(param, address);
+			redirectAttr.addFlashAttribute("msg", result > 0 ? "정보 수정 성공!" : "정보 수정 실패!");
+		}
+		else {
+			redirectAttr.addFlashAttribute("msg", "비밀번호가 일치하지 않습니다.");
+		}
+		
 		
 		return "redirect:/member/mypageMain.do";
 	}
