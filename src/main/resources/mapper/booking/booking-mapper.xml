@@ -60,7 +60,7 @@
 		<result column="board_no" property="boardNo"/>
 		<result column="start_date" property="startDate"/>
 		<result column="end_date" property="endDate"/>
-		<result column="id" property="id"/>
+		<result column="borrowerId" property="borrowerId"/>
 	</resultMap>
 	
 	<resultMap type="member" id="memberMap">
@@ -82,7 +82,7 @@
 		<result column="reg_date" property="regDate"/>
 		<association property="bookInfo" resultMap="bookInfoMap"/>
 		<association property="member" resultMap="memberMap"/>
-		<collection property="bookReaservation" resultMap="bookReservationMap"/>
+		<collection property="bookReservation" resultMap="bookReservationMap"/>
 	</resultMap>
 
 	<select id="selectTotalBookingCount" resultType="_int">

@@ -168,7 +168,7 @@ public class BookingController {
 
         param.put("cri", cri);
         param.put("id", member.getId());
-    	
+    	log.debug("member = {}", member);
     	
     	List<Booking> list = bookingService.selectMyBookingList(param);
     	log.debug("list = {}", list);
