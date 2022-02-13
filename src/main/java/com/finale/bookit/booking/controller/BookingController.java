@@ -207,6 +207,7 @@ public class BookingController {
     	
     	List<Booking> list = bookingService.selectLentList(param);
     	log.debug("list = {}", list);
+    	log.debug("테스트데이터 = {}", list.get(1).getBookReservations().get(1));
     	
     	int total = bookingService.selectTotalMyLentBookingCount(param);
     	Paging page = new Paging(cri, total);

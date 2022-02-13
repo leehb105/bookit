@@ -80,9 +80,9 @@
 		<result column="delete_yn" property="deleteYn"/>
 		<result column="isbn13" property="isbn13"/>
 		<result column="reg_date" property="regDate"/>
-		<association property="bookInfo" resultMap="bookInfoMap"/>
 		<association property="member" resultMap="memberMap"/>
-		<collection property="bookReservation" resultMap="bookReservationMap"/>
+		<association property="bookInfo" resultMap="bookInfoMap"/>
+		<collection property="bookReservations" javaType="java.util.List" resultMap="bookReservationMap"/>
 	</resultMap>
 
 	<select id="selectTotalBookingCount" resultType="_int">
@@ -220,7 +220,24 @@
 				tb1.*
 			from
 				(SELECT
-					*
+					b.board_no,
+					b.content,
+					b.book_status,
+					b.price,
+					b.deposit,
+					b.writer,
+					b.delete_yn,
+					b.isbn13,
+					b.reg_date,
+					bi.title,
+					bi.AUTHOR,
+					bi.PUBLISHER,
+					bi.ITEM_PAGE,
+					bi.CATEGORY_NAME,
+					bi.COVER,
+					br.RES_NO,
+					br.START_DATE,
+					br.END_DATE
 				FROM
 					booking b join book_info bi ON
 				    b.isbn13 = bi.isbn13
@@ -231,7 +248,7 @@
 					AND
 					DELETE_YN = 'N'
 					AND
-					br.id IS NOT NULL
+					br.borrower_id IS NOT NULL
 				ORDER BY
 					REG_DATE desc
 					,start_date desc) tb1
@@ -266,7 +283,7 @@
 			AND
 			DELETE_YN = 'N'
 			AND
-			br.id IS NOT NULL
+			br.borrower_id IS NOT NULL
 		ORDER BY
 			REG_DATE DESC
 	</select>

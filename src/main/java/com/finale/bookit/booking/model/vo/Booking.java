@@ -2,6 +2,7 @@ package com.finale.bookit.booking.model.vo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import com.finale.bookit.member.model.vo.Member;
 
@@ -27,7 +28,7 @@ public class Booking implements Serializable{
     private Date regDate;
     
     private BookInfo bookInfo;
-    private BookReservation bookReservation;
+    private List<BookReservation> bookReservations;
     private Member member;
     private Criteria cri;
 
