@@ -76,6 +76,11 @@ public class BookkingDaoImpl implements BookingDao{
 		return session.selectOne("booking.selectTotalMyLentBookingCount", param);
 	}
 
+	@Override
+	public int selectWishCount(Map<String, Object> param) {
+		return session.selectOne("booking.selectWishCount", param);
+	}
+
 
 	
 	

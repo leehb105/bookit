@@ -33,4 +33,6 @@ public interface BookingDao {
 
 	int selectTotalMyLentBookingCount(Map<String, Object> param);
 
+	int selectWishCount(Map<String, Object> param);
+
 }
