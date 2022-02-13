@@ -65,9 +65,13 @@ input#btn-add{float:right; margin: 0 0 15px;}
 </style>
 
 <script>
-var writer;
+
+
+var category = "titleAndContent";
+var keyword = "파일";
+
 function searchCommunity(){
-	location.href = "${pageContext.request.contextPath}/board/communitySearch.do";
+	location.href = "${pageContext.request.contextPath}/board/search.do?"+"category=${category}&"+"keyword=${keyword}";
 }
 function goCommunityForm(){
 	location.href = "${pageContext.request.contextPath}/board/communityForm.do";
@@ -98,6 +102,8 @@ $(() => {
 	
 	
 });
+
+
 </script>
 <section id="board-container" class="container">
 	<input 
@@ -128,12 +134,12 @@ $(() => {
 	
 				      <form method="get" id="searchFrm">
 				      	<div >
-				      	    <select name = "f" >
-                            <option ${(param.f == "category")? "selected" : ""} value = "title">카테고리</option>
-                            <option ${(param.f == "title")? "selected" : ""} value = "title">제목</option>
+				      	    <select name = "category" >
+                            <option ${(param.category == "titleAndContent")? "selected" : ""} value = "titleAndContent">제목/내용</option>
+                            <option ${(param.category == "writer")? "selected" : ""} value = "writer">작성자</option>
                         </select>
-				        <input type = "text" name = "q" value = "${param.q}" style="margin: 5px;"/>
-                   		<button type="submit" class="btn btn-outline-info" id="searchBtn">검색</button>
+				        <input type = "text" name = "keyword" value = "${param.keyword}" style="margin: 5px;"/>
+                   		<button type="submit" class="btn btn-outline-info" onClick="searchCommunity()" id="searchBtn">검색</button>
 				      	</div>
 				      </form>
 	

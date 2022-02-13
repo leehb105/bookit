@@ -101,7 +101,7 @@
                                     <li><a href="${pageContext.request.contextPath}/booking/bookingEnroll.do">대여등록</a></li>  
                                     <li><a href="${pageContext.request.contextPath}/board/used.do">중고거래</a></li>  
                                     <li><a href="${pageContext.request.contextPath}/board/community.do">커뮤니티</a></li>  
-                                  <li><a href="${pageContext.request.contextPath}/board/request.do">도서요청</a></li>  
+                                  	<li><a href="${pageContext.request.contextPath}/board/request.do">도서요청</a></li>  
                                         <!-- <ul class="dropdown">
                                             <li><a href="./index.html">- Home</a></li>
                                             <li><a href="./room.html">- Rooms</a></li>
@@ -124,10 +124,10 @@
                                     <sec:authorize access="hasRole('ADMIN')">
                                     	 <li><a href="${pageContext.request.contextPath}/admin/admin.do">관리자</a></li>    
                                     </sec:authorize>                  
- 									</ul>
+ 								</ul>
 
                                 <!-- Search -->
-                                <div class="search-btn ml-4" style="padding-right: 30px">
+                                <div class="search-btn ml-4" style="padding-right: 15px">
                                     <i class="fa fa-search" aria-hidden="true"></i>
                                 </div>
                                 <!-- Login -->

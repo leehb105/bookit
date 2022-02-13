@@ -52,4 +52,6 @@ public interface CommunityDao {
 	int updateReadCount(int no);
 	
 	int getCommunityNoCurrval();
+	
+	List<Community> searchCommuntiy(Map<String,Object> map);
 }
