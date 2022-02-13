@@ -3,7 +3,7 @@ package com.finale.bookit.booking.model.service;
 import com.finale.bookit.booking.model.dao.BookingDao;
 import com.finale.bookit.booking.model.vo.BookInfo;
 import com.finale.bookit.booking.model.vo.Booking;
-import com.finale.bookit.booking.model.vo.Criteria;
+import com.finale.bookit.common.util.Criteria;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

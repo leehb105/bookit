@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import com.finale.bookit.common.util.Criteria;
 import com.finale.bookit.member.model.vo.Member;
 
 import lombok.AllArgsConstructor;

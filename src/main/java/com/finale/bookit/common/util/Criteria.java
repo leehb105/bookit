@@ -1,4 +1,4 @@
-package com.finale.bookit.booking.model.vo;
+package com.finale.bookit.common.util;
 
 import lombok.Getter;
 import lombok.Setter;
