@@ -51,5 +51,10 @@ public class WishlistServiceImpl implements WishlistService {
 	public int selectTotalWishlist(Member loginMember) {
 		return wishlistDao.selectTotalWishlist(loginMember);
 	}
+
+	@Override
+	public int wishlistCancel(Map<String, Object> param) {
+		return wishlistDao.wishlistCancel(param);
+	}
 	
 }
