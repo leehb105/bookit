@@ -66,23 +66,27 @@
 	                        </div>
 	                    </div>
 					</c:forEach> 
-
-					<hr class="my-2 wow fadeInUp">
-                    <!-- Pagination -->
-                    <nav class="roberto-pagination wow fadeInUp mb-100" data-wow-delay="100ms">
-                        <ul class="pagination">
-							<c:if test="${page.prev}"> 
-								<li class="page-item"><a class="page-link" href="${page.startPage - 1}"> 이전 <i class="fa fa-angle-left"></i></a></li>
-							</c:if>
-							<c:forEach var="num" begin="${page.startPage }" end="${page.endPage }">
-								<li class="page-item ${page.cri.pageNum == num ? 'active' : ''}"><a class="page-link" href="${num}">${num}</a></li>
-							</c:forEach>
-							<c:if test="${page.next}">
-								<li class="page-item"><a class="page-link" href="${page.endPage + 1}"> 다음 <i class="fa fa-angle-right"></i></a></li>
-							</c:if>
-
-                        </ul>
-                    </nav>
+					<c:if test="${empty list}">
+						<h2>검색 결과가 없습니다.</h2>
+					</c:if>
+					<c:if test="${!empty list}">
+						<hr class="my-2 wow fadeInUp">
+						<!-- Pagination -->
+						<nav class="roberto-pagination wow fadeInUp mb-100" data-wow-delay="100ms">
+							<ul class="pagination">
+								<c:if test="${page.prev}"> 
+									<li class="page-item"><a class="page-link" href="${page.startPage - 1}"> 이전 <i class="fa fa-angle-left"></i></a></li>
+								</c:if>
+								<c:forEach var="num" begin="${page.startPage }" end="${page.endPage }">
+									<li class="page-item ${page.cri.pageNum == num ? 'active' : ''}"><a class="page-link" href="${num}">${num}</a></li>
+								</c:forEach>
+								<c:if test="${page.next}">
+									<li class="page-item"><a class="page-link" href="${page.endPage + 1}"> 다음 <i class="fa fa-angle-right"></i></a></li>
+								</c:if>
+	
+							</ul>
+						</nav>
+					</c:if>
 
 					<form id='actionForm' action="${pageContext.request.contextPath}/booking/bookingList.do" method="get"> 
 						<input type="hidden" name="checkIn" value=""> 
