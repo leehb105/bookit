@@ -126,21 +126,16 @@ $(() => {
 		</c:forEach>
 	</table>
 	
-	<div class="search-container">
- 	<select id="searchType">
-	<option value="title" name="title" ${"title".equals(searchType) ? searchKeyword : ""}>제목</option>		
-	<option value="category" name="category" ${"category".equals(searchType) ? searchKeyword : ""}>말머리</option>
-	</select>
-	
-	<div id="search-title" class="search-type">
-	<form class="example" action="/action_page.php" style="margin:auto;max-width:300px">
-	 <input type="hidden" name="searchType" value="title" >
- 	 <input type="text" name="searchKeyword" value=${"title".equals(searchType) ? searchKeyword : "" || "category".equals(searchType) ? searchKeyword : ""}>
-  	<button type="button" class="btn btn-primary btn-icon-split" style="padding: 2px" onclick="searchCommunity()">검색
-  	<i class="fa fa-search" aria-hidden="true"></i></button>			
-	</form>
-	</div>
-	</div>
+				      <form method="get" id="searchFrm">
+				      	<div >
+				      	    <select name = "f" >
+                            <option ${(param.f == "category")? "selected" : ""} value = "title">카테고리</option>
+                            <option ${(param.f == "title")? "selected" : ""} value = "title">제목</option>
+                        </select>
+				        <input type = "text" name = "q" value = "${param.q}" style="margin: 5px;"/>
+                   		<button type="submit" class="btn btn-outline-info" id="searchBtn">검색</button>
+				      	</div>
+				      </form>
 	
 	<br>
 	<div class="pagebar"  style="margin-bottom: 2%;">

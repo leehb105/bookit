@@ -35,7 +35,7 @@
 	-->
 	
 	<select id="selectCommunityComment" parameterType="Integer" resultType="comment">
-		select c.content, c.reg_date, c.writer, m.nickname, c.is_parent, c.no,  c.comment_level
+		select c.content, c.reg_date, c.writer, m.nickname, c.is_parent, c.no,  c.comment_level, c.delete_yn
 		from community_comment c join member m on m.id = c.writer
 		where c.community_no = #{no}
 		and c.comment_level = 1 
@@ -49,19 +49,7 @@
 		and comment_level = 2 
 		order by reg_date
 	</select>
-	
-	<!--  
-		<resultMap type="map" id="commentMap">
-		<id column="no" property="no"/>
-		<result column="community_no" property="communityNo"/>
-		<result column="writer" property="writer"/>
-		<result column="content" property="content"/>
-		<result column="reg_date" property="regDate"/>
-		<result column="delete_yn" property="deleteYn"/>
-		<result column="comment_level" property="commentLevel"/>
-		<result column="comment_ref" property="commentRef"/>
-	</resultMap>
-	-->
+
 	
 	<select id="selectOneCommunityAttachment" parameterType="Integer" resultType="communityAttachment">
 		select no, original_filename, renamed_filename, community_no from community_attachment where no = #{no} 
@@ -77,7 +65,7 @@
 	</update>
 	
 	<update id="updateCommunityContent" parameterType="map">
-		update community set title = #{title}, content = #{content}, category = #{category}, member_id = #{memberId}  where community_no = #{no}
+		update community set title = #{title}, content = #{content}, category = #{category} where community_no = #{no}
 	</update>
 	
 	<select id="getCommunityList" resultType="community">
@@ -123,26 +111,58 @@
 	
 	<!-- 댓글 -->
 	<insert id="insertComment" parameterType="map">
-		insert into community_comment (community_no, no, content, writer) values(
+		insert into community_comment (community_no, no, content, writer, comment_level) values(
 			#{communityNo},
-			SEQ_COMMUNITY_COMMUNITY_NO.nextval,
+			SEQ_COMMUNITY_COMMENT_NO.nextval,
 			#{content},
-			#{writer}
+			#{writer},
+			1
 		)
 	</insert>
+	<update id="setIsParent" parameterType="comment" >
+		update community_comment set is_parent = #{isParent} where no = #{no}
+	</update>
+	
 	<select id="readComment" resultType="comment">
 		select * from community_comment where no = #{no}
 	</select> 
 	<delete id="deleteComment">
 		delete from community_comment where no = #{no}
 	</delete>
-	<update id="updateComment">
+	<update id="updateComment" parameterType="comment">
 		update community_comment set content = #{content}, reg_date = sysdate where no = #{no} 
 	</update>
-	
+	<!-- 대댓글 -->
+		<insert id="insertReComment" parameterType="map">
+		insert into community_comment (community_no, no, content, writer, comment_ref, comment_level) values(
+			#{communityNo},
+			SEQ_COMMUNITY_COMMENT_NO.nextval,
+			#{content},
+			#{writer},
+			#{comment_ref},
+			2
+		)
+		</insert>
+		
+		
 	<!-- 조회수 -->
 	<update id="updateReadCount">
 		update community set read_count = read_count + 1 where community_no = #{no}
 	</update>
+	
+	<!-- 좋아요 -->
+	 <update id="like" parameterType="HashMap">
+    update likeCount set likeCount = likeCount + 1 
+    where community_no=#{no}
+  </update>
+  
+  <update id="likeCancel" parameterType="HashMap">
+    update likeCount set likeCount = likeCount - 1 
+    where community_no=#{no}
+  </update>
+
+	<!-- 검색 -->
+	
+
 </mapper>
 

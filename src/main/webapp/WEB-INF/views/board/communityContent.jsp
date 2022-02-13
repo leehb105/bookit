@@ -1,19 +1,73 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<sec:authentication property="principal" var="loginMember"/>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+<sec:authentication property="principal" var="loginMember" />
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="게시판 상세보기" name="title"/>
+	<jsp:param value="게시판 상세보기" name="title" />
 </jsp:include>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/community.css"/>
-<script src="https://kit.fontawesome.com/01809a491f.js" crossorigin="anonymous"></script>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/community.css" />
+<script src="https://kit.fontawesome.com/01809a491f.js"
+	crossorigin="anonymous"></script>
 
 <script>
+
+//댓글등록전 검사
+$(document.boardCommentFrm).submit((e) => {
+	const $content = $("[name=content]", e.target);
+	if(!/^(.|\n)+$/.test($content.val())){
+		alert("댓글을 작성해주세요.");
+		e.preventDefault();
+	}
+});
+//댓글 삭제
+$("button[name=btn-delete]").click(function(){
+	console.log(12345);
+	if(confirm("해당 댓글을 삭제하시겠습니까?")){
+		var $frm = $(document.commentDelFrm);
+		var no = $(this).val();
+		console.log(no);
+		$frm.find("[name=no]").val(no);
+		$frm.submit();
+	}
+});	
+//대댓글 기능
+function commentReply(e) {
+	//대댓글 상위댓글 저장
+	const commentRef = e.value;
+	const tr = `<tr>
+		<td colspan="2" style="text-align:left">
+			<form 
+				action="${pageContext.request.contextPath}/board/commentEnroll" 
+				method="post">
+			    <input type="hidden" name="no" value="${community.communityNo}" />
+			    <input type="hidden" name="commentLevel" value="2" />
+			    <input type="hidden" name="commentRef" value="\${comment.commentRef}" />    
+				<textarea name="content" cols="60" rows="3" style="resize: none;" placeholder="인터넷은 우리가 함께 만들어가는 소중한 공간입니다. 글 작성 시 타인에 대한 배려와 책임을 담아주세요."></textarea>
+			    <br />
+				<button type="submit" class="btn btn-primary btn-icon-split" style="padding: 5px; margin-top: 20px;">등록</button>
+				</form>
+		</td>`;
+	const baseTr = e.parentNode.parentNode;
+	const $baseTr = $(e.target).parent().parent();
+	const $tr = $(tr);
+	$tr.insertAfter(baseTr)	
+	.find("form")
+	.submit((e) => {
+		const $content = $("[name=content]", e.target);
+		if(!/^(.|\n)+$/.test($content.val())){
+			alert("댓글을 작성해주세요.");
+			e.preventDefault();
+		}
+	});
+		
+}
 function updateCommunity(){
 	location.href = "${pageContext.request.contextPath}/board/communityUpdate.do?no=${community.communityNo}";
 }
@@ -36,20 +90,16 @@ function like(){
 	document.getElementById('full').style.display = 'inline-block';
 	document.getElementById('empty').style.display = 'none';
 	
+	
 }
-function dislike(){
+function likeCancel(){
 	document.getElementById('full').style.display = 'none';
 	document.getElementById('empty').style.display = 'inline-block';
+	location.href = "${pageContext.request.contextPath}/board/likeCancel.do";
 }
 function goCommunityList(){
 	location.href = "${pageContext.request.contextPath}/board/community.do";
 }
-
-
-console.log("recomments :", "${community.comment}")
-
-console.log("${community.comment[0].no}")
-console.log("delete :", "${community.comment[0].deleteYn}")
 
 $(document).ready(function(){
 	// 페이지 로드시 모달창 출력 방지
@@ -67,114 +117,179 @@ function adjustHeight() {
 	textEle.css('height', textEleHeight);
 };
 
+
+console.log("${community.comment}");
+
 </script>
 <style>
-div#board-container{width:400px;}
-input, button, textarea {margin-bottom:15px;}
-button { overflow: hidden; }
+div#board-container {
+	width: 400px;
+}
+
+input, button, textarea {
+	margin-bottom: 15px;
+}
+
+button {
+	overflow: hidden;
+}
 /* 부트스트랩 : 파일라벨명 정렬*/
-div#board-container label.custom-file-label{text-align:left;}
-textarea {resize: none;}
+div#board-container label.custom-file-label {
+	text-align: left;
+}
+
+textarea {
+	resize: none;
+}
+
 .modal-body p {
 	display: inline-block;
 	width: 100px;
 	text-align: right;
 	margin-right: 30px;
 }
-.modal-body input {width: auto;}
+
+.modal-body input {
+	width: auto;
+}
 </style>
 <div id="board-container" class="mx-auto text-center">
-      <input type="submit" value="수정" id="modify" onclick="updateCommunity();">
-      <input type="button" value="삭제" id="delete" onclick="communityDelete();">
-      <input type="button" value="리스트로" onclick="goCommunityList();">
-    <p>${community.category}</p>  
+	<input type="submit" value="수정" id="modify"
+		onclick="updateCommunity();"> <input type="button" value="삭제"
+		id="delete" onclick="communityDelete();"> <input type="button"
+		value="리스트로" onclick="goCommunityList();">
+	<p>${community.category}</p>
 	<p>${community.title}</p>
 	<!-- 프로필 이미지 -->
+	<img
+		src="${pageContext.request.contextPath}/resources/img/profile/${collectionList.profileImage}"
+		height="30px" />
 	<p>${community.nickname}</p>
 	<p>${community.regDate}</p>
 	<p>${community.readCount}</p>
 	<p>${community.likeCount}</p>
 	<p>${community.commentCount}</p>
 	<!-- 파일 이미지 -->
-	<c:forEach items="${community.file}"  var="file" varStatus="vs">
-	<img src="${pageContext.request.contextPath}/resources/img/board/${file.renamedFilename}">
-								
+
+	<c:forEach items="${community.file}" var="file" varStatus="vs">
+		<img
+			src="${pageContext.request.contextPath}/resources/img/board/${file.renamedFilename}">
 	</c:forEach>
+
 	<!-- 글 내용 -->
 	<p>${community.content}</p>
 	<p>${community.likeCount}</p>
 	<!-- 파일 다운로드 -->
-	<c:forEach items="${community.file}" var="file" varStatus="vs">
-	<a href="${pageContext.request.contextPath}/board/fileDownload.do?fileNo=${file.no}"
-	role="button"
-	class="btn btn-outline-success btn-block">
-	첨부파일 ${vs.count} - ${file.originalFilename}</a>
-	<hr>
-	</c:forEach>
-	
-	<hr>
-	
-	<table>
-	<!-- 댓글 -->
-	<c:choose>
-		<c:when test="${community.comment ne null}" >
 
-					<c:forEach items="${community.comment}" var="comment">
-						<tr data-no="${comment.no}">
-					
-						<td>${comment.nickname}</td>
-						<td><fmt:formatDate value="${comment.regDate}" pattern="yy/MM/dd HH:mm"/></td>
-						
-						
+	<c:forEach items="${community.file}" var="file" varStatus="vs">
+		<a
+			href="${pageContext.request.contextPath}/board/fileDownload.do?fileNo=${file.no}"
+			role="button" class="btn btn-outline-success btn-block"> 첨부파일
+			${vs.count} - ${file.originalFilename}</a>
+		<hr>
+	</c:forEach>
+
+	<hr>
+
+	<table>
+		<c:choose>
+			<c:when test="${community.comment ne null}">
+				<c:forEach items="${community.comment}" var="comment">
+					<tr data-no="${comment.no}">
 						<c:choose>
-						
-							<c:when test="${comment.isParent == 'Y' && comment.deleteYn ==  false}">	
-							<td>${comment.content}</td>
-								<c:forEach items="${comment.reComments}" var="reComment">
-								<tr data-no="${reComment.no}">
-									
-									<td>${reComment.nickname}</td>
-									<td><fmt:formatDate value="${reComment.regDate}" pattern="yy/MM/dd HH:mm"/></td>
-									<td>${reComment.content}</td>
-								</c:forEach>
+							<c:when test="${comment.deleteYn == 'N'}">
+								<td>${comment.nickname}</td>
+								<td><fmt:formatDate value="${comment.regDate}"
+										pattern="yy/MM/dd HH:mm" /></td>
+								<td>${comment.content}</td>
+								<td>
+									<button class="btn btn-primary btn-icon-split"
+										value="${comment.no}" onclick="commentReply(this);"
+										style="padding: 5px; margin-top: 20px;">답글</button>
+										
+										<c:if test="${comment.writer == loginMember.id}">
+				
+										<button class="btn btn-primary btn-icon-split"
+											name="btn-update" value="${comment.no}"
+											style="padding: 5px; margin-top: 20px;">수정</button>
+										<button class="btn btn-primary btn-icon-split"
+											name="btn-delete" value="${comment.no}"
+											style="padding: 5px; margin-top: 20px;">삭제</button>
+
+									</c:if>
+								</td>
+								<c:choose>
+									<c:when test="${comment.isParent == 'Y'}">
+										<c:forEach items="${comment.reComments}" var="reComment">
+											<tr data-no="${reComment.no}">
+
+												<td>${reComment.nickname}</td>
+												<td><fmt:formatDate value="${reComment.regDate}"
+														pattern="yy/MM/dd HH:mm" /></td>
+												<td>${reComment.content}</td>
+										</c:forEach>
+									</c:when>
+								</c:choose>
 							</c:when>
-							
-							
-							<c:when test="${comment.isParent == 'Y' && comment.deleteYn == true && comment.commentLevel == 1}">
-							
+
+
+							<c:when
+								test="${comment.isParent == 'Y' && comment.deleteYn == 'Y' && comment.commentLevel == 1}">
 								<td>삭제된 댓글입니다.</td>
 								<c:forEach items="${comment.reComments}" var="reComment">
-								<tr data-no="${reComment.no}">
-									<td>${reComment.nickname}</td>
-									<td><fmt:formatDate value="${reComment.regDate}" pattern="yy/MM/dd HH:mm"/></td>
-									<td>${reComment.content}</td>
+									<tr data-no="${reComment.no}">
+										<td>${reComment.nickname}</td>
+										<td><fmt:formatDate value="${reComment.regDate}"
+												pattern="yy/MM/dd HH:mm" /></td>
+										<td>${reComment.content}</td>
 								</c:forEach>
 							</c:when>
 						</c:choose>
-						</tr>	
-					</c:forEach>
-					
-					</c:when>
-					
-					<c:otherwise>
+					</tr>
+				</c:forEach>
+
+			</c:when>
+
+			<c:otherwise>
 						테스트
 					</c:otherwise>
-			</c:choose>
-</table>
-			<!--  댓글이 없으면 = 출력 안함 -->
+		</c:choose>
+	</table>
+	<!--  댓글이 없으면 = 출력 안함 -->
+	<!-- 댓글입력칸 -->
+	<form
+		action="${pageContext.request.contextPath}/board/commentEnroll.do"
+		method="post" name="commentFrm">
+		<input type="hidden" name="no" value="${community.communityNo}" /> <input
+			type="hidden" name="commentLevel" value="1" /> <input type="hidden"
+			name="commentRef" value="0" />
+		<div id="comment-input">
+			<textarea name="content" cols="120" rows="3" style="resize: none;"
+				placeholder="댓글을 입력해주세요"></textarea>
 
-	
-	
-	
-	
-	<div class = "likeBan" >
-	<h3 id="empty" style="diaplay: inline-block;"><a href="#" onclick="like();" ><i class="far fa-thumbs-up"></i></a></h3>
-	<h3 id="full" style="display: none"><a href="#" onclick="dislike();"><i class="fas fa-thumbs-up"></i></a></h3>
-	<h3><a href="#" data-toggle="modal" data-target="#reportBoardEnrollModal"><i class="fas fa-ban" style="display: inline-block;"></i></a></h3>
+			<br />
+			<button type="submit" class="btn btn-primary btn-icon-split"
+				style="padding: 5px; margin-top: 20px;">등록</button>
+		</div>
+	</form>
 </div>
-	<br>
 
+
+<div class="likeReport" style="text-align: center;">
+	<h3 id="empty" style="diaplay: inline-block;">
+		<a href="#" onclick="like();"><i class="far fa-thumbs-up"></i></a>
+	</h3>
+	<h3 id="full" style="display: none">
+		<a href="#" onclick="likeCancel();"><i class="fas fa-thumbs-up"></i></a>
+	</h3>
+	<h3>
+		<a href="#" data-toggle="modal" data-target="#reportBoardEnrollModal"><i
+			class="fas fa-ban" style="display: inline-block;"></i></a>
+	</h3>
 </div>
+<br>
+
+
 
 
 <!-- 게시글 신고 등록 Modal -->
@@ -182,51 +297,56 @@ textarea {resize: none;}
 	role="dialog" aria-labelledby="reportBoardEnrollModalLabel"
 	aria-hidden="true">
 	<div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	        <div class="modal-header">
-	            <h5 class="modal-title" id="reportBoardEnrollModalLabel">신고 상세내용</h5>
-	            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	                <span aria-hidden="true">×</span>
-	            </button>
-	        </div>
-	        <form:form method="POST" action="${pageContext.request.contextPath}/report/reportBoardEnroll.do">
-	            <div class="modal-body">
-	                <div>
-	                    <p>신고자ID</p>
-	                    <input type="text" name="reporter" value="${loginMember.id}" readonly/>
-	                </div>
-	                <div>
-	                    <p>게시판</p>
-	                    <input type="text" name="boardName" value="community" readonly/>
-	                </div>
-	                <div>
-	                    <p>게시글NO</p>
-	                    <input type="text" name="boardNo" value="${community.communityNo}" readonly/>
-	                </div>
-	                <div>
-	                    <p>사유</p>
-	                    <input type="radio" name="reason" id="badword" value="욕설">
-	                    <label for="badword">욕설</label>&nbsp;
-	                    <input type="radio" name="reason" id="cheat" value="사기">
-	                    <label for="cheat">사기</label>&nbsp;
-	                    <input type="radio" name="reason" id="loop" value="도배">
-	                    <label for="loop">도배</label>&nbsp;
-	                    <input type="radio" name="reason" id="ad" value="광고">
-	                    <label for="ad">광고</label>&nbsp;
-	                    <input type="radio" name="reason" id="weird" value="음란물">
-	                    <label for="weird">음란물</label>&nbsp;
-	                </div>
-	                <div>
-	                    <p>상세내용</p>
-	                    <textarea name="detail" cols="40" onkeyup="adjustHeight();" placeholder="내용을 입력하세요"></textarea>
-	                </div>
-	            </div>
-	            <div class="modal-footer">
-	                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	                <button type="submit" class="btn btn-success">신고</button>
-	            </div>
-	        </form:form>
-	    </div>
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="reportBoardEnrollModalLabel">신고
+					상세내용</h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<form:form method="POST"
+				action="${pageContext.request.contextPath}/report/reportBoardEnroll.do">
+				<div class="modal-body">
+					<div>
+						<p>신고자ID</p>
+						<input type="text" name="reporter" value="${loginMember.id}"
+							readonly />
+					</div>
+					<div>
+						<p>게시판</p>
+						<input type="text" name="boardName" value="community" readonly />
+					</div>
+					<div>
+						<p>게시글NO</p>
+						<input type="text" name="boardNo" value="${community.communityNo}"
+							readonly />
+					</div>
+					<div>
+						<p>사유</p>
+						<input type="radio" name="reason" id="badword" value="욕설">
+						<label for="badword">욕설</label>&nbsp; <input type="radio"
+							name="reason" id="cheat" value="사기"> <label for="cheat">사기</label>&nbsp;
+						<input type="radio" name="reason" id="loop" value="도배"> <label
+							for="loop">도배</label>&nbsp; <input type="radio" name="reason"
+							id="ad" value="광고"> <label for="ad">광고</label>&nbsp; <input
+							type="radio" name="reason" id="weird" value="음란물"> <label
+							for="weird">음란물</label>&nbsp;
+					</div>
+					<div>
+						<p>상세내용</p>
+						<textarea name="detail" cols="40" onkeyup="adjustHeight();"
+							placeholder="내용을 입력하세요"></textarea>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-success">신고</button>
+				</div>
+			</form:form>
+		</div>
 	</div>
 </div>
 
