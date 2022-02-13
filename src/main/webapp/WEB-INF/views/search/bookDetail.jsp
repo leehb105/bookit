@@ -101,8 +101,12 @@
                                                 </div>
                                             </div>
                                         </li>
-
                                     </c:forEach>
+                                    <c:if test="${empty list}">
+                                        <li class="single_comment_area mt-30">
+                                            <h4>리뷰가 없습니다. 리뷰를 작성해보세요!</h4>
+                                        </li>
+                                    </c:if>
                                 </ol>
                                 <nav class="roberto-pagination wow fadeInUp mb-100" data-wow-delay="100ms">
                                     <ul class="pagination">
