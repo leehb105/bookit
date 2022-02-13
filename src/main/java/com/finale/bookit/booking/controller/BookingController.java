@@ -77,9 +77,12 @@ public class BookingController {
     }
 
     @GetMapping("/bookingDetail.do")
-    public void bookingDetail(@RequestParam(value = "bno") int bno, Model model) {
+    public void bookingDetail(@RequestParam(value = "bno") int bno, Model model,
+    		@AuthenticationPrincipal Member loginMember) {
+    	String id = loginMember.getId();
     	Map<String, Object> param = new HashMap<>();
     	param.put("bno", bno);
+    	param.put("id", id);
     	
     	log.debug("bno = {}", bno);
     	
@@ -87,8 +90,11 @@ public class BookingController {
     	String newDate = BookitUtils.getFormatDate(booking.getRegDate());
     	log.debug("booking = {} ", booking);
     	
+    	int wishlistCount = bookingService.selectWishCount(param);
+    	
     	model.addAttribute("booking", booking);
     	model.addAttribute("newDate", newDate);
+    	model.addAttribute("wishlistCount", wishlistCount);
     }
     
     @GetMapping("/bookingEnroll.do")

@@ -77,6 +77,11 @@ public class BookingServiceImpl implements BookingService {
 		return bookingDao.selectTotalMyLentBookingCount(param);
 	}
 
+	@Override
+	public int selectWishCount(Map<String, Object> param) {
+		return bookingDao.selectWishCount(param);
+	}
+
 	
 
 }

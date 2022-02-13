@@ -43,11 +43,19 @@ public interface AdminDao {
 
 	List<Chart> selectCashChart();
 
-	List<MemberEntity> selectAllMembers(Map<String, Object> param);
+	List<Member> selectAllMembers(Map<String, Object> param);
 
 	int getTotalMember();
 
 	int deleteYn(Map<String, Object> param);
+
+	int selectAuthority(String userId);
+
+	int insertAuthority(String userId);
+
+	int deleteAuthority(String userId);
+
+	int insertAuthority_ADMIN(String userId);
 
 
 }

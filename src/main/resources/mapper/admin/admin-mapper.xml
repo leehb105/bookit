@@ -91,7 +91,7 @@
 		    on m.id = a.member_id
 	</select>
 	
-	<resultMap type="memberentity" id="member">
+	<resultMap type="member" id="member">
 		<id column="id" property="id"/>
 		<result column="password" property="password"/>
 		<result column="email" property="email"/>
@@ -103,7 +103,14 @@
 		<result column="report_yn" property="reportYn"/>
 		<result column="cash" property="cash"/>
 		<result column="profle_image" property="profileImage"/>
-		<result column="authority" property="authority"/>
+		<collection 
+			property="authorities" 
+			ofType="org.springframework.security.core.authority.SimpleGrantedAuthority">
+			
+			<constructor>
+				<arg column="authority" javaType="string"/>
+			</constructor>
+		</collection>
 	</resultMap>
 	
 	<update id="communityDeleteYn">
@@ -117,6 +124,35 @@
 	<update id="requestDeleteYn">
 		update request_board set delete_yn = 'Y' where request_board_no = #{boardNo}
 	</update>
+	
+	
+	<select id="selectAuthority" resultType="_int">
+		select
+			count(*)
+		from
+			authority
+		where
+			member_id = #{userId}
+	</select>
+	
+	<insert id="insertAuthority">
+		insert into
+			authority
+		values('ROLE_USER',#{userId})
+	</insert>
+	
+	<delete id="deleteAuthority">
+		delete from
+			authority
+		where
+			member_id = #{userId} and authority = 'ROLE_ADMIN'
+	</delete>
+	
+	<insert id="insertAuthority_ADMIN">
+		insert into
+			authority
+		values('ROLE_ADMIN',#{userId})
+	</insert>
 	
 	<!--====================================== 관리자 통계부분=========================================================================================== -->
 		<select id="selectChart" resultMap="chartMap">

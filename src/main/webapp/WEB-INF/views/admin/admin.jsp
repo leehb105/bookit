@@ -23,8 +23,6 @@
 	                       <a href="#"><p>회원목록</p></a>
 	                       <b>통계</b><br />	
 	 				 	   <a href="${pageContext.request.contextPath}/admin/chart/chart.do">-가입 회원</a><br />
-	 				 	   <a href="${pageContext.request.contextPath}/admin/chart/addressChart.do">-회원 주소</a><br />
-	 				 	   <a href="#">-리뷰 작성</a><br />
 	 				 	   <a href="${pageContext.request.contextPath}/admin/chart/cashChart.do">-북토리 충전</a>
 	                   </div>
 			</form>           
@@ -50,21 +48,54 @@
 					<td>${memberList.phone}</td>
 					<td><fmt:formatDate value="${memberList.enrollDate}" pattern="yy/MM/dd HH:mm"/> </td>
 					<td>
-						<select id="authority">
-							<option value="${memberList.authority}"/>					
-						</select></td>
+						<select class = "authority" id="${memberList.id}">
+							<option value="ROLE_USER">유저</option>					
+							<option value="ROLE_ADMIN" <c:if test="${memberList.authorities[0] eq 'ROLE_ADMIN'}"> selected="selected"</c:if>>관리자</option>
+							<c:if test="${empty memberList.authorities}"><option value="ROLE_NULL"  selected="selected">권한없음</option></c:if>	
+						</select>
+					</td>
 				</tr>
 			</c:forEach>
 	</table>
 	${pagebar}
 	
 	</div>
-
-
+	
+	
 
 </div>
 
+<script>
+$(document).ready(function() {
+	$(".authority").on('change',function(e) {
+		var role = $(e.target).val();
+		var id = e.target.id;
+		var returnValue = confirm(id+"님의 권한을 변경하시겠습니까?");
+		
+		if(returnValue){
+			$.ajax({
+				url: "${pageContext.request.contextPath}/admin/updateAuthority",
+				method: "GET",
+				data:{
+					userId: id,
+					authority : role
+				},
+				success(resp){
+					console.log(resp);
+				},
+				error: console.log
+			});
+			
+		}
 
+		
+	});
+	
+});
+
+
+
+</script>
 
 
 

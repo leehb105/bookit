@@ -197,5 +197,71 @@ public class CommunityServiceImpl implements CommunityService {
 		return communityDao.getCommunityNoCurrval();
 	}
 
+	@Override
+	public void insertComment(Comment comment) throws Exception {
+		communityDao.insertComment(comment);
+	}
+
+	@Override
+	public int updateComment(Comment comment) throws Exception {
+		return communityDao.updateComment(comment);
+	}
+
+	@Override
+	public int deleteComment(int no) throws Exception {
+		return communityDao.deleteComment(no);
+	}
+
+	@Override
+	public List<Comment> getCommentList(int no) {
+		 List<Comment> commentList = communityDao.getCommentList(no);
+		 
+		    for(Comment comment : commentList) {
+		    	
+		    	List<Comment> childCommentList = new ArrayList<>();
+		    	
+		    	// 1. 댓글 중 부모인 댓글만 반복
+		    	if(comment.getIsParent().equalsIgnoreCase("y")) {
+		    		log.info("parent comment no {}", comment.getNo());
+		    		
+		    		// 게시물 대댓글
+		    		// TODO: List 포문에서 빼기 
+		    	    List<Comment> reCommentList = communityDao.getReCommentList(comment.getNo());
+		    	   
+		    	    log.info("reCommentList size {} ", reCommentList.size());
+		    	    
+		    	    // 2. 반복문 내에서 대댓글 조회
+		    	    for(Comment reComment : reCommentList) {
+		    	    	log.info("recomment no {} ", reComment.getNo());
+		    	
+		    	    	log.info("equal test {}", comment.getNo() == reComment.getCommentRef());
+		    	    	log.info("comment.getno {}", comment.getNo());
+		    	    	log.info("recomm.getref {}", reComment.getCommentRef());
+		    	    	
+		    	    	log.info("string equal test {}", Integer.toString(comment.getNo()).equals(Integer.toString(reComment.getCommentRef()) )  );
+		    	    	
+		    	    	 // 3. 대댓글 ref가 부모 댓글 no와 동일하다면
+		    	    	if(comment.getNo() == reComment.getCommentRef()) {
+		    	    		
+		    	    		// 3-1. 댓글 리스트에 담기
+		    	    		childCommentList.add(reComment);	
+		    	    	}
+		    	 	}
+		    	    
+		    	    log.info("childCommentList size {}", childCommentList.size());
+		    	}
+		    	// 4. 댓글 객체 내 대댓글 프로퍼티 객체에 할당
+		    	comment.setReComments(childCommentList);	
+		    }
+		 
+		 return commentList;
+	}
+
+	@Override
+	public void insertReComment(Comment comment) {
+		communityDao.insertReComment(comment);
+		
+	}
+
 
 }

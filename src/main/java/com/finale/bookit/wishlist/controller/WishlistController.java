@@ -78,20 +78,36 @@ public class WishlistController {
 		return "redirect:/";
 	}
 	
-	// 찜 등록 (no값 수정 필요)
+	// 찜 등록
 	@ResponseBody
 	@PostMapping("/wishlistEnroll.do")
 	public int wishlistEnroll(
-			@RequestParam int no, 
+			@RequestParam int boardNo, 
 			@AuthenticationPrincipal Member loginMember) {
 		String id = loginMember.getId();
 		Map<String, Object> param = new HashMap<>();
-		param.put("no", no);
+		param.put("boardNo", boardNo);
 		param.put("id", id);
 		int result = wishlistService.wishlistEnroll(param);
 		
 		return result;
 	}
+	
+	// 찜 취소
+	@ResponseBody
+	@PostMapping("/wishlistCancel.do")
+	public int wishlistCancel(
+			@RequestParam int boardNo,
+			@AuthenticationPrincipal Member loginMember) {
+		String id = loginMember.getId();
+		Map<String, Object> param = new HashMap<>();
+		param.put("boardNo", boardNo);
+		param.put("id", id);
+		int result = wishlistService.wishlistCancel(param);
+				
+		return result;
+	}
+	
 	
 //	아래는 컬렉션 관련==================================
 	

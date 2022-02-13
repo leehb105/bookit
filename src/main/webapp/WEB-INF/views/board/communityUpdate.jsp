@@ -13,8 +13,6 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/community.css"/>
 <script>
 
-console.log("${community}");
-
 function goCommunityList(){
 	location.href = "${pageContext.request.contextPath}/board/community.do";
 }
@@ -44,7 +42,7 @@ $(() => {
 <div class="container">
   <form 		
   		name="communityFrm" 
-		action="${pageContext.request.contextPath}/board/communityEnroll?${_csrf.parameterName}=${_csrf.token}" 
+		action="${pageContext.request.contextPath}/updateCommunity.do?${_csrf.parameterName}=${_csrf.token}" 
 		method="post"
 		enctype="multipart/form-data" 
 		onsubmit="return boardValidate();">

@@ -76,7 +76,8 @@ public class AdminController {
 		param.put("limit", limit);
 		
 		
-		List<MemberEntity> memberList = adminService.selectAllMembers(param);
+		List<Member> memberList = adminService.selectAllMembers(param);
+		log.debug("memberList= {}",memberList);
 		
 		model.addAttribute("memberList", memberList);
 		
@@ -294,7 +295,31 @@ public class AdminController {
 	
 	
 	
-	
+	@GetMapping("/updateAuthority")
+	@ResponseBody
+	public String updateAuthority(@RequestParam String userId,@RequestParam String authority) {
+		String msg = "성공!";
+		int result;
+		if(authority.equals("ROLE_USER")) {
+			int userAuthority = adminService.selectAuthority(userId);
+			if(userAuthority == 0) {
+				result = adminService.insertAuthority(userId);
+				
+			}
+			else {
+				result = adminService.deleteAuthority(userId);
+			}
+			
+		}
+		
+		else {
+			result = adminService.insertAuthority_ADMIN(userId);
+			
+		}
+		
+		return msg;
+		
+	}
 	
 	
 	

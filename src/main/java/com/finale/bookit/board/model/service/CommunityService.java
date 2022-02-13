@@ -5,6 +5,7 @@ package com.finale.bookit.board.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.finale.bookit.board.model.vo.Comment;
 import com.finale.bookit.board.model.vo.Community;
 import com.finale.bookit.board.model.vo.CommunityAttachment;
 import com.finale.bookit.board.model.vo.CommunityTest;
@@ -29,5 +30,14 @@ public interface CommunityService {
 	int updateReadCount(int no);
 	
 	int getCommunityNoCurrval();
+	
+	void insertComment(Comment comment) throws Exception;
+	
+	int updateComment(Comment comment) throws Exception;
+	
+	int deleteComment(int no) throws Exception;
 
+	List<Comment> getCommentList(int no);
+	
+	void insertReComment(Comment comment);
 }	

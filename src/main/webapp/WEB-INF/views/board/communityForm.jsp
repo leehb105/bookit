@@ -65,8 +65,12 @@ $(() => {
 		    <span class="input-group-text">첨부파일</span>
 		  </div>
 		  <div class="custom-file">
-		    <input type="file" class="custom-file-input" name="upFiles" id="upFiles" multiple>
-		    <label class="custom-file-label" for="upFiles">파일을 선택하세요</label>
+		    <input type="file" class="custom-file-input" name="upFiles" id="upFiles1" multiple>
+		    <label class="custom-file-label" for="upFiles1">파일을 선택하세요</label>
+		  </div>
+		  		  <div class="custom-file">
+		    <input type="file" class="custom-file-input" name="upFiles" id="upFiles2" multiple>
+		    <label class="custom-file-label" for="upFiles2">파일을 선택하세요</label>
 		  </div>
 		</div>
 		</div>
