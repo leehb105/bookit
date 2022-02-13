@@ -17,36 +17,6 @@
 <link rel="stylesheet" href="${ pageContext.request.contextPath}/resources/css/kakaoMap.css" />
 
 
-<script>
-$(() => {
-	$(memberUpdateFrm).submit((e) => {
-    	// nickname
-    	if(!/^[가-힣|a-z|A-Z]{2,}$/.test($(nickname).val())){
-    		alert("닉네임은 한글 또는 영문으로 2글자 이상 입력해주세요.");
-    		return false;
-    	}
-    	/* // password
-    	if(!/^[a-zA-Z0-9]{8,16}$/.test($(password).val())){
-    		alert("비밀번호는 숫자와 영문 조합으로 8~16자리만 사용 가능합니다.")
-    		return false;
-    	} */
-    	// email
-    	if(!/^[\w]{3,}@[\w]+(\.[\w]+){1,3}$/.test($(email).val())){
-    		alert("올바르지 않은 이메일 형식입니다.")
-    		return false;
-    	}
-    	// phone
-    	if(!/^010[0-9]{8}$/.test($(phone).val())){
-    		alert("유효한 전화번호가 아닙니다.");
-    		return false;
-    	}
-    	return true;
-    });
-});
-
-
-</script>
-
 <jsp:include page="/WEB-INF/views/member/common/sidebar.jsp"/>    
                <div class="col-1"></div>
 	               <div class="col-3">
@@ -98,10 +68,18 @@ $(() => {
 			                    </div>
 			                    <div class="row">
 			                        <div class="col-md-4">
-			                            <label>비밀번호</label>
+			                            <label>현재 비밀번호</label>
 			                        </div>
 			                        <div class="col-md-4">
-			                            <input type="password" name="password" id="password" value="${loginMember.password}" required>
+			                            <input type="password" name="password" id="password" value="" required>
+			                        </div>
+			                    </div>
+			                    <div class="row">
+			                        <div class="col-md-4">
+			                            <label>새 비밀번호</label>
+			                        </div>
+			                        <div class="col-md-4">
+			                            <input type="password" name="newPassword" id="newPassword" value="">
 			                        </div>
 			                    </div>
 			                    <div class="row">
@@ -109,7 +87,7 @@ $(() => {
 			                            <label>비밀번호 확인</label>
 			                        </div>
 			                        <div class="col-md-4">
-			                            <input type="password" name="passwordCheck" id="passwordCheck" value="${loginMember.password}" required>
+			                            <input type="password" name="newPasswordCheck" id="newPasswordCheck" value="">
 			                        </div>
 			                    </div>
 			                    <div class="row">
@@ -192,6 +170,56 @@ $(() => {
 	               </div> 
                </div>          
         </div>
+        
+<script>
+// 현재 비밀번호 일치 여부는 컨트롤러에서 비교.
+$(memberUpdateFrm).submit((e) => {
+	// nickname
+	if(!/^[가-힣|a-z|A-Z]{2,}$/.test($(nickname).val())){
+		alert("닉네임은 한글 또는 영문으로 2글자 이상 입력해주세요.");
+		return false;
+	}
+	// email
+	if(!/^[\w]{3,}@[\w]+(\.[\w]+){1,3}$/.test($(email).val())){
+		alert("올바르지 않은 이메일 형식입니다.")
+		return false;
+	}
+	// phone
+	if(!/^010[0-9]{8}$/.test($(phone).val())){
+		alert("유효한 전화번호가 아닙니다.");
+		return false;
+	}
+	return true;
+});
+// 새로운 비밀번호 유효성 검사. 정보 수정할때마다 필수 요소 아님.
+$("#newPassword").focusout(function() {
+	if(!/^[a-zA-Z0-9]{8,16}$/.test($(newPassword).val())){
+		alert("비밀번호는 숫자와 영문 조합으로 8~16자리만 사용 가능합니다.")
+		return false;
+	}
+	else{
+		alert("사용가능한 비밀번호입니다.")
+	}
+});
+// 비밀번호 일치 여부 확인
+$("#newPasswordCheck").focusout(function() {
+	var newPassword = $("#newPassword").val();
+	var newPasswordCheck = $("#newPasswordCheck").val();
+	
+	if (newPassword == "") {
+		alert("새로운 비밀번호를 입력해주세요.")
+		return false;
+	}
+	else if (newPassword != newPasswordCheck) {
+		alert("비밀번호가 일치하지 않습니다.")
+		return false;
+	}
+	else if (newPassword == newPasswordCheck) {
+		alert("비밀번호가 일치합니다.")
+		return true;
+	}
+});
+</script>
 
 <script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6572b946baab53e064d0fc558f5af389&libraries=services,clusterer,drawing"></script>
