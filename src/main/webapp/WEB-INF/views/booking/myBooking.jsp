@@ -18,11 +18,11 @@
                 <div class="profile-work">
                     <p>나의 거래</p>
                     <hr class="my-2">
-                    <a href="${pageContext.request.contextPath}/booking/myBooking.do"><strong>나의 대여 게시글</strong></a>
+                    <a href="${pageContext.request.contextPath}/booking/myBooking.do?pageNum=1&amout=5"><strong>나의 대여 게시글</strong></a>
                     <br />
-                    <a href="${pageContext.request.contextPath}/booking/lentList.do">나의 대여 예약 관리</a>
+                    <a href="${pageContext.request.contextPath}/booking/lentList.do?pageNum=1&amout=5">나의 대여 예약 관리</a>
                     <br />
-                    <a href="${pageContext.request.contextPath}/booking/borrowedList.do">나의 빌린 도서</a>
+                    <a href="${pageContext.request.contextPath}/booking/borrowedList.do?pageNum=1&amout=5">나의 빌린 도서</a>
                 </div>
             </div>
 
