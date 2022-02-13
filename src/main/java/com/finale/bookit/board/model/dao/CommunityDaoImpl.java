@@ -29,7 +29,7 @@ public class CommunityDaoImpl implements CommunityDao{
 		public List<CommunityAttachment> getAttachmentList(int no) {
 			return session.selectList("community.selectCommunityAttachment", no);
 		}
-
+		
 		@Override
 		public void deleteCommunityContent(int no) {
 			session.update("community.deleteCommunityContent", no);
@@ -82,6 +82,16 @@ public class CommunityDaoImpl implements CommunityDao{
 		@Override
 		public int insertCommunityAttachment(CommunityAttachment attach) {
 			return session.insert("community.insertCommunityAttachment", attach);
+		}
+
+		@Override
+		public int updateReadCount(int no) {
+			return session.update("community.updateReadCount", no);
+		}
+
+		@Override
+		public int getCommunityNoCurrval(){
+			return session.selectOne("community.getCommunityNoCurrval");
 		}
 
 

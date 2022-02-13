@@ -36,4 +36,11 @@ public interface CommunityDao {
 	String writerCheck(int no);
 
 	int insertCommunityAttachment(CommunityAttachment attach);
+	
+	//조회수
+	int updateReadCount(int no);
+	
+	int getCommunityNoCurrval();
+
+
 }

@@ -431,10 +431,16 @@ select * from (select count(*) from member group by extract(day from enroll_date
 
 
 		select
-			*
+            extract(month from ch.charge_date) as month,
+			round(avg(charge_cash),0) as cash
 		from
-			chat_history;
-
+			charge_history ch
+        group by
+            extract(month from ch.charge_date);
+select
+    *
+from
+    charge_history;
 --DROP TRIGGER trig_member;
 --SQL Error [4098] [42000]: ORA-04098 오류 발생시 trigger drop 후에 재생성
 CREATE OR REPLACE TRIGGER trig_member

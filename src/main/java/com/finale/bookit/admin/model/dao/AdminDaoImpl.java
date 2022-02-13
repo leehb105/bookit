@@ -11,10 +11,15 @@ import org.springframework.stereotype.Repository;
 import com.finale.bookit.admin.model.vo.AdminInquire;
 import com.finale.bookit.admin.model.vo.Chart;
 import com.finale.bookit.inquire.model.vo.Inquire;
+import com.finale.bookit.member.model.vo.Member;
+import com.finale.bookit.member.model.vo.MemberEntity;
 import com.finale.bookit.report.model.vo.ReportBoard;
 import com.finale.bookit.report.model.vo.ReportUser;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Repository
+@Slf4j
 public class AdminDaoImpl implements AdminDao {
 
 	@Autowired
@@ -97,6 +102,42 @@ public class AdminDaoImpl implements AdminDao {
 	@Override
 	public int selectTotalReportBoard() {
 		return session.selectOne("admin.selectTotalReportBoard");
+	}
+
+	@Override
+	public List<Chart> selectCashChart() {
+		return session.selectList("admin.selectCashChart");
+	}
+
+	@Override
+	public List<MemberEntity> selectAllMembers(Map<String, Object> param) {
+		int offset = (int) param.get("offset");
+		int limit = (int) param.get("limit");
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return session.selectList("admin.selectAllMembers",null,rowBounds);
+	}
+
+	@Override
+	public int getTotalMember() {
+		// TODO Auto-generated method stub
+		return session.selectOne("admin.getTotalMember");
+	}
+
+	@Override
+	public int deleteYn(Map<String, Object> param) {
+		String boardName = (String) param.get("boardName");
+		log.debug("boardName = {}", boardName);
+		
+		// community, used, request 분기
+		if("community".equals(boardName)) {
+			return session.update("admin.communityDeleteYn", param);
+		}
+		else if("used".equals(boardName)) {
+			return session.update("admin.usedDeleteYn", param);
+		}
+		else {
+			return session.update("admin.requestDeleteYn", param);
+		}
 	}
 
 }

@@ -18,7 +18,8 @@
 	<select id="selectAllCollection" resultType="bookCollection">
 		select
 		    b.*,
-		    m.nickname
+		    m.nickname,
+		    m.profile_image
 		from 
 		    book_collection b left join member m
     		on b.member_id = m.id

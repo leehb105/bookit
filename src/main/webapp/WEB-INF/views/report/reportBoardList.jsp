@@ -6,7 +6,7 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/mypage.css" />
 
-<jsp:include page="/WEB-INF/views/common/header.jsp" />
+<jsp:include page="/WEB-INF/views/member/common/sidebar.jsp"/>
 
 <script>
 	// 게시글 신고 modal에 띄울 내용 담기
@@ -15,13 +15,13 @@
 		
 		$("#reportBoardDetailModal").on('show.bs.modal', function(event) {
 			var reporter = $(event.relatedTarget).data('reporter');
-			var boardName = $(event.relatedTarget).data('boardname');
+			var boardNameKor = $(event.relatedTarget).data('boardnamekor');
 			var boardNo = $(event.relatedTarget).data('boardno');
 			var reason = $(event.relatedTarget).data('reason');
 			var detail = $(event.relatedTarget).data('detail');
 			
 			$(".modal-body #reporter").val(reporter);
-			$(".modal-body #boardName").val(boardName);
+			$(".modal-body #boardNameKor").val(boardNameKor);
 			$(".modal-body #boardNo").val(boardNo);
 			$(".modal-body #reason").val(reason);
 			$(".modal-body #detail").val(detail);
@@ -65,26 +65,7 @@ textarea {
 	resize: none;
 }
 </style>
-
-<div class="container member-profile">
-	<div class="container mb-100 mt-100">
-		<div class="row mb-50">
-			<div class="col-2">
-				<div class="profile-work">
-					<a href="${pageContext.request.contextPath}/member/mypageMain.do"><p>마이페이지HOME</p></a>
-					<a href="${pageContext.request.contextPath}/member/editProfile.do">정보수정</a><br />
-					<p>북토리 관리</p>
-					<a href="">결제 내역</a><br /> <a href="">거래 내역</a><br /> <a href="">북토리충전</a>
-					<p>나의 게시글</p>
-					<a href="">게시글 작성목록</a><br /> <a href="">리뷰 작성목록</a><br />
-					<p>1:1 문의</p>
-					<a href="${pageContext.request.contextPath}/inquire/inquireForm.do">1:1문의하기</a><br />
-					<a href="${pageContext.request.contextPath}/inquire/inquireList.do">1:1문의내역</a><br />
-					<p>신고내역</p>
-					<a href="${pageContext.request.contextPath}/report/reportUserList.do">사용자 신고목록</a><br />
-					<a href="${pageContext.request.contextPath}/report/reportBoardList.do">게시글 신고목록</a><br />
-				</div>
-			</div>
+<!-- include header.jsp / sidebar.jsp -->
 			<div class="col-lg-8 col-md-10 ml-auto mr-auto">
 				<div class="section-heading text-center">
 					<h5>게시글 신고 목록</h5>
@@ -108,14 +89,20 @@ textarea {
 								<tr class="selectReport">
 									<td>${reportBoardList.no}</td>
 									<td class="btn-link" data-no="${reportBoardList.no}" data-boardname="${reportBoardList.boardName}">
-										${reportBoardList.boardName}-${reportBoardList.boardNo}
+										<c:if test="${reportBoardList.boardName eq 'community'}">커뮤니티-${reportBoardList.boardNo}</c:if>
+										<c:if test="${reportBoardList.boardName eq 'used'}">중고거래-${reportBoardList.boardNo}</c:if>
+										<c:if test="${reportBoardList.boardName eq 'request'}">도서요청-${reportBoardList.boardNo}</c:if>
 									</td>
 									<td>${reportBoardList.reporter}</td>
 									<td data-toggle="modal"
 										data-target="#reportBoardDetailModal"
 										data-no="${reportBoardList.no}"
 										data-reporter="${reportBoardList.reporter}"
-										data-boardname="${reportBoardList.boardName}"
+										data-boardnamekor="<c:choose>
+<c:when test="${reportBoardList.boardName eq 'community'}">커뮤니티</c:when>
+<c:when test="${reportBoardList.boardName eq 'used'}">중고거래</c:when>
+<c:when test="${reportBoardList.boardName eq 'request'}">도서요청</c:when>
+</c:choose>"
 										data-boardno="${reportBoardList.boardNo}"
 										data-reason="${reportBoardList.reason}"
 										data-detail="${reportBoardList.detail}">${reportBoardList.reason}
@@ -141,12 +128,12 @@ textarea {
 					
 					<!-- 게시글 신고 상세보기 Modal -->
 					<div class="modal fade" id="reportBoardDetailModal" tabindex="-1"
-						role="dialog" aria-labelledby="#reportBoardDetailModalLabel"
+						role="dialog" aria-labelledby="reportBoardDetailModalLabel"
 						aria-hidden="true">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h5 class="modal-title" id="#reportBoardDetailModalLabel">신고 상세내용</h5>
+									<h5 class="modal-title" id="reportBoardDetailModalLabel">신고 상세내용</h5>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">×</span>
 									</button>
@@ -158,7 +145,7 @@ textarea {
 									</div>
 									<div>
 										<p>게시판</p>
-										<input type="text" id="boardName" value="" />
+										<input type="text" id="boardNameKor" value="" />
 									</div>
 									<div>
 										<p>게시글NO</p>
@@ -181,7 +168,6 @@ textarea {
 					</div>
 				</div>
 			</div>
-		</div>
 	</div>
 </div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

@@ -1,9 +1,27 @@
 @charset "UTF-8";
 
 
+.admin_container{
+	display: flex;
+}
+
+
+.memberList_container{
+	margin-right: 200px;
+	
+}
+
+
+
 canvas#myChart {
 	width: 800px !important;
 }
 .container-chart {
 	display: inline-block;
+}
+
+#chart-category-second{
+	left: 370px;
+    position: absolute;
+    top: 160px;
 }

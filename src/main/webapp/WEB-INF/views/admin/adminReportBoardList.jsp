@@ -1,4 +1,5 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@page import="org.apache.taglibs.standard.tag.common.xml.WhenTag"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -15,7 +16,9 @@
 <script>
 	// 게시글 신고 처리 상태 변경 함수(condition값, no값 넘겨주기)
 	function reportBoardUpdateCondition(condition) {
-		var no = $("input[id=no1]").val();
+		var no = $("input[id=no]").val();
+		console.log(no);
+		console.log(condition);
 		let f = document.createElement('form');
 
 		let obj1 = document.createElement('input');
@@ -48,6 +51,7 @@
 		$("#reportBoardDetailModal").on('show.bs.modal', function(event) {
 			var reporter = $(event.relatedTarget).data('reporter');
 			var boardName = $(event.relatedTarget).data('boardname');
+			var boardNameKor = $(event.relatedTarget).data('boardnamekor');
 			var boardNo = $(event.relatedTarget).data('boardno');
 			var reason = $(event.relatedTarget).data('reason');
 			var detail = $(event.relatedTarget).data('detail');
@@ -55,22 +59,31 @@
 			
 			$(".modal-body #reporter").val(reporter);
 			$(".modal-body #boardName").val(boardName);
+			$(".modal-body #boardNameKor").val(boardNameKor);
 			$(".modal-body #boardNo").val(boardNo);
 			$(".modal-body #reason").val(reason);
 			$(".modal-body #detail").val(detail);
-			$(".modal-body #no1").val(no);
+			$(".modal-body #no").val(no);
 		});
 	});
 	
-	// 회원 삭제
-	function enableUser(){
-		var reportee = $("input[id=reportee]").val();
-		let f = document.createElement('form:form');
+	// 게시글 열람 불가 (delete_yn = 'Y')
+	function deleteYn(){
+		var boardNo = $("input[id=boardNo]").val();
+		var boardName = $("input[id=boardName]").val();
+		console.log(boardNo);
+		console.log(boardName);
+		let f = document.createElement('form');
 
 		let obj1 = document.createElement('input');
 		obj1.setAttribute('type', 'hidden');
-		obj1.setAttribute('name', 'reportee');
-		obj1.setAttribute('value', reportee);
+		obj1.setAttribute('name', 'boardNo');
+		obj1.setAttribute('value', boardNo);
+		
+		let obj2 = document.createElement('input');
+		obj2.setAttribute('type', 'hidden');
+		obj2.setAttribute('name', 'boardName');
+		obj2.setAttribute('value', boardName);
 		
 		csrf = document.createElement('input');
 		csrf.setAttribute('type', 'hidden');
@@ -78,9 +91,10 @@
 		csrf.setAttribute('value', '${_csrf.token}');
 
 		f.appendChild(obj1);
+		f.appendChild(obj2);
 		f.appendChild(csrf);
 		f.setAttribute('method', 'post');
-		f.setAttribute('action', '${pageContext.request.contextPath}/admin/enableUser.do');
+		f.setAttribute('action', '${pageContext.request.contextPath}/admin/deleteYn.do');
 		document.body.appendChild(f);
 		f.submit();
 	}
@@ -157,13 +171,20 @@ textarea {
 								<td>${reportBoardList.no}</td>
 								<td>${reportBoardList.reporter}</td>
 								<td class="btn-link" data-no="${reportBoardList.no}" data-boardname="${reportBoardList.boardName}">
-									${reportBoardList.boardName}-${reportBoardList.boardNo}
+									<c:if test="${reportBoardList.boardName eq 'community'}">커뮤니티-${reportBoardList.boardNo}</c:if>
+									<c:if test="${reportBoardList.boardName eq 'used'}">중고거래-${reportBoardList.boardNo}</c:if>
+									<c:if test="${reportBoardList.boardName eq 'request'}">도서요청-${reportBoardList.boardNo}</c:if>
 								</td>
 								<td data-toggle="modal"
 									data-target="#reportBoardDetailModal"
 									data-no="${reportBoardList.no}"
 									data-reporter="${reportBoardList.reporter}"
 									data-boardname="${reportBoardList.boardName}"
+									data-boardnamekor="<c:choose>
+<c:when test="${reportBoardList.boardName eq 'community'}">커뮤니티</c:when>
+<c:when test="${reportBoardList.boardName eq 'used'}">중고거래</c:when>
+<c:when test="${reportBoardList.boardName eq 'request'}">도서요청</c:when>
+</c:choose>"
 									data-boardno="${reportBoardList.boardNo}"
 									data-reason="${reportBoardList.reason}"
 									data-detail="${reportBoardList.detail}">${reportBoardList.reason}
@@ -184,12 +205,12 @@ textarea {
 				
 				<!-- 게시글 신고 상세보기 Modal -->
 				<div class="modal fade" id="reportBoardDetailModal" tabindex="-1"
-					role="dialog" aria-labelledby="#reportBoardDetailModalLabel"
+					role="dialog" aria-labelledby="reportBoardDetailModalLabel"
 					aria-hidden="true">
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h5 class="modal-title" id="#reportBoardDetailModalLabel">신고 상세내용</h5>
+								<h5 class="modal-title" id="reportBoardDetailModalLabel">신고 상세내용</h5>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<span aria-hidden="true">×</span>
 								</button>
@@ -201,7 +222,8 @@ textarea {
 								</div>
 								<div>
 									<p>게시판</p>
-									<input type="text" id="boardName" value="" />
+									<input type="text" id="boardNameKor" value="" />
+									<input type="hidden" id="boardName" value="" />
 								</div>
 								<div>
 									<p>게시글NO</p>
@@ -215,13 +237,13 @@ textarea {
 									<p style="transform: translate(0px, -30px);">상세내용</p>
 										<textarea id="detail" cols="30" onkeyup="adjustHeight();"></textarea>
 								</div>
-								<input type="hidden" id="no1" value="" />
+								<input type="hidden" id="no" value="" />
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 								<button type="button" name="success" class="btn btn-success" onclick="reportBoardUpdateCondition(1);">승인</button>
 								<button type="button" name="danger" class="btn btn-danger" onclick="reportBoardUpdateCondition(2);">반려</button>
-								<button type="button" name="danger" class="btn btn-info" onclick="enableUser();">회원정지</button>
+								<button type="button" name="danger" class="btn btn-info" onclick="deleteYn();">게시글 차단</button>
 							</div>
 						</div>
 					</div>

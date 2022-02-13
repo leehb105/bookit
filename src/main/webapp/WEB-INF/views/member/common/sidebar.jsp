@@ -24,7 +24,8 @@
 					<a href="${pageContext.request.contextPath}/inquire/inquireForm.do">1:1 문의하기</a><br />
 					<a href="${pageContext.request.contextPath}/inquire/inquireList.do">1:1 문의내역</a><br />
 					<p>신고내역</p>
-					<a href="">나의 신고목록</a><br />
+					<a href="${pageContext.request.contextPath}/report/reportUserList.do">사용자 신고목록</a><br />
+					<a href="${pageContext.request.contextPath}/report/reportBoardList.do">게시글 신고목록</a><br />
                     <button type = "button" value = ${loginMember.id} class = "chat">채팅내역</button>
 				</div>
 			</div>

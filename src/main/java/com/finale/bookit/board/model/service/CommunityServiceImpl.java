@@ -35,6 +35,7 @@ public class CommunityServiceImpl implements CommunityService {
 		// 게시물 기본 정보
 		Map<String, Object> communityMap = communityDao.selectCommunityContent(no);
 		
+		community.setCommunityNo(Integer.parseInt(communityMap.get("communityNo").toString()));
 	    community.setCategory(communityMap.get("category").toString());
 	    community.setTitle(communityMap.get("title").toString());
 	    community.setReadCount(Integer.parseInt(communityMap.get("readCount").toString()));
@@ -125,17 +126,8 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
-	public void deleteCommunityContent(int no, String memberId) throws Exception {
-		String writer = communityDao.writerCheck(no);
-		
-		if(memberId.equals(writer)) {
+	public void deleteCommunityContent(int no, String memberId ) throws Exception {
 			communityDao.deleteCommunityContent(no);
-		}else {
-			throw new Exception("Unauthorized!");
-		}
-		
-	
-		
 	}
 
 	@Override
@@ -149,8 +141,6 @@ public class CommunityServiceImpl implements CommunityService {
 		}else {
 			throw new Exception("Unauthorized!");
 		}
-		
-		
 	}
 
 	@Override
@@ -164,19 +154,27 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
-	public int insertCommunity(CommunityTest communityTest) {
-		int result = communityDao.insertCommunity(communityTest);
-		log.debug("communityNo = {}", communityTest.getCommunityNo());
+	public void insertCommunity(CommunityTest communityTest) {
+		// 커뮤니티 테이블의 pk가 파일 테이블 커뮤니티 넘버의 부모로서, 
+		// 커뮤니티 테이블의 데이터가 먼저 만들어져야한다.
+		
+		// 1. 커뮤니티 테이블에 데이터 인서트 
+		 communityDao.insertCommunity(communityTest);
+		
+		// 2. 업로드된 커뮤니티 넘버 조회 (currval이용)
+		 int communityResult = communityDao.getCommunityNoCurrval();
+		 log.info("communityResult {}", communityResult); 
+		 
 		List<CommunityAttachment> attachments = communityTest.getFiles();
+		
 		if(attachments != null) {
 			for(CommunityAttachment attach : attachments) {
-				// fk컬럼 boardNo값 설정
-				attach.setCommunityNo(communityTest.getCommunityNo());
-				result = insertCommunityAttachment(attach);
+				// 3. 리턴값으로 받은 커뮤니티 넘버 할당해주기
+				attach.setCommunityNo(communityResult);
+				// 4. 파일 테이블에 데이터 인서트
+				insertCommunityAttachment(attach);
 			}
 		}
-		
-		return result; 
 	
 	}
 	
@@ -188,5 +186,16 @@ public class CommunityServiceImpl implements CommunityService {
 	public CommunityAttachment selectOneCommunityAttachment(int no) {
 		return communityDao.selectOneCommunityAttachment(no);
 	}
+
+	@Override
+	public int updateReadCount(int no) {
+		return communityDao.updateReadCount(no);
+	}
+
+	@Override
+	public int getCommunityNoCurrval() {
+		return communityDao.getCommunityNoCurrval();
+	}
+
 
 }

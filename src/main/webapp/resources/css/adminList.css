@@ -1,0 +1,36 @@
+@charset "UTF-8";
+.admin_container{
+	display: flex;
+}
+
+.member-profile {
+	width: 150px;
+}
+table{
+	margin-top: 20px;
+	margin-left: 200px;
+	
+	
+}
+.memberList_container{
+	margin-right: 200px;
+	
+}
+.admin_container nav{
+	
+	margin-left: 250px;
+	margin-bottom: 50px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

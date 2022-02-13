@@ -16,45 +16,6 @@
 		update report_board set condition = #{condition} where no = #{no}
 	</update>
 	
-	<select id="selectChart" resultMap="chartMap">
-		select  
-			extract(month from m.enroll_date) as md
-			,count(*) 
-		from 
-			member m 
-		where 
-			extract(month from m.enroll_date) is not null 
-		group by 
-			extract(month from m.enroll_date) 
-		order by
-			extract(month from m.enroll_date) asc
-	
-	</select>
-	
-	
-	<select id="selectChartDay" resultMap="chartMap">
-		select 
-			* 
-		from 
-			(select 
-				extract(day from enroll_date) as md,count(*) 
-			from 
-				member 
-			where 
-				extract(month from enroll_date) = #{month} 
-			group by 
-				extract(day from enroll_date))
-			order by 
-				md asc
-	
-	</select>
-	
-	<resultMap type="chart" id="chartMap">
-		<result column="md" property="md"/>
-		<result column="COUNT(*)" property="count"/>
-	</resultMap>
-  
-
 	<select id="selectAllInquire" resultMap="inquireMap">
 		select
 		    i.*,
@@ -113,6 +74,111 @@
 	<select id="selectTotalReportBoard" resultType="_int">
 		select count(*) from report_board
 	</select>
+	
+	<select id="getTotalMember" resultType="_int">
+		select
+			count(*)
+		from
+			member
+	</select>
+	
+	
+	<select id="selectAllMembers" resultMap="member">
+		select
+		    *
+		from
+		    member m left join authority a
+		    on m.id = a.member_id
+	</select>
+	
+	<resultMap type="memberentity" id="member">
+		<id column="id" property="id"/>
+		<result column="password" property="password"/>
+		<result column="email" property="email"/>
+		<result column="nickname" property="nickname"/>
+		<result column="name" property="name"/>
+		<result column="phone" property="phone"/>
+		<result column="enabled" property="enabled"/>
+		<result column="enroll_date" property="enrollDate"/>
+		<result column="report_yn" property="reportYn"/>
+		<result column="cash" property="cash"/>
+		<result column="profle_image" property="profileImage"/>
+		<result column="authority" property="authority"/>
+	</resultMap>
+	
+	<update id="communityDeleteYn">
+		update community set delete_yn = 'Y' where community_no = #{boardNo}
+	</update>
+	
+	<update id="usedDeleteYn">
+		update used_board set delete_yn = 'Y' where used_board_no = #{boardNo}
+	</update>
+	
+	<update id="requestDeleteYn">
+		update request_board set delete_yn = 'Y' where request_board_no = #{boardNo}
+	</update>
+	
+	<!--====================================== 관리자 통계부분=========================================================================================== -->
+		<select id="selectChart" resultMap="chartMap">
+		select  
+			extract(month from m.enroll_date) as md
+			,count(*) 
+		from 
+			member m 
+		where 
+			extract(month from m.enroll_date) is not null 
+		group by 
+			extract(month from m.enroll_date) 
+		order by
+			extract(month from m.enroll_date) asc
+	
+	</select>
+	
+	
+	<select id="selectChartDay" resultMap="chartMap">
+		select 
+			* 
+		from 
+			(select 
+				extract(day from enroll_date) as md,count(*) 
+			from 
+				member 
+			where 
+				extract(month from enroll_date) = #{month} 
+			group by 
+				extract(day from enroll_date))
+			order by 
+				md asc
+	
+	</select>
+	
+	
+	
+	
+	<!-- 북토리 충전 차트 -->
+	<select id="selectCashChart" resultMap="cashChartMap">
+
+		select
+            extract(month from ch.charge_date) as month,
+			round(avg(charge_cash),0) as cash
+		from
+			charge_history ch
+        group by
+            extract(month from ch.charge_date)
+	
+	</select>
+	
+	
+	<resultMap type="chart" id="chartMap">
+		<result column="md" property="md"/>
+		<result column="COUNT(*)" property="count"/>
+	</resultMap>
+  
+	<resultMap type="chart" id="cashChartMap">
+		<result column="month" property="md"/>
+		<result column="cash" property="count"/>
+	</resultMap>
+	
 </mapper>
 
 

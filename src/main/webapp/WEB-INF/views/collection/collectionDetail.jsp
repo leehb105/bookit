@@ -106,7 +106,7 @@ function openSearchWindow(){
     window.name = "parentForm";
 
     let url = `${pageContext.request.contextPath}/booking/bookSearch.do`;
-    var option = "width=570, height=350, resizable = no, scrollbars = no";
+    var option = "width=1000, height=700, resizable = no, scrollbars = no";
     
     //새탭으로 열기
     childWin = window.open('', "result", option);
@@ -129,7 +129,7 @@ window.getJson = function(){
         document.getElementById('title').innerHTML = book.title;
         document.getElementById('author').innerHTML = book.author;
         document.getElementById('publisher').innerHTML = book.publisher;
-        document.getElementById('isbn').value = book.isbn;
+        document.getElementById('isbn').value = book.isbn13;
     }
 }
 
@@ -155,9 +155,10 @@ function checkAllElement(obj){
 }
 
 function insertBook(){
-	var collectionNo = $("input[id=bookCollectionNo]").val();
+	var collectionNo = $("input[id=no]").val();
 	var isbn = $("input[id=isbn]").val();
-	
+	console.log(collectionNo);
+	console.log(isbn);
 	let f = document.createElement('form');
 	
 	let obj1 = document.createElement('input');
@@ -221,6 +222,7 @@ function insertBook(){
 		                    <input type="hidden" id="nickname" value="${collectionDetailList.nickname}"/>
 		                    <input type="hidden" id="collectionName" value="${collectionDetailList.collectionName}"/>
 		                   	<input type="hidden" id="bookCollectionNo" value="${collectionDetailList.bookCollectionNo}"/>
+		                   	<input type="hidden" id="no" value="${collectionDetailList.no}"/>
 		                   	<c:if test="${collectionDetailList.listNo ne null}">
 		                   		<c:if test="${collectionDetailList.memberId eq loginMember.id}">
 			                		<input type="checkbox" id="checkListNo" value="${collectionDetailList.listNo}"/>

@@ -5,7 +5,7 @@
 <mapper namespace="community">
 	<select id="selectCommunityContent" parameterType="Integer" resultMap="communityMap">
 	select 
-	c.category, c.title, TO_CHAR(c.reg_date, 'YYYY-MM-DD  HH24:MI') reg_date , c.read_count, c.like_count, c.member_id, c.content, 
+	c.community_no, c.category, c.title, TO_CHAR(c.reg_date, 'YYYY-MM-DD  HH24:MI') reg_date , c.read_count, c.like_count, c.member_id, c.content, 
 	(select count(*) from community_comment where community_no = c.community_no) comment_count, (select m.nickname from member m where c.member_id = m.id) nickname
 	from community  c
 	where c.community_no = #{no}
@@ -35,15 +35,19 @@
 	-->
 	
 	<select id="selectCommunityComment" parameterType="Integer" resultType="comment">
-		select c.content, c.reg_date, c.writer, m.nickname, c.is_parent, c.no 
+		select c.content, c.reg_date, c.writer, m.nickname, c.is_parent, c.no,  c.comment_level
 		from community_comment c join member m on m.id = c.writer
-		where c.delete_yn = 'N' 
-		and c.community_no = #{no}
+		where c.community_no = #{no}
 		and c.comment_level = 1 
 		order by c.reg_date
 	</select>
 	<select id="selectCommunityReComment" parameterType="Integer" resultType="comment">
-		select content, reg_date, writer, comment_ref from community_comment where delete_yn = 'N' and comment_ref = #{ref} and comment_level = 2 order by reg_date
+		select c.no, c.content, c.reg_date, c.writer, m.nickname, c.comment_ref, c.comment_level
+		from community_comment c join member m on m.id = c.writer 
+		where delete_yn = 'N' 
+		and comment_ref = #{ref} 
+		and comment_level = 2 
+		order by reg_date
 	</select>
 	
 	<!--  
@@ -59,10 +63,15 @@
 	</resultMap>
 	-->
 	
-	<select id="selectCommunityAttachment" parameterType="Integer" resultType="communityAttachment">
-		select no, original_filename, renamed_filename, community_no from community_attachment where community_no = #{no} order by reg_date
+	<select id="selectOneCommunityAttachment" parameterType="Integer" resultType="communityAttachment">
+		select no, original_filename, renamed_filename, community_no from community_attachment where no = #{no} 
 	</select>
-	
+
+	<select id="selectCommunityAttachment" parameterType="Integer" resultType="communityAttachment">
+		select no, original_filename, renamed_filename, community_no from community_attachment where community_no = #{no} order by reg_date 
+	</select>
+
+
 	<update id="deleteCommunityContent" parameterType="Integer">
 		update community set delete_yn = 'Y' where community_no = #{communiy_no}
 	</update>
@@ -73,7 +82,7 @@
 	
 	<select id="getCommunityList" resultType="community">
 		select community_no, category, title, (select m.nickname from member m where c.member_id = m.id) nickname, 
-		reg_date, read_count, like_count from community c order by reg_date
+		reg_date, read_count, like_count from community c where delete_yn = 'N' order by reg_date
 	</select>
 	
 	<select id="getTotalCommunityContent" resultType="Integer">
@@ -102,6 +111,10 @@
 			#{renamedFilename}
 		)
 	</insert>
+	<select id="getCommunityNoCurrval" resultType="Integer">
+	select SEQ_COMMUNITY_COMMUNITY_NO.currval from dual
+	</select>
+	
 	
 	<select id="writerCheck" resultType="String" parameterType="Integer">
 		select member_id from community where no=#{no} 
@@ -109,7 +122,7 @@
 	
 	
 	<!-- 댓글 -->
-	<insert id="insertComment">
+	<insert id="insertComment" parameterType="map">
 		insert into community_comment (community_no, no, content, writer) values(
 			#{communityNo},
 			SEQ_COMMUNITY_COMMUNITY_NO.nextval,
@@ -127,5 +140,9 @@
 		update community_comment set content = #{content}, reg_date = sysdate where no = #{no} 
 	</update>
 	
+	<!-- 조회수 -->
+	<update id="updateReadCount">
+		update community set read_count = read_count + 1 where community_no = #{no}
+	</update>
 </mapper>
 

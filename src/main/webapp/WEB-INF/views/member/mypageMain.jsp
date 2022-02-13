@@ -23,10 +23,7 @@
               <div class="col-3">
                   <div class="profile-img">
                   	<br /><br />
-                      <img src="${pageContext.request.contextPath}/resources/img/default_profile.png" alt=""/>
-                      <!-- <div class="file btn btn-lg">
-                         	사진 변경<input type="file" name="file"/>
-                      </div> -->
+                      <img src="${pageContext.request.contextPath}/resources/img/profile/${loginMember.profileImage}" onerror="this.src='${pageContext.request.contextPath}/resources/img/profile/default_profile.png'" alt=""/>
                   </div>
               </div>
               <div class="col-4">

@@ -243,11 +243,12 @@ function collectionInsert(){
 	                <div class="col-12 col-md-6 col-lg-3" style="cursor: pointer;">
 	            		<input type="checkbox" name="collectionNo" id="collectionNo" value="${collectionList.no}"/>
 	                    <div class="single-post-area mb-100 wow fadeInUp text-center" data-wow-delay="50ms">
-							<a href="${pageContext.request.contextPath}/collection/collectionDetail.do?no=${collectionList.no}" class="post-thumbnail">
-								<img class="w-50" 
-									src=""
-									onerror="this.src='${pageContext.request.contextPath}/resources/img/default_profile.png'">
-							</a>
+							<div class="w-50 mb-3" style="height: 165px; display: inline-block; writing-mode: vertical-lr;">
+								<a href="${pageContext.request.contextPath}/collection/collectionDetail.do?no=${collectionList.no}">
+									<img src="${pageContext.request.contextPath}/resources/img/profile/${collectionList.profileImage}"
+									onerror="this.src='${pageContext.request.contextPath}/resources/img/profile/default_profile.png'">
+								</a>
+							</div>
 							<h5 class="post-title">${collectionList.nickname}님의</h5>
 							<h6>${collectionList.collectionName}</h6>
 						</div>
