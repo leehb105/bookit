@@ -28,6 +28,7 @@ public class Booking implements Serializable{
     private Date regDate;
     
     private BookInfo bookInfo;
+    private List<BookInfo> bookInfos;
     private List<BookReservation> bookReservations;
     private Member member;
     private Criteria cri;

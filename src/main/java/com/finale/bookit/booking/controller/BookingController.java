@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -90,10 +92,19 @@ public class BookingController {
     	String newDate = BookitUtils.getFormatDate(booking.getRegDate());
     	log.debug("booking = {} ", booking);
     	
+    	List<String> startDateList = new ArrayList<String>();
+    	List<String> endDateList = new ArrayList<String>();
+    	for(int i = 0; i < booking.getBookReservations().size(); i++) {
+    		startDateList.add(BookitUtils.getFormatDateToString(booking.getBookReservations().get(i).getStartDate()));
+    		endDateList.add(BookitUtils.getFormatDateToString(booking.getBookReservations().get(i).getEndDate()));
+    	}
+    	log.debug("startDateList = {}", startDateList);
     	int wishlistCount = bookingService.selectWishCount(param);
     	
     	model.addAttribute("booking", booking);
     	model.addAttribute("newDate", newDate);
+    	model.addAttribute("startDateList", startDateList);
+    	model.addAttribute("endDateList", endDateList);
     	model.addAttribute("wishlistCount", wishlistCount);
     }
     
@@ -207,7 +218,9 @@ public class BookingController {
     	
     	List<Booking> list = bookingService.selectLentList(param);
     	log.debug("list = {}", list);
-    	log.debug("테스트데이터 = {}", list.get(1).getBookReservations().get(1));
+
+//    	log.debug("getBookInfos = {}", list.get(1).getBookInfos());
+//    	log.debug("테스트데이터 = {}", list.get(1).getBookReservations().get(1));
     	
     	int total = bookingService.selectTotalMyLentBookingCount(param);
     	Paging page = new Paging(cri, total);
