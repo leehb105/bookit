@@ -50,6 +50,20 @@ public class ReportDaoImpl implements ReportDao {
 	public ReportUser selectOneReportUser(int no) {
 		return session.selectOne("report.selectOneReportUser", no);
 	}
+
+	@Override
+	public int insertReportBoard(Map<String, Object> param) {
+		String boardName = (String) param.get("boardName");
+		if("community".equals(boardName)) {
+			return session.insert("report.insertReportCommunity", param);			
+		}
+		else if("used".equals(boardName)) {
+			return session.insert("report.insertReportUsed", param);
+		}
+		else {
+			return session.insert("report.insertReportRequest", param);
+		}
+	}
 	
 	
 }

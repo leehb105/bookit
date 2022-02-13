@@ -205,12 +205,12 @@ textarea {
 				
 				<!-- 게시글 신고 상세보기 Modal -->
 				<div class="modal fade" id="reportBoardDetailModal" tabindex="-1"
-					role="dialog" aria-labelledby="#reportBoardDetailModalLabel"
+					role="dialog" aria-labelledby="reportBoardDetailModalLabel"
 					aria-hidden="true">
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h5 class="modal-title" id="#reportBoardDetailModalLabel">신고 상세내용</h5>
+								<h5 class="modal-title" id="reportBoardDetailModalLabel">신고 상세내용</h5>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<span aria-hidden="true">×</span>
 								</button>
