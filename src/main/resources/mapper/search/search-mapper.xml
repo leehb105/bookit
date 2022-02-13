@@ -22,6 +22,8 @@
 				    BOOK_REVIEW b join member m ON
 				    b.writer = m.id
 				WHERE
+					b.isbn13 = #{isbn}
+					AND
 					b.DELETE_YN = 'N'
 				ORDER BY
 					b.reg_date DESC
@@ -54,6 +56,8 @@
 		from
 		    BOOK_REVIEW
 		WHERE
+			isbn13 = #{isbn}
+			AND
 			DELETE_YN = 'N'
 	</select>
 
