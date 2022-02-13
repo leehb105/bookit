@@ -17,8 +17,6 @@
                        <a href="#"><p>회원목록</p></a>
                        <p>통계</p>	
  				 	   <a href="${pageContext.request.contextPath}/admin/chart/chart.do">-가입 회원</a><br />
- 				 	   <a href="${pageContext.request.contextPath}/admin/chart/addressChart.do">-회원 주소</a><br />
- 				 	   <a href="#">-리뷰 작성</a><br />
  				 	   <a href="${pageContext.request.contextPath}/admin/chart/cashChart.do">-북토리 충전</a>
                    </div>
                </div>
