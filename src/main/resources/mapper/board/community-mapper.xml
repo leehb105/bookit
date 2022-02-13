@@ -162,7 +162,21 @@
   </update>
 
 	<!-- 검색 -->
-	
+	<select id="searchCommuntiy" parameterType="map" resultType="community">
+	select * from community c 
+	join member m on m.id = c.member_id
+	where c.delete_yn = 'N'
+	<choose>
+	<when test="category == 'writer'">
+	and m.nickname like '%' ||  #{keyword} || '%'
+	</when>
+	<otherwise>
+	and (c.title like '%' ||  #{keyword} || '%') 
+	or (c.content like '%' ||  #{keyword} || '%')
+	</otherwise>
+	</choose>
+	order by c.reg_date
+	</select>
 
 </mapper>
 

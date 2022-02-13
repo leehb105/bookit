@@ -25,6 +25,7 @@ public class Comment implements Serializable{
 	private String nickname;
 	private String isParent;
 	private int commentCount;
+	private int communityNo;
 	private List<Comment> reComments;
 	
 }

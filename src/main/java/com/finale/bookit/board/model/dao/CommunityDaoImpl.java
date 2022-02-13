@@ -119,5 +119,11 @@ public class CommunityDaoImpl implements CommunityDao{
 		session.insert("community.insertReComment", comment);
 	}
 
+	@Override
+	public List<Community> searchCommuntiy(Map<String, Object> map) {
+		
+		return session.selectList("community.searchCommuntiy", map);
+	}
+
 		}
 
