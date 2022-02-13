@@ -31,5 +31,7 @@ public interface BookingService {
 	public int selectTotalMyBookingCount(Map<String, Object> param);
 
 	public int selectTotalMyLentBookingCount(Map<String, Object> param);
+
+	public int selectWishCount(Map<String, Object> param);
 	
 }

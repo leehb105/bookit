@@ -270,4 +270,15 @@
 		ORDER BY
 			REG_DATE DESC
 	</select>
+	
+	<select id="selectWishCount" resultType="_int">
+		select 
+			count(*)
+		from
+		    wishlist w left join booking b
+		    on w.board_no = b.board_no
+		where 
+		    w.board_no = #{bno}
+		    and w.member_id = #{id}
+	</select>
 </mapper>
