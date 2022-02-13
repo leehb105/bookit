@@ -10,7 +10,7 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/mypage.css" />
 
-<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<jsp:include page="/WEB-INF/views/member/common/adminSidebar.jsp"/>
 
 <script>
 $(() => {
@@ -27,18 +27,6 @@ $(() => {
 	background: #f7fff6;
 }
 </style>
-
-<div class="container member-profile">
-	<div class="container mb-100">
-    	<div class="row mb-50">
-			<div class="col-2">
-				<div class="profile-work text-center">
-					<a href="#"><p>회원관리</p></a><br />
-					<a href="${pageContext.request.contextPath}/admin/adminReportList.do"><p>신고접수</p></a><br />
-					<a href="#"><p>회원통계</p></a><br />
-					<a href="${pageContext.request.contextPath}/admin/adminInquireList.do"><p>회원문의</p></a>
-				</div>
-			</div>
     	
             <div class="col-lg-9 col-md-10 ml-auto mr-auto">
 	    		<div class="section-heading text-center">
