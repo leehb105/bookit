@@ -12,6 +12,8 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/community.css"/>
 <script>
+
+
 function goCommunityList(){
 	location.href = "${pageContext.request.contextPath}/board/community.do";
 }
@@ -35,6 +37,7 @@ $(() => {
 			$label.html("파일을 선택하세요.");
 	});
 });
+
 </script>
 <div class="container">
   <form 		

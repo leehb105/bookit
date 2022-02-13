@@ -40,4 +40,9 @@ public interface CommunityService {
 	List<Comment> getCommentList(int no);
 	
 	void insertReComment(Comment comment);
+
+	List<Community> searchCommuntiy(Map<String, Object> map);
+	
 }	
+
+

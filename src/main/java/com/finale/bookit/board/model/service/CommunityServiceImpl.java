@@ -263,5 +263,11 @@ public class CommunityServiceImpl implements CommunityService {
 		
 	}
 
+	@Override
+	public List<Community> searchCommuntiy(Map<String, Object> map) {
+		
+		return communityDao.searchCommuntiy(map);
+	}
+
 
 }
