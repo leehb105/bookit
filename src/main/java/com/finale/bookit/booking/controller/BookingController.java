@@ -3,9 +3,9 @@ package com.finale.bookit.booking.controller;
 import com.finale.bookit.booking.model.service.BookingService;
 import com.finale.bookit.booking.model.vo.BookInfo;
 import com.finale.bookit.booking.model.vo.Booking;
-import com.finale.bookit.booking.model.vo.Criteria;
-import com.finale.bookit.booking.model.vo.Paging;
 import com.finale.bookit.common.util.BookitUtils;
+import com.finale.bookit.common.util.Criteria;
+import com.finale.bookit.common.util.Paging;
 import com.finale.bookit.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;

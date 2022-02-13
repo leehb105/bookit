@@ -65,8 +65,8 @@
         <!-- Search Form -->
         <div class="search-form d-flex align-items-center">
             <div class="container">
-                <form action="index.html" method="get">
-                    <input type="search" name="search-form-input" id="searchFormInput" placeholder="Type your keyword ...">
+                <form action="${pageContext.request.contextPath}/search/searchBook.do" method="get">
+                    <input type="search" name="title" id="searchFormInput" placeholder="검색할 도서를 입력해주세요">
                     <button type="submit"><i class="icon_search"></i></button>
                 </form>
             </div>

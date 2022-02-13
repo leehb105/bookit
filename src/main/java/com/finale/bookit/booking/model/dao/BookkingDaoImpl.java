@@ -2,7 +2,7 @@ package com.finale.bookit.booking.model.dao;
 
 import com.finale.bookit.booking.model.vo.BookInfo;
 import com.finale.bookit.booking.model.vo.Booking;
-import com.finale.bookit.booking.model.vo.Criteria;
+import com.finale.bookit.common.util.Criteria;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
