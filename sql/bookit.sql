@@ -437,10 +437,13 @@ select * from (select count(*) from member group by extract(day from enroll_date
 			charge_history ch
         group by
             extract(month from ch.charge_date);
-select
-    *
-from
-    charge_history;
+            
+		select
+		    *
+		from
+		    member m left join authority a
+		    on m.id = a.member_id;            
+
 --DROP TRIGGER trig_member;
 --SQL Error [4098] [42000]: ORA-04098 오류 발생시 trigger drop 후에 재생성
 CREATE OR REPLACE TRIGGER trig_member

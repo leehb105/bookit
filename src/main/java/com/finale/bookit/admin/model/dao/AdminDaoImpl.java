@@ -110,7 +110,7 @@ public class AdminDaoImpl implements AdminDao {
 	}
 
 	@Override
-	public List<MemberEntity> selectAllMembers(Map<String, Object> param) {
+	public List<Member> selectAllMembers(Map<String, Object> param) {
 		int offset = (int) param.get("offset");
 		int limit = (int) param.get("limit");
 		RowBounds rowBounds = new RowBounds(offset, limit);
@@ -138,6 +138,27 @@ public class AdminDaoImpl implements AdminDao {
 		else {
 			return session.update("admin.requestDeleteYn", param);
 		}
+	}
+
+	@Override
+	public int selectAuthority(String userId) {
+		return session.selectOne("admin.selectAuthority",userId);
+	}
+
+	@Override
+	public int insertAuthority(String userId) {
+		return session.insert("admin.insertAuthority", userId);
+	}
+
+	@Override
+	public int deleteAuthority(String userId) {
+		return session.delete("admin.deleteAuthority", userId);
+	}
+
+	@Override
+	public int insertAuthority_ADMIN(String userId) {
+		// TODO Auto-generated method stub
+		return session.insert("admin.insertAuthority_ADMIN", userId);
 	}
 
 }

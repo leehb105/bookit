@@ -31,7 +31,6 @@ public class MemberEntity implements Serializable {
 	private Date enrollDate;
 	private String reportYn;
 	private int cash;
-	private String authority;
 	private String profileImage;
 	
 	private String roadAddress;
