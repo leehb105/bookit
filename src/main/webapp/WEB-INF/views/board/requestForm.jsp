@@ -18,7 +18,6 @@ function boardValidate(){
 	}
 	return true;
 }
-
 </script>
 <!-- 등록 폼 시작 -->
 <div class="roberto-contact-form-area section-padding-100">
@@ -134,16 +133,13 @@ function boardValidate(){
 <script>
     //책 등록 여부 변수
     let inputBookFlag = false;
-
     // 검색 input
     const $title = $('input[name=title]');
-
     //책 검색 버튼 비활성화
     window.onload = function(){
         $('#searchBtn').attr("disabled", true);
         setInitBookInfo();
     }
-
     //검색창 입력시 검색 버튼 활성화
     $(function(){
         $title.on('input', function(){
@@ -156,13 +152,10 @@ function boardValidate(){
             }
         });
     });
-
     let childWin;
-
     function openSearchWindow(){
         // window.name = "부모창 이름"; 
         window.name = "parentForm";
-
         let url = `${pageContext.request.contextPath}/booking/bookSearch.do`;
         var option = "width=570, height=350, resizable = no, scrollbars = no";
         
@@ -171,15 +164,11 @@ function boardValidate(){
         $("#searchFrm").attr("action", url);
         $("#searchFrm").attr("target", "result");
         $("#searchFrm").submit();
-
     }
-
     let book;
     //자식창에서 호출할 json 페이지적용 함수
     window.getJson = function(){
-
         book = JSON.parse(localStorage.getItem("book"));
-
         if(isEmptyObj(book)){
             alert("책정보 없음 - 도서를 다시 선택해주세요.");
         }else if(!checkAllElement(book)){
@@ -187,7 +176,6 @@ function boardValidate(){
         }else{
             const date = new Date(book.pubdate);
             const newDate = date.getFullYear() + '년 ' + (date.getMonth()+1) + '월';
-
             document.getElementById('cover').src = book.cover;
             document.getElementById('title').innerHTML = book.title;
             document.getElementById('author').innerHTML = book.author;
@@ -197,12 +185,10 @@ function boardValidate(){
             document.getElementById('itemPage').innerHTML = book.itemPage + ' 쪽';
             document.getElementById('categoryName').innerHTML = book.categoryName;
             document.getElementById('description').innerHTML = book.description;
-
             inputBookFlag = true;
             document.getElementById('errorTxt').style.display = 'none';
         }
     }
-
     //검색도서 적용 전 초기 서식
     function setInitBookInfo(){
         document.getElementById('title').innerHTML = '책의 제목입력이 필요합니다.';
@@ -225,7 +211,6 @@ function boardValidate(){
             }
         };
     }, true);
-
     //json 객체 비어있는지 검사
     function isEmptyObj(obj){
         if(obj.constructor === Object
@@ -235,7 +220,6 @@ function boardValidate(){
         
         return false;
     }
-
     function checkAllElement(obj){
         //json객체 검사 시 비어있는 항목이 있는 경우 false 반환
         for(let i in obj){
@@ -246,11 +230,9 @@ function boardValidate(){
         }        
         return true;
     }
-
     //보증금 0원에 대한 처리
     document.getElementById('deposit').addEventListener('keyup', function(){
         const deposit = document.getElementById('deposit');
-
         if(deposit.value.length > 0){
             if(Number(deposit.value) <= 0){
                 alert('보증금은 0원 보다 많아야 합니다.');
@@ -258,21 +240,16 @@ function boardValidate(){
             }
         }
         
-
     });
-
-
     //일일요금 0원에 대한 처리
     document.getElementById('price').addEventListener('keyup', function(){
         const price = document.getElementById('price');
-
         if(price.value.length > 0){
             if(Number(price.value) <= 0){
                 alert('일일대여로는 0원 보다 많아야 합니다.');
                 price.value = 500;
             }
         }
-
     });
     
     //책상태 입력에 대한 처리
@@ -283,9 +260,7 @@ function boardValidate(){
             return false;
         }
         return true;
-
     }
-
     //글내용 글자갯수 제한 코드
     $(document).ready(function() {
         $('#content').on('keyup', function() {
@@ -300,12 +275,10 @@ function boardValidate(){
             }
         });
     });
-
     //페이지 로드시 에러메세지 보임
     window.onload = function(){
         document.getElementById('errorTxt').style.color = 'red';
     };
-
     //글 등록
     function enrollBooking(){
         
@@ -313,9 +286,7 @@ function boardValidate(){
 		const csrfToken = "${_csrf.token}";
 		const headers = {};
 		headers[csrfHeader] = csrfToken;
-
         console.log(JSON.stringify(book));
-
         //책 요소에 문제가 없을시
         if(book != undefined){
             //책정보 전송부분
@@ -340,17 +311,13 @@ function boardValidate(){
             alert('책정보를 검색하세요');
             document.getElementById('title').focus();
         }
-
-
     }
-
     //폼제출 전 체크
     function frmSubmit(){
         const frm = document.getElementById('enrollFrm');
         const deposit = document.getElementById('deposit');
         const price = document.getElementById('price');
         const content = document.getElementById('content');
-
         if(!checkBookStatus()){
             alert('책 상태를 선택해주세요');
         }else if(deposit.value == ''){
@@ -366,9 +333,7 @@ function boardValidate(){
             // console.log('모두 채워짐');
             frm.submit();
         }
-
     }
-
 </script>
 
 

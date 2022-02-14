@@ -159,16 +159,23 @@
 	</update>
 	
 	<!-- 좋아요 -->
-	 <update id="like" parameterType="HashMap">
+	 <update id="likeCountUp" parameterType="HashMap">
     update likeCount set likeCount = likeCount + 1 
     where community_no=#{no}
   </update>
   
-  <update id="likeCancel" parameterType="HashMap">
+  <update id="likeCountDown" parameterType="HashMap">
     update likeCount set likeCount = likeCount - 1 
     where community_no=#{no}
   </update>
-
+ 
+ 	<insert id="communityLike" parameterType="map">
+ 		insert into community_like (like_no, community_no, member_id) values (seq_community_like.nextval, #{communityNo}, #{memberId})
+ 	</insert>
+	<delete id="communityLikeCancel" parameterType="Integer">
+	    delete from community_like where like_no = #{no}
+	</delete>
+	
 	<!-- 검색 -->
 	<select id="searchCommuntiy" parameterType="map" resultType="community">
 	select * from community c 
