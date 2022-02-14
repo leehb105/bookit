@@ -11,5 +11,9 @@ public interface SearchDao {
 
 	int selectTotalBookReviewCount(HashMap<String, Object> param);
 
+	int selectReviewIdCount(HashMap<String, Object> param);
+
+	int bookReviewEnroll(HashMap<String, Object> param);
+
 	
 }

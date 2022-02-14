@@ -16,4 +16,6 @@ public interface SearchService {
 
 	public List<BookReview> selectBookReviewByIsbn(HashMap<String, Object> param);
 	public int selectTotalBookReviewCount(HashMap<String, Object> param);
+	public int selectReviewIdCount(HashMap<String, Object> param);
+	public int bookReviewEnroll(HashMap<String, Object> param);
 }
