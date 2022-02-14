@@ -466,6 +466,8 @@ CREATE TABLE my_trade_history (
     ,constraint pk_my_trade_history_rent_no PRIMARY KEY(rent_no)
     ,constraint fk_my_trade_history_res_no FOREIGN key(res_no) REFERENCES BOOKING_RESERVATION(res_no)
 );
+create sequence seq_my_trade_history_rent_no nocache;
+
 
 --DROP TRIGGER trig_member;
 --SQL Error [4098] [42000]: ORA-04098 오류 발생시 trigger drop 후에 재생성
@@ -480,3 +482,5 @@ BEGIN
 	WHERE id = :NEW.member_id;
 END;
 /;	
+
+
