@@ -66,12 +66,12 @@ public class Member extends MemberEntity implements Serializable, UserDetails {
 	}
 
 	public Member(String id, String password, String email, String nickname, String name, String phone, boolean enabled,
-			Date enrollDate, String reportYn, int cash, String profileImage, String roadAddress, String jibunAddress,
-			float latitude, float longitude, List<SimpleGrantedAuthority> authorities) {
-		super(id, password, email, nickname, name, phone, enabled, enrollDate, reportYn, cash, profileImage,
-				roadAddress, jibunAddress, latitude, longitude);
-		this.authorities = authorities;
-	}
+            Date enrollDate, String reportYn, int cash, String profileImage, String searchAddress, String roadAddress, String jibunAddress,
+            float latitude, float longitude, List<SimpleGrantedAuthority> authorities) {
+        super(id, password, email, nickname, name, phone, enabled, enrollDate, reportYn, cash, profileImage, searchAddress,
+                roadAddress, jibunAddress, latitude, longitude);
+        this.authorities = authorities;
+    }
 	
 	
 

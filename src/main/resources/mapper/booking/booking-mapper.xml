@@ -17,12 +17,15 @@
 					SELECT
 						b.REG_DATE, b.BOARD_NO, b.BOOK_STATUS, b.PRICE, b.DEPOSIT, b.DELETE_YN,
 					    bi.TITLE, bi.AUTHOR, bi.PUBLISHER, bi.PUBDATE, bi.CATEGORY_NAME,bi.COVER,
-					    br.RES_NO, br.START_DATE, br.END_DATE
+					    br.RES_NO, br.START_DATE, br.END_DATE,
+		    			mv.search_address, mv.jibun_address
 					from
 					    booking b join book_info bi ON
 					    b.isbn13 = bi.isbn13
 					    JOIN BOOKING_RESERVATION br ON
-						    b.board_no = br.board_no
+					    b.board_no = br.board_no
+					    JOIN member_view mv ON
+		    			b.writer = mv.id
 						WHERE
 							bi.title LIKE '%' || #{bookTitle} || '%' 
 							AND
@@ -31,6 +34,8 @@
 							#{checkOut} NOT BETWEEN br.start_date AND br.end_date
 							AND
 							b.DELETE_YN = 'N'
+							AND 
+							mv.search_address = #{address}
 						ORDER BY
 							b.reg_date DESC
 						) tb1
@@ -64,10 +69,13 @@
 		<result column="reg_date" property="regDate"/>
 		<result column="status" property="status"/>
 	</resultMap>
+
 	
 	<resultMap type="member" id="memberMap">
 		<id column="id" property="id"/>
 		<result column="nickname" property="nickname"/>
+		<result column="search_address" property="searchAddress"/>
+		<result column="jibun_address" property="jibunAddress"/>
 	</resultMap>
 
 	
@@ -127,7 +135,8 @@
 		    br.*,
 		    m.id,
 		    m.nickname,
-		    m.profile_image
+		    m.profile_image,
+		    mv.jibun_address
 		from
 		    booking b join book_info bi ON
 		    b.isbn13 = bi.isbn13
@@ -135,6 +144,8 @@
 		    b.board_no = br.board_no
 		    JOIN MEMBER m ON 
 		    b.writer = m.id
+		    JOIN member_view mv ON
+   			b.writer = mv.id
 		WHERE
 			b.board_no = #{bno}
 			
