@@ -58,6 +58,12 @@ public interface CommunityDao {
 
 	int getSearchCommuntiyContentCount(Map<String, Object> param);
 
+	void likeCountUp(int no);
+	
+	void likeCountDown(int no);
 
-
+	void communityLike(Map<String, Object> map);
+	
+	void communityLikeCancel(Map<String, Object> map);
+	
 }

@@ -45,7 +45,9 @@ public interface CommunityService {
 
 	int getSearchCommuntiyContentCount(Map<String, Object> param);
 
+	void likeCountUp(Map<String, Object> param);
 	
+	void likeCountDown(Map<String, Object> param);
 }	
 
 

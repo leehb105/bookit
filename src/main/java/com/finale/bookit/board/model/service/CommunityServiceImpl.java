@@ -44,7 +44,10 @@ public class CommunityServiceImpl implements CommunityService {
 	    community.setContent(communityMap.get("content").toString());
 	    community.setCommentCount(Integer.parseInt(communityMap.get("commentCount").toString()));
 	    community.setNickname(communityMap.get("nickname").toString());
-	    community.setProfileImage(communityMap.get("profileImage").toString());
+	    if(communityMap.get("profileImage") != null) {
+	    	 community.setProfileImage(communityMap.get("profileImage").toString());
+	    }
+	   
 	    
 	    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-ddHH:mm");
 	    String str =  communityMap.get("regDate").toString();
@@ -274,6 +277,18 @@ public class CommunityServiceImpl implements CommunityService {
 	public int getSearchCommuntiyContentCount(Map<String, Object> param) {
 		return communityDao.getSearchCommuntiyContentCount(param);
 		
+	}
+
+	@Override
+	public void likeCountUp(Map<String, Object> param) {
+		communityDao.likeCountUp(Integer.parseInt(param.get("no").toString()));
+		communityDao.communityLike(param);
+	}
+
+	@Override
+	public void likeCountDown(Map<String, Object> param) {
+		communityDao.likeCountDown(Integer.parseInt(param.get("no").toString()));
+		communityDao.communityLikeCancel(param);
 	}
 
 }

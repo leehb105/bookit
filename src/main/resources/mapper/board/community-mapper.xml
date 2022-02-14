@@ -66,7 +66,7 @@
 	
 	<select id="getCommunityList" resultType="community" parameterType="map">
 		select community_no, category, title, (select m.nickname from member m where c.member_id = m.id) nickname, 
-		reg_date, read_count, like_count from community c where delete_yn = 'N' 
+		reg_date, read_count, like_count,(select count(*) from community_comment where community_no = c.community_no) comment_count from community c where delete_yn = 'N' 
 		
 		<choose>
 			<when test="category eq 'writer'">

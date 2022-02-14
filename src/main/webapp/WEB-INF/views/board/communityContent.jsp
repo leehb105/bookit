@@ -16,28 +16,41 @@
 	crossorigin="anonymous"></script>
 
 <script>
+const csrfHeader = "${_csrf.headerName}";
+const csrfToken = "${_csrf.token}";
+const headers = {};
+headers[csrfHeader] = csrfToken;
 
-//수정
- const csrfHeader = "${_csrf.headerName}";
-	const csrfToken = "${_csrf.token}";
-	const headers = {};
-	headers[csrfHeader] = csrfToken;
-	
-	function updateCommentEvent(e){
-		
-		
-		var className = '.comment_content_'+e;
-	
-		var replyContent = document.querySelector(className).value;
-	
-		
-		var paramData = JSON.stringify({
+function likeCheck(e){
+	$.ajax({
+		url:`${pageContext.request.contextPath}/board/updateComment.do`,
+		headers : headers,
+		type	:"post",
+		data: paramData,
+		contentType: 'application/json;charset=UTF-8',
+		success:function(responseData){
+			// responseData : {isSuccess:true}
+			if(responseData.isSuccess){
+				//폼에 입력한 내용 읽어오기
+				var content=$this.find("textarea").val();
+				//pre 요소에 수정 반영하기 
+				$this.parent().find("pre").text(content);
+			}
+		}
+	})
+}
+
+
+//댓글 수정
+function updateCommentEvent(e){
+	var className = '.comment_content_'+e;
+	var replyContent = document.querySelector(className).value;
+	var paramData = JSON.stringify({
 			"content": replyContent	,
 			"no" : e
-	});
-	
-		
-		$.ajax({
+		});
+
+	$.ajax({
 			url:`${pageContext.request.contextPath}/board/updateComment.do`,
 			headers : headers,
 			type	:"post",
@@ -199,8 +212,6 @@ function showButton(){
 	}
 }
 
-
-
 function goCommunityList(){
 	location.href = "${pageContext.request.contextPath}/board/community.do";
 }
@@ -254,10 +265,9 @@ textarea {
 }
 </style>
 <div id="board-container" class="mx-auto text-center">
-	<input type="submit" value="수정" id="modify"
-		onclick="updateCommunity();"> <input type="button" value="삭제"
-		id="delete" onclick="communityDelete();"> <input type="button"
-		value="리스트로" onclick="goCommunityList();">
+	<input type="submit" value="수정" id="modify" onclick="updateCommunity();"> 
+	<input type="button" value="삭제" id="delete" onclick="communityDelete();"> 
+	<input type="button" value="리스트로" onclick="goCommunityList();">
 	<p>${community.category}</p>
 	<p>${community.title}</p>
 	<p>[${community.commentCount}]</p>

@@ -131,7 +131,29 @@ public class CommunityDaoImpl implements CommunityDao{
 		return session.selectOne("community.selectSearchCommuntiyContentCount", param);
 	}
 
+	@Override
+	public void likeCountUp(int no) {
+		session.update("community.likeCountUp", no);
+	}
+
+	@Override
+	public void likeCountDown(int no) {
+		session.update("community.likeCountDown", no);
+	}
+
+	@Override
+	public void communityLike(Map<String, Object> map) {
+		session.insert("community.communityLike", map);
+		
+	}
+
+	@Override
+	public void communityLikeCancel(Map<String, Object> map) {
+		session.delete("community.communityLikeCancle", map);
+		
+	}
 
 
-		}
+
+}
 

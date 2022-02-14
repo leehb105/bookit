@@ -351,6 +351,33 @@ public class CommunityController {
 		return mav;
 	}
 	
+	@ResponseBody
+	@GetMapping("/like.do")
+	public Map<String, Object> CommunityLike(@RequestParam int no, @RequestParam boolean isLike, @AuthenticationPrincipal Member member){
+		Map<String, Object> resultMap = new HashMap<>();
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("memberId", member.getId());
+		paramMap.put("communityNo", no);
+		
+		try{
+			if(isLike) {
+				communityService.likeCountUp(paramMap);
+				
+			} else {
+				communityService.likeCountDown(paramMap);
+		
+			}
+
+			resultMap.put("result", true);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			resultMap.put("result", false);
+		}
+		
+		return resultMap;
+	}
+	
 
 
 }
