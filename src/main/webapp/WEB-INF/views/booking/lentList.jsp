@@ -62,7 +62,7 @@
                         </c:forEach>
                         <c:if test="${empty list}">
                             <tr>
-                                <td colspan="5"><p>작성하신 대여 도서가 없습니다.</p></td>
+                                <td colspan="8"><p>대여한 도서가 없습니다.</p></td>
                             </tr>
                         </c:if>
                     </tbody>

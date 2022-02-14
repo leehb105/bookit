@@ -231,7 +231,7 @@ $(document).ready(function(){
                             	<input type="text" class="form-control" id="bookTitle" name="bookTitle" placeholder="책 제목을 입력하세요" autofocus>
                             </div>
                             <div class="col-12 col-md-3">
-                                <button type="button" class="form-control btn roberto-btn w-100" onclick="checkInputDate();">Check Availability</button>
+                                <button type="button" class="form-control btn roberto-btn w-100" id="searchBtn" onclick="checkInputDate();">Check Availability</button>
                                 <!-- <button type="button" class="form-control btn roberto-btn w-100" >Check Availability</button> -->
                             </div>
                             <h2>${test}</h2>     
@@ -564,6 +564,11 @@ $(document).ready(function(){
     <!-- Partner Area End -->
 
 <script>
+    window.onload = function(){
+        //버튼 죽여놓음
+        document.getElementById('searchBtn').disabled = true;
+    };
+
 //datdpicker 한글설정
     $(function() {
         $.fn.datepicker.dates['ko'] = {
@@ -684,62 +689,18 @@ $(document).ready(function(){
         });//datepicker end
     });
 
-
-
-
-
-
-
-
-
-
-
-
+    
     function checkInputDate() {
 
         const resfrm = document.getElementById("resfrm");
-        resfrm.submit();
+        const bookTitle = document.getElementById('bookTitle');
 
-    //     const checkIn = document.getElementById("checkIn");
-    //     const checkOut = document.getElementById("checkOut");
-    //     const $bookTitle = $(bookTitle);
-    //     const resfrm = document.getElementById("resfrm");
-    //     // console.log(checkIn);
-    //     // console.log(checkOut);
-    //     // console.log(new Date());
+        //입력이 되었을때만
+        if(bookTitle.value != ''){
+            resfrm.submit();
 
-    //     //날짜 객체 생성
-    //     let startDate = new Date(checkIn.value);
-    //     let endDate = new Date(checkOut.value);
+        }
 
-    //     if(startDate < new Date()){
-    //         alert("오늘보다 이전 날짜는 선택할 수 없습니다.");
-    //         //대여시작일 오늘날짜로 변경
-    //         checkIn.value = getFormatDate();
-    //     }else if (checkIn.value == '' || checkOut.value == '') {
-    //         alert("대여 기간을 선택하세요.");
-    //         //대여시작일 오늘날짜로 변경
-    //         checkIn.value = getFormatDate();
-    //     }else if(startDate.getTime() > endDate.getTime()){
-    //         alert("대여시작일이 예약 마지막일보다 후일 수 없습니다. ");
-    //         //마지막일 초기화
-    //         checkOut.value = '';
-    //     }
-    //     else if($bookTitle.val() == ''){
-    //         alert("대여할 책의 제목을 입력하세요.");
-    //         //커서 이동
-    //         $bookTitle.focus();
-    //     }else{
-    //         //체크 완료후 제출
-    //         resfrm.submit();
-    //     }
-    // }
-    // //오늘날짜 포멧함수
-    // function getFormatDate(){
-    //     const date = new Date();
-    //     //날짜 포멧 ex) 2022-01-01
-    //     const today = date.getFullYear() + '-' + (("00"+(date.getMonth()+1).toString()).slice(-2)) + '-' + (("00"+date.getDate().toString()).slice(-2));
-    //     return today;
     }
 
 
