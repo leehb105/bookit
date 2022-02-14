@@ -43,7 +43,6 @@ public interface CommunityService {
 
 	void updateComment(Comment comment);
 
-	void updateReComment(Comment comment);
 	
 }	
 

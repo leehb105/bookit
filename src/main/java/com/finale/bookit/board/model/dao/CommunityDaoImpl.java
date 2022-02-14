@@ -126,10 +126,7 @@ public class CommunityDaoImpl implements CommunityDao{
 		session.update("community.updateComment", comment);
 	}
 
-	@Override
-	public void updateReComment(Comment comment) {
-		session.update("community.updateReComment", comment);
-	}
+
 
 		}
 

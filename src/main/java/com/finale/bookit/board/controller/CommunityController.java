@@ -21,6 +21,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -141,7 +142,7 @@ public class CommunityController {
 		model.addAttribute("list", list);
 		model.addAttribute("pagebar", pagebar);
 	}
-
+	//게시글 삭제 
 	@GetMapping("/communityDelete.do")
 	public String communityDelete(@RequestParam int no, Model model, HttpServletRequest request,
 			@AuthenticationPrincipal Member member) {
@@ -155,14 +156,14 @@ public class CommunityController {
 		}
 		return "redirect:/board/community.do";
 	}
-
+	//게시글 수정 
 	@GetMapping("/communityUpdate.do")
 	public void communityUpdate(@RequestParam int no, Model model, @AuthenticationPrincipal Member member) {
 
 		Community community = communityService.getCommunity(no);
 
 		model.addAttribute("community", community);
-
+		
 	};
 
 	@PostMapping("/updateCommunity.do")
@@ -172,10 +173,11 @@ public class CommunityController {
 		try {
 			communityService.updateCommunityContent(loginMember.getId(), param);
 		} catch (Exception e) {
-			log.error(e.getMessage());
+			
 			e.printStackTrace();
 		}
-		return "redirect:/board/communityContent.do?communityNo= #{no}";
+		return "redirect:/community.do";
+		
 	}
 
 	@PostMapping("/communityEnroll")
@@ -225,6 +227,8 @@ public class CommunityController {
 
 	}
 
+	
+	//댓글처리 
 
 	@ResponseBody
 	@GetMapping("/commentList.do")
@@ -233,6 +237,7 @@ public class CommunityController {
 		model.addAttribute("comment", comments);
 		return comments;
 	}
+
 
 	@PostMapping("/insertComment.do")
 	public Map<String, Object> insertComment(@RequestBody Map<String, Object> commentMap, @AuthenticationPrincipal Member member) {
@@ -269,42 +274,41 @@ public class CommunityController {
 		return resultMap;
 	}
 	
+	@ResponseBody
 	@PostMapping("/updateComment.do")
-	public Map<String, Object> updateComment(@RequestBody Map<String, Object> commentMap, @AuthenticationPrincipal Member member) {
-
-		Map<String, Object> resultMap = new HashMap<>();
-		boolean result = false;
-	
+	public Map<String, Object> updateComment(@RequestBody Comment comment, Model model) {
+		log.info("upate comment to ajax {}", comment);
+		Map<String, Object> map = new HashMap<>();
 		try {
-
-			Comment comment = new Comment();
+	
+			communityService.updateComment(comment);
+		
+			map.put("isSuccess", true);
 			
-			comment.setCommunityNo(Integer.parseInt(commentMap.get("communityNo").toString()));
-			comment.setCommentLevel(Integer.parseInt(commentMap.get("commentLevel").toString()));
-			comment.setContent(commentMap.get("content").toString());
-			
-			String writer = member.getId();
-			comment.setWriter(writer);
-
-			if (comment.getCommentLevel() == 2) {
-				communityService.updateReComment(comment);
-			} else {
-				communityService.updateComment(comment);
-			}
-
-			result = true;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-
+			model.addAttribute("result", map);
+		
+		}catch(Exception e) {
+		e.printStackTrace();
 		}
-
-		resultMap.put("result", result);
-
-		return resultMap;
+		
+		return map;
 	}
 
-	
+	@ResponseBody
+	@PostMapping("/deleteComment.do")
+	public Map<String, Object>  deleteComment(HttpServletRequest request,
+			@RequestParam int no) {
+
+			try {
+				communityService.deleteComment(no);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			Map<String,Object> map=new HashMap<>();
+			map.put("isSuccess",true);
+			return map;
+	}
+
 	@GetMapping("/search.do")
 	public void SearchCommunity(@RequestParam String keyword, @RequestParam String category, Model model) {
 	

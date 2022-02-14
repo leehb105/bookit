@@ -16,9 +16,108 @@
 	crossorigin="anonymous"></script>
 
 <script>
-$(document).ready(function () {
-	showCommentsByAjax();	
-})
+//수정
+ const csrfHeader = "${_csrf.headerName}";
+	const csrfToken = "${_csrf.token}";
+	const headers = {};
+	headers[csrfHeader] = csrfToken;
+	
+	function updateCommentEvent(e){
+		
+		
+		var className = '.comment_content_'+e;
+	
+		var replyContent = document.querySelector(className).value;
+	
+		
+		var paramData = JSON.stringify({
+			"content": replyContent	,
+			"no" : e
+	});
+	
+		
+		$.ajax({
+			url:`${pageContext.request.contextPath}/board/updateComment.do`,
+			headers : headers,
+			type	:"post",
+			data: paramData,
+			contentType: 'application/json;charset=UTF-8',
+			success:function(responseData){
+				// responseData : {isSuccess:true}
+				if(responseData.isSuccess){
+					//폼에 입력한 내용 읽어오기
+					var content=$this.find("textarea").val();
+					//pre 요소에 수정 반영하기 
+					$this.parent().find("pre").text(content);
+				}
+			}
+		});
+		
+		
+
+		
+	};
+	
+//수정 폼 출력 
+function showUpdateCommentFrm(e){
+	var className = '.updateCommentFrm_'+e;
+	 document.querySelector(className).style.display = 'block';
+}
+
+//대댓글 폼 출력 
+function writeReComment(){
+	 document.querySelector('.reCommentInput').style.display = 'block';
+}
+//대댓글 입력 
+function btnReCommentSubmit(){
+		var replyContent = $('#reCommentContent').val();
+		var paramData = JSON.stringify({
+			"content": replyContent
+			, "commentLevel": 2
+			, "communityNo" : "${community.communityNo}"
+			, "commentRef" : "${comment.no}"
+			
+	});
+	 const csrfHeader = "${_csrf.headerName}";
+		const csrfToken = "${_csrf.token}";
+		const headers = {};
+		headers[csrfHeader] = csrfToken;
+		$.ajax({
+			url: `${pageContext.request.contextPath}/board/insertComment.do`
+			, headers : headers
+			, data : paramData
+			, type : 'POST'
+			,  contentType: 'application/json;charset=UTF-8'
+			, success: function(result){
+				console.log(result)
+				showCommentsByAjax();
+				
+				$('#content').val('');
+				
+			}
+			, error: function(error){
+				console.log("에러 : " + error);
+			}
+		});
+}
+
+//삭제 
+function deleteComment(no){
+		var isDelete=confirm("댓글을 정말 삭제하겠습니까");
+		if(isDelete){
+			$.ajax({
+				url:"deleteComment.do",
+				method:"post",
+				data:{"no":no}, 
+				success:function(responseData){
+					if(responseData.isSuccess){
+						
+					}
+				}
+			});
+		}
+	}
+
 function showCommentsByAjax() {
 	
 	$.ajax({
@@ -82,18 +181,8 @@ $(document.commentFrm).submit((e) => {
 		e.preventDefault();
 	}
 });
-//댓글 삭제
-$("button[name=btn-delete]").click(function(){
-	console.log(12345);
-	if(confirm("해당 댓글을 삭제하시겠습니까?")){
-		var $frm = $(document.commentDelFrm);
-		var no = $(this).val();
-		console.log(no);
-		$frm.find("[name=no]").val(no);
-		$frm.submit();
-	}
-});	
-//대댓글 기능
+
+
 function updateCommunity(){
 	location.href = "${pageContext.request.contextPath}/board/communityUpdate.do?no=${community.communityNo}";
 }
@@ -146,9 +235,11 @@ console.log("${community.comment}");
 div#board-container {
 	width: 400px;
 }
+
 input, button, textarea {
 	margin-bottom: 15px;
 }
+
 button {
 	overflow: hidden;
 }
@@ -156,15 +247,18 @@ button {
 div#board-container label.custom-file-label {
 	text-align: left;
 }
+
 textarea {
 	resize: none;
 }
+
 .modal-body p {
 	display: inline-block;
 	width: 100px;
 	text-align: right;
 	margin-right: 30px;
 }
+
 .modal-body input {
 	width: auto;
 }
@@ -178,7 +272,7 @@ textarea {
 	<p>${community.title}</p>
 	<!-- 프로필 이미지 -->
 	<img
-		src="${pageContext.request.contextPath}/resources/img/profile/${collectionList.profileImage}"
+		src="${pageContext.request.contextPath}/resources/img/profile/${community.profileImage}"
 		height="30px" />
 	<p>${community.nickname}</p>
 	<p>${community.regDate}</p>
@@ -186,17 +280,18 @@ textarea {
 	<p>${community.likeCount}</p>
 	<p>${community.commentCount}</p>
 	<!-- 파일 이미지 -->
-
-	<c:forEach items="${community.file}" var="file" varStatus="vs">
-		<img
-			src="${pageContext.request.contextPath}/resources/img/board/${file.renamedFilename}">
-	</c:forEach>
+	<c:if test="${not empty file}">
+		<c:forEach items="${community.file}" var="file">
+			<img
+				src="${pageContext.request.contextPath}/resources/img/board/${file.renamedFilename}">
+		</c:forEach>
+	</c:if>
 
 	<!-- 글 내용 -->
 	<p>${community.content}</p>
 	<p>${community.likeCount}</p>
-	<!-- 파일 다운로드 -->
 
+	<!-- 파일 다운로드 -->
 	<c:forEach items="${community.file}" var="file" varStatus="vs">
 		<a
 			href="${pageContext.request.contextPath}/board/fileDownload.do?fileNo=${file.no}"
@@ -217,23 +312,53 @@ textarea {
 								<td>${comment.nickname}</td>
 								<td><fmt:formatDate value="${comment.regDate}"
 										pattern="yy/MM/dd HH:mm" /></td>
-								<td>${comment.content}</td>
-								<td>
-									<button class="btn btn-primary btn-icon-split"
-										value="${comment.no}" onclick="commentReply(this);"
-										style="padding: 5px; margin-top: 20px;">답글</button>
-										
-										<c:if test="${comment.writer == loginMember.id}">
-				
-										<button class="btn btn-primary btn-icon-split" onclick="commentReply(this);"
-											name="btn-update" value="${comment.no}"
+								<td><pre>${comment.content}</pre></td>
+								<td><c:if test="${comment.writer != loginMember.id}">
+										<button class="btn btn-primary btn-icon-split"
+											value="${comment.no}" onclick="writeReComment();"
+											style="padding: 5px; margin-top: 20px;">답글</button>
+
+										<form>
+											<input type="hidden" name="no"
+												value="${community.communityNo}" /> <input type="hidden"
+												name="commentLevel" value="2" /> <input type="hidden"
+												name="commentRef" value="0" />
+											<div class="reCommentInput" style="display: none;">
+												<textarea id="reCommentContent" name="content" cols="120"
+													rows="3" style="resize: none;" placeholder="댓글을 입력해주세요"></textarea>
+												<br />
+												<button id="reComment" onClick="btnReCommentSubmit()"
+													class="btn btn-primary btn-icon-split"
+													style="padding: 5px; margin-top: 20px;">등록</button>
+											</div>
+										</form>
+
+									</c:if> <c:if test="${comment.writer == loginMember.id}">
+
+										<button type="button" class="btn btn-primary btn-icon-split"
+											onclick="showUpdateCommentFrm(${comment.no});" name="btn-update"
+											id="showUpdateCommentFrm" value="${comment.no}"
 											style="padding: 5px; margin-top: 20px;">수정</button>
-										<button class="btn btn-primary btn-icon-split" 
-											name="btn-delete" value="${comment.no}"
+
+										<div class="updateCommentFrm_${comment.no}" style="display: none;">
+											<form class="comment-update-form" action="comment_update.do"
+												method="post">
+												<input type="hidden" name="num" value="${comment.no}" />
+												<textarea class="comment_content_${comment.no}">${comment.content}</textarea>
+
+												<button type="button" id="updateComment"
+													onClick="updateCommentEvent(${comment.no});"
+													class="btn btn-primary btn-icon-split"
+													style="padding: 5px; margin-top: 20px;">수정</button>
+
+											</form>
+										</div>
+
+										<button class="btn btn-primary btn-icon-split"
+											onclick="deleteComment();" value="${comment.no}"
 											style="padding: 5px; margin-top: 20px;">삭제</button>
 
-									</c:if>
-								</td>
+									</c:if></td>
 								<c:choose>
 									<c:when test="${comment.isParent == 'Y'}">
 										<c:forEach items="${comment.reComments}" var="reComment">
@@ -273,22 +398,20 @@ textarea {
 	</table>
 	<!--  댓글이 없으면 = 출력 안함 -->
 	<!-- 댓글입력칸 -->
-	<form
-	
-		>
-		
-		<input type="hidden" name="no" value="${community.communityNo}" /> 
-		<input
-			type="hidden" name="commentLevel" value="1" /> 
-			<input type="hidden" name="commentRef" value="0" />
+	<form>
+
+		<input type="hidden" name="no" value="${community.communityNo}" /> <input
+			type="hidden" name="commentLevel" value="1" /> <input type="hidden"
+			name="commentRef" value="0" />
 		<div id="comment-input">
-		
-			<textarea id="comment_content" name="content" cols="120" rows="3" style="resize: none;"
-				placeholder="댓글을 입력해주세요"></textarea>
+
+			<textarea id="comment_content" name="content" cols="120" rows="3"
+				style="resize: none;" placeholder="댓글을 입력해주세요"></textarea>
 
 			<br />
-			
-			<button type="submit" onClick="btnCommentSubmit()" class="btn btn-primary btn-icon-split"
+
+			<button type="submit" onClick="btnCommentSubmit()"
+				class="btn btn-primary btn-icon-split"
 				style="padding: 5px; margin-top: 20px;">등록</button>
 		</div>
 	</form>

@@ -270,10 +270,4 @@ public class CommunityServiceImpl implements CommunityService {
 		communityDao.updateComment(comment);
 	}
 
-	@Override
-	public void updateReComment(Comment comment) {
-		communityDao.updateReComment(comment);
-	}
-
-
 }
