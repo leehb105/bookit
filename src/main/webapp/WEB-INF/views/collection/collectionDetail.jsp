@@ -88,14 +88,15 @@ $(document).ready(function () {
 
 // 검색어 value값 체크
 function checkTitle(){
-	const $title = $('input[name=title]').val();
-	if($title != ""){
-	    $('#searchBtn').attr("disabled", false);
+	const title = $('input[id=title]').val();
+	const searchBtn = document.getElementById("searchBtn");
+	if(title != ""){
+		searchBtn.disabled = false;
 	    return true;
 	}
-	else{
+	else {
 	    //입력값 없을 시 다시 버튼 비활성화
-	    $('#searchBtn').attr("disabled", true);
+		searchBtn.disabled = true;
 	    return false;
 	}
 }

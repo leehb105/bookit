@@ -46,6 +46,11 @@ public class ReportServiceImpl implements ReportService {
 	public int insertReportBoard(Map<String, Object> param) {
 		return reportDao.insertReportBoard(param);
 	}
+
+	@Override
+	public int insertReportUser(Map<String, Object> param) {
+		return reportDao.insertReportUser(param);
+	}
 	
 	
 }

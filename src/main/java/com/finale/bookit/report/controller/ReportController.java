@@ -114,4 +114,19 @@ public class ReportController {
 		
 		return "redirect:/board/communityContent.do?no=" + boardNo;
 	}
+	
+	// 사용자 신고 등록
+	@PostMapping("/reportUserEnroll.do")
+	public String reportUserEnroll(@RequestParam String reporter, @RequestParam String reportee,
+			@RequestParam String reason, @RequestParam String detail, RedirectAttributes redirectAttr) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("reporter", reporter);
+		param.put("reportee", reportee);
+		param.put("reason", reason);
+		param.put("detail", detail);
+		int result = reportService.insertReportUser(param);
+		redirectAttr.addFlashAttribute("msg", result > 0 ? "신고가 접수되었습니다." : "다시 시도하세요.");
+		
+		return "redirect:/board/request.do";
+	}
 }
