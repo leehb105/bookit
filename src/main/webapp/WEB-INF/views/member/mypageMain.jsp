@@ -61,30 +61,6 @@
 	</form>           
 </div>
 
-<script>
-$(document).ready(function() {
-	
-	
-	$(".chat").on("click", function(e){
-
-		loginMember = $(e.target).val();
-	
-		location.href = `${pageContext.request.contextPath}/chat/chatMain?loginMember=\${loginMember}`;
-		
-	});
-
-
-	
-
-	
-	
-
-
-
-});
-
-
-</script>
 
 
 
