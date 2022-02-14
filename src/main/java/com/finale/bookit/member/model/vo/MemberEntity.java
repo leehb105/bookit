@@ -33,6 +33,7 @@ public class MemberEntity implements Serializable {
 	private int cash;
 	private String profileImage;
 	
+	private String searchAddress;
 	private String roadAddress;
 	private String jibunAddress;
 	private float latitude;
