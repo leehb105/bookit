@@ -56,7 +56,6 @@ public interface CommunityDao {
 
 	void updateComment(Comment comment);
 
-	void updateReComment(Comment comment);
 
 
 }

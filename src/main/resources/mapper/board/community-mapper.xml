@@ -123,7 +123,7 @@
 		select * from community_comment where no = #{no}
 	</select> 
 	<delete id="deleteComment">
-		delete from community_comment where no = #{no}
+		update community_comment set deleteYn ='Y' where no = #{no}
 	</delete>
 	<update id="updateComment" parameterType="comment">
 		update community_comment set content = #{content}, reg_date = sysdate where no = #{no} 
