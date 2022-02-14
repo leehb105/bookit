@@ -106,7 +106,6 @@
                                             <div class="comment-content d-flex">
                                                 <!-- Comment Author -->
                                                 <div class="comment-author ml-40">
-                                                    <!-- 수정필요 -->
                                                     <c:if test="${review.member.profileImage eq null}">
                                                         <img src="${pageContext.request.contextPath}/resources/img/profile/default_profile.png" alt="author">
                                                     </c:if>

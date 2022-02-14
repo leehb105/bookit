@@ -12,12 +12,16 @@
             <div class="row">
                 <div class="col-12 col-lg-8">
                     <!-- Single Room Details Area -->
-                    <div class="single-room-details-area mb-50">
+                    <h3>도서 상세 정보</h3>
+                    <hr class="my-2">
+                    <div class="single-room-details-area mt-30 mb-50">
                         <div class="single-blog-post d-flex align-items-center mb-50">
-                            <img src="${booking.bookInfo.cover}" class="d-block w-40" alt="">
+                            <a href="${pageContext.request.contextPath}/search/bookDetail.do?isbn=${booking.bookInfo.isbn13}">
+                                <img src="${booking.bookInfo.cover}" class="d-block w-40 mr-30" alt="">
+                            </a>
                             <div class="post-content">
                                 <!-- booking Title -->
-                                <a href="#" class="post-title">${booking.bookInfo.title }</a>
+                                <a href="${pageContext.request.contextPath}/search/bookDetail.do?isbn=${booking.bookInfo.isbn13}" class="post-title">${booking.bookInfo.title }</a>
                                 <!-- 분류 -->
                                 <p>${booking.bookInfo.categoryName}</p>
                                 <!-- 저자, 출판사, 출판일 -->
@@ -55,15 +59,28 @@
 
                         </div>
 
-                        <h2>대여정보</h2>
-                        <span>제공자</span>
-                        <span>${booking.member.nickname}(${booking.member.id})</span>
-                        <br>
-                        <span>작성일 ${newDate}</span>
+                        <h3>대여정보</h3>
+                        <hr class="my-2">
 
-                        <p>${booking.content}</p>
+                        <c:if test="${booking.member.profileImage eq null}">
+                            <img src="${pageContext.request.contextPath}/resources/img/profile/default_profile.png" alt="author" style="width: 10%;">
+                            </c:if>
+                        <c:if test="${booking.member.profileImage ne null}">
+                            <img src="${pageContext.request.contextPath}/resources/img/profile/${review.member.profileImage}" alt="author">
+                        </c:if>
+
+                        <span>
+                            ${booking.member.nickname}(${booking.member.id})
+                        </span>
+                         &nbsp; 작성일 <span>${newDate}</span>
+                        
+                        <div class="hotel-reservation--area m-3">
+                            <p>${booking.content}</p>
+
+
+                        </div>
+                        
                     </div>
-
                     
                 </div>
 
