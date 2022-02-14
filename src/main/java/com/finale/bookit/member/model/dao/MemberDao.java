@@ -30,4 +30,6 @@ public interface MemberDao {
 
 	int insertAuthority(String id);
 
+	int updateMemberCash(HashMap<String, Object> param);
+
 }

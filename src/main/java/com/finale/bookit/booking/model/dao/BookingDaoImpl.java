@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class BookkingDaoImpl implements BookingDao{
+public class BookingDaoImpl implements BookingDao{
     @Autowired
     private SqlSessionTemplate session;
 
@@ -93,10 +93,12 @@ public class BookkingDaoImpl implements BookingDao{
 		return session.selectOne("booking.selectTotalMyBorrowedBookingCount", param);
 	}
 
+	/*
 	@Override
-	public int updateUserCash(HashMap<String, Object> param) {
-		return session.update("booking.updateUserCash", param);
+	public int updateMemberCash(HashMap<String, Object> param) {
+		return session.update("member.updateUserCash", param);
 	}
+	*/
 
 
 	

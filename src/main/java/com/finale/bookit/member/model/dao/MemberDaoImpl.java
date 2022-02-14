@@ -73,4 +73,9 @@ public class MemberDaoImpl implements MemberDao {
 		return session.insert("member.insertAuthority", id);
 	}
 
+	@Override
+	public int updateMemberCash(HashMap<String, Object> param) {
+		return session.insert("member.updateMemberCash", param);
+	}
+
 }

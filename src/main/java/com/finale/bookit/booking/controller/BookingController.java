@@ -280,7 +280,7 @@ public class BookingController {
     	HashMap<String, Object> param = new HashMap<String, Object>();
     	param.put("checkIn", BookitUtils.getFormatDate(checkIn));
     	param.put("checkOut", BookitUtils.getFormatDate(checkOut));
-    	param.put("pay", pay);
+    	param.put("pay", -1 * pay);
     	param.put("boardNo", boardNo);
     	param.put("id", member.getId());
     	log.debug("param = {}", param);
