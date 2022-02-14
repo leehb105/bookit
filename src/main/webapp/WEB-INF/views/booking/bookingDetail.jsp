@@ -118,8 +118,8 @@
                             </div>
                             <input type="hidden" id="pay" name="pay" value="">
                             <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+							<input type="hidden" name="deposit" id="deposit" value="${booking.deposit}">
                         </form>
-                        <input type="hidden" id="deposit" value="${booking.deposit}">
                         <input type="hidden" id="price" value="${booking.price}">
                     </div>
                 </div>

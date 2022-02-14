@@ -12,6 +12,8 @@
 			#{resNo},
 			#{pay},
 			0,
+			default,
+			#{deposit},
 			default
 		)
 	</insert>
