@@ -71,7 +71,12 @@ var category = "titleAndContent";
 var keyword = "파일";
 
 function searchCommunity(){
-	location.href = "${pageContext.request.contextPath}/board/search.do?"+"category=${category}&"+"keyword=${keyword}";
+	var searchType = $("select[name=searchType]").val();
+	var keyword = $("input[name=keyword]").val();
+		
+	console.log("searchType: "+ searchType, " keyword: ", keyword);	
+	
+	location.href = "${pageContext.request.contextPath}/board/search.do?searchType="+searchType+"&keyword="+keyword
 }
 function goCommunityForm(){
 	location.href = "${pageContext.request.contextPath}/board/communityForm.do";
@@ -98,9 +103,7 @@ $(() => {
 		$(".modal_chat").css("display","none");
 		$(".modal_content p").remove();
 	});
-	
-	
-	
+
 });
 
 
@@ -134,9 +137,9 @@ $(() => {
 	
 				      <form method="get" id="searchFrm">
 				      	<div >
-				      	    <select name = "category" >
-                            <option ${(param.category == "titleAndContent")? "selected" : ""} value = "titleAndContent">제목/내용</option>
-                            <option ${(param.category == "writer")? "selected" : ""} value = "writer">작성자</option>
+				      	    <select name = "searchType" >
+                            <option ${(param.searchType == "titleAndContent")? "selected" : ""} value = "titleAndContent">제목/내용</option>
+                            <option ${(param.searchType == "writer")? "selected" : ""} value = "writer">작성자</option>
                         </select>
 				        <input type = "text" name = "keyword" value = "${param.keyword}" style="margin: 5px;"/>
                    		<button type="submit" class="btn btn-outline-info" onClick="searchCommunity()" id="searchBtn">검색</button>

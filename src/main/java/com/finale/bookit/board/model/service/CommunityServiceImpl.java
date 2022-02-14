@@ -44,6 +44,7 @@ public class CommunityServiceImpl implements CommunityService {
 	    community.setContent(communityMap.get("content").toString());
 	    community.setCommentCount(Integer.parseInt(communityMap.get("commentCount").toString()));
 	    community.setNickname(communityMap.get("nickname").toString());
+	    community.setProfileImage(communityMap.get("profileImage").toString());
 	    
 	    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-ddHH:mm");
 	    String str =  communityMap.get("regDate").toString();
@@ -268,6 +269,12 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public void updateComment(Comment comment) {
 		communityDao.updateComment(comment);
+	}
+
+	@Override
+	public int getSearchCommuntiyContentCount(Map<String, Object> param) {
+		return communityDao.getSearchCommuntiyContentCount(param);
+		
 	}
 
 }
