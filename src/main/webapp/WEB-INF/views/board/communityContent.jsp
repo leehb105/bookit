@@ -17,40 +17,6 @@
 
 <script>
 
-
-//좋아요
-function communityLike(no){ 
-	    $.ajax({
-	           type : "POST",  
-	           url : `${pageContext.request.contextPath}/board/communityLike.do`,,       
-	           dataType : "json",   
-	           data : 'no' : no
-	           error : function(){
-	              alert("에러");
-	           },
-	           success : function(likeCheck) {
-	               
-	                   if(no == 0){
-	                   	alert("추천완료.");
-	                	document.getElementById('full').style.display = 'inline-block';
-	                	document.getElementById('empty').style.display = 'none';
-	                 	location.href = "${pageContext.request.contextPath}/board/likeCountCancel.do";
-	                   }
-	                   else (no == 1){
-	                    alert("추천취소");
-	                	document.getElementById('full').style.display = 'none';
-	                	document.getElementById('empty').style.display = 'inline-block';
-	                	location.href = "${pageContext.request.contextPath}/board/likeCountCancel.do";
-
-	               
-	               }
-
-	           }
-	       });
-	}
-	
-}
-
 //수정
  const csrfHeader = "${_csrf.headerName}";
 	const csrfToken = "${_csrf.token}";
