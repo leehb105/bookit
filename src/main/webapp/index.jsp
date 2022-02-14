@@ -564,9 +564,12 @@ $(document).ready(function(){
     <!-- Partner Area End -->
 
 <script>
+    //도서 명 input
+    const bookTitle = document.getElementById('bookTitle');
+    const searchBtn = document.getElementById('searchBtn');
     window.onload = function(){
         //버튼 죽여놓음
-        document.getElementById('searchBtn').disabled = true;
+        searchBtn.disabled = true;
     };
 
 //datdpicker 한글설정
@@ -636,6 +639,12 @@ $(document).ready(function(){
                 }
             }
 
+            if($('#bookTitle').val() != '' && $('#checkIn').val() != '' && $('#checkOut').val() != ''){
+                $('#searchBtn').attr("disabled", false);
+            }else{
+                //입력값 없을 시 다시 버튼 비활성화
+                $('#searchBtn').attr("disabled", true);
+            }
             
         });;//datepicker end
 
@@ -686,6 +695,15 @@ $(document).ready(function(){
             if($('#checkIn').val() > $('#checkOut').val()){
                 $('#checkOut').datepicker('setDate', new Date($('#checkIn').val()));
             }
+
+            if($('#bookTitle').val() != '' && $('#checkIn').val() != '' && $('#checkOut').val() != ''){
+                $('#searchBtn').attr("disabled", false);
+            }else{
+                //입력값 없을 시 다시 버튼 비활성화
+                $('#searchBtn').attr("disabled", true);
+            }
+
+
         });//datepicker end
     });
 
@@ -693,7 +711,6 @@ $(document).ready(function(){
     function checkInputDate() {
 
         const resfrm = document.getElementById("resfrm");
-        const bookTitle = document.getElementById('bookTitle');
 
         //입력이 되었을때만
         if(bookTitle.value != ''){
@@ -702,7 +719,39 @@ $(document).ready(function(){
         }
 
     }
-
+    //도서입력 체크
+    $(function(){
+        $('#bookTitle').on('input', function(){
+            if($('#bookTitle').val() != '' && $('#checkIn').val() != '' && $('#checkOut').val() != ''){
+                $('#searchBtn').attr("disabled", false);
+            }else{
+                //입력값 없을 시 다시 버튼 비활성화
+                $('#searchBtn').attr("disabled", true);
+            }
+        });
+    });
+    // //대여시작일 체크
+    // $(function(){
+    //     $('#checkIn').on('input', function(){
+    //         if($('#bookTitle').val() != '' && $('#checkIn').val() != '' && $('#checkOut').val() != ''){
+    //             $('#searchBtn').attr("disabled", false);
+    //         }else{
+    //             //입력값 없을 시 다시 버튼 비활성화
+    //             $('#searchBtn').attr("disabled", true);
+    //         }
+    //     });
+    // });
+    // //대여 종료일 체크
+    // $(function(){
+    //     $('#checkOut').on('input', function(){
+    //         if($('#bookTitle').val() != '' && $('#checkIn').val() != '' && $('#checkOut').val() != ''){
+    //             $('#searchBtn').attr("disabled", false);
+    //         }else{
+    //             //입력값 없을 시 다시 버튼 비활성화
+    //             $('#searchBtn').attr("disabled", true);
+    //         }
+    //     });
+    // });
 
 
 </script>

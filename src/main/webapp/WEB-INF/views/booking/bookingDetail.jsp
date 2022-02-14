@@ -74,7 +74,10 @@
                         <span>
                             ${booking.member.nickname}(${booking.member.id})
                         </span>
-                         &nbsp; 작성일 <span>${newDate}</span>
+                        &nbsp;&nbsp;
+                        <span>${newDate}</span>
+                        &nbsp;&nbsp;
+                        <span>${booking.member.jibunAddress}</span>
                         
                         <div class="hotel-reservation--area m-3">
                             <p>${booking.content}</p>
