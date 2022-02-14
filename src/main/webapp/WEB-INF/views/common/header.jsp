@@ -120,10 +120,7 @@
                                             </li>
                                         </ul> -->
 
-                                    <li><a href="#">컬렉션</a></li>
-                                    <sec:authorize access="hasRole('ADMIN')">
-                                    	 <li><a href="${pageContext.request.contextPath}/admin/admin.do">관리자</a></li>    
-                                    </sec:authorize>                  
+                                    <li><a href="#">컬렉션</a></li>             
  								</ul>
 
                                 <!-- Search -->
@@ -141,18 +138,26 @@
                               
                               <sec:authorize access="isAuthenticated()">
                               	<div style="padding-right:20px">
-                              		
-	                            	<a href="${pageContext.request.contextPath}/member/mypageMain.do">
-	                            		<sec:authentication property="principal.username"/>
-	                            		</a>님 &nbsp
-                                        <a href="${pageContext.request.contextPath}/booking/myBooking.do?pageNum=1&amout=5"><i class="fa fa-list fa-lg"></i></a> &nbsp
-	                            	<a href="#"><i class="fa fa-heart fa-lg"></i></a>
-		                            </div>
-	                            	<form:form
-	                            		method="POST"
-	                            		action="${pageContext.request.contextPath}/member/memberLogout.do">
-	                            		<button type = "submit" class="btn roberto-btn mb-15 w-10">로그아웃</button>
-	                              	</form:form>
+                              		<c:choose>
+	                              		<c:when test="${loginMember.id eq 'admin'}">
+	                              			<a href="${pageContext.request.contextPath}/admin/admin.do">
+		                            		<sec:authentication property="principal.username"/>
+		                            		</a>님 &nbsp
+	                                        <a href="${pageContext.request.contextPath}/booking/myBooking.do?pageNum=1&amout=5"><i class="fa fa-list fa-lg"></i></a> &nbsp
+		                            	<a href="#"><i class="fa fa-heart fa-lg"></i></a>
+		                            	<a href="${pageContext.request.contextPath}/member/memberLogout.do" class="btn roberto-btn mb-15 w-10">로그아웃</a>
+	                              		</c:when>
+	                              		
+	                              		<c:otherwise>
+		                              		<a href="${pageContext.request.contextPath}/member/mypageMain.do">
+		                            		<sec:authentication property="principal.username"/>
+		                            		</a>님 &nbsp
+	                                        <a href="${pageContext.request.contextPath}/booking/myBooking.do?pageNum=1&amout=5"><i class="fa fa-list fa-lg"></i></a> &nbsp
+		                            		<a href="#"><i class="fa fa-heart fa-lg"></i></a>
+		                            		<a href="${pageContext.request.contextPath}/member/memberLogout.do" class="btn roberto-btn mb-15 w-10">로그아웃</a>
+	                              		</c:otherwise>
+                              		</c:choose>
+		                          </div>
 						  	  </sec:authorize>	
 						  	  
 						  	  <c:if test="${!empty sessionScope.kakaoE}">
