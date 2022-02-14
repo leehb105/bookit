@@ -51,6 +51,7 @@ public class BookingController {
     		@RequestParam(value = "bookTitle") String bookTitle, 
     		@RequestParam(value = "checkIn") String checkIn, 
     		@RequestParam(value = "checkOut") String checkOut, 
+    		@AuthenticationPrincipal Member loginMember,
     		Model model, 
     		HttpServletRequest request ){
         int amount = 5;
@@ -63,6 +64,7 @@ public class BookingController {
         param.put("checkIn", checkIn);
         param.put("checkOut", checkOut);
         param.put("cri", cri);
+        param.put("address", loginMember.getSearchAddress());
         
         log.debug("title = {}", bookTitle);
         List<Booking> list = bookingService.selectBookingList(param);
