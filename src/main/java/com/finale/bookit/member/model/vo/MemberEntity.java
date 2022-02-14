@@ -20,24 +20,24 @@ public class MemberEntity implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	private String id;
-	private String password;
-	private String email;
-	private String nickname;
-	private String name;
-	private String phone;
-	private boolean enabled;
-	private Date enrollDate;
-	private String reportYn;
-	private int cash;
-	private String profileImage;
-	
-	private String searchAddress;
-	private String roadAddress;
-	private String jibunAddress;
-	private float latitude;
-	private float longitude;
+    
+    private String id;
+    private String password;
+    private String email;
+    private String nickname;
+    private String name;
+    private String phone;
+    private boolean enabled;
+    private Date enrollDate;
+    private String reportYn;
+    private int cash;
+    private String profileImage;
+    
+    private String searchAddress;
+    private String roadAddress;
+    private String jibunAddress;
+    private float latitude;
+    private float longitude;
 	
 	
 	

@@ -33,6 +33,7 @@
 		<result column="jibun_address" property="jibunAddress"/>
 		<result column="latitude" property="latitude"/>
 		<result column="longitude" property="longitude"/>
+		<result column="search_address" property="searchAddress"/>
 	
 		<collection 
 			property="authorities" 

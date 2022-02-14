@@ -8,6 +8,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import com.finale.bookit.member.model.dao.MemberDao;
 import com.finale.bookit.member.model.vo.Address;
 import com.finale.bookit.member.model.vo.Member;
 import com.finale.bookit.member.model.vo.MemberEntity;
+import com.finale.bookit.search.model.vo.BookReview;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -214,6 +216,16 @@ public class MemberServiceImpl implements MemberService {
 	public int insertAuthority(String id) {
 		// TODO Auto-generated method stub
 		return memberDao.insertAuthority(id);
+	}
+
+	@Override
+	public List<BookReview> selectBookReviewList(HashMap<String, Object> param) {
+		return memberDao.selectBookReviewList(param);
+	}
+
+	@Override
+	public int selectTotalBookReviewCountById(HashMap<String, Object> param) {
+		return memberDao.selectTotalBookReviewCountById(param);
 	}
 
 
