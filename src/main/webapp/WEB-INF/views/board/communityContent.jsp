@@ -270,6 +270,7 @@ textarea {
 		value="리스트로" onclick="goCommunityList();">
 	<p>${community.category}</p>
 	<p>${community.title}</p>
+	<p>[${community.commentCount}]</p>
 	<!-- 프로필 이미지 -->
 	<img
 		src="${pageContext.request.contextPath}/resources/img/profile/${community.profileImage}"
@@ -278,9 +279,9 @@ textarea {
 	<p>${community.regDate}</p>
 	<p>${community.readCount}</p>
 	<p>${community.likeCount}</p>
-	<p>${community.commentCount}</p>
+
 	<!-- 파일 이미지 -->
-	<c:if test="${not empty file}">
+	<c:if test="${!empty community.file}">
 		<c:forEach items="${community.file}" var="file">
 			<img
 				src="${pageContext.request.contextPath}/resources/img/board/${file.renamedFilename}">

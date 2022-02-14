@@ -8,7 +8,7 @@
 	c.community_no, c.category, c.title, TO_CHAR(c.reg_date, 'YYYY-MM-DD  HH24:MI') reg_date , 
 	c.read_count, c.like_count, c.member_id, c.content,
 	(select count(*) from community_comment where community_no = c.community_no) comment_count, 
-	(select m.nickname from member m where c.member_id = m.id) nickname
+	(select m.nickname from member m where c.member_id = m.id) nickname,(select m.profile_image from member m where c.member_id = m.id) profile_image
 	from community  c
 	where c.community_no = #{no}
 	</select>
@@ -64,9 +64,21 @@
 		update community set title = #{title}, content = #{content}, category = #{category} where community_no = #{no}
 	</update>
 	
-	<select id="getCommunityList" resultType="community">
+	<select id="getCommunityList" resultType="community" parameterType="map">
 		select community_no, category, title, (select m.nickname from member m where c.member_id = m.id) nickname, 
-		reg_date, read_count, like_count from community c where delete_yn = 'N' order by reg_date
+		reg_date, read_count, like_count from community c where delete_yn = 'N' 
+		
+		<choose>
+			<when test="category eq 'writer'">
+			and m.nickname like '%' ||  #{keyword} || '%'
+			</when>
+			<otherwise>
+			and (c.title like '%' ||  #{keyword} || '%') 
+			or (c.content like '%' ||  #{keyword} || '%')
+			</otherwise>
+			</choose>
+			
+		order by reg_date desc
 	</select>
 	
 	<select id="getTotalCommunityContent" resultType="Integer">
@@ -163,7 +175,7 @@
 	join member m on m.id = c.member_id
 	where c.delete_yn = 'N'
 	<choose>
-	<when test="category == 'writer'">
+	<when test="category eq 'writer'">
 	and m.nickname like '%' ||  #{keyword} || '%'
 	</when>
 	<otherwise>
@@ -171,7 +183,24 @@
 	or (c.content like '%' ||  #{keyword} || '%')
 	</otherwise>
 	</choose>
+	
 	order by c.reg_date
+	</select>
+
+	<select id="selectSearchCommuntiyContentCount" parameterType="map" resultType="Integer">
+	select count(*) 
+	 from community c where delete_yn = 'N' 
+		
+		<choose>
+			<when test="category eq 'writer'">
+			and m.nickname like '%' ||  #{keyword} || '%'
+			</when>
+			<otherwise>
+			and (c.title like '%' ||  #{keyword} || '%') 
+			or (c.content like '%' ||  #{keyword} || '%')
+			</otherwise>
+			</choose>
+	
 	</select>
 
 </mapper>

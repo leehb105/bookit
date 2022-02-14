@@ -43,6 +43,8 @@ public interface CommunityService {
 
 	void updateComment(Comment comment);
 
+	int getSearchCommuntiyContentCount(Map<String, Object> param);
+
 	
 }	
 
