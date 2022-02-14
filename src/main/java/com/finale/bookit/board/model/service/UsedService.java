@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.finale.bookit.board.model.vo.Used;
+import com.finale.bookit.board.model.vo.UsedAttachment;
 
 public interface UsedService {
 
@@ -17,5 +18,13 @@ public interface UsedService {
 
 	void deleteUsedContent(int no, String id);
 
+	void insertUsed(Used used);
+	
+	UsedAttachment selectOneUsedAttachment(int no);
+	
+	int getSearchUsedContentCount(Map<String, Object> param);
+
+	int getUsedNoCurrval();
+	
 	
 }
