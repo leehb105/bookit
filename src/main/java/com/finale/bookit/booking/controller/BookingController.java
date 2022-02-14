@@ -271,6 +271,7 @@ public class BookingController {
     		@RequestParam String checkOut,
     		@RequestParam int pay,
     		@RequestParam int boardNo,
+    		@RequestParam int deposit,
     		RedirectAttributes attributes,
     		@AuthenticationPrincipal Member member) {
     	
@@ -282,8 +283,9 @@ public class BookingController {
     	HashMap<String, Object> param = new HashMap<String, Object>();
     	param.put("checkIn", BookitUtils.getFormatDate(checkIn));
     	param.put("checkOut", BookitUtils.getFormatDate(checkOut));
-    	param.put("pay", -1 * pay);
+    	param.put("pay", pay);
     	param.put("boardNo", boardNo);
+    	param.put("deposit", deposit);
     	param.put("id", member.getId());
     	log.debug("param = {}", param);
     	

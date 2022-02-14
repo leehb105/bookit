@@ -402,16 +402,6 @@ CREATE TABLE rent_deposit (
 );
 CREATE SEQUENCE seq_rent_deposit_rent_no nocache;
 
-CREATE TABLE my_trade_history (
-	rent_no	number		NOT NULL,
-	price	number		NOT NULL,
-	cash	number		NOT NULL,
-	trade_date	date		NOT NULL
-
-	,constraint pk_my_trade_history_rent_no PRIMARY KEY(rent_no)
-);
-CREATE SEQUENCE seq_my_trade_history_rent_no nocache;
-
 
 create table admin_inquire(
     no number,
@@ -455,16 +445,19 @@ select * from (select count(*) from member group by extract(day from enroll_date
 		from
 		    member m left join authority a
 		    on m.id = a.member_id;            
-		   
+
 CREATE TABLE my_trade_history (
     rent_no    number,
     res_no NUMBER ,
     price    number        NOT NULL,
     cash    number        NOT NULL,
-    trade_date    date        DEFAULT current_date
+    trade_date    date        DEFAULT current_date,
+    deposit NUMBER			NOT NULL,
+    refund_yn varchar2(1)	DEFAULT 'N'
 
     ,constraint pk_my_trade_history_rent_no PRIMARY KEY(rent_no)
     ,constraint fk_my_trade_history_res_no FOREIGN key(res_no) REFERENCES BOOKING_RESERVATION(res_no)
+	,CONSTRAINT ck_my_trade_history_refund_yn CHECK(refund_yn IN ('Y', 'N'))
 );
 create sequence seq_my_trade_history_rent_no nocache;
 

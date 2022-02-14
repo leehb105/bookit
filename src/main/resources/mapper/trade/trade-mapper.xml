@@ -10,8 +10,10 @@
 		values(
 			seq_my_trade_history_rent_no.nextval,
 			#{resNo},
-			-1 * #{pay},
+			#{pay},
 			0,
+			default,
+			#{deposit},
 			default
 		)
 	</insert>
