@@ -41,4 +41,7 @@ public interface BookingDao {
 
 	int selectTotalMyBorrowedBookingCount(HashMap<String, Object> param);
 
+	int selectOneBookingReservation(HashMap<String, Object> param);
+
+	int selectOneBookingReservation2(HashMap<String, Object> param);
 }

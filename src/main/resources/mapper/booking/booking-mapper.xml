@@ -4,6 +4,36 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="booking">
+
+	
+	<select id="selectOneBookingReservation" resultType="_int">
+		select res_no from(
+			select
+				res_no,
+				rank() over(
+					order by res_no desc) rn
+			from
+				booking_reservation
+			where
+				borrower_id = #{id}
+		)
+		where rn = 1
+	</select>
+
+	<select id="selectOneBookingReservation2" resultType="_int">
+		select rent_no from(
+			select
+				rent_no,
+				rank() over(
+					order by res_no desc) rn
+			from
+				booking_reservation
+			where
+				borrower_id = #{id}
+		)
+		where rn = 1
+	</select>
+	
     <select id="selectBookingList" resultMap="bookingMap" resultType="criteria">
 		<![CDATA[
 			SELECT

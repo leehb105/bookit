@@ -78,6 +78,7 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public int updateMemberCash(HashMap<String, Object> param) {
 		return session.insert("member.updateMemberCash", param);
+	}
 
 	public List<BookReview> selectBookReviewList(HashMap<String, Object> param) {
 		return session.selectList("search.selectBookReviewList", param);
