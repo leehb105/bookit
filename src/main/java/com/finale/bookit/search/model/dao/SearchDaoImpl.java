@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.finale.bookit.search.model.vo.BookReview;
+import com.finale.bookit.search.model.vo.BookReviewEntity;
 
 @Repository
 public class SearchDaoImpl implements SearchDao {
@@ -23,6 +24,16 @@ public class SearchDaoImpl implements SearchDao {
 	@Override
 	public int selectTotalBookReviewCount(HashMap<String, Object> param) {
 		return session.selectOne("search.selectTotalBookReviewCount", param);
+	}
+
+	@Override
+	public int selectReviewIdCount(HashMap<String, Object> param) {
+		return session.selectOne("search.selectReviewIdCount", param);
+	}
+
+	@Override
+	public int bookReviewEnroll(HashMap<String, Object> param) {
+		return session.insert("search.bookReviewEnroll", param);
 	}
 	
 	

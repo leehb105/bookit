@@ -24,6 +24,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.finale.bookit.booking.model.vo.BookInfo;
 import com.finale.bookit.search.model.dao.SearchDao;
 import com.finale.bookit.search.model.vo.BookReview;
+import com.finale.bookit.search.model.vo.BookReviewEntity;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -222,6 +223,19 @@ public class SearchServiceImpl implements SearchService{
 		return searchDao.selectTotalBookReviewCount(param);
 	}
 
+
+	@Override
+	public int selectReviewIdCount(HashMap<String, Object> param) {
+		return searchDao.selectReviewIdCount(param);
+	}
+
+
+	@Override
+	public int bookReviewEnroll(HashMap<String, Object> param) {
+		return searchDao.bookReviewEnroll(param);
+	}
+
+	
 
 
 

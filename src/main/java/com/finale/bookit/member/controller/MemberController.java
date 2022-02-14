@@ -3,6 +3,7 @@ package com.finale.bookit.member.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -29,11 +30,14 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.finale.bookit.common.util.BookitUtils;
+import com.finale.bookit.common.util.Criteria;
+import com.finale.bookit.common.util.Paging;
 //import com.fasterxml.jackson.core.JsonParser;
 import com.finale.bookit.member.model.service.MemberService;
 import com.finale.bookit.member.model.vo.Address;
 import com.finale.bookit.member.model.vo.Member;
 import com.finale.bookit.member.model.vo.MemberEntity;
+import com.finale.bookit.search.model.vo.BookReview;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -254,9 +258,52 @@ public class MemberController {
 	}
 	
 	
+	@GetMapping("/bookReviewList.do")
+	public void reviewList(
+			@RequestParam(defaultValue = "1") int pageNum, 
+			@AuthenticationPrincipal Member loginMember,
+			Model model) {
+		
+		int amount = 5;
+        Criteria cri = new Criteria();
+        cri.setPageNum(pageNum);
+        cri.setAmount(amount);
+        
+		HashMap<String, Object> param = new HashMap<String, Object>();
+		param.put("id", loginMember.getId());
+		param.put("cri", cri);
+		
+		List<BookReview> list = memberService.selectBookReviewList(param);
+		
+		int total = memberService.selectTotalBookReviewCountById(param);
+		
+		log.debug("list = {}", list);
+        Paging page = new Paging(cri, total);
+        log.debug("paging = {}", page);
+        
+        model.addAttribute("list", list);
+        model.addAttribute("page", page);
+	}
 	
-	
-	
+	@PostMapping("/bookReviewDelete.do")
+	public String reviewDelete(
+			@RequestParam int reviewNo, 
+			RedirectAttributes attributes) {
+		log.debug("reviewNo = {}", reviewNo);
+		HashMap<String, Object> param = new HashMap<String, Object>();
+		param.put("reviewNo", reviewNo);
+		int result = memberService.bookReviewDelete(param);
+		
+		String msg = "";
+    	if(result > 0) {
+    		msg = "도서 리뷰가 삭제되었습니다.";   		
+    	}else {
+    		msg = "도서 리뷰삭제를 실패했습니다.";
+    	}
+    	attributes.addFlashAttribute("msg", msg); 
+    	return "redirect:/member/reviewList.do?pageNum=1";
+		
+	}
 	
 	
 	

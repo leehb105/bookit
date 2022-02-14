@@ -48,11 +48,13 @@
 	                            			<td>상태</td>
 	                            			<td>보증금</td>
 	                            			<td>일당 대여료</td>
+	                            			<td>주소</td>
 	                            		</tr>
 	                            		<tr>
 	                            			<td>${booking.bookStatus}</td>
 	                            			<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${booking.deposit }" />원</td>
 	                            			<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${booking.price }" />원</td>
+											<td>${booking.member.searchAddress}</td>
 	                            		</tr>
 		                            		
 	                            	

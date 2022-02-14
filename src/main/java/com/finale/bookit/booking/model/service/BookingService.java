@@ -2,8 +2,10 @@ package com.finale.bookit.booking.model.service;
 
 import com.finale.bookit.booking.model.vo.BookInfo;
 import com.finale.bookit.booking.model.vo.Booking;
+import com.finale.bookit.booking.model.vo.BookingEntity;
 import com.finale.bookit.common.util.Criteria;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +24,7 @@ public interface BookingService {
 
 	public int insertBooking(Booking booking);
 
-	public List<Booking> selectBorrowedList(String id);
+	public List<Booking> selectBorrowedList(HashMap<String, Object> param);
 
 	public List<Booking> selectLentList(Map<String, Object> param);
 
@@ -33,5 +35,9 @@ public interface BookingService {
 	public int selectTotalMyLentBookingCount(Map<String, Object> param);
 
 	public int selectWishCount(Map<String, Object> param);
-	
+
+	public int insertBookingReservation(HashMap<String, Object> param);
+
+	public int selectTotalMyBorrowedBookingCount(HashMap<String, Object> param);
+
 }

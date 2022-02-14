@@ -3,8 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <script src="https://kit.fontawesome.com/01809a491f.js" crossorigin="anonymous"></script>
+<sec:authentication property="principal" var="loginMember"/>
 
 	<!-- Rooms Area Start -->
     <div class="roberto-rooms-area section-padding-100-0 wow fadeInUp" data-wow-delay="100ms">
@@ -12,12 +14,16 @@
             <div class="row">
                 <div class="col-12 col-lg-8">
                     <!-- Single Room Details Area -->
-                    <div class="single-room-details-area mb-50">
+                    <h3>도서 상세 정보</h3>
+                    <hr class="my-2">
+                    <div class="single-room-details-area mt-30 mb-50">
                         <div class="single-blog-post d-flex align-items-center mb-50">
-                            <img src="${booking.bookInfo.cover}" class="d-block w-40" alt="">
+                            <a href="${pageContext.request.contextPath}/search/bookDetail.do?isbn=${booking.bookInfo.isbn13}">
+                                <img src="${booking.bookInfo.cover}" class="d-block w-40 mr-30" alt="">
+                            </a>
                             <div class="post-content">
                                 <!-- booking Title -->
-                                <a href="#" class="post-title">${booking.bookInfo.title }</a>
+                                <a href="${pageContext.request.contextPath}/search/bookDetail.do?isbn=${booking.bookInfo.isbn13}" class="post-title">${booking.bookInfo.title }</a>
                                 <!-- 분류 -->
                                 <p>${booking.bookInfo.categoryName}</p>
                                 <!-- 저자, 출판사, 출판일 -->
@@ -55,24 +61,40 @@
 
                         </div>
 
-                        <h2>대여정보</h2>
-                        <span>제공자</span>
-                        <span>${booking.member.nickname}(${booking.member.id})</span>
-                        <br>
-                        <span>작성일 ${newDate}</span>
+                        <h3>대여정보</h3>
+                        <hr class="my-2">
 
-                        <p>${booking.content}</p>
+                        <c:if test="${booking.member.profileImage eq null}">
+                            <img src="${pageContext.request.contextPath}/resources/img/profile/default_profile.png" alt="author" style="width: 10%;">
+                            </c:if>
+                        <c:if test="${booking.member.profileImage ne null}">
+                            <img src="${pageContext.request.contextPath}/resources/img/profile/${review.member.profileImage}" alt="author">
+                        </c:if>
+
+                        <span>
+                            ${booking.member.nickname}(${booking.member.id})
+                        </span>
+                        &nbsp;&nbsp;
+                        <span>${newDate}</span>
+                        &nbsp;&nbsp;
+                        <span>${booking.member.jibunAddress}</span>
+                        
+                        <div class="hotel-reservation--area m-3">
+                            <p>${booking.content}</p>
+
+
+                        </div>
+                        
                     </div>
-
                     
                 </div>
 
                 <div class="col-12 col-lg-4">
                     <!-- Hotel Reservation Area -->
                     <div class="hotel-reservation--area mt-100">
-                        <form action="#" method="post">
+                        <form th:action method="post" id="resEnrollFrm">
                         	<div>
-                        		<input type="hidden" id="bookingNo" value="${booking.boardNo}"/>
+                        		<input type="hidden" id="bookingNo" name="boardNo" value="${booking.boardNo}"/>
                         		<c:if test="${wishlistCount eq 0}">
 									<h3 id="empty" style="display: inline-block;"><a href="#" onclick="like();" ><i class="far fa-heart" ></i></a></h3>
 									<h3 id="full" style="display: none"><a href="#" onclick="dislike();"><i class="fas fa-heart"></i></a></h3>
@@ -85,17 +107,20 @@
                             <label for="checkInDate">대여일자</label>
                             <div class="row no-gutters">
                                 <div class="col-6">
-                                    <input type="text" class="input-small form-control" name="datepicker" id="checkIn" autocomplete="off" placeholder="대여 시작일">
+                                    <input type="text" class="input-small form-control" name="checkIn" id="checkIn" autocomplete="off" placeholder="대여 시작일">
                                 </div>
                                 <div class="col-6">
-                                    <input type="text" class="input-small form-control" name="datepicker" id="checkOut" autocomplete="off" placeholder="대여 종료일">
+                                    <input type="text" class="input-small form-control" name="checkOut" id="checkOut" autocomplete="off" placeholder="대여 종료일">
                                 </div>
                             </div>
                             <div class="form-group mt-30">
-                                <button type="submit" class="btn roberto-btn w-100">대여 신청</button>
+                                <button type="button" class="btn roberto-btn w-100" id="bookResBtn" onclick="bookResEnroll();">대여 신청</button>
                             </div>
-                            
+                            <input type="hidden" id="pay" name="pay" value="">
+                            <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+							<input type="hidden" name="deposit" id="deposit" value="${booking.deposit}">
                         </form>
+                        <input type="hidden" id="price" value="${booking.price}">
                     </div>
                 </div>
             </div>
@@ -173,6 +198,17 @@
                     $('#checkIn').datepicker('setDate', new Date($('#checkOut').val()));
                 }
             }
+
+            //사용자가 날짜를 모두 입력해야 버튼 활성화
+            let checkInDate = document.getElementById('checkIn').value;
+            let checkOutDate = document.getElementById('checkOut').value;
+
+            if(checkInDate != '' && checkOutDate != ''){
+                console.log(checkInDate);
+                console.log(checkOutDate);
+                document.getElementById('bookResBtn').disabled = false;
+
+            }
         });//datepicker end
 
 
@@ -223,6 +259,17 @@
             if($('#checkIn').val() > $('#checkOut').val()){
                 $('#checkOut').datepicker('setDate', new Date($('#checkIn').val()));
             }
+
+             //사용자가 날짜를 모두 입력해야 버튼 활성화
+            let checkInDate = document.getElementById('checkIn').value;
+            let checkOutDate = document.getElementById('checkOut').value;
+
+            if(checkInDate != '' && checkOutDate != ''){
+                console.log(checkInDate);
+                console.log(checkOutDate);
+                document.getElementById('bookResBtn').disabled = false;
+
+            }
         });//datepicker end
     });
 
@@ -230,10 +277,13 @@
     let resStartDate = new Array();
     let resEndDate = new Array();
     window.onload = function(){
-        console.log('test');
-        console.log(resStartDate);
-        console.log("${startDateList}");
-        
+        // console.log('test');
+        // console.log(resStartDate);
+        // console.log("${startDateList}");
+
+        document.getElementById('bookResBtn').disabled = true;
+
+
         //문자열 파싱
         let temp = "${startDateList}".replace('[', '');
         temp = temp.replace(']', '');
@@ -243,8 +293,8 @@
         temp = temp.replace(']', '');
         resEndDate = temp.split(", ");
 
-        console.log(resStartDate);
-        console.log(resEndDate);
+        // console.log(resStartDate);
+        // console.log(resEndDate);
         // for(let i = 0; i < resStartDate.length; i++){
         //     $('#checkIn').datepicker("option", "minDate", new Date(resStartDate[i]));
         //     // $("#edate").datepicker("option", "minDate", selectedDate);
@@ -253,6 +303,66 @@
         // }
         
     };
+
+    
+    //대여 신청 버튼
+    function bookResEnroll(){
+        const userCash = `${loginMember.cash}`;
+        console.log(userCash);
+        let checkInDate = document.getElementById('checkIn').value;
+        let checkOutDate = document.getElementById('checkOut').value;
+        
+        //대여 시작일과 종료일이 입력되었을 경우만
+        if(checkInDate != '' && checkOutDate != ''){
+            console.log(checkInDate);
+            console.log(checkOutDate);
+
+
+            checkInDate = new Date(checkInDate);
+            checkOutDate = new Date(checkOutDate);
+
+            const sec = checkOutDate.getTime() - checkInDate.getTime();
+            //날짜 사이값
+            const date = (sec / 1000 / 60 / 60 / 24) + 1;
+            console.log(date);
+
+            const deposit = Number(document.getElementById('deposit').value);
+            const price = Number(document.getElementById('price').value);
+            console.log(deposit);
+            console.log(price);
+            //최종 가격
+            const pay = deposit + (price * date);
+            console.log(pay);
+            document.getElementById('pay').value = pay;
+
+            //유저의 캐쉬가 지불가격보다 크거나 같다면
+            if(userCash >= pay){
+                let url = `${pageContext.request.contextPath}/booking/bookingReservation.do`;
+                $("#resEnrollFrm").attr("action", url);
+                $("#resEnrollFrm").submit();
+            }else{
+                //유저 캐쉬가 모자라다면
+                alert('충전액이 모자랍니다.');
+                location.href = `${pageContext.request.contextPath}/member/payments/charge.do`;
+            }
+
+            
+
+            // const url = `${pageContext.request.contextPath}/booking/bookingReservation`;
+            // $("#resEnrollFrm").attr("action", url);
+            // $("#resEnrollFrm").submit();
+        }
+
+
+        // let url = `${pageContext.request.contextPath}/booking/bookSearch.do`;
+        
+        // //새탭으로 열기
+        // $("#resEnrollFrm").attr("action", url);
+        // $("#resEnrollFrm").attr("target", "result");
+        // $("#resEnrollFrm").submit();
+
+
+    }
 
 
 

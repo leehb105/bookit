@@ -1,10 +1,12 @@
 package com.finale.bookit.member.model.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.finale.bookit.member.model.vo.Address;
 import com.finale.bookit.member.model.vo.MemberEntity;
+import com.finale.bookit.search.model.vo.BookReview;
 
 public interface MemberDao {
 
@@ -29,5 +31,13 @@ public interface MemberDao {
 	MemberEntity findkakao(HashMap<String, Object> userInfo);
 
 	int insertAuthority(String id);
+
+	int updateMemberCash(HashMap<String, Object> param);
+
+	List<BookReview> selectBookReviewList(HashMap<String, Object> param);
+
+	int selectTotalBookReviewCountById(HashMap<String, Object> param);
+
+	int bookReviewDelete(HashMap<String, Object> param);
 
 }

@@ -69,8 +69,9 @@ public class ChatController {
 		
 	}
 	
-	@GetMapping("chat/chatMain")
-	public String chatMain(@RequestParam String loginMember,Model model) {
+	@GetMapping("chat/chatMain.do")
+	public void chatMain(@AuthenticationPrincipal Member member,Model model) {
+		String loginMember = member.getId();
 		
 		
 		List<ChatRoom> result = chatRoomService.findAllRooms(loginMember);
@@ -91,7 +92,6 @@ public class ChatController {
         log.debug("list = {}", result);
         
         model.addAttribute("list", result);
-		return "forward:/WEB-INF/views/chat/chatMain.jsp";
 	}
 	
 

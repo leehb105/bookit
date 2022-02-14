@@ -28,10 +28,12 @@
 		<result column="report_yn" property="reportYn"/>
 		<result column="cash" property="cash"/>
 		<result column="profile_image" property="profileImage"/>
+		<result column="search_address" property="searchAddress"/>
 		<result column="road_address" property="roadAddress"/>
 		<result column="jibun_address" property="jibunAddress"/>
 		<result column="latitude" property="latitude"/>
 		<result column="longitude" property="longitude"/>
+		<result column="search_address" property="searchAddress"/>
 	
 		<collection 
 			property="authorities" 

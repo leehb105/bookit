@@ -373,6 +373,7 @@ CREATE OR REPLACE VIEW member_view
 AS
 SELECT
 	m.*,
+	a.depth1 || ' ' || a.depth2 AS search_address,
 	a.LATITUDE,
 	a.LONGITUDE,
 	a.road_address || nvl2(a.extra_address, ' (' || a.extra_address || ')', '') AS road_address,
@@ -400,16 +401,6 @@ CREATE TABLE rent_deposit (
 	,constraint ck_rent_deposit_refunds check(refunds IN ('Y', 'N'))
 );
 CREATE SEQUENCE seq_rent_deposit_rent_no nocache;
-
-CREATE TABLE my_trade_history (
-	rent_no	number		NOT NULL,
-	price	number		NOT NULL,
-	cash	number		NOT NULL,
-	trade_date	date		NOT NULL
-
-	,constraint pk_my_trade_history_rent_no PRIMARY KEY(rent_no)
-);
-CREATE SEQUENCE seq_my_trade_history_rent_no nocache;
 
 
 create table admin_inquire(
@@ -455,6 +446,22 @@ select * from (select count(*) from member group by extract(day from enroll_date
 		    member m left join authority a
 		    on m.id = a.member_id;            
 
+CREATE TABLE my_trade_history (
+    rent_no    number,
+    res_no NUMBER ,
+    price    number        NOT NULL,
+    cash    number        NOT NULL,
+    trade_date    date        DEFAULT current_date,
+    deposit NUMBER			NOT NULL,
+    refund_yn varchar2(1)	DEFAULT 'N'
+
+    ,constraint pk_my_trade_history_rent_no PRIMARY KEY(rent_no)
+    ,constraint fk_my_trade_history_res_no FOREIGN key(res_no) REFERENCES BOOKING_RESERVATION(res_no)
+	,CONSTRAINT ck_my_trade_history_refund_yn CHECK(refund_yn IN ('Y', 'N'))
+);
+create sequence seq_my_trade_history_rent_no nocache;
+
+
 --DROP TRIGGER trig_member;
 --SQL Error [4098] [42000]: ORA-04098 오류 발생시 trigger drop 후에 재생성
 CREATE OR REPLACE TRIGGER trig_member
@@ -468,3 +475,5 @@ BEGIN
 	WHERE id = :NEW.member_id;
 END;
 /;	
+
+

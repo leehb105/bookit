@@ -1,6 +1,7 @@
 package com.finale.bookit.member.model.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -9,13 +10,14 @@ import org.springframework.stereotype.Repository;
 
 import com.finale.bookit.member.model.vo.Address;
 import com.finale.bookit.member.model.vo.MemberEntity;
+import com.finale.bookit.search.model.vo.BookReview;
 
 @Repository
 public class MemberDaoImpl implements MemberDao {
 
 	@Autowired
 	private SqlSessionTemplate session;
-	
+
 	@Override
 	public int insertMember(MemberEntity member) {
 		return session.insert("member.insertMember", member);
@@ -58,8 +60,8 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public int kakaoinsert(HashMap<String, Object> userInfo) {
-		return session.insert("member.kakaoInsert",userInfo);
-		
+		return session.insert("member.kakaoInsert", userInfo);
+
 	}
 
 	@Override
@@ -71,6 +73,25 @@ public class MemberDaoImpl implements MemberDao {
 	public int insertAuthority(String id) {
 		// TODO Auto-generated method stub
 		return session.insert("member.insertAuthority", id);
+	}
+
+	@Override
+	public int updateMemberCash(HashMap<String, Object> param) {
+		return session.insert("member.updateMemberCash", param);
+	}
+
+	public List<BookReview> selectBookReviewList(HashMap<String, Object> param) {
+		return session.selectList("search.selectBookReviewList", param);
+	}
+
+	@Override
+	public int selectTotalBookReviewCountById(HashMap<String, Object> param) {
+		return session.selectOne("search.selectTotalBookReviewCountById", param);
+	}
+
+	@Override
+	public int bookReviewDelete(HashMap<String, Object> param) {
+		return session.update("search.bookReviewDelete", param);
 	}
 
 }

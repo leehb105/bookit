@@ -3,19 +3,31 @@ package com.finale.bookit.booking.model.service;
 import com.finale.bookit.booking.model.dao.BookingDao;
 import com.finale.bookit.booking.model.vo.BookInfo;
 import com.finale.bookit.booking.model.vo.Booking;
+import com.finale.bookit.booking.model.vo.BookingEntity;
 import com.finale.bookit.common.util.Criteria;
+import com.finale.bookit.member.model.dao.MemberDao;
+import com.finale.bookit.trade.model.dao.TradeDao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
+@Transactional(rollbackFor=Exception.class)
 public class BookingServiceImpl implements BookingService {
 
 	@Autowired
 	private BookingDao bookingDao;
+
+	@Autowired
+	private MemberDao memberDao;
+	
+	@Autowired
+	private TradeDao tradeDao;
 
 	@Override
 	public List<Booking> selectBookingList(Map<String, Object> param) {
@@ -53,8 +65,8 @@ public class BookingServiceImpl implements BookingService {
 	}
 
 	@Override
-	public List<Booking> selectBorrowedList(String id) {
-		return bookingDao.selectBorrowedList(id);
+	public List<Booking> selectBorrowedList(HashMap<String, Object> param) {
+		return bookingDao.selectBorrowedList(param);
 	}
 
 	@Override
@@ -82,6 +94,25 @@ public class BookingServiceImpl implements BookingService {
 		return bookingDao.selectWishCount(param);
 	}
 
-	
+	@Override
+	public int insertBookingReservation(HashMap<String, Object> param) {
+		int result = bookingDao.insertBookingReservation(param);
+		int resNo = bookingDao.selectOneBookingReservation(param);
+		param.put("resNo", resNo);
+//		int rentNo = bookingDao.selectOneBookingReservation2(param);
+//		param.put("rentNo", rentNo);
+		if(result > 0) {
+			result = memberDao.updateMemberCash(param);
+			if(result > 0) {
+				result = tradeDao.insertTrade(param);
+			}
+		}
+		return result;
+	}
+
+	@Override
+	public int selectTotalMyBorrowedBookingCount(HashMap<String, Object> param) {
+		return bookingDao.selectTotalMyBorrowedBookingCount(param);
+	}
 
 }

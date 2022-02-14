@@ -7,7 +7,16 @@
 	<select id="selectBookReviewByIsbn" resultMap="bookReviewMap">
 		<![CDATA[
 		SELECT
-			*
+			tb2.review_no,
+			tb2.isbn13,
+			tb2.content,
+			tb2.rating,
+			tb2.writer,
+			tb2.reg_date,
+			tb2.delete_yn,
+			tb2.ID,
+			tb2.NICKNAME,
+			tb2.profile_image
 		from
 			(SELECT 
 				rownum rn,
@@ -15,9 +24,7 @@
 			FROM
 				(
 				SELECT
-					b.*,
-					m.ID,
-					m.NICKNAME
+					*
 				from
 				    BOOK_REVIEW b join member m ON
 				    b.writer = m.id
@@ -29,7 +36,7 @@
 					b.reg_date DESC
 				) tb1
 			WHERE
-				rownum <= #{cri.pageNum} * #{cri.amount})
+				rownum <= #{cri.pageNum} * #{cri.amount}) tb2
 		WHERE
 			rn > (#{cri.pageNum} - 1) * #{cri.amount}	
 		]]>
@@ -43,10 +50,31 @@
 		<result column="writer" property="writer"/> 
 		<result column="reg_date" property="regDate"/> 
 		<result column="delete_yn" property="deleteYn"/> 
-		<association property="member" javaType="member">
+		<association property="member" javaType="Member">
 			<id property="id" column="id"/>
 			<result property="nickname" column="nickname"/>
-			<result property="profile_image" column="profileImage"/>
+			<result property="profileImage" column="profile_image"/>
+		</association>
+	</resultMap>
+	
+	<resultMap type="bookReview" id="bookReviewListMap">
+		<id column="review_no" property="reviewNo"/>
+		<result column="isbn13" property="isbn13"/> 
+		<result column="content" property="content"/> 
+		<result column="rating" property="rating"/> 
+		<result column="writer" property="writer"/> 
+		<result column="reg_date" property="regDate"/> 
+		<result column="delete_yn" property="deleteYn"/> 
+		<association property="bookInfo" javaType="bookInfo">
+			<id property="isbn13" column="isbn13"/>
+			<result property="title" column="title"/>
+			<result property="author" column="author"/>
+			<result property="publisher" column="publisher"/>
+			<result property="pubDate" column="pub_date"/>
+			<result property="itemPage" column="item_page"/>
+			<result property="categoryName" column="category_name"/>
+			<result property="cover" column="cover"/>
+			<result property="discription" column="discription"/>
 		</association>
 	</resultMap>
 
@@ -60,5 +88,76 @@
 			AND
 			DELETE_YN = 'N'
 	</select>
+	
+	<select id="selectReviewIdCount" resultType="int">
+		SELECT
+			count(*)
+		from
+		    BOOK_REVIEW b join member m ON
+		    b.writer = m.id
+		WHERE
+			b.isbn13 = #{isbn}
+			AND
+			m.id = #{id}
+			AND 
+			b.DELETE_YN = 'N'
+	</select>
+	
+	<insert id="bookReviewEnroll">
+		INSERT INTO BOOK_REVIEW values(
+			seq_book_review_review_no.nextval,
+			#{isbn},
+			#{content},
+			#{rating},
+			#{id},
+			DEFAULT,
+			DEFAULT	
+		)
+	</insert>
+
+	<select id="selectBookReviewList" resultMap="bookReviewListMap">
+	<![CDATA[
+		SELECT
+			*
+		FROM
+			(SELECT
+				rownum rn,
+				tb1.*
+			from
+				(SELECT
+					*
+				FROM
+					book_info bi JOIN BOOK_REVIEW br
+					ON bi.isbn13 = br.ISBN13
+				WHERE
+					br.writer = #{id}
+					AND
+					br.delete_yn = 'N'
+				ORDER BY
+					br.reg_date desc) tb1
+			WHERE 
+				ROWNUM <= #{cri.pageNum} * #{cri.amount}) tb2
+		WHERE
+			rn > (#{cri.pageNum} - 1) * #{cri.amount}
+	]]>
+	</select>
+	
+	
+	<select id="selectTotalBookReviewCountById" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			BOOK_REVIEW
+		WHERE
+			writer = #{id}
+			AND
+			delete_yn = 'N'
+	</select>
+	
+	<update id="bookReviewDelete">
+		update BOOK_REVIEW set delete_yn = 'Y' where review_no = #{reviewNo}
+	</update>
+
+
 
 </mapper>

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.finale.bookit.search.model.vo.BookReview;
+import com.finale.bookit.search.model.vo.BookReviewEntity;
 
 
 public interface SearchService {
@@ -16,4 +17,6 @@ public interface SearchService {
 
 	public List<BookReview> selectBookReviewByIsbn(HashMap<String, Object> param);
 	public int selectTotalBookReviewCount(HashMap<String, Object> param);
+	public int selectReviewIdCount(HashMap<String, Object> param);
+	public int bookReviewEnroll(HashMap<String, Object> param);
 }

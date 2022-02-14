@@ -4,6 +4,36 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="booking">
+
+	
+	<select id="selectOneBookingReservation" resultType="_int">
+		select res_no from(
+			select
+				res_no,
+				rank() over(
+					order by res_no desc) rn
+			from
+				booking_reservation
+			where
+				borrower_id = #{id}
+		)
+		where rn = 1
+	</select>
+
+	<select id="selectOneBookingReservation2" resultType="_int">
+		select rent_no from(
+			select
+				rent_no,
+				rank() over(
+					order by res_no desc) rn
+			from
+				booking_reservation
+			where
+				borrower_id = #{id}
+		)
+		where rn = 1
+	</select>
+	
     <select id="selectBookingList" resultMap="bookingMap" resultType="criteria">
 		<![CDATA[
 			SELECT
@@ -17,22 +47,25 @@
 					SELECT
 						b.REG_DATE, b.BOARD_NO, b.BOOK_STATUS, b.PRICE, b.DEPOSIT, b.DELETE_YN,
 					    bi.TITLE, bi.AUTHOR, bi.PUBLISHER, bi.PUBDATE, bi.CATEGORY_NAME,bi.COVER,
-					    br.RES_NO, br.START_DATE, br.END_DATE
+					    br.RES_NO, br.START_DATE, br.END_DATE,
+		    			mv.search_address, mv.jibun_address
 					from
 					    booking b join book_info bi ON
 					    b.isbn13 = bi.isbn13
 					    JOIN BOOKING_RESERVATION br ON
-						    b.board_no = br.board_no
+					    b.board_no = br.board_no
+					    JOIN member_view mv ON
+		    			b.writer = mv.id
 						WHERE
 							bi.title LIKE '%' || #{bookTitle} || '%' 
 							AND
-							br.start_date NOT BETWEEN #{checkIn} AND #{checkOut}
+							#{checkIn} NOT BETWEEN br.start_date AND br.end_date
 							AND
-							br.end_date NOT BETWEEN #{checkIn} AND #{checkOut}
-							AND 
-							br.borrower_id IS NOT null
+							#{checkOut} NOT BETWEEN br.start_date AND br.end_date
 							AND
 							b.DELETE_YN = 'N'
+							AND 
+							mv.search_address = #{address}
 						ORDER BY
 							b.reg_date DESC
 						) tb1
@@ -62,12 +95,17 @@
 		<result column="board_no" property="boardNo"/>
 		<result column="start_date" property="startDate"/>
 		<result column="end_date" property="endDate"/>
-		<result column="borrowerId" property="borrowerId"/>
+		<result column="borrower_id" property="borrowerId"/>
+		<result column="reg_date" property="regDate"/>
+		<result column="status" property="status"/>
 	</resultMap>
+
 	
 	<resultMap type="member" id="memberMap">
 		<id column="id" property="id"/>
 		<result column="nickname" property="nickname"/>
+		<result column="search_address" property="searchAddress"/>
+		<result column="jibun_address" property="jibunAddress"/>
 	</resultMap>
 
 	
@@ -113,9 +151,9 @@
 		WHERE
 			bi.title LIKE '%' || #{bookTitle} || '%' 
 			AND
-			br.start_date NOT BETWEEN #{checkIn} AND #{checkOut}
+			#{checkIn} NOT BETWEEN br.start_date AND br.end_date
 			AND
-			br.end_date NOT BETWEEN #{checkIn} AND #{checkOut}
+			#{checkOut} NOT BETWEEN br.start_date AND br.end_date
 			AND
 			b.DELETE_YN = 'N'
     </select>
@@ -126,7 +164,9 @@
 		    bi.*,
 		    br.*,
 		    m.id,
-		    m.nickname
+		    m.nickname,
+		    m.profile_image,
+		    mv.jibun_address
 		from
 		    booking b join book_info bi ON
 		    b.isbn13 = bi.isbn13
@@ -134,6 +174,8 @@
 		    b.board_no = br.board_no
 		    JOIN MEMBER m ON 
 		    b.writer = m.id
+		    JOIN member_view mv ON
+   			b.writer = mv.id
 		WHERE
 			b.board_no = #{bno}
 			
@@ -214,17 +256,48 @@
 		]]>
 	</select>
 	
-	<select id="selectBorrowedList" resultMap="bookingMap">
+	<resultMap type="booking" id="selectBorrowedListMap">
+		<id column="board_no" property="boardNo"/>
+		<result column="content" property="content"/>
+		<result column="book_status" property="bookStatus"/>
+		<result column="price" property="price"/>
+		<result column="deposit" property="deposit"/>
+		<result column="writer" property="writer"/>
+		<result column="delete_yn" property="deleteYn"/>
+		<result column="isbn13" property="isbn13"/>
+		<result column="reg_date" property="regDate"/>
+		<association property="bookInfo" resultMap="bookInfoMap"/>
+		<association property="bookReservation" resultMap="bookReservationMap"/>
+	</resultMap>
+	
+	
+	<select id="selectBorrowedList" resultMap="selectBorrowedListMap">
+	<![CDATA[
 		SELECT
 			*
 		FROM
-			BOOKING
+			(SELECT
+				rownum rn,
+				tb1.*
+			from
+				(SELECT
+					*
+				FROM
+					booking b join book_info bi ON
+				    b.isbn13 = bi.isbn13
+				    JOIN BOOKING_RESERVATION br ON
+				    b.board_no = br.board_no
+				WHERE
+					br.borrower_id = #{id}
+					AND
+					br.borrower_id IS NOT NULL
+				ORDER BY
+					br.REG_DATE desc) tb1
+			WHERE 
+				ROWNUM <= #{cri.pageNum} * #{cri.amount}) tb2
 		WHERE
-			writer = #{id}
-			AND
-			DELETE_YN = 'N'
-		ORDER BY
-			REG_DATE DESC
+			rn > (#{cri.pageNum} - 1) * #{cri.amount}
+		]]>
 	</select>
 	
 	<select id="selectLentList" resultMap="bookingMap_bookInfoList" resultType="criteria">
@@ -301,8 +374,18 @@
 			DELETE_YN = 'N'
 			AND
 			br.borrower_id IS NOT NULL
-		ORDER BY
-			REG_DATE DESC
+	</select>
+	
+	<select id="selectTotalMyBorrowedBookingCount" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			BOOKING b JOIN BOOKING_RESERVATION br
+			ON b.BOARD_NO = br.BOARD_NO
+		WHERE
+			br.borrower_id = #{id}
+			AND
+			br.borrower_id IS NOT NULL
 	</select>
 	
 	<select id="selectWishCount" resultType="_int">
@@ -315,4 +398,17 @@
 		    w.board_no = #{bno}
 		    and w.member_id = #{id}
 	</select>
+	
+	<insert id="insertBookingReservation">
+		INSERT INTO booking_reservation values(
+			seq_booking_reservation_res_no.nextval,
+			#{boardNo}, 
+			#{checkIn}, 
+			#{checkOut}, 
+			#{id},
+			default,
+			'대여중'
+		)
+	</insert>
+	
 </mapper>

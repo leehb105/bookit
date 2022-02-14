@@ -2,17 +2,19 @@ package com.finale.bookit.booking.model.dao;
 
 import com.finale.bookit.booking.model.vo.BookInfo;
 import com.finale.bookit.booking.model.vo.Booking;
+import com.finale.bookit.booking.model.vo.BookingEntity;
 import com.finale.bookit.common.util.Criteria;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Repository
-public class BookkingDaoImpl implements BookingDao{
+public class BookingDaoImpl implements BookingDao{
     @Autowired
     private SqlSessionTemplate session;
 
@@ -52,8 +54,8 @@ public class BookkingDaoImpl implements BookingDao{
 	}
 
 	@Override
-	public List<Booking> selectBorrowedList(String id) {
-		return session.selectList("booking.selectBorrowedList", id);
+	public List<Booking> selectBorrowedList(HashMap<String, Object> param) {
+		return session.selectList("booking.selectBorrowedList", param);
 	}
 
 	@Override
@@ -81,7 +83,25 @@ public class BookkingDaoImpl implements BookingDao{
 		return session.selectOne("booking.selectWishCount", param);
 	}
 
+	@Override
+	public int insertBookingReservation(HashMap<String, Object> param) {
+		return session.insert("booking.insertBookingReservation", param);
+	}
 
-	
+	@Override
+	public int selectTotalMyBorrowedBookingCount(HashMap<String, Object> param) {
+		return session.selectOne("booking.selectTotalMyBorrowedBookingCount", param);
+	}
+
+	@Override
+	public int selectOneBookingReservation(HashMap<String, Object> param) {
+		return session.selectOne("booking.selectOneBookingReservation", param);
+	}
+
+	@Override
+	public int selectOneBookingReservation2(HashMap<String, Object> param) {
+		return session.selectOne("booking.selectOneBookingReservation2", param);
+	}
+
 	
 }
