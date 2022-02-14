@@ -202,10 +202,6 @@ public class CommunityServiceImpl implements CommunityService {
 		communityDao.insertComment(comment);
 	}
 
-	@Override
-	public int updateComment(Comment comment) throws Exception {
-		return communityDao.updateComment(comment);
-	}
 
 	@Override
 	public int deleteComment(int no) throws Exception {
@@ -267,6 +263,16 @@ public class CommunityServiceImpl implements CommunityService {
 	public List<Community> searchCommuntiy(Map<String, Object> map) {
 		
 		return communityDao.searchCommuntiy(map);
+	}
+
+	@Override
+	public void updateComment(Comment comment) {
+		communityDao.updateComment(comment);
+	}
+
+	@Override
+	public void updateReComment(Comment comment) {
+		communityDao.updateReComment(comment);
 	}
 
 

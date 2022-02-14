@@ -8,13 +8,14 @@ import com.finale.bookit.board.model.vo.Used;
 public interface UsedService {
 
 	Used getUsed(int no);
-	
-	void deleteUsedContent(int no);
 
 	void updateUsedContent(Map<String, Object> param);
 	
 	List<Used> getUsedList(Map<String, Object> param);
 
 	int getTotalUsedContent();
+
+	void deleteUsedContent(int no, String id);
+
 	
 }

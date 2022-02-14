@@ -97,9 +97,12 @@ public class CommunityController {
 	@GetMapping("/communityContent.do")
 	public void community(@RequestParam int no, Model model, @AuthenticationPrincipal Member member) {
 		Community community = new Community();
+		
+	
 
 		try {
 			community = communityService.getCommunity(no);
+			communityService.updateReadCount(no);
 			log.info("community {}", community);
 		} catch (Exception e) {
 			log.error(e.getMessage());
@@ -192,9 +195,6 @@ public class CommunityController {
 		if (upFiles.length > 0)
 			log.info("===== file length {}", upFiles.length);
 
-		// 1. 첨부파일을 서버컴퓨터 저장 : rename
-		// 2. 저장된 파일의 정보 -> Attachment객체 -> attachment insert
-
 		for (int i = 0; i < upFiles.length; i++) {
 			MultipartFile upFile = upFiles[i];
 			if (!upFile.isEmpty()) {
@@ -225,10 +225,6 @@ public class CommunityController {
 
 	}
 
-	@GetMapping("/communitySearch.do")
-	public void communitySearch() {
-
-	}
 
 	@ResponseBody
 	@GetMapping("/commentList.do")
@@ -239,14 +235,11 @@ public class CommunityController {
 	}
 
 	@PostMapping("/insertComment.do")
-	public Map<String, Object> updateComment(@RequestBody Map<String, Object> commentMap, @AuthenticationPrincipal Member member) {
+	public Map<String, Object> insertComment(@RequestBody Map<String, Object> commentMap, @AuthenticationPrincipal Member member) {
 
-		log.info("insert comment --> {}", commentMap);
-		
 		Map<String, Object> resultMap = new HashMap<>();
 		boolean result = false;
 	
-		
 		try {
 
 			Comment comment = new Comment();
@@ -262,6 +255,41 @@ public class CommunityController {
 				communityService.insertReComment(comment);
 			} else {
 				communityService.insertComment(comment);
+			}
+
+			result = true;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+
+		resultMap.put("result", result);
+
+		return resultMap;
+	}
+	
+	@PostMapping("/updateComment.do")
+	public Map<String, Object> updateComment(@RequestBody Map<String, Object> commentMap, @AuthenticationPrincipal Member member) {
+
+		Map<String, Object> resultMap = new HashMap<>();
+		boolean result = false;
+	
+		try {
+
+			Comment comment = new Comment();
+			
+			comment.setCommunityNo(Integer.parseInt(commentMap.get("communityNo").toString()));
+			comment.setCommentLevel(Integer.parseInt(commentMap.get("commentLevel").toString()));
+			comment.setContent(commentMap.get("content").toString());
+			
+			String writer = member.getId();
+			comment.setWriter(writer);
+
+			if (comment.getCommentLevel() == 2) {
+				communityService.updateReComment(comment);
+			} else {
+				communityService.updateComment(comment);
 			}
 
 			result = true;
@@ -298,5 +326,6 @@ public class CommunityController {
 
 		}
 	}
+
 	
 }

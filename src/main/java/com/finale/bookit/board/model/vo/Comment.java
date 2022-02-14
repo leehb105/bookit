@@ -27,5 +27,6 @@ public class Comment implements Serializable{
 	private int commentCount;
 	private int communityNo;
 	private List<Comment> reComments;
-	
+	private String profileImage;
+
 }

@@ -65,11 +65,6 @@ public class UsedServiceImpl implements UsedService{
 	}
 
 	@Override
-	public void deleteUsedContent(int no) {
-		usedDao.deleteUsedContent(no);
-	}
-
-	@Override
 	public void updateUsedContent(Map<String, Object> param) {
 		usedDao.updateUsedContent(param);
 	}
@@ -83,6 +78,12 @@ public class UsedServiceImpl implements UsedService{
 	public int getTotalUsedContent() {
 		return usedDao.getTotalUsedContent();
 	}
+
+	@Override
+	public void deleteUsedContent(int no, String id) {
+		usedDao.deleteUsedContent(no);
+	}
+
 
 	
 }
