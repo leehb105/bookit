@@ -5,6 +5,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/collectionImage.css" />
+
 <!-- Breadcrumb Area Start -->
 <div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: none">
     <div class="container h-100">
@@ -33,7 +35,7 @@
         	<c:forEach items="${collectionList}" var="collectionList">
 	            <div class="col-12 col-md-6 col-lg-4">
 					<div class="single-post-area mb-100 wow fadeInUp text-center" data-wow-delay="50ms">
-						<div class="w-50 mb-3" style="height: 165px; display: inline-block; writing-mode: vertical-lr;">
+						<div class="collectionImage mb-4">
 							<a href="${pageContext.request.contextPath}/collection/collectionDetail.do?no=${collectionList.no}">
 								<img src="${pageContext.request.contextPath}/resources/img/profile/${collectionList.profileImage}"
 								onerror="this.src='${pageContext.request.contextPath}/resources/img/profile/default_profile.png'">

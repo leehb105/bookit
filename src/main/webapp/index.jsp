@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/collectionImage.css" />
 
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
@@ -125,10 +126,10 @@ $(document).ready(function(){
 				$(".collection-area").append(
 					'<div class="col-12 col-md-6 col-lg-4">'
 						+ '<div class="single-post-area mb-100 wow fadeInUp text-center" data-wow-delay="100ms">'
-							+ '<div class="w-50 mb-3" style="height: 165px; display: inline-block; writing-mode: vertical-lr;">'
+							+ '<div class="collectionImage mb-4">'
 								+ '<a href="${pageContext.request.contextPath}/collection/collectionDetail.do?no=' + no + '">'
 									+ ' <img src="${pageContext.request.contextPath}/resources/img/profile/' + collectionList[i].profileImage + '"'
-								+ ' onerror="this.src=`${pageContext.request.contextPath}/resources/img/profile/default_profile.png`"/>'
+									+ ' onerror="this.src=`${pageContext.request.contextPath}/resources/img/profile/default_profile.png`"/>'
 								+ '</a>'
 							+ '</div>'
 							+ '<h5 class="post-title">' + collectionList[i].nickname + '님의<br /></h5>'
