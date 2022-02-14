@@ -33,7 +33,7 @@ $(document).ready(function() {
 	  labels: labels,
 	  datasets: [{
 	    label: '2022년 북토리 충전 금액',
-	    data: [${cash[0]},${cash[1]}],
+	    data: [${cash[0]},${cash[1]},${cash[2]},${cash[3]},${cash[4]},${cash[5]},${cash[6]}],
 	    backgroundColor: [
 	      'rgba(255, 99, 132, 0.2)',
 	      'rgba(255, 159, 64, 0.2)',
