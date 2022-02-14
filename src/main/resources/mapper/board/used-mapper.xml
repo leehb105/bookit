@@ -5,7 +5,7 @@
 <mapper namespace="used">
 	<select id="selectUsedContent" parameterType="Integer" resultMap="usedMap">
 	select 
-	u.used_board_no, u.title, u.used_bookstate, u.trade_method, u.price, u.category, u.content, u.writer, u.read_count, TO_CHAR(c.reg_date, 'YYYY-MM-DD  HH24:MI') reg_date,
+	u.used_board_no, u.title, u.book_state, u.trade_method, u.price, u.category, u.content, u.writer, u.read_count, TO_CHAR(u.reg_date, 'YYYY-MM-DD  HH24:MI') reg_date,
 	(select m.nickname from member m where u.writer = m.id) nickname
 	from used_board u
 	where u.used_board_no = #{no}
@@ -27,7 +27,7 @@
 	
 
 	<select id="selectUsedAttachment" parameterType="Integer" resultType="usedAttachment">
-		select no, original_filename, renamed_filename, used_board_no from used_attachment where used_no = #{no} order by reg_date
+		select no, ORIGINAL_FILENMAE, renamed_filename, used_board_no from used_board_attachment where used_board_no = #{no} order by reg_date
 	</select>
 	
 	<update id="deleteUsedContent" parameterType="Integer">
@@ -47,6 +47,61 @@
 		select	count(*) from used_board
 	</select>
 	
-
+	<insert id="insertUsed" parameterType="used">
+		insert into
+			used_board(used_board_no, category, title, price, trade_method, book_state, writer, content)
+		values(
+			SEQ_USED_BOARD_USED_BOARD_NO.nextval,
+			#{category},
+			#{title},
+			#{price},
+			#{trade_method},
+			#{book_state},
+			#{writer},
+			#{content}
+		)
+	</insert>
+	
+	<insert id="insertUsedAttachment" parameterType="usedAttachment">
+		insert into
+			used_board_attachment(no, used_board_no, original_filename, renamed_filename)
+		values(
+			SEQ_USED_BOARD_ATTACHMENT_NO.nextval,
+			#{usedBoardNo},
+			#{originalFilename},
+			#{renamedFilename}
+		)
+	</insert>
+	<select id="getUsedNoCurrval" resultType="Integer">
+	select SEQ_USED_BOARD_USED_BOARD_NO.currval from dual
+	</select>
+	
+	
+	<select id="writerCheck" resultType="String" parameterType="Integer">
+		select writer from used_board where no=#{no} 
+	</select>
+			
+	<!-- 조회수 -->
+	<update id="updateReadCount">
+		update used_board set read_count = read_count + 1 where used_board_no = #{no}
+	</update>
+	
+	<!-- 검색 -->
+	<select id="searchUsed" parameterType="map" resultType="used">
+	select * from used_board u 
+	join member m on m.id = u.writer
+	where u.delete_yn = 'N'
+	<choose>
+	<when test=" == 'writer'">
+	and m.nickname like '%' ||  #{keyword} || '%'
+	</when>
+	<otherwise>
+	and (u.title like '%' ||  #{keyword} || '%') 
+	or (u.content like '%' ||  #{keyword} || '%')
+	</otherwise>
+	</choose>
+	order by u.reg_date
+	</select>
+	
 </mapper>
 

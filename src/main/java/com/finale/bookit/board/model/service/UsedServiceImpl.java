@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.finale.bookit.board.model.dao.UsedDao;
+import com.finale.bookit.board.model.vo.CommunityAttachment;
 import com.finale.bookit.board.model.vo.Used;
 import com.finale.bookit.board.model.vo.UsedAttachment;
 
@@ -49,24 +50,12 @@ public class UsedServiceImpl implements UsedService{
 		
 		used.setRegDate(date); 
 	    
-	    log.info("------------------ used 세팅 전------------------ ");
-	    log.info("--> {} ", used);
 	    
 	    //파일 
 	    List<UsedAttachment> fileList = usedDao.getUsedAttachmentList(no);
-	    used.setFile(fileList);
-	  
-	 
-	    
-	    log.info("------------------ used 세팅 후------------------ ");
-	    log.info("--> {} ", used);
+	    used.setFiles(fileList);
 
 	    return used;
-	}
-
-	@Override
-	public void deleteUsedContent(int no) {
-		usedDao.deleteUsedContent(no);
 	}
 
 	@Override
@@ -84,5 +73,48 @@ public class UsedServiceImpl implements UsedService{
 		return usedDao.getTotalUsedContent();
 	}
 
+	@Override
+	public void deleteUsedContent(int no, String id) {
+		usedDao.deleteUsedContent(no);
+	}
+
+	@Override
+	public void insertUsed(Used used) {
+		usedDao.insertUsed(used);
+		
+		int usedResult = usedDao.getUsedNoCurrval();
+		List<UsedAttachment> attachments = used.getFiles();
+		
+		if(attachments != null) {
+			for(UsedAttachment attach : attachments) {
+				// 3. 리턴값으로 받은 커뮤니티 넘버 할당해주기
+				attach.setUsedBoardNo(usedResult);
+				// 4. 파일 테이블에 데이터 인서트
+				insertUsedAttachment(attach);
+			}
+		}
+	
+	}
+	
+	public int insertUsedAttachment(UsedAttachment attach) {
+		return usedDao.insertUsedAttachment(attach);
+	}
+
+
+	@Override
+	public UsedAttachment selectOneUsedAttachment(int no) {
+		return usedDao.selectOneUsedAttachment(no);
+	}
+
+
+	@Override
+	public int getSearchUsedContentCount(Map<String, Object> param) {
+		return usedDao.getSearchUsedContentCount(param);
+	}
+
+	@Override
+	public int getUsedNoCurrval() {
+		return usedDao.getUsedNoCurrval();
+	}
 	
 }

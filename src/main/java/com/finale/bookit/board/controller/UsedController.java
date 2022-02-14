@@ -1,14 +1,13 @@
 package com.finale.bookit.board.controller;
 
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.finale.bookit.board.model.service.UsedService;
 import com.finale.bookit.board.model.vo.Used;
 import com.finale.bookit.common.util.BookitUtils;
+import com.finale.bookit.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -79,32 +79,19 @@ public class UsedController {
 	}
 	
 	@GetMapping("/usedDelete.do")
-	public void usedDelete(@RequestParam int no, Model model, HttpServletRequest request) {
-		log.info("no : {}", no );
-		
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		
-	      Enumeration<String> attrNames = session.getAttributeNames();                
-	      
-	      while(attrNames.hasMoreElements()){
-	            String attrName = attrNames.nextElement();
-	            Object attrValue = session.getAttribute(attrName);
-	            System.out.println(attrName + " : " + attrValue);
-	      }
+	public String usedDelete(@RequestParam int no, Model model, HttpServletRequest request,
+			@AuthenticationPrincipal Member member) {
 
-	
-		log.info("userId {} ", userId);
-		
 		try {
-			
-			usedService.deleteUsedContent(no);
-		
-		}catch(Exception e) {
+			usedService.deleteUsedContent(no, member.getId());
+
+		} catch (Exception e) {
 			log.error(e.getMessage());
 			e.printStackTrace();
-		}	
+		}
+		return "redirect:/board/used.do";
 	}
+	      
 	
 	@PostMapping("/usedUpdate.do")
 	public void usedUpdate(@RequestBody Map<String, Object> param, Model model) {

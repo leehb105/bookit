@@ -11,57 +11,52 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-12">
-						<button type="button" class="btn roberto-btn w-10 float-right" onclick="location.href='bookingEnroll.do'">책 등록</button>
+						<button type="button" class="btn roberto-btn w-10 float-right" onclick="location.href='requestForm.do'">요청서 작성</button>
 					</div>
 	
 				</div>
 			</div>
 		</div>
-
 	</c:if>
 
-	<!-- Booking Area Start -->
+	
     <div class="roberto-news-area section-padding-30-0">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-8">
-                    <!-- Single Booking List Area -->
-					<c:forEach var="booking" items="${list }">                   
+            
+					<c:forEach var="request" items="${list }">                   
 	                    <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
 	                        <!-- List Cover -->
 	                        <div class="post-thumbnail">
 								<!-- <input type="hidden" name="bno" value="${booking.boardNo}"> -->
-	                            <a href="#"><img src="${booking.bookInfo.cover }" alt=""></a>
+	                            <a href="#"><img src="${request.bookInfo.cover }" alt=""></a>
 	                        </div>
 	                        <!-- List Content -->
 	                        <div class="post-content">
 	                            <!-- List Meta -->
 	                            <!-- List Title -->
-	                            <a href="${pageContext.request.contextPath}/booking/bookingDetail.do?bno=${booking.boardNo}" class="post-title">${booking.bookInfo.title }</a>
+	                            <a href="${pageContext.request.contextPath}/booking/requestContent.do?bno=${request.no}" class="post-title">${request.bookInfo.title }</a>
 	                            <!-- List Author, publisher, pubdate -->
-	                            <p>${booking.bookInfo.author} 저 | ${booking.bookInfo.publisher} | <fmt:formatDate value="${booking.bookInfo.pubdate }" pattern="yyyy년 MM월"/></p>
+	                            <p>${booking.bookInfo.author} 저 | ${booking.bookInfo.publisher} | <fmt:formatDate value="${request.bookInfo.pubdate }" pattern="yyyy년 MM월"/></p>
 	                            
 	                            <div class="list-price">
 	                            	<table class="table text-center">
 	                            		<tr>
+	                            			<td>제목</td>
 	                            			<td>상태</td>
 	                            			<td>보증금</td>
 	                            			<td>일당 대여료</td>
 	                            		</tr>
 	                            		<tr>
-	                            			<td>${booking.bookStatus}</td>
-	                            			<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${booking.deposit }" />원</td>
-	                            			<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${booking.price }" />원</td>
+	                            			<td>${request.bookStatus}</td>
+	                            			<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${request.price }" />원</td>
 	                            		</tr>
-		                            		
-	                            	
+    	
 	                            	</table>
-	                            
-	                            
-	                          
+
 	                            </div>	
-	                            <!-- <div class="post-meta"><a href="">asd</a></div> -->
-								
+
 	                        </div>
 	                    </div>
 					</c:forEach> 
@@ -84,3 +79,5 @@
 	
 
     <!-- Partner Area End -->
+    <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+

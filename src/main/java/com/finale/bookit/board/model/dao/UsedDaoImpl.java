@@ -50,5 +50,40 @@ public class UsedDaoImpl implements UsedDao{
 		return session.selectOne("used.getTotalUsedContent");
 	}
 
+	@Override
+	public int insertUsed(Used used) {
+		return session.insert("used.inserUsed", used);
+	}
+
+	@Override
+	public UsedAttachment selectOneUsedAttachment(int no) {
+		return session.selectOne("used.selectOneUsedAttachment", no);
+	}
+
+	@Override
+	public String writerCheck(int no) {
+		return session.selectOne("used.writerCheck", no);
+	}
+
+	@Override
+	public int insertUsedAttachment(UsedAttachment attach) {
+		return session.insert("used.inserUsedAttachment", attach);
+	}
+
+	@Override
+	public int getUsedNoCurrval() {
+		return session.selectOne("used.getUsedNoCurrval");
+	}
+
+	@Override
+	public List<Used> searchUsed(Map<String, Object> map) {
+		return session.selectList("used.searchUsed", map);
+	}
+
+	@Override
+	public int getSearchUsedContentCount(Map<String, Object> param) {
+		return session.selectOne("used.getSearchUsedContentCount", param);
+	}
+
 
 }
