@@ -126,7 +126,7 @@ $(() => {
 			<tr data-no="${community.communityNo}">
 				<td>${community.communityNo}</td>
 				<td>${community.category}</td>
-				<td class = "title">${community.title}</td>
+				<td class = "title">${community.title}&nbsp;[${community.commentCount}]</td>
 				<td class="writer" id="${community.nickname}">${community.nickname}</td>
 				<td><fmt:formatDate value="${community.regDate}" pattern="yy/MM/dd HH:mm"/> </td>
 				<td>${community.readCount}</td>

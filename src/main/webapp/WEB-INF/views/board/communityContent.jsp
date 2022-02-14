@@ -16,6 +16,41 @@
 	crossorigin="anonymous"></script>
 
 <script>
+
+
+//좋아요
+function communityLike(no){ 
+	    $.ajax({
+	           type : "POST",  
+	           url : `${pageContext.request.contextPath}/board/communityLike.do`,,       
+	           dataType : "json",   
+	           data : 'no' : no
+	           error : function(){
+	              alert("에러");
+	           },
+	           success : function(likeCheck) {
+	               
+	                   if(no == 0){
+	                   	alert("추천완료.");
+	                	document.getElementById('full').style.display = 'inline-block';
+	                	document.getElementById('empty').style.display = 'none';
+	                 	location.href = "${pageContext.request.contextPath}/board/likeCountCancel.do";
+	                   }
+	                   else (no == 1){
+	                    alert("추천취소");
+	                	document.getElementById('full').style.display = 'none';
+	                	document.getElementById('empty').style.display = 'inline-block';
+	                	location.href = "${pageContext.request.contextPath}/board/likeCountCancel.do";
+
+	               
+	               }
+
+	           }
+	       });
+	}
+	
+}
+
 //수정
  const csrfHeader = "${_csrf.headerName}";
 	const csrfToken = "${_csrf.token}";
@@ -52,10 +87,7 @@
 				}
 			}
 		});
-		
-		
 
-		
 	};
 	
 //수정 폼 출력 
@@ -200,17 +232,9 @@ function showButton(){
 		document.getElementById('modify').style.display = 'none';
 	}
 }
-function like(){
-	document.getElementById('full').style.display = 'inline-block';
-	document.getElementById('empty').style.display = 'none';
-	
-	
-}
-function likeCancel(){
-	document.getElementById('full').style.display = 'none';
-	document.getElementById('empty').style.display = 'inline-block';
-	location.href = "${pageContext.request.contextPath}/board/likeCancel.do";
-}
+
+
+
 function goCommunityList(){
 	location.href = "${pageContext.request.contextPath}/board/community.do";
 }
@@ -421,10 +445,10 @@ textarea {
 
 <div class="likeReport" style="text-align: center;">
 	<h3 id="empty" style="diaplay: inline-block;">
-		<a href="#" onclick="like();"><i class="far fa-thumbs-up"></i></a>
+		<a href="#" onclick="likeCheck(0);"><i class="far fa-thumbs-up"></i></a>
 	</h3>
 	<h3 id="full" style="display: none">
-		<a href="#" onclick="likeCancel();"><i class="fas fa-thumbs-up"></i></a>
+		<a href="#" onclick="likeCheck(1);"><i class="fas fa-thumbs-up"></i></a>
 	</h3>
 	<h3>
 		<a href="#" data-toggle="modal" data-target="#reportBoardEnrollModal"><i
