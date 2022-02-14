@@ -285,14 +285,30 @@ public class BookingController {
     	param.put("id", member.getId());
     	log.debug("param = {}", param);
     	
-    	int insertResult = bookingService.insertBookingReservation(param);
-    	int updateResult = bookingService.updateUserCash(param);
+    	int result = bookingService.insertBookingReservation(param);
     	String msg = "";
-    	if(insertResult > 0) {
+    	if(result > 0) {
     		msg = "대여 신청이 완료되었습니다.";   		
     	}else {
-    		msg = "리뷰 등록에 실패하였습니다.";
+    		msg = "대여 신청에 실패하였습니다.";
+    		attributes.addFlashAttribute("msg", msg); 
+    		return "redirect:/booking/bookingDetail.do?bno=" + boardNo;
     	}
+    	
+    	//사용자 잔액 차감 및 거래내역 추가 부분 이 밑으로 구현하세요 
+    	
+    	//잔액 차감 메소드만들어놓은거 필요하면 수정해서 쓰세요
+//    	result = bookingService.updateUserCash(param);
+//    	if(result > 0) {
+//    		
+//    	}else {
+//    		msg = "대여 신청에 실패하였습니다.";
+//    		attributes.addFlashAttribute("msg", msg); 
+//    		return "redirect:/booking/bookingDetail.do?bno=" + boardNo;
+//    	}
+    	
+    	
+    	
     	attributes.addFlashAttribute("msg", msg); 
     	
     	
