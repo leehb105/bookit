@@ -21,4 +21,6 @@ public interface ReportService {
 
 	int insertReportBoard(Map<String, Object> param);
 
+	int insertReportUser(Map<String, Object> param);
+
 }

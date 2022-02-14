@@ -64,6 +64,11 @@ public class ReportDaoImpl implements ReportDao {
 			return session.insert("report.insertReportRequest", param);
 		}
 	}
+
+	@Override
+	public int insertReportUser(Map<String, Object> param) {
+		return session.insert("report.insertReportUser", param);
+	}
 	
 	
 }
