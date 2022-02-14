@@ -27,5 +27,14 @@
 		select count(*) from request_board
 	</select>
 	
+	<insert id="requestEnroll">
+		insert into request_board
+		values (seq_request_board_no.nextval, #{wishPrice}, #{bookCondition}, #{id}, default, #{isbn13})
+	</insert>
+	
+	<delete id="requestDelete">
+		delete from request_board where no = #{requestNo}
+	</delete>
+	
 </mapper>
 

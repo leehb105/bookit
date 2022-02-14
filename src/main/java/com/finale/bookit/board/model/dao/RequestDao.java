@@ -11,4 +11,8 @@ public interface RequestDao {
 
 	int selectTotalRequest();
 
+	int requestEnroll(Map<String, Object> param);
+
+	int requestDelete(int requestNo);
+
 }

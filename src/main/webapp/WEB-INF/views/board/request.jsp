@@ -40,6 +40,30 @@ $(document).ready(function() {
 	  $(this).find('form')[0].reset();
 	});
 });
+function requestDelete(){
+	var requestNo = $("input[id=requestNo]").val();
+	$.ajax({
+		url: `${pageContext.request.contextPath}/board/requestDelete.do`,
+		method: "POST",
+		data: {
+			requestNo : requestNo
+		},
+		beforeSend : function(xhr){
+			/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+        },
+        success: function(res){
+			if(res = 1){
+				alert("삭제되었습니다.");
+				location.replace(`${pageContext.request.contextPath}/board/request.do`);
+			}
+			else{
+				alert("다시 시도해주세요.");
+			}
+		},
+		error: console.log
+	});
+}
 </script>
 
 	<c:if test="${!empty loginMember}">
@@ -79,6 +103,10 @@ $(document).ready(function() {
 	                    		<div class="dropdown-menu">
 	                    			<a class="dropdown-item" data-reportee="${requestList.memberId}" data-toggle="modal" data-target="#reportUserEnrollModal"><small>신고</small></a>
 	                    			<a class="dropdown-item" href=""><small>채팅</small></a>
+	                    			<c:if test="${requestList.memberId eq loginMember.id}">
+	                    				<a class="dropdown-item" onclick="requestDelete();"><small>삭제</small></a>
+	                    				<input type="hidden" id="requestNo" value="${requestList.no}"/>
+	                    			</c:if>
 	                    		</div>
 		                    </div>
 	                    </div>
@@ -105,11 +133,11 @@ $(document).ready(function() {
 	                <div class="modal-body">
 	                    <div>
 	                        <p>신고자ID</p>
-	                        <input type="text" id="reporter" value="${loginMember.id}" readonly />
+	                        <input type="text" id="reporter" name="reporter" value="${loginMember.id}" readonly />
 	                    </div>
 	                    <div>
 	                        <p>신고대상ID</p>
-	                        <input type="text" id="reportee" value="" readonly />
+	                        <input type="text" id="reportee" name="reportee" value="" readonly />
 	                    </div>
 	                    <div>
 							<p>사유</p>
@@ -131,7 +159,7 @@ $(document).ready(function() {
 	                </div>
 	                <div class="modal-footer">
 	                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	                    <button type="submit" class="btn btn-success" data-dismiss="modal">신고</button>
+	                    <button type="submit" class="btn btn-success">신고</button>
 	                </div>
 				</form:form>
             </div>

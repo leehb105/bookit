@@ -24,6 +24,16 @@ public class RequestServiceImpl implements RequestService{
 	public int selectTotalRequest() {
 		return requestDao.selectTotalRequest();
 	}
+
+	@Override
+	public int requestEnroll(Map<String, Object> param) {
+		return requestDao.requestEnroll(param);
+	}
+
+	@Override
+	public int requestDelete(int requestNo) {
+		return requestDao.requestDelete(requestNo);
+	}
 	
 	
 }
