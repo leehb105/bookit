@@ -89,7 +89,7 @@
                                     </div>
                                     
                                     <div class="col-12 mt-30 p-0">
-                                        <button type="button" class="btn roberto-btn" id="enrollBtn" onclick="enrollBooking();">대여 글 등록</button>
+                                        <button type="button" class="btn roberto-btn" id="enrollBtn" onclick="enrollBooking();">리뷰 등록</button>
                                     </div>
                                 </div>
                                 <input type="hidden" name="isbn" value="">
@@ -141,11 +141,6 @@
                                                                 <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
                                                             </c:when>
                                                         </c:choose>
-
-
-
-
-                                                            <!-- <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span> -->
                                                         </div>
                                                         <div class="star-ratings-base space-x-2 text-lg">
                                                             <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
@@ -237,9 +232,6 @@
         // let input = document.getElementById('1-star');
         console.log(input);
 
-        //별점 처리
-        // const stars = 
-
     });
 
     //댓글 페이징 관련
@@ -280,11 +272,6 @@
 		enrollFrm.submit(); 
 	});
 
-    //별점 처리
-    function ratingToPercent() {
-        const score = +this.restaurant.averageScore * 20;
-        return score + 1.5;
-    }
 
 
 </script>
