@@ -153,6 +153,10 @@
 			AND
 			delete_yn = 'N'
 	</select>
+	
+	<update id="bookReviewDelete">
+		update BOOK_REVIEW set delete_yn = 'Y' where review_no = #{reviewNo}
+	</update>
 
 
 

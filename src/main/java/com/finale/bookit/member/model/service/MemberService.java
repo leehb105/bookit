@@ -38,4 +38,6 @@ public interface MemberService {
 
 	int selectTotalBookReviewCountById(HashMap<String, Object> param);
 
+	int bookReviewDelete(HashMap<String, Object> param);
+
 }

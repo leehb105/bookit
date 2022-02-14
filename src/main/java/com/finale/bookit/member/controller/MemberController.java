@@ -258,7 +258,7 @@ public class MemberController {
 	}
 	
 	
-	@GetMapping("/reviewList.do")
+	@GetMapping("/bookReviewList.do")
 	public void reviewList(
 			@RequestParam(defaultValue = "1") int pageNum, 
 			@AuthenticationPrincipal Member loginMember,
@@ -285,7 +285,25 @@ public class MemberController {
         model.addAttribute("page", page);
 	}
 	
-	
+	@PostMapping("/bookReviewDelete.do")
+	public String reviewDelete(
+			@RequestParam int reviewNo, 
+			RedirectAttributes attributes) {
+		log.debug("reviewNo = {}", reviewNo);
+		HashMap<String, Object> param = new HashMap<String, Object>();
+		param.put("reviewNo", reviewNo);
+		int result = memberService.bookReviewDelete(param);
+		
+		String msg = "";
+    	if(result > 0) {
+    		msg = "도서 리뷰가 삭제되었습니다.";   		
+    	}else {
+    		msg = "도서 리뷰삭제를 실패했습니다.";
+    	}
+    	attributes.addFlashAttribute("msg", msg); 
+    	return "redirect:/member/reviewList.do?pageNum=1";
+		
+	}
 	
 	
 	
