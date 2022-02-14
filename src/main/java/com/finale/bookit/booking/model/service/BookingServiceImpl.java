@@ -6,6 +6,7 @@ import com.finale.bookit.booking.model.vo.Booking;
 import com.finale.bookit.booking.model.vo.BookingEntity;
 import com.finale.bookit.common.util.Criteria;
 import com.finale.bookit.member.model.dao.MemberDao;
+import com.finale.bookit.trade.model.dao.TradeDao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,9 @@ public class BookingServiceImpl implements BookingService {
 
 	@Autowired
 	private MemberDao memberDao;
+	
+	@Autowired
+	private TradeDao tradeDao;
 
 	@Override
 	public List<Booking> selectBookingList(Map<String, Object> param) {
@@ -93,8 +97,15 @@ public class BookingServiceImpl implements BookingService {
 	@Override
 	public int insertBookingReservation(HashMap<String, Object> param) {
 		int result = bookingDao.insertBookingReservation(param);
+		int resNo = bookingDao.selectOneBookingReservation(param);
+		param.put("resNo", resNo);
+//		int rentNo = bookingDao.selectOneBookingReservation2(param);
+//		param.put("rentNo", rentNo);
 		if(result > 0) {
 			result = memberDao.updateMemberCash(param);
+			if(result > 0) {
+				result = tradeDao.insertTrade(param);
+			}
 		}
 		return result;
 	}

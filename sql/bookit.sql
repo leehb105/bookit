@@ -373,6 +373,7 @@ CREATE OR REPLACE VIEW member_view
 AS
 SELECT
 	m.*,
+	a.depth1 || ' ' || a.depth2 AS search_address,
 	a.LATITUDE,
 	a.LONGITUDE,
 	a.road_address || nvl2(a.extra_address, ' (' || a.extra_address || ')', '') AS road_address,
@@ -454,6 +455,17 @@ select * from (select count(*) from member group by extract(day from enroll_date
 		from
 		    member m left join authority a
 		    on m.id = a.member_id;            
+		   
+CREATE TABLE my_trade_history (
+    rent_no    number,
+    res_no NUMBER ,
+    price    number        NOT NULL,
+    cash    number        NOT NULL,
+    trade_date    date        DEFAULT current_date
+
+    ,constraint pk_my_trade_history_rent_no PRIMARY KEY(rent_no)
+    ,constraint fk_my_trade_history_res_no FOREIGN key(res_no) REFERENCES BOOKING_RESERVATION(res_no)
+);
 
 --DROP TRIGGER trig_member;
 --SQL Error [4098] [42000]: ORA-04098 오류 발생시 trigger drop 후에 재생성
