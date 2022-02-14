@@ -18,6 +18,9 @@
 
 
 	<div class="container member-profile">
+		<jsp:include page="/WEB-INF/views/member/common/sidebar.jsp"/>    
+		
+	<!-- 
        		<div class="chat-row">
                <div class="col-2">
                    <div class="profile-work">
@@ -38,7 +41,8 @@
                        <button type = "button" value = ${loginMember.id} class = "chat">채팅내역</button>
                    </div>
                </div>	 	
-			</div>
+			</div> -->
+			
 		<div class ="container-chat">
 		
 		
