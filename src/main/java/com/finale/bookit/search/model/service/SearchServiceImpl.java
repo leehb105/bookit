@@ -24,6 +24,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.finale.bookit.booking.model.vo.BookInfo;
 import com.finale.bookit.search.model.dao.SearchDao;
 import com.finale.bookit.search.model.vo.BookReview;
+import com.finale.bookit.search.model.vo.BookReviewEntity;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

@@ -7,7 +7,16 @@
 	<select id="selectBookReviewByIsbn" resultMap="bookReviewMap">
 		<![CDATA[
 		SELECT
-			*
+			tb2.review_no,
+			tb2.isbn13,
+			tb2.content,
+			tb2.rating,
+			tb2.writer,
+			tb2.reg_date,
+			tb2.delete_yn,
+			tb2.ID,
+			tb2.NICKNAME,
+			tb2.profile_image
 		from
 			(SELECT 
 				rownum rn,
@@ -15,9 +24,7 @@
 			FROM
 				(
 				SELECT
-					b.*,
-					m.ID,
-					m.NICKNAME
+					*
 				from
 				    BOOK_REVIEW b join member m ON
 				    b.writer = m.id
@@ -29,7 +36,7 @@
 					b.reg_date DESC
 				) tb1
 			WHERE
-				rownum <= #{cri.pageNum} * #{cri.amount})
+				rownum <= #{cri.pageNum} * #{cri.amount}) tb2
 		WHERE
 			rn > (#{cri.pageNum} - 1) * #{cri.amount}	
 		]]>
@@ -43,10 +50,10 @@
 		<result column="writer" property="writer"/> 
 		<result column="reg_date" property="regDate"/> 
 		<result column="delete_yn" property="deleteYn"/> 
-		<association property="member" javaType="member">
+		<association property="member" javaType="Member">
 			<id property="id" column="id"/>
 			<result property="nickname" column="nickname"/>
-			<result property="profile_image" column="profileImage"/>
+			<result property="profileImage" column="profile_image"/>
 		</association>
 	</resultMap>
 

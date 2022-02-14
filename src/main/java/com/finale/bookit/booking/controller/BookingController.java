@@ -131,7 +131,7 @@ public class BookingController {
     	
     	BookInfo bookInfo = new BookInfo();
     	bookInfo.setIsbn13(isbn);
-    	
+
     	booking.setBookInfo(bookInfo);
     	booking.setWriter(member.getId());
     	

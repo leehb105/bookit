@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.finale.bookit.search.model.vo.BookReview;
+import com.finale.bookit.search.model.vo.BookReviewEntity;
 
 public interface SearchDao {
 

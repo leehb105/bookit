@@ -27,7 +27,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.finale.bookit.booking.model.service.BookingService;
 import com.finale.bookit.booking.model.vo.BookInfo;
-import com.finale.bookit.booking.model.vo.Booking;
 import com.finale.bookit.common.util.BookitUtils;
 import com.finale.bookit.common.util.Criteria;
 import com.finale.bookit.common.util.Paging;
@@ -242,7 +241,6 @@ public class SearchController {
         model.addAttribute("list", list);
         model.addAttribute("page", page);
 		model.addAttribute("book", book);
-		model.addAttribute("list", list);
 		model.addAttribute("idResult", idResult);
 	}
 	

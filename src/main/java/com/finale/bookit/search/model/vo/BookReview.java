@@ -12,17 +12,18 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookReview implements Serializable {
+public class BookReview extends BookReviewEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private int reviewNo;
-	private String isbn13;
-	private String content;
-	private int rating;
-	private String writer;
-	private Date regDate;
-	private String deleteYn;
-	
 	private Member member;
+
+	public BookReview(int reviewNo, String isbn13, String content, int rating, String writer, Date regDate,
+			String deleteYn, Member member) {
+		super(reviewNo, isbn13, content, rating, writer, regDate, deleteYn);
+		this.member = member;
+	}
+	
+	
 }
+
