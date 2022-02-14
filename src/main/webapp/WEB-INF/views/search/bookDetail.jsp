@@ -71,8 +71,8 @@
                                 <h3>별점 및 100자 평</h3>
                                 <hr class="my-2">
                                 <div class="star-rating space-x-4 mx-auto mt-40">
-                                    <label for="5-stars" class="star pr-4">★</label>
                                     <input type="radio" id="5-stars" name="rating" value="5" v-model="ratings"/>
+                                    <label for="5-stars" class="star pr-4">★</label>
                                     <input type="radio" id="4-stars" name="rating" value="4" v-model="ratings"/>
                                     <label for="4-stars" class="star">★</label>
                                     <input type="radio" id="3-stars" name="rating" value="3" v-model="ratings"/>

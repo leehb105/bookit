@@ -19,5 +19,7 @@ public class BookReservation implements Serializable{
 	private Date startDate;
 	private Date endDate;
 	private String borrowerId;
+	private Date regDate;
+	private String status;
 
 }
