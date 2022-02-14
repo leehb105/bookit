@@ -377,27 +377,8 @@
 			#{checkOut}, 
 			#{id},
 			default,
-			'대여중' 
+			'대여중'
 		)
 	</insert>
-	
-	
-	<update id="updateUserCash">
-		update member set cash = cash - #{pay}
-	</update>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 </mapper>

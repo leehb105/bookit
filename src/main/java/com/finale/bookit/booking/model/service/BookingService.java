@@ -40,6 +40,4 @@ public interface BookingService {
 
 	public int selectTotalMyBorrowedBookingCount(HashMap<String, Object> param);
 
-	public int updateUserCash(HashMap<String, Object> param);
-	
 }

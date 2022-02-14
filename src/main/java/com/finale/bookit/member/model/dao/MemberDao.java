@@ -32,6 +32,8 @@ public interface MemberDao {
 
 	int insertAuthority(String id);
 
+	int updateMemberCash(HashMap<String, Object> param);
+
 	List<BookReview> selectBookReviewList(HashMap<String, Object> param);
 
 	int selectTotalBookReviewCountById(HashMap<String, Object> param);

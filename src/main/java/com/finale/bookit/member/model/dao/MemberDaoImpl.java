@@ -17,7 +17,7 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Autowired
 	private SqlSessionTemplate session;
-	
+
 	@Override
 	public int insertMember(MemberEntity member) {
 		return session.insert("member.insertMember", member);
@@ -60,8 +60,8 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public int kakaoinsert(HashMap<String, Object> userInfo) {
-		return session.insert("member.kakaoInsert",userInfo);
-		
+		return session.insert("member.kakaoInsert", userInfo);
+
 	}
 
 	@Override
@@ -76,6 +76,9 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
+	public int updateMemberCash(HashMap<String, Object> param) {
+		return session.insert("member.updateMemberCash", param);
+
 	public List<BookReview> selectBookReviewList(HashMap<String, Object> param) {
 		return session.selectList("search.selectBookReviewList", param);
 	}

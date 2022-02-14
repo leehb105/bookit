@@ -41,6 +41,4 @@ public interface BookingDao {
 
 	int selectTotalMyBorrowedBookingCount(HashMap<String, Object> param);
 
-	int updateUserCash(HashMap<String, Object> param);
-
 }

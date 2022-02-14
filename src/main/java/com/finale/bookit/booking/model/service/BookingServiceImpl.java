@@ -5,19 +5,25 @@ import com.finale.bookit.booking.model.vo.BookInfo;
 import com.finale.bookit.booking.model.vo.Booking;
 import com.finale.bookit.booking.model.vo.BookingEntity;
 import com.finale.bookit.common.util.Criteria;
+import com.finale.bookit.member.model.dao.MemberDao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
+@Transactional(rollbackFor=Exception.class)
 public class BookingServiceImpl implements BookingService {
 
 	@Autowired
 	private BookingDao bookingDao;
+
+	@Autowired
+	private MemberDao memberDao;
 
 	@Override
 	public List<Booking> selectBookingList(Map<String, Object> param) {
@@ -86,19 +92,16 @@ public class BookingServiceImpl implements BookingService {
 
 	@Override
 	public int insertBookingReservation(HashMap<String, Object> param) {
-		return bookingDao.insertBookingReservation(param);
+		int result = bookingDao.insertBookingReservation(param);
+		if(result > 0) {
+			result = memberDao.updateMemberCash(param);
+		}
+		return result;
 	}
 
 	@Override
 	public int selectTotalMyBorrowedBookingCount(HashMap<String, Object> param) {
 		return bookingDao.selectTotalMyBorrowedBookingCount(param);
 	}
-
-	@Override
-	public int updateUserCash(HashMap<String, Object> param) {
-		return bookingDao.updateUserCash(param);
-	}
-
-	
 
 }

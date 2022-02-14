@@ -113,5 +113,8 @@
 		)
 	</insert>
 	
+	<update id="updateMemberCash">
+		update member set cash = cash + #{pay} where ids = #{id}
+	</update>
 	
 </mapper>
