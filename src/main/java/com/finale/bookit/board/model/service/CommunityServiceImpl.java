@@ -164,7 +164,6 @@ public class CommunityServiceImpl implements CommunityService {
 		
 		// 2. 업로드된 커뮤니티 넘버 조회 (currval이용)
 		 int communityResult = communityDao.getCommunityNoCurrval();
-		 log.info("communityResult {}", communityResult); 
 		 
 		List<CommunityAttachment> attachments = communityTest.getFiles();
 		

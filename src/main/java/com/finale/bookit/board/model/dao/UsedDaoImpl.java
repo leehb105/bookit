@@ -52,32 +52,27 @@ public class UsedDaoImpl implements UsedDao{
 
 	@Override
 	public int insertUsed(Used used) {
-		// TODO Auto-generated method stub
-		return 0;
+		return session.insert("used.inserUsed", used);
 	}
 
 	@Override
 	public UsedAttachment selectOneUsedAttachment(int no) {
-		// TODO Auto-generated method stub
-		return null;
+		return session.selectOne("used.selectOneUsedAttachment", no);
 	}
 
 	@Override
 	public String writerCheck(int no) {
-		// TODO Auto-generated method stub
-		return null;
+		return session.selectOne("used.writerCheck", no);
 	}
 
 	@Override
 	public int insertUsedAttachment(UsedAttachment attach) {
-		// TODO Auto-generated method stub
-		return 0;
+		return session.insert("used.inserUsedAttachment", attach);
 	}
 
 	@Override
 	public int getUsedNoCurrval() {
-		// TODO Auto-generated method stub
-		return 0;
+		return session.selectOne("used.getUsedNoCurrval");
 	}
 
 	@Override
