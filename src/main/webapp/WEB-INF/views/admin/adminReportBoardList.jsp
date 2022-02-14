@@ -11,7 +11,7 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/mypage.css" />
 
-<jsp:include page="/WEB-INF/views/common/header.jsp" />
+<jsp:include page="/WEB-INF/views/member/common/adminSidebar.jsp"/>
 
 <script>
 	// 게시글 신고 처리 상태 변경 함수(condition값, no값 넘겨주기)
@@ -138,18 +138,6 @@ textarea {
 	resize: none;
 }
 </style>
-
-<div class="container member-profile">
-	<div class="container mb-100 mt-100">
-		<div class="row mb-50">
-			<div class="col-2">
-				<div class="profile-work text-center">
-					<a href="#"><p>회원관리</p></a><br />
-					<a href="${pageContext.request.contextPath}/admin/adminReportList.do"><p>신고접수</p></a><br />
-					<a href="#"><p>회원통계</p></a><br />
-					<a href="${pageContext.request.contextPath}/admin/adminInquireList.do"><p>회원문의</p></a>
-				</div>
-			</div>
 			<div class="col-lg-8 col-md-10 ml-auto mr-auto">
 				<div class="section-heading text-center">
 					<h5>게시글 신고 목록</h5>
@@ -205,12 +193,12 @@ textarea {
 				
 				<!-- 게시글 신고 상세보기 Modal -->
 				<div class="modal fade" id="reportBoardDetailModal" tabindex="-1"
-					role="dialog" aria-labelledby="#reportBoardDetailModalLabel"
+					role="dialog" aria-labelledby="reportBoardDetailModalLabel"
 					aria-hidden="true">
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h5 class="modal-title" id="#reportBoardDetailModalLabel">신고 상세내용</h5>
+								<h5 class="modal-title" id="reportBoardDetailModalLabel">신고 상세내용</h5>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<span aria-hidden="true">×</span>
 								</button>

@@ -72,7 +72,8 @@ CREATE TABLE report_user (
 	detail	varchar2(100)		NULL,
 	reporter	varchar2(20)		NOT NULL,
 	reportee	varchar2(20)		NOT NULL,
-	reg_date	date	DEFAULT current_date	NOT NULL
+	reg_date	date	DEFAULT current_date	NOT NULL,
+    condition number default 0
 
 	,CONSTRAINT pk_report_user_no PRIMARY KEY(no)
 	,CONSTRAINT fk_report_user_reporter FOREIGN KEY(reporter) REFERENCES member(id)
@@ -140,7 +141,8 @@ CREATE TABLE report_board (
 	detail	varchar2(100)		NULL,
 	reporter	varchar2(20)		NOT NULL,
 	reg_date	date	DEFAULT current_date	NOT NULL,
-	board_id	varchar2(20)		NOT NULL
+	board_id	varchar2(20)		NOT NULL,
+    condition number default 0
 
 	,CONSTRAINT pk_report_board_no PRIMARY KEY(no)
 	,CONSTRAINT fk_report_board_reporter FOREIGN KEY(reporter) REFERENCES member(id)
@@ -206,16 +208,25 @@ CREATE SEQUENCE seq_request_board_no nocache;
 
 CREATE TABLE book_collection (
 	no	number		NOT NULL,
-	collection_no	number		NOT NULL,
 	collection_name	varchar2(50)		NOT NULL,
-	member_nickname	varchar2(20)		NOT NULL,
-	isbn13	varchar2(13)		NOT NULL
+	member_id	varchar2(20)		NOT NULL
 
-	,constraint pk_book_collection_no_collection_no PRIMARY KEY(no, collection_no)
-	,constraint fk_book_collection_member_nickname FOREIGN key(member_nickname) REFERENCES member(nickname)
-	,constraint fk_book_collection_isbn13 FOREIGN key(isbn13) REFERENCES book_info(isbn13)
+	,constraint pk_book_collection_no PRIMARY KEY(no)
+	,constraint fk_book_collection_member_id FOREIGN key(member_id) REFERENCES member(id)
 );
 CREATE SEQUENCE seq_book_collection_no nocache;
+
+create table book_collection_list(
+    no number not null,
+    book_collection_no number not null,
+    isbn13 varchar2(13) not null,
+    regDate date default current_date
+    
+    ,constraint pk_book_collection_list_no primary key (no)
+    ,constraint fk_book_collection_list_book_collection_no foreign key(book_collection_no) references book_collection(no) on delete cascade
+    ,constraint fk_book_collection_list_isbn13 foreign key(isbn13) references book_info(isbn13)
+);
+create sequence seq_book_collection_list_no nocache;
 
 CREATE TABLE book_review (
 	isbn13	varchar2(13)		NOT NULL,
@@ -404,7 +415,7 @@ CREATE SEQUENCE seq_my_trade_history_rent_no nocache;
 create table admin_inquire(
     no number,
     inquire_no number,
-    admin_id varchar2(20),  -- 제약조건 아직 안 넣었습니다
+    admin_id varchar2(20),
     admin_name varchar2(30),
     content varchar2(4000),
     reg_date date default sysdate,
@@ -437,10 +448,13 @@ select * from (select count(*) from member group by extract(day from enroll_date
 			charge_history ch
         group by
             extract(month from ch.charge_date);
-select
-    *
-from
-    charge_history;
+            
+		select
+		    *
+		from
+		    member m left join authority a
+		    on m.id = a.member_id;            
+
 --DROP TRIGGER trig_member;
 --SQL Error [4098] [42000]: ORA-04098 오류 발생시 trigger drop 후에 재생성
 CREATE OR REPLACE TRIGGER trig_member

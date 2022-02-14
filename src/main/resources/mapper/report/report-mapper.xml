@@ -32,4 +32,19 @@
 	<select id="selectOneReportUser" resultType="reportUser">
 		select * from report_user where no = #{no}
 	</select>
+	
+	<insert id="insertReportCommunity">
+		insert into report_board
+		values(seq_report_board_no.nextval, #{boardNo}, #{reason}, #{detail}, #{reporter}, default, 1, default)
+	</insert>
+	
+	<insert id="insertReportUsed">
+		insert into report_board
+		values(seq_report_board_no.nextval, #{boardNo}, #{reason}, #{detail}, #{reporter}, default, 3, default)
+	</insert>
+	
+	<insert id="insertReportRequest">
+		insert into report_board
+		values(seq_report_board_no.nextval, #{boardNo}, #{reason}, #{detail}, #{reporter}, default, 2, default)
+	</insert>
 </mapper>

@@ -4,28 +4,16 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
-
+<script src="https://kit.fontawesome.com/01809a491f.js" crossorigin="anonymous"></script>
 
 	<!-- Rooms Area Start -->
-    <div class="roberto-rooms-area section-padding-100-0">
+    <div class="roberto-rooms-area section-padding-100-0 wow fadeInUp" data-wow-delay="100ms">
         <div class="container">
             <div class="row">
                 <div class="col-12 col-lg-8">
                     <!-- Single Room Details Area -->
                     <div class="single-room-details-area mb-50">
-                        <!-- Room Thumbnail Slides -->
-                        <!-- <div class="room-thumbnail-slides mb-50">
-                            <div id="room-thumbnail--slide" class="carousel slide" data-ride="carousel">
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <img src="${booking.bookInfo.cover}" class="d-block w-40" alt="">
-
-                                    </div>
-                                   
-                                </div>  
-                            </div>
-                        </div> -->
-                        <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
+                        <div class="single-blog-post d-flex align-items-center mb-50">
                             <img src="${booking.bookInfo.cover}" class="d-block w-40" alt="">
                             <div class="post-content">
                                 <!-- booking Title -->
@@ -72,16 +60,6 @@
                         <span>${booking.member.nickname}(${booking.member.id})</span>
                         <br>
                         <span>작성일 ${newDate}</span>
-                       
-
-                        <!-- <ul>
-                            <li><i class="fa fa-check"></i> Mauris molestie lectus in irdiet auctor.</li>
-                            <li><i class="fa fa-check"></i> Dictum purus at blandit molestie.</li>
-                            <li><i class="fa fa-check"></i> Neque non fermentum suscipit.</li>
-                            <li><i class="fa fa-check"></i> Donec id dui ac massa malesuada.</li>
-                            <li><i class="fa fa-check"></i> In sit amet sapien quis orci maximus.</li>
-                            <li><i class="fa fa-check"></i> Vestibulum rutrum diam vel eros tristique.</li>
-                        </ul> -->
 
                         <p>${booking.content}</p>
                     </div>
@@ -93,19 +71,17 @@
                     <!-- Hotel Reservation Area -->
                     <div class="hotel-reservation--area mt-100">
                         <form action="#" method="post">
-                            <!-- <div class="form-group mb-30">
-                                <label for="checkInDate">대여일자</label>
-                                <div class="input-daterange" id="datepicker">
-                                    <div class="row no-gutters">
-                                        <div class="col-6">
-                                            <input type="text" class="input-small form-control" name="datepicker" id="checkIn" autocomplete="off" placeholder="대여 시작일">
-                                        </div>
-                                        <div class="col-6">
-                                            <input type="text" class="input-small form-control" name="datepicker" id="checkOut" autocomplete="off" placeholder="대여 종료일">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
+                        	<div>
+                        		<input type="hidden" id="bookingNo" value="${booking.boardNo}"/>
+                        		<c:if test="${wishlistCount eq 0}">
+									<h3 id="empty" style="display: inline-block;"><a href="#" onclick="like();" ><i class="far fa-heart" ></i></a></h3>
+									<h3 id="full" style="display: none"><a href="#" onclick="dislike();"><i class="fas fa-heart"></i></a></h3>
+								</c:if>
+								<c:if test="${wishlistCount eq 1}">
+									<h3 id="empty" style="display: none;"><a href="#" onclick="like();" ><i class="far fa-heart" ></i></a></h3>
+									<h3 id="full" style="display: inline-block"><a href="#" onclick="dislike();"><i class="fas fa-heart"></i></a></h3>
+								</c:if>
+							</div>
                             <label for="checkInDate">대여일자</label>
                             <div class="row no-gutters">
                                 <div class="col-6">
@@ -144,6 +120,8 @@
         };
     });
 
+    let startDate = new Date();
+    let endDate = new Date();
 
     $(function() {
         //대여시작일 설정
@@ -164,22 +142,39 @@
             // ,todayBtn : true //'오늘'버튼 활성화
             ,todayHighlight : true //오늘날짜 하이라이트 효과
             ,startDate : new Date() //오늘날짜 이전의 날짜는 선택 불가
+           
 
         })
-        .on("show", function(e) {
-            //이벤트의 종류
-            //show : datePicker가 보이는 순간 호출
-            //hide : datePicker가 숨겨지는 순간 호출
-            //clearDate: clear 버튼 누르면 호출
-            //changeDate : 사용자가 클릭해서 날짜가 변경되면 호출 (개인적으로 가장 많이 사용함)
-            //changeMonth : 월이 변경되면 호출
-            //changeYear : 년이 변경되는 호출
-            //changeCentury : 한 세기가 변경되면 호출 ex) 20세기에서 21세기가 되는 순간
+        // .on("show", function(e) {
+        //     //이벤트의 종류
+        //     //show : datePicker가 보이는 순간 호출
+        //     //hide : datePicker가 숨겨지는 순간 호출
+        //     //clearDate: clear 버튼 누르면 호출
+        //     //changeDate : 사용자가 클릭해서 날짜가 변경되면 호출 (개인적으로 가장 많이 사용함)
+        //     //changeMonth : 월이 변경되면 호출
+        //     //changeYear : 년이 변경되는 호출
+        //     //changeCentury : 한 세기가 변경되면 호출 ex) 20세기에서 21세기가 되는 순간
             
-            console.log(e);// 찍어보면 event 객체가 나온다.
-            //간혹 e 객체에서 date 를 추출해야 하는 경우가 있는데 
-            // e.date를 찍어보면 Thu Jun 27 2019 00:00:00 GMT+0900 (한국 표준시)
+        //     console.log(e);// 찍어보면 event 객체가 나온다.
+            
+
+        //     //간혹 e 객체에서 date 를 추출해야 하는 경우가 있는데 
+        //     // e.date를 찍어보면 Thu Jun 27 2019 00:00:00 GMT+0900 (한국 표준시)
+        // })
+        .on('changeDate', function(e){
+            // console.log(e.date, typeof e.date);
+            endDate = e.date; //선택한 날짜를 대입
+            //대여 시작일보다 전날짜를 대여종료일에서 선택할 수 없음
+            $('#checkOut').datepicker('setStartDate', endDate);
+
+            //종료일보다 시작일이 후라면 자동으로 시작일로 날짜 변경
+            if($('#checkOut').val() != ''){
+                if($('#checkIn').val() > $('#checkOut').val()){
+                    $('#checkIn').datepicker('setDate', new Date($('#checkOut').val()));
+                }
+            }
         });//datepicker end
+
 
     });
 
@@ -205,23 +200,60 @@
             ,startDate : new Date() //오늘날짜 이전의 날짜는 선택 불가
 
         })
-        .on("show", function(e) {
-            //이벤트의 종류
-            //show : datePicker가 보이는 순간 호출
-            //hide : datePicker가 숨겨지는 순간 호출
-            //clearDate: clear 버튼 누르면 호출
-            //changeDate : 사용자가 클릭해서 날짜가 변경되면 호출 (개인적으로 가장 많이 사용함)
-            //changeMonth : 월이 변경되면 호출
-            //changeYear : 년이 변경되는 호출
-            //changeCentury : 한 세기가 변경되면 호출 ex) 20세기에서 21세기가 되는 순간
+        // .on("show", function(e) {
+        //     //이벤트의 종류
+        //     //show : datePicker가 보이는 순간 호출
+        //     //hide : datePicker가 숨겨지는 순간 호출
+        //     //clearDate: clear 버튼 누르면 호출
+        //     //changeDate : 사용자가 클릭해서 날짜가 변경되면 호출 (개인적으로 가장 많이 사용함)
+        //     //changeMonth : 월이 변경되면 호출
+        //     //changeYear : 년이 변경되는 호출
+        //     //changeCentury : 한 세기가 변경되면 호출 ex) 20세기에서 21세기가 되는 순간
             
-            console.log(e);// 찍어보면 event 객체가 나온다.
-            //간혹 e 객체에서 date 를 추출해야 하는 경우가 있는데 
-            // e.date를 찍어보면 Thu Jun 27 2019 00:00:00 GMT+0900 (한국 표준시)
+        //     console.log(e);// 찍어보면 event 객체가 나온다.
+        //     //간혹 e 객체에서 date 를 추출해야 하는 경우가 있는데 
+        //     // e.date를 찍어보면 Thu Jun 27 2019 00:00:00 GMT+0900 (한국 표준시)
+        // })
+        .on('changeDate', function(e){
+            startDate = e.date; //선택한 날짜를 대입
+            //대여 종료일보다 이후 날짜를 대여 시작일에서 선택할 수 없음
+            $('#checkIn').datepicker('setEndDate', startDate);
+    
+            //시작일보다 전날짜를 선택하면 자동으로 시작일로 날짜 변경
+            if($('#checkIn').val() > $('#checkOut').val()){
+                $('#checkOut').datepicker('setDate', new Date($('#checkIn').val()));
+            }
         });//datepicker end
     });
 
-    
+
+    let resStartDate = new Array();
+    let resEndDate = new Array();
+    window.onload = function(){
+        console.log('test');
+        console.log(resStartDate);
+        console.log("${startDateList}");
+        
+        //문자열 파싱
+        let temp = "${startDateList}".replace('[', '');
+        temp = temp.replace(']', '');
+        resStartDate = temp.split(", ");
+
+        temp = "${endDateList}".replace('[', '');
+        temp = temp.replace(']', '');
+        resEndDate = temp.split(", ");
+
+        console.log(resStartDate);
+        console.log(resEndDate);
+        // for(let i = 0; i < resStartDate.length; i++){
+        //     $('#checkIn').datepicker("option", "minDate", new Date(resStartDate[i]));
+        //     // $("#edate").datepicker("option", "minDate", selectedDate);
+        //     $('#checkOut').datepicker('setDatesDisabled', new Date(resEndDate[i]));
+
+        // }
+        
+    };
+
 
 
 
@@ -288,7 +320,64 @@
 //     });//datepicker end
 // });
 
-
+// 찜 추가
+function like(){
+	document.getElementById('full').style.display = 'inline-block';
+	document.getElementById('empty').style.display = 'none';
+	
+	var boardNo = $("input[id=bookingNo]").val();
+	console.log(boardNo);
+	$.ajax({
+		url: `${pageContext.request.contextPath}/wishlist/wishlistEnroll.do`,
+		type: "POST",
+		data: {
+			boardNo : boardNo
+		},
+		beforeSend : function(xhr){   
+			/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+        },
+		dataType: "json",
+		success: function(data){
+			if(data == 1) {
+				alert("찜 등록되었습니다.");
+			} 
+			else {
+				alert("다시 시도해주세요.");
+			}
+		},
+		error: console.log
+	});
+}
+// 찜 해제
+function dislike(){
+	document.getElementById('full').style.display = 'none';
+	document.getElementById('empty').style.display = 'inline-block';
+	
+	var boardNo = $("input[id=bookingNo]").val();
+	console.log(boardNo);
+	$.ajax({
+		url: `${pageContext.request.contextPath}/wishlist/wishlistCancel.do`,
+		type: "POST",
+		data: {
+			boardNo : boardNo
+		},
+		beforeSend : function(xhr){   
+			/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+        },
+		dataType: "json",
+		success: function(data){
+			if(data == 1) {
+				alert("찜 취소되었습니다.");
+			} 
+			else {
+				alert("다시 시도해주세요.");
+			}
+		},
+		error: console.log
+	});
+}
 
 
 </script>

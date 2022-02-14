@@ -65,8 +65,8 @@
         <!-- Search Form -->
         <div class="search-form d-flex align-items-center">
             <div class="container">
-                <form action="index.html" method="get">
-                    <input type="search" name="search-form-input" id="searchFormInput" placeholder="Type your keyword ...">
+                <form action="${pageContext.request.contextPath}/search/searchBook.do" method="get">
+                    <input type="search" name="title" id="searchFormInput" placeholder="검색할 도서를 입력해주세요">
                     <button type="submit"><i class="icon_search"></i></button>
                 </form>
             </div>
@@ -98,9 +98,10 @@
                             <div class="classynav">
                                 <ul id="nav">
                                     
+                                    <li><a href="${pageContext.request.contextPath}/booking/bookingEnroll.do">대여등록</a></li>  
                                     <li><a href="${pageContext.request.contextPath}/board/used.do">중고거래</a></li>  
                                     <li><a href="${pageContext.request.contextPath}/board/community.do">커뮤니티</a></li>  
-                                  <li><a href="${pageContext.request.contextPath}/board/request.do">도서요청</a></li>  
+                                  	<li><a href="${pageContext.request.contextPath}/board/request.do">도서요청</a></li>  
                                         <!-- <ul class="dropdown">
                                             <li><a href="./index.html">- Home</a></li>
                                             <li><a href="./room.html">- Rooms</a></li>
@@ -123,10 +124,10 @@
                                     <sec:authorize access="hasRole('ADMIN')">
                                     	 <li><a href="${pageContext.request.contextPath}/admin/admin.do">관리자</a></li>    
                                     </sec:authorize>                  
- 									</ul>
+ 								</ul>
 
                                 <!-- Search -->
-                                <div class="search-btn ml-4" style="padding-right: 30px">
+                                <div class="search-btn ml-4" style="padding-right: 15px">
                                     <i class="fa fa-search" aria-hidden="true"></i>
                                 </div>
                                 <!-- Login -->
@@ -144,6 +145,7 @@
 	                            	<a href="${pageContext.request.contextPath}/member/mypageMain.do">
 	                            		<sec:authentication property="principal.username"/>
 	                            		</a>님 &nbsp
+                                        <a href="${pageContext.request.contextPath}/booking/myBooking.do?pageNum=1&amout=5"><i class="fa fa-list fa-lg"></i></a> &nbsp
 	                            	<a href="#"><i class="fa fa-heart fa-lg"></i></a>
 		                            </div>
 	                            	<form:form
@@ -157,6 +159,7 @@
                               	<div style="padding-right:10px">
                               		
 	                            	<a href="${pageContext.request.contextPath}/member/mypageMain.do">${sessionScope.kakaoN}님</a>
+	                            	<a href="#"><i class="glyphicon glyphicon-th-list"></i></a>
 	                            	<a href="#"><i class="fa fa-heart fa-lg"></i></a>
 	                              		
                               	</div>

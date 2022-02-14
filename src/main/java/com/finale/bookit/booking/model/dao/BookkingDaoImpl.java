@@ -2,6 +2,8 @@ package com.finale.bookit.booking.model.dao;
 
 import com.finale.bookit.booking.model.vo.BookInfo;
 import com.finale.bookit.booking.model.vo.Booking;
+import com.finale.bookit.common.util.Criteria;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -15,8 +17,8 @@ public class BookkingDaoImpl implements BookingDao{
     private SqlSessionTemplate session;
 
     @Override
-    public int selectTotalBookingCount() {
-        return session.selectOne("booking.selectTotalBookingCount");
+    public int selectTotalBookingCount(Map<String, Object> param) {
+        return session.selectOne("booking.selectTotalBookingCount", param);
     }
 
     @Override
@@ -48,6 +50,38 @@ public class BookkingDaoImpl implements BookingDao{
 	public int insertBooking(Booking booking) {
 		return session.insert("booking.insertBooking", booking);
 	}
+
+	@Override
+	public List<Booking> selectBorrowedList(String id) {
+		return session.selectList("booking.selectBorrowedList", id);
+	}
+
+	@Override
+	public List<Booking> selectLentList(Map<String, Object> param) {
+		return session.selectList("booking.selectLentList", param);
+	}
+
+	@Override
+	public List<Booking> selectMyBookingList(Map<String, Object> param) {
+		return session.selectList("booking.selectMyBookingList", param);
+	}
+
+	@Override
+	public int selectTotalMyBookingCount(Map<String, Object> param) {
+		return session.selectOne("booking.selectTotalMyBookingCount", param);
+	}
+
+	@Override
+	public int selectTotalMyLentBookingCount(Map<String, Object> param) {
+		return session.selectOne("booking.selectTotalMyLentBookingCount", param);
+	}
+
+	@Override
+	public int selectWishCount(Map<String, Object> param) {
+		return session.selectOne("booking.selectWishCount", param);
+	}
+
+
 	
 	
 }

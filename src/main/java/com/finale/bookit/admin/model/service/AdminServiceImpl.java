@@ -97,7 +97,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public List<MemberEntity> selectAllMembers(Map<String, Object> param) {
+	public List<Member> selectAllMembers(Map<String, Object> param) {
 		// TODO Auto-generated method stub
 		return adminDao.selectAllMembers(param);
 	}
@@ -112,5 +112,30 @@ public class AdminServiceImpl implements AdminService {
 	public int deleteYn(Map<String, Object> param) {
 		return adminDao.deleteYn(param);
 	}
+
+	@Override
+	public int selectAuthority(String userId) {
+
+		return adminDao.selectAuthority(userId);
+	}
+
+	@Override
+	public int insertAuthority(String userId) {
+
+		return adminDao.insertAuthority(userId);
+	}
+
+	@Override
+	public int deleteAuthority(String userId) {
+		return adminDao.deleteAuthority(userId);
+	}
+
+	@Override
+	public int insertAuthority_ADMIN(String userId) {
+		// TODO Auto-generated method stub
+		return adminDao.insertAuthority_ADMIN(userId);
+	}
+
+
 
 }

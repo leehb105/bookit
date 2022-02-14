@@ -2,13 +2,14 @@ package com.finale.bookit.booking.model.dao;
 
 import com.finale.bookit.booking.model.vo.BookInfo;
 import com.finale.bookit.booking.model.vo.Booking;
+import com.finale.bookit.common.util.Criteria;
 
 import java.util.List;
 import java.util.Map;
 
 public interface BookingDao {
 
-    int selectTotalBookingCount();
+    int selectTotalBookingCount(Map<String, Object> param);
 
     List<Booking> selectBookingList(Map<String, Object> param);
 
@@ -21,4 +22,17 @@ public interface BookingDao {
 	int insertBookInfo(BookInfo bookInfo);
 
 	int insertBooking(Booking booking);
+
+	List<Booking> selectBorrowedList(String id);
+
+	List<Booking> selectLentList(Map<String, Object> param);
+
+	List<Booking> selectMyBookingList(Map<String, Object> param);
+
+	int selectTotalMyBookingCount(Map<String, Object> param);
+
+	int selectTotalMyLentBookingCount(Map<String, Object> param);
+
+	int selectWishCount(Map<String, Object> param);
+
 }

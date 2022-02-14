@@ -15,13 +15,13 @@
 		
 		$("#reportBoardDetailModal").on('show.bs.modal', function(event) {
 			var reporter = $(event.relatedTarget).data('reporter');
-			var boardName = $(event.relatedTarget).data('boardname');
+			var boardNameKor = $(event.relatedTarget).data('boardnamekor');
 			var boardNo = $(event.relatedTarget).data('boardno');
 			var reason = $(event.relatedTarget).data('reason');
 			var detail = $(event.relatedTarget).data('detail');
 			
 			$(".modal-body #reporter").val(reporter);
-			$(".modal-body #boardName").val(boardName);
+			$(".modal-body #boardNameKor").val(boardNameKor);
 			$(".modal-body #boardNo").val(boardNo);
 			$(".modal-body #reason").val(reason);
 			$(".modal-body #detail").val(detail);
@@ -89,14 +89,20 @@ textarea {
 								<tr class="selectReport">
 									<td>${reportBoardList.no}</td>
 									<td class="btn-link" data-no="${reportBoardList.no}" data-boardname="${reportBoardList.boardName}">
-										${reportBoardList.boardName}-${reportBoardList.boardNo}
+										<c:if test="${reportBoardList.boardName eq 'community'}">커뮤니티-${reportBoardList.boardNo}</c:if>
+										<c:if test="${reportBoardList.boardName eq 'used'}">중고거래-${reportBoardList.boardNo}</c:if>
+										<c:if test="${reportBoardList.boardName eq 'request'}">도서요청-${reportBoardList.boardNo}</c:if>
 									</td>
 									<td>${reportBoardList.reporter}</td>
 									<td data-toggle="modal"
 										data-target="#reportBoardDetailModal"
 										data-no="${reportBoardList.no}"
 										data-reporter="${reportBoardList.reporter}"
-										data-boardname="${reportBoardList.boardName}"
+										data-boardnamekor="<c:choose>
+<c:when test="${reportBoardList.boardName eq 'community'}">커뮤니티</c:when>
+<c:when test="${reportBoardList.boardName eq 'used'}">중고거래</c:when>
+<c:when test="${reportBoardList.boardName eq 'request'}">도서요청</c:when>
+</c:choose>"
 										data-boardno="${reportBoardList.boardNo}"
 										data-reason="${reportBoardList.reason}"
 										data-detail="${reportBoardList.detail}">${reportBoardList.reason}
@@ -122,12 +128,12 @@ textarea {
 					
 					<!-- 게시글 신고 상세보기 Modal -->
 					<div class="modal fade" id="reportBoardDetailModal" tabindex="-1"
-						role="dialog" aria-labelledby="#reportBoardDetailModalLabel"
+						role="dialog" aria-labelledby="reportBoardDetailModalLabel"
 						aria-hidden="true">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h5 class="modal-title" id="#reportBoardDetailModalLabel">신고 상세내용</h5>
+									<h5 class="modal-title" id="reportBoardDetailModalLabel">신고 상세내용</h5>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">×</span>
 									</button>
@@ -139,7 +145,7 @@ textarea {
 									</div>
 									<div>
 										<p>게시판</p>
-										<input type="text" id="boardName" value="" />
+										<input type="text" id="boardNameKor" value="" />
 									</div>
 									<div>
 										<p>게시글NO</p>

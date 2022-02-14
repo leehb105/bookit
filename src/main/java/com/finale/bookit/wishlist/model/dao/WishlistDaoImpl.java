@@ -60,5 +60,10 @@ public class WishlistDaoImpl implements WishlistDao {
 	public int selectTotalWishlist(Member loginMember) {
 		return session.selectOne("wishlist.selectTotalWishlist", loginMember);
 	}
+
+	@Override
+	public int wishlistCancel(Map<String, Object> param) {
+		return session.delete("wishlist.wishlistCancel", param);
+	}
 	
 }

@@ -71,7 +71,7 @@
                                         </div>
                                         <button type="button" class="btn roberto-btn" onclick="setBookInfo(this)">선택</button>
                                     </div>
-					            </c:forEach>                                    
+					            </c:forEach>                                  
                             </div>                         
                         <!-- </form> -->
                     </div>
@@ -79,10 +79,6 @@
             </div>
         </div>
     </div>
-
-
-
-
 
 
 

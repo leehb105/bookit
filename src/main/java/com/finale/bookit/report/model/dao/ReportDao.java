@@ -19,4 +19,6 @@ public interface ReportDao {
 
 	ReportUser selectOneReportUser(int no);
 
+	int insertReportBoard(Map<String, Object> param);
+
 }
