@@ -2,7 +2,7 @@ package com.finale.bookit.booking.controller;
 
 import com.finale.bookit.booking.model.service.BookingService;
 import com.finale.bookit.booking.model.vo.BookInfo;
-import com.finale.bookit.booking.model.vo.BookingEntity;
+import com.finale.bookit.booking.model.vo.Booking;
 import com.finale.bookit.common.util.BookitUtils;
 import com.finale.bookit.common.util.Criteria;
 import com.finale.bookit.common.util.Paging;
@@ -63,7 +63,7 @@ public class BookingController {
         param.put("cri", cri);
         
         log.debug("title = {}", bookTitle);
-        List<BookingEntity> list = bookingService.selectBookingList(param);
+        List<Booking> list = bookingService.selectBookingList(param);
         int total = bookingService.selectTotalBookingCount(param);
         log.debug("total = {}", total);
         String url = request.getRequestURI();
@@ -88,7 +88,7 @@ public class BookingController {
     	
     	log.debug("bno = {}", bno);
     	
-    	BookingEntity booking = bookingService.selectBooking(param);
+    	Booking booking = bookingService.selectBooking(param);
     	String newDate = BookitUtils.getFormatDate(booking.getRegDate());
     	log.debug("booking = {} ", booking);
     	
@@ -123,7 +123,7 @@ public class BookingController {
 
     	log.debug("member = {}", member);
     	
-    	BookingEntity booking = new BookingEntity();
+    	Booking booking = new Booking();
     	booking.setBookStatus(status);
     	booking.setDeposit(deposit);
     	booking.setPrice(price);
@@ -131,7 +131,7 @@ public class BookingController {
     	
     	BookInfo bookInfo = new BookInfo();
     	bookInfo.setIsbn13(isbn);
-    	
+
     	booking.setBookInfo(bookInfo);
     	booking.setWriter(member.getId());
     	
@@ -187,7 +187,7 @@ public class BookingController {
         param.put("id", member.getId());
     	log.debug("member = {}", member);
     	
-    	List<BookingEntity> list = bookingService.selectMyBookingList(param);
+    	List<Booking> list = bookingService.selectMyBookingList(param);
     	log.debug("list = {}", list);
     	
     	int total = bookingService.selectTotalMyBookingCount(param);
@@ -216,7 +216,7 @@ public class BookingController {
     	param.put("id", member.getId());
     	param.put("cri", cri);
     	
-    	List<BookingEntity> list = bookingService.selectLentList(param);
+    	List<Booking> list = bookingService.selectLentList(param);
     	log.debug("list = {}", list);
 
 //    	log.debug("getBookInfos = {}", list.get(1).getBookInfos());
@@ -238,7 +238,7 @@ public class BookingController {
     	//내가 빌린 내역
     	log.debug("member = {}", member);
     	String id = member.getId();
-    	List<BookingEntity> list = bookingService.selectBorrowedList(id);
+    	List<Booking> list = bookingService.selectBorrowedList(id);
     	log.debug("list = {}", list);
     	
     	

@@ -2,6 +2,7 @@ package com.finale.bookit.booking.model.service;
 
 import com.finale.bookit.booking.model.dao.BookingDao;
 import com.finale.bookit.booking.model.vo.BookInfo;
+import com.finale.bookit.booking.model.vo.Booking;
 import com.finale.bookit.booking.model.vo.BookingEntity;
 import com.finale.bookit.common.util.Criteria;
 
@@ -18,7 +19,7 @@ public class BookingServiceImpl implements BookingService {
 	private BookingDao bookingDao;
 
 	@Override
-	public List<BookingEntity> selectBookingList(Map<String, Object> param) {
+	public List<Booking> selectBookingList(Map<String, Object> param) {
 		return bookingDao.selectBookingList(param);
 	}
 
@@ -28,7 +29,7 @@ public class BookingServiceImpl implements BookingService {
 	}
 
 	@Override
-	public BookingEntity selectBooking(Map<String, Object> param) {
+	public Booking selectBooking(Map<String, Object> param) {
 		return bookingDao.selectBooking(param);
 	}
 
@@ -48,22 +49,22 @@ public class BookingServiceImpl implements BookingService {
 	}
 
 	@Override
-	public int insertBooking(BookingEntity booking) {
+	public int insertBooking(Booking booking) {
 		return bookingDao.insertBooking(booking);
 	}
 
 	@Override
-	public List<BookingEntity> selectBorrowedList(String id) {
+	public List<Booking> selectBorrowedList(String id) {
 		return bookingDao.selectBorrowedList(id);
 	}
 
 	@Override
-	public List<BookingEntity> selectLentList(Map<String, Object> param) {
+	public List<Booking> selectLentList(Map<String, Object> param) {
 		return bookingDao.selectLentList(param);
 	}
 
 	@Override
-	public List<BookingEntity> selectMyBookingList(Map<String, Object> param) {
+	public List<Booking> selectMyBookingList(Map<String, Object> param) {
 		return bookingDao.selectMyBookingList(param);
 	}
 

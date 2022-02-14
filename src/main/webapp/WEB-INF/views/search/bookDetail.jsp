@@ -107,7 +107,13 @@
                                                 <!-- Comment Author -->
                                                 <div class="comment-author ml-40">
                                                     <!-- 수정필요 -->
-                                                    <!-- <img src="${review.member.profileImage == null ? '${pageContext.request.contextPath}/resources/img/default_profile.png' : '${pageContext.request.contextPath}/resources/img/profile/${review.member.profileImage}'}" alt="author"> -->
+                                                    <c:if test="${review.member.profileImage eq null}">
+                                                        <img src="${pageContext.request.contextPath}/resources/img/profile/default_profile.png" alt="author">
+                                                    </c:if>
+                                                    <c:if test="${review.member.profileImage ne null}">
+                                                        <img src="${pageContext.request.contextPath}/resources/img/profile/${review.member.profileImage}" alt="author">
+                                                    </c:if>
+                                                    
                                                 </div>
                                                 <!-- Comment Meta -->
                                                 <div class="comment-meta">

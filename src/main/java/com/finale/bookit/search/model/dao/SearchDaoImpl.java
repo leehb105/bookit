@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.finale.bookit.search.model.vo.BookReview;
 import com.finale.bookit.search.model.vo.BookReviewEntity;
 
 @Repository
@@ -16,7 +17,7 @@ public class SearchDaoImpl implements SearchDao {
 	private SqlSessionTemplate session;
 
 	@Override
-	public List<BookReviewEntity> selectBookReviewByIsbn(HashMap<String, Object> param) {
+	public List<BookReview> selectBookReviewByIsbn(HashMap<String, Object> param) {
 		return session.selectList("search.selectBookReviewByIsbn", param);
 	}
 
