@@ -16,11 +16,9 @@
 	crossorigin="anonymous"></script>
 
 <script>
-
 $(document).ready(function () {
 	showCommentsByAjax();	
 })
-
 function showCommentsByAjax() {
 	
 	$.ajax({
@@ -36,25 +34,20 @@ function showCommentsByAjax() {
 	});
 	
 }
-
 //댓글 저장 버튼 클릭 이벤트
 function btnCommentSubmit() {
 	
-
 	var replyContent = $('#comment_content').val();
-
 	var paramData = JSON.stringify({
 		"content": replyContent
 		, "commentLevel": 1
 		, "communityNo" : "${community.communityNo}"
 		
 });
-
  const csrfHeader = "${_csrf.headerName}";
 	const csrfToken = "${_csrf.token}";
 	const headers = {};
 	headers[csrfHeader] = csrfToken;
-
 	$.ajax({
 		url: `${pageContext.request.contextPath}/board/insertComment.do`
 		, headers : headers
@@ -74,23 +67,13 @@ function btnCommentSubmit() {
 	});
 		
 }
-
 //댓글 저장 버튼 클릭 이벤트
 function onClickTest() {
 	
-
 	var replyContent = $('#comment_content').val();
-
 	console.log("====> ",replyContent)
 		
 }
-
-
-
-
-
-
-
 //댓글등록전 검사
 $(document.commentFrm).submit((e) => {
 	const $content = $("[name=content]", e.target);
@@ -111,7 +94,6 @@ $("button[name=btn-delete]").click(function(){
 	}
 });	
 //대댓글 기능
-
 function updateCommunity(){
 	location.href = "${pageContext.request.contextPath}/board/communityUpdate.do?no=${community.communityNo}";
 }

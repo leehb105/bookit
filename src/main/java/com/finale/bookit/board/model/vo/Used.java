@@ -42,4 +42,6 @@ public class Used implements Serializable{
 	private String nickname;
 
 	private List<UsedAttachment> file;
+	
+	private String profileImage;
 }

@@ -5,8 +5,10 @@
 <mapper namespace="community">
 	<select id="selectCommunityContent" parameterType="Integer" resultMap="communityMap">
 	select 
-	c.community_no, c.category, c.title, TO_CHAR(c.reg_date, 'YYYY-MM-DD  HH24:MI') reg_date , c.read_count, c.like_count, c.member_id, c.content, 
-	(select count(*) from community_comment where community_no = c.community_no) comment_count, (select m.nickname from member m where c.member_id = m.id) nickname
+	c.community_no, c.category, c.title, TO_CHAR(c.reg_date, 'YYYY-MM-DD  HH24:MI') reg_date , 
+	c.read_count, c.like_count, c.member_id, c.content,
+	(select count(*) from community_comment where community_no = c.community_no) comment_count, 
+	(select m.nickname from member m where c.member_id = m.id) nickname
 	from community  c
 	where c.community_no = #{no}
 	</select>
@@ -25,14 +27,8 @@
 		<result column="delete_yn" property="deleteYn"/>
 		<result column="comment_count" property="commentCount"/>
 		<result column="nickname" property="nickname"/>	
+		<result column="profile_image" property="profileImage"/>
 	</resultMap>
-	
-	<!-- 
-		<resultMap type="member" id="membeMap">
-		<id column="id" property="id"/>
-		<result column="nickname" property="nickname"/>
-		</resultMap>
-	-->
 	
 	<select id="selectCommunityComment" parameterType="Integer" resultType="comment">
 		select c.content, c.reg_date, c.writer, m.nickname, c.is_parent, c.no,  c.comment_level, c.delete_yn

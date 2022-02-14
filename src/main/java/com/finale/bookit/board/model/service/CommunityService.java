@@ -17,8 +17,6 @@ public interface CommunityService {
 
 	void deleteCommunityContent(int no, String string) throws Exception;
 
-	void updateCommunityContent(String memberId, Map<String, Object> param) throws Exception;
-
 	List<Community> getCommunityList(Map<String, Object> param);
 
 	int getTotalCommunityContent();
@@ -33,8 +31,6 @@ public interface CommunityService {
 	
 	void insertComment(Comment comment) throws Exception;
 	
-	int updateComment(Comment comment) throws Exception;
-	
 	int deleteComment(int no) throws Exception;
 
 	List<Comment> getCommentList(int no);
@@ -42,6 +38,12 @@ public interface CommunityService {
 	void insertReComment(Comment comment);
 
 	List<Community> searchCommuntiy(Map<String, Object> map);
+
+	void updateCommunityContent(String memberId, Map<String, Object> param) throws Exception;
+
+	void updateComment(Comment comment);
+
+	void updateReComment(Comment comment);
 	
 }	
 
