@@ -60,5 +60,31 @@
 			AND
 			DELETE_YN = 'N'
 	</select>
+	
+	<select id="selectReviewIdCount" resultType="int">
+		SELECT
+			count(*)
+		from
+		    BOOK_REVIEW b join member m ON
+		    b.writer = m.id
+		WHERE
+			b.isbn13 = #{isbn}
+			AND
+			m.id = #{id}
+			AND 
+			b.DELETE_YN = 'N'
+	</select>
+	
+	<insert id="bookReviewEnroll">
+		INSERT INTO BOOK_REVIEW values(
+			seq_book_review_review_no.nextval,
+			#{isbn},
+			#{content},
+			#{rating},
+			#{id},
+			DEFAULT,
+			DEFAULT	
+		)
+	</insert>
 
 </mapper>

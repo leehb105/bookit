@@ -223,6 +223,19 @@ public class SearchServiceImpl implements SearchService{
 	}
 
 
+	@Override
+	public int selectReviewIdCount(HashMap<String, Object> param) {
+		return searchDao.selectReviewIdCount(param);
+	}
+
+
+	@Override
+	public int bookReviewEnroll(HashMap<String, Object> param) {
+		return searchDao.bookReviewEnroll(param);
+	}
+
+	
+
 
 
 

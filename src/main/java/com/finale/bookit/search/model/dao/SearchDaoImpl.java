@@ -24,6 +24,16 @@ public class SearchDaoImpl implements SearchDao {
 	public int selectTotalBookReviewCount(HashMap<String, Object> param) {
 		return session.selectOne("search.selectTotalBookReviewCount", param);
 	}
+
+	@Override
+	public int selectReviewIdCount(HashMap<String, Object> param) {
+		return session.selectOne("search.selectReviewIdCount", param);
+	}
+
+	@Override
+	public int bookReviewEnroll(HashMap<String, Object> param) {
+		return session.insert("search.bookReviewEnroll", param);
+	}
 	
 	
 }

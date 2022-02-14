@@ -15,12 +15,15 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.finale.bookit.booking.model.service.BookingService;
 import com.finale.bookit.booking.model.vo.BookInfo;
@@ -28,6 +31,7 @@ import com.finale.bookit.booking.model.vo.Booking;
 import com.finale.bookit.common.util.BookitUtils;
 import com.finale.bookit.common.util.Criteria;
 import com.finale.bookit.common.util.Paging;
+import com.finale.bookit.member.model.vo.Member;
 import com.finale.bookit.search.model.service.SearchService;
 import com.finale.bookit.search.model.service.SearchServiceImpl;
 import com.finale.bookit.search.model.vo.BookReview;
@@ -176,6 +180,7 @@ public class SearchController {
 	public void bookDatail(
 			@RequestParam(defaultValue = "1") int pageNum,
 			@RequestParam String isbn, 
+			@AuthenticationPrincipal Member loginMember,
 			Model model) {
 		
 		log.debug("isbn = {}" ,isbn);
@@ -222,6 +227,7 @@ public class SearchController {
     	HashMap<String, Object> param = new HashMap<String, Object>();
     	param.put("isbn", isbn);
     	param.put("cri", cri);
+    	param.put("id", loginMember.getId());
     	
      	List<BookReview> list = searchService.selectBookReviewByIsbn(param);
     	log.debug("list = {}", list);
@@ -229,11 +235,47 @@ public class SearchController {
     	int total = searchService.selectTotalBookReviewCount(param);
 		Paging page = new Paging(cri, total);
 		log.debug("paging = {}", page);
+		
+		int idResult = searchService.selectReviewIdCount(param);
+		log.debug("idResult = {}", idResult);
          
         model.addAttribute("list", list);
         model.addAttribute("page", page);
 		model.addAttribute("book", book);
 		model.addAttribute("list", list);
+		model.addAttribute("idResult", idResult);
+	}
+	
+	@PostMapping("/search/bookReviewEnroll.do")
+	public String bookReviewEnroll(
+			@RequestParam int rating,
+			@RequestParam String content,
+			@RequestParam String isbn,
+			@AuthenticationPrincipal Member loginMember,
+			RedirectAttributes attributes,
+			HttpServletRequest request) {
+		
+		log.debug("rating = {}", rating);
+		log.debug("content = {}", content);
+		HashMap<String, Object> param = new HashMap<String, Object>();
+		param.put("rating", rating);
+		param.put("content", content);
+		param.put("isbn", isbn);
+		param.put("id", loginMember.getId());
+		
+		int result = searchService.bookReviewEnroll(param);
+		String msg = "";
+    	if(result > 0) {
+    		msg = "리뷰 등록이 완료되었습니다.";
+    		attributes.addFlashAttribute("msg", "리뷰 등록이 완료되었습니다.");    		
+    	}else {
+    		msg = "리뷰 등록에 실패하였습니다.";
+    	}
+    	attributes.addFlashAttribute("msg", msg);  
+    	String url = "/search/bookDetail.do?isbn=" + isbn + "&pageNum=1&amout=1";
+    	attributes.addFlashAttribute("msg", msg);
+    	
+    	return "redirect:" + url;
 	}
 }
 
