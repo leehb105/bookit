@@ -9,6 +9,7 @@ import com.finale.bookit.common.util.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -54,8 +55,8 @@ public class BookingServiceImpl implements BookingService {
 	}
 
 	@Override
-	public List<Booking> selectBorrowedList(String id) {
-		return bookingDao.selectBorrowedList(id);
+	public List<Booking> selectBorrowedList(HashMap<String, Object> param) {
+		return bookingDao.selectBorrowedList(param);
 	}
 
 	@Override
@@ -81,6 +82,21 @@ public class BookingServiceImpl implements BookingService {
 	@Override
 	public int selectWishCount(Map<String, Object> param) {
 		return bookingDao.selectWishCount(param);
+	}
+
+	@Override
+	public int insertBookingReservation(HashMap<String, Object> param) {
+		return bookingDao.insertBookingReservation(param);
+	}
+
+	@Override
+	public int selectTotalMyBorrowedBookingCount(HashMap<String, Object> param) {
+		return bookingDao.selectTotalMyBorrowedBookingCount(param);
+	}
+
+	@Override
+	public int updateUserCash(HashMap<String, Object> param) {
+		return bookingDao.updateUserCash(param);
 	}
 
 	

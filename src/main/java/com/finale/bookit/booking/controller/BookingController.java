@@ -9,6 +9,8 @@ import com.finale.bookit.common.util.Paging;
 import com.finale.bookit.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
+import oracle.jdbc.proxy.annotation.Post;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -232,18 +234,69 @@ public class BookingController {
     
     @GetMapping("/borrowedList.do")
     public void borrowedList(
+    		@RequestParam(defaultValue = "1") int pageNum, 
     		Model model,
-    		@AuthenticationPrincipal Member member
-	) {
+    		@AuthenticationPrincipal Member member) {
     	//내가 빌린 내역
     	log.debug("member = {}", member);
-    	String id = member.getId();
-    	List<Booking> list = bookingService.selectBorrowedList(id);
+    	
+    	int amount = 5;
+		Criteria cri = new Criteria();
+		cri.setPageNum(pageNum);
+		cri.setAmount(amount);
+		
+
+    	HashMap<String, Object> param = new HashMap<String, Object>();
+    	param.put("id",  member.getId());
+    	param.put("cri", cri);
+    	
+    	List<Booking> list = bookingService.selectBorrowedList(param);
     	log.debug("list = {}", list);
     	
+    	int total = bookingService.selectTotalMyBorrowedBookingCount(param);
+    	Paging page = new Paging(cri, total);
+    	model.addAttribute("page", page);
+    	
+    	model.addAttribute("list", list);
+        model.addAttribute("page", page);
     	
     	
+    }
+    
+    @PostMapping("/bookingReservation.do")
+    public String bookingReservation(
+    		@RequestParam String checkIn,
+    		@RequestParam String checkOut,
+    		@RequestParam int pay,
+    		@RequestParam int boardNo,
+    		RedirectAttributes attributes,
+    		@AuthenticationPrincipal Member member) {
     	
+    	log.debug("checkIn = {}", checkIn);
+    	log.debug("checkOut = {}", checkOut);
+    	log.debug("pay = {}", pay);
+    	log.debug("boardNo = {}", boardNo);
+    	
+    	HashMap<String, Object> param = new HashMap<String, Object>();
+    	param.put("checkIn", BookitUtils.getFormatDate(checkIn));
+    	param.put("checkOut", BookitUtils.getFormatDate(checkOut));
+    	param.put("pay", pay);
+    	param.put("boardNo", boardNo);
+    	param.put("id", member.getId());
+    	log.debug("param = {}", param);
+    	
+    	int insertResult = bookingService.insertBookingReservation(param);
+    	int updateResult = bookingService.updateUserCash(param);
+    	String msg = "";
+    	if(insertResult > 0) {
+    		msg = "대여 신청이 완료되었습니다.";   		
+    	}else {
+    		msg = "리뷰 등록에 실패하였습니다.";
+    	}
+    	attributes.addFlashAttribute("msg", msg); 
+    	
+    	
+    	return "redirect:/";
     }
     
     

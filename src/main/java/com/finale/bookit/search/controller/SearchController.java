@@ -265,11 +265,9 @@ public class SearchController {
 		String msg = "";
     	if(result > 0) {
     		msg = "리뷰 등록이 완료되었습니다.";
-    		attributes.addFlashAttribute("msg", "리뷰 등록이 완료되었습니다.");    		
     	}else {
     		msg = "리뷰 등록에 실패하였습니다.";
     	}
-    	attributes.addFlashAttribute("msg", msg);  
     	String url = "/search/bookDetail.do?isbn=" + isbn + "&pageNum=1&amout=1";
     	attributes.addFlashAttribute("msg", msg);
     	

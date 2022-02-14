@@ -5,6 +5,7 @@ import com.finale.bookit.booking.model.vo.Booking;
 import com.finale.bookit.booking.model.vo.BookingEntity;
 import com.finale.bookit.common.util.Criteria;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +25,7 @@ public interface BookingDao {
 
 	int insertBooking(Booking booking);
 
-	List<Booking> selectBorrowedList(String id);
+	List<Booking> selectBorrowedList(HashMap<String, Object> param);
 
 	List<Booking> selectLentList(Map<String, Object> param);
 
@@ -35,5 +36,11 @@ public interface BookingDao {
 	int selectTotalMyLentBookingCount(Map<String, Object> param);
 
 	int selectWishCount(Map<String, Object> param);
+
+	int insertBookingReservation(HashMap<String, Object> param);
+
+	int selectTotalMyBorrowedBookingCount(HashMap<String, Object> param);
+
+	int updateUserCash(HashMap<String, Object> param);
 
 }

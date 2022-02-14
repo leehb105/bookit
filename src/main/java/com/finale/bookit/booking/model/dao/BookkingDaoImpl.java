@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,8 +54,8 @@ public class BookkingDaoImpl implements BookingDao{
 	}
 
 	@Override
-	public List<Booking> selectBorrowedList(String id) {
-		return session.selectList("booking.selectBorrowedList", id);
+	public List<Booking> selectBorrowedList(HashMap<String, Object> param) {
+		return session.selectList("booking.selectBorrowedList", param);
 	}
 
 	@Override
@@ -80,6 +81,21 @@ public class BookkingDaoImpl implements BookingDao{
 	@Override
 	public int selectWishCount(Map<String, Object> param) {
 		return session.selectOne("booking.selectWishCount", param);
+	}
+
+	@Override
+	public int insertBookingReservation(HashMap<String, Object> param) {
+		return session.insert("booking.insertBookingReservation", param);
+	}
+
+	@Override
+	public int selectTotalMyBorrowedBookingCount(HashMap<String, Object> param) {
+		return session.selectOne("booking.selectTotalMyBorrowedBookingCount", param);
+	}
+
+	@Override
+	public int updateUserCash(HashMap<String, Object> param) {
+		return session.update("booking.updateUserCash", param);
 	}
 
 
