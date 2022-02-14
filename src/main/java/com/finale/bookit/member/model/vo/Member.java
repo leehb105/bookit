@@ -44,7 +44,7 @@ public class Member extends MemberEntity implements Serializable, UserDetails {
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
-		return getId();
+		return getNickname();
 	}
 
 	@Override

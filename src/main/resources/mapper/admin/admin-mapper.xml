@@ -201,6 +201,8 @@
 			charge_history ch
         group by
             extract(month from ch.charge_date)
+        order by
+            month asc
 	
 	</select>
 	

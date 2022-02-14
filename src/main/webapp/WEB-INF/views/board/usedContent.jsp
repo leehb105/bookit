@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="게시판 상세보기" name="title"/>
 </jsp:include>
@@ -21,6 +23,14 @@ button { overflow: hidden; }
 div#board-container label.custom-file-label{text-align:left;}
 </style>
 <div id="board-container" class="mx-auto text-center">
+
+	 <form:form
+	       action="${pageContext.request.contextPath}/chatroom/create" 
+           method="POST">
+		<input type="hidden" name = "writer" value="${used.nickname}"/>
+	       <button class="form-control btn roberto-btn w-100">채팅하기</button>
+	</form:form>
+	
       <input type="submit" value="등록" >
       <input type="button" value="취소" onclick="goUsedList();">
     <p>${used.category}</p> 
@@ -62,5 +72,9 @@ div#board-container label.custom-file-label{text-align:left;}
 </div>
 	<br>
 	<br>
+	
 
+<script>
+
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
