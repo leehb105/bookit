@@ -8,26 +8,12 @@
 <%-- spring-webmvc의존 : security의 xss대비 csrf토큰 생성 --%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<jsp:include page="/WEB-INF/views/member/common/adminSidebar.jsp"/>
 
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage.css"/>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/adminList.css"/>
-<div class = "admin_container">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/adminList.css"/>     
 
-
-	<div class="member-profile">
-	    	<form method="get" action="">
-
-	                   <div class="profile-work">
-	                       <a href="#"><p>회원목록</p></a>
-	                       <b>통계</b><br />	
-	 				 	   <a href="${pageContext.request.contextPath}/admin/chart/chart.do">-가입 회원</a><br />
-	 				 	   <a href="${pageContext.request.contextPath}/admin/chart/cashChart.do">-북토리 충전</a>
-	                   </div>
-			</form>           
-	</div>
-	
 	<div class = "memberList_container">
 		<table id="tbl-board" class="table table-striped table-hover">
 			<tr>
@@ -62,7 +48,8 @@
 	</div>
 	
 	
-
+            </div>
+        </div>
 </div>
 
 <script>
