@@ -30,7 +30,6 @@
                                 <th colspan="2">제목</th>
                                 <th>작가</th>
                                 <th>별점</th>
-                                <th>평가</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -44,9 +43,10 @@
                                         ${bookReview.bookInfo.author}
                                     </td>
                                     <td class="rating align-middle">${bookReview.rating}</td>
-                                    <td class="rating align-middle">${bookReview.content}</td>
+                                    
     
                                 </tr>
+                               
     
                             </c:forEach>
                             <c:if test="${empty list}">
@@ -55,6 +55,7 @@
                                 </tr>
                             </c:if>
                         </tbody>
+                        
                     </table>
                     <!-- Pagination -->
                     <nav class="roberto-pagination mb-100">

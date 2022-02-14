@@ -118,6 +118,41 @@
                                                 <div class="comment-meta">
                                                     <a href="#" class="post-date"><fmt:formatDate value="${review.regDate}" pattern="yyyy년 MM월 dd일"/></a>
                                                     <h5>${review.member.nickname}(${review.member.id})</h5>
+                                                    <!-- 리뷰 별점처리 -->
+                                                    <div class="star-ratings">
+                                                        <div 
+                                                        class="star-ratings-fill space-x-2 text-lg"
+                                                        :style="{ width: ratingToPercent + '%' }"
+                                                        >
+                                                        <c:choose>
+                                                            <c:when test="${review.rating == 1}">
+                                                                <span>★</span>
+                                                            </c:when>
+                                                            <c:when test="${review.rating == 2}">
+                                                                <span>★</span><span>★</span>
+                                                            </c:when>
+                                                            <c:when test="${review.rating == 3}">
+                                                                <span>★</span><span>★</span><span>★</span>
+                                                            </c:when>
+                                                            <c:when test="${review.rating == 4}">
+                                                                <span>★</span><span>★</span><span>★</span><span>★</span>
+                                                            </c:when>
+                                                            <c:when test="${review.rating == 5}">
+                                                                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                                                            </c:when>
+                                                        </c:choose>
+
+
+
+
+                                                            <!-- <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span> -->
+                                                        </div>
+                                                        <div class="star-ratings-base space-x-2 text-lg">
+                                                            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                                                        </div>
+                                                    </div>
+
+
                                                     <p>${review.content}</p>
                                                 </div>
                                             </div>
@@ -202,7 +237,9 @@
         // let input = document.getElementById('1-star');
         console.log(input);
 
-        
+        //별점 처리
+        // const stars = 
+
     });
 
     //댓글 페이징 관련
@@ -222,9 +259,8 @@
 	});
 
     $('input[type=radio]').change(function(){
-        console.log('값 변경');
         starValue = this.value;
-        console.log(starValue);
+        // console.log(starValue);
     });
 
    
@@ -244,7 +280,11 @@
 		enrollFrm.submit(); 
 	});
 
-
+    //별점 처리
+    function ratingToPercent() {
+        const score = +this.restaurant.averageScore * 20;
+        return score + 1.5;
+    }
 
 
 </script>
