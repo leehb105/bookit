@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="search">
+	<select id="selectBookReviewByIsbn" resultMap="bookReviewMap">
+		<![CDATA[
+		SELECT
+			*
+		from
+			(SELECT 
+				rownum rn,
+				tb1.*
+			FROM
+				(
+				SELECT
+					b.*,
+					m.ID,
+					m.NICKNAME
+				from
+				    BOOK_REVIEW b join member m ON
+				    b.writer = m.id
+				WHERE
+					b.isbn13 = #{isbn}
+					AND
+					b.DELETE_YN = 'N'
+				ORDER BY
+					b.reg_date DESC
+				) tb1
+			WHERE
+				rownum <= #{cri.pageNum} * #{cri.amount})
+		WHERE
+			rn > (#{cri.pageNum} - 1) * #{cri.amount}	
+		]]>
+	</select>
+	
+	<resultMap type="bookReview" id="bookReviewMap">
+		<id column="review_no" property="reviewNo"/>
+		<result column="isbn13" property="isbn13"/> 
+		<result column="content" property="content"/> 
+		<result column="rating" property="rating"/> 
+		<result column="writer" property="writer"/> 
+		<result column="reg_date" property="regDate"/> 
+		<result column="delete_yn" property="deleteYn"/> 
+		<association property="member" javaType="member">
+			<id property="id" column="id"/>
+			<result property="nickname" column="nickname"/>
+			<result property="profile_image" column="profileImage"/>
+		</association>
+	</resultMap>
+
+	<select id="selectTotalBookReviewCount" resultType="int">
+		SELECT
+			count(*)
+		from
+		    BOOK_REVIEW
+		WHERE
+			isbn13 = #{isbn}
+			AND
+			DELETE_YN = 'N'
+	</select>
+
+</mapper>

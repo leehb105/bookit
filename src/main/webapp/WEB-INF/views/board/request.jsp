@@ -1,61 +1,86 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="게시판" name="title" />
-</jsp:include>
-<script>
-	function goRequestForm() {
-		location.href = "${pageContext.request.contextPath}/board/requestForm.do";
-	}
-</script>
-<style>
-div#board-container {
-	width: 400px;
-	margin: 100px auto;
-	text-align: center;
-}
-
-div#board-container input {
-	margin-bottom: 15px;
-}
-
-div#board-container label.custom-file-label {
-	text-align: left;
-}
-</style>
-<style>
-/*글쓰기버튼*/
-input#btn-add {
-	float: right;
-	margin: 15px 0 15px;
-}
-
-tr[data-no] {
-	cursor: pointer;
-}
-</style>
-<section id="board-container" class="container">
-	<input type="button" value="글쓰기" id="btn-add"
-		class="btn btn-outline-success" onclick="goRequestForm();" />
-	<table id="tbl-board" class="table table-striped table-hover">
-		<tr>
-			<th>요청 도서 목록</th>
-		</tr>
-	</table>
-
-	<form method="get" id="searchFrm">
-		<div>
-		 <input type="text" name="q" value="${param.q}" style="margin: 5px;" />
-			<button type="submit" class="btn btn-outline-info" id="searchBtn">검색</button>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:authentication property="principal" var="loginMember"/>
+<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+	<c:if test="${!empty loginMember}">
+		<div class="button-area mt-40">
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+						<button type="button" class="btn roberto-btn w-10 float-right" onclick="location.href='bookingEnroll.do'">책 등록</button>
+					</div>
+	
+				</div>
+			</div>
 		</div>
-	</form>
 
-	<br>
-	<div class="pagebar" style="margin-bottom: 2%;">${pagebar}</div>
-</section>
+	</c:if>
 
+	<!-- Booking Area Start -->
+    <div class="roberto-news-area section-padding-30-0">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-8">
+                    <!-- Single Booking List Area -->
+					<c:forEach var="booking" items="${list }">                   
+	                    <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
+	                        <!-- List Cover -->
+	                        <div class="post-thumbnail">
+								<!-- <input type="hidden" name="bno" value="${booking.boardNo}"> -->
+	                            <a href="#"><img src="${booking.bookInfo.cover }" alt=""></a>
+	                        </div>
+	                        <!-- List Content -->
+	                        <div class="post-content">
+	                            <!-- List Meta -->
+	                            <!-- List Title -->
+	                            <a href="${pageContext.request.contextPath}/booking/bookingDetail.do?bno=${booking.boardNo}" class="post-title">${booking.bookInfo.title }</a>
+	                            <!-- List Author, publisher, pubdate -->
+	                            <p>${booking.bookInfo.author} 저 | ${booking.bookInfo.publisher} | <fmt:formatDate value="${booking.bookInfo.pubdate }" pattern="yyyy년 MM월"/></p>
+	                            
+	                            <div class="list-price">
+	                            	<table class="table text-center">
+	                            		<tr>
+	                            			<td>상태</td>
+	                            			<td>보증금</td>
+	                            			<td>일당 대여료</td>
+	                            		</tr>
+	                            		<tr>
+	                            			<td>${booking.bookStatus}</td>
+	                            			<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${booking.deposit }" />원</td>
+	                            			<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${booking.price }" />원</td>
+	                            		</tr>
+		                            		
+	                            	
+	                            	</table>
+	                            
+	                            
+	                          
+	                            </div>	
+	                            <!-- <div class="post-meta"><a href="">asd</a></div> -->
+								
+	                        </div>
+	                    </div>
+					</c:forEach> 
+					
+					
 
-<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
+                    <!-- Pagination -->
+                    <nav class="roberto-pagination wow fadeInUp mb-100" data-wow-delay="600ms">
+                        <ul class="pagination">
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">Next <i class="fa fa-angle-right"></i></a></li>
+                        </ul>
+                    </nav>
+                </div>
+
+    <!-- Booking Area End -->
+
+	
+
+    <!-- Partner Area End -->

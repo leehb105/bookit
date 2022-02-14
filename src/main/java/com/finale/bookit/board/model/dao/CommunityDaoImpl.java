@@ -45,7 +45,7 @@ public class CommunityDaoImpl implements CommunityDao{
 		int offset = (int) param.get("offset");
 		int limit = (int) param.get("limit");
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		return session.selectList("community.getCommunityList", null, rowBounds);
+		return session.selectList("community.getCommunityList", param, rowBounds);
 	}
 
 	@Override
@@ -99,10 +99,6 @@ public class CommunityDaoImpl implements CommunityDao{
 		session.insert("community.insertComment", comment);
 	}
 
-	@Override
-	public int updateComment(Comment comment) {
-		return session.update("community.updateCommunity", comment);
-	}
 
 	@Override
 	public int deleteComment(int no) {
@@ -118,6 +114,24 @@ public class CommunityDaoImpl implements CommunityDao{
 	public void insertReComment(Comment comment) {
 		session.insert("community.insertReComment", comment);
 	}
+
+	@Override
+	public List<Community> searchCommuntiy(Map<String, Object> map) {
+		
+		return session.selectList("community.searchCommuntiy", map);
+	}
+
+	@Override
+	public void updateComment(Comment comment) {
+		session.update("community.updateComment", comment);
+	}
+
+	@Override
+	public int getSearchCommuntiyContentCount(Map<String, Object> param) {
+		return session.selectOne("community.selectSearchCommuntiyContentCount", param);
+	}
+
+
 
 		}
 

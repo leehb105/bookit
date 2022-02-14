@@ -18,9 +18,9 @@
                 <div class="profile-work">
                     <p>나의 거래</p>
                     <hr class="my-2">
-                    <a href="${pageContext.request.contextPath}/booking/myBooking.do?pageNum=1&amout=5"><strong>나의 대여 게시글</strong></a>
+                    <a href="${pageContext.request.contextPath}/booking/myBooking.do?pageNum=1&amout=5">나의 대여 게시글</a>
                     <br />
-                    <a href="${pageContext.request.contextPath}/booking/lentList.do?pageNum=1&amout=5">나의 대여 예약 관리</a>
+                    <a href="${pageContext.request.contextPath}/booking/lentList.do?pageNum=1&amout=5"><strong>나의 대여 예약 관리</strong></a>
                     <br />
                     <a href="${pageContext.request.contextPath}/booking/borrowedList.do?pageNum=1&amout=5">나의 빌린 도서</a>
                 </div>
@@ -43,21 +43,22 @@
                     </thead>
                     <tbody>
                         <c:forEach items="${list}" var="booking" varStatus="status">
+                        <c:forEach items="${booking.bookInfos}" var="bookInfo">
                             <tr onclick="location.href='${pageContext.request.contextPath}/booking/bookingDetail.do?bno=${booking.boardNo}'" style="cursor:pointer;">
                                 <td class="align-middle">${page.total - ((page.cri.pageNum - 1) * page.cri.amount) - status.index}</td>
-                                <td class="align-middle"><img src="${booking.bookInfo.cover}" alt="" style="width: 30%;"></td>
+                                <td class="align-middle"><img src="${bookInfo.cover}" alt="" style="width: 30%;"></td>
                                 
-                                <td class="title align-middle" style="text-align: left;">${booking.bookInfo.title}</td>
+                                <td class="title align-middle" style="text-align: left;">${bookInfo.title}</td>
                                 <td class="author align-middle">
-                                    ${booking.bookInfo.author}
+                                    ${bookInfo.author}
                                 </td>
-                                <td class="align-middle">${booking.bookInfo.publisher}</td>
+                                <td class="align-middle">${bookInfo.publisher}</td>
                                 <td class="align-middle">${booking.bookStatus}</td>
                                 <td class="align-middle"><fmt:formatNumber type="number" maxFractionDigits="3" value="${booking.deposit }" />원</td>
                                 <td class="align-middle"><fmt:formatNumber type="number" maxFractionDigits="3" value="${booking.price }" />원</td>
 
                             </tr>
-
+                        </c:forEach>
                         </c:forEach>
                         <c:if test="${empty list}">
                             <tr>

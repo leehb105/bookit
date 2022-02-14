@@ -2,10 +2,110 @@
     pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/collectionImage.css" />
 
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
 <script>
+// 인터파크 베스트셀러
+/* $(() => {
+    const csrfHeader = "${_csrf.headerName}";
+	const csrfToken = "${_csrf.token}";
+	const headers = {};
+	headers[csrfHeader] = csrfToken;
+	
+	$.ajax({
+		url: "http://book.interpark.com/api/bestSeller.api",
+		data: {
+			key: "4CF11621757EDF17D8BA21B59906CE5911022255FF90339036F0FC3ADF91AA8E",
+			categoryId: 100,
+			output: "json"
+		},
+		dataType: "jsonp",
+		contentType: "javascript/jsonp; charset=utf-8",
+		headers: headers,
+		success(data){
+			//console.log(data);
+			const item = data.item;
+			//console.log(item);
+			for(var i = 0; i < item.length; i++){
+				const title = item[i].title;
+				const author = item[i].author;
+				const coverSmallUrl = item[i].coverSmallUrl;
+				console.log(title, author, coverSmallUrl);
+				$(".interpark").before(
+					'<div class="mt-1 d-flex align-items-center">'
+					+ 	'<span class="ml-50">' + (i + 1) + '</span>'
+					+ 	'<img class="mr-50 ml-5" src="' + coverSmallUrl + '" style="display: inline-block; width: 15%" />'
+					+ 	'<table class="table table-borderless table-sm ml-4 align-middle">'
+					+		'<tr>'
+					+			'<td><small><strong>' + title + '</strong></small></td>'
+					+		'</tr>'
+					+		'<tr>'
+					+			'<td><small>' + author + '</small></td>'
+					+		'</tr>'
+					+ 	'</table>'
+					+ '</div>'
+				);
+				if(i == 7){
+					break;
+				}
+			}
+		},
+		error: console.log
+	});
+}); */
+
+// 알라딘 베스트셀러
+/* $(() => {
+    const csrfHeader = "${_csrf.headerName}";
+	const csrfToken = "${_csrf.token}";
+	const headers = {};
+	headers[csrfHeader] = csrfToken;
+	
+	$.ajax({
+		url: "http://www.aladin.co.kr/ttb/api/ItemList.aspx",
+		data: {
+			ttbkey: "ttbdbqjqdyd1752002",
+			QueryType: "Bestseller",
+			MaxResults: 7,
+			start: 1,
+			SearchTarget: "Book",
+			output: "js",
+			Version: "20131101"
+		},
+		dataType: "jsonp",
+		contentType: "javascript/jsonp; charset=utf-8",
+		headers: headers,
+		success(data){
+			console.log(data);
+			const item = data.item;
+			console.log(item);
+			for(var i = 0; i < item.length; i++){
+				const title = item[i].title;
+				const author = item[i].author;
+				const cover = item[i].cover;
+				console.log(title, author, cover);
+				$(".aladin").before(
+					'<div class="mt-1 d-flex align-items-center">'
+					+ 	'<span class="ml-50">' + (i + 1) + '</span>'
+					+ 	'<img class="mr-50 ml-5" src="' + cover + '" style="display: inline-block; width: 15%" />'
+					+ 	'<table class="table table-borderless table-sm ml-4 align-middle">'
+					+		'<tr>'
+					+			'<td><small><strong>' + title + '</strong></small></td>'
+					+		'</tr>'
+					+		'<tr>'
+					+			'<td><small>' + author + '</small></td>'
+					+		'</tr>'
+					+ 	'</table>'
+					+ '</div>'
+				);
+			}
+		},
+		error: console.log
+	});
+}); */
+
 // 컬렉션 불러오기(랜덤으로 3개). 475번줄 collection-area
 $(document).ready(function(){
 	var header = "${_csrf.headerName}";
@@ -26,10 +126,12 @@ $(document).ready(function(){
 				$(".collection-area").append(
 					'<div class="col-12 col-md-6 col-lg-4">'
 						+ '<div class="single-post-area mb-100 wow fadeInUp text-center" data-wow-delay="100ms">'
-							+ '<a href="${pageContext.request.contextPath}/collection/collectionDetail.do?no=' + no + '" class="post-thumbnail">'
-							+ ' <img class="w-50" src="' + collectionList[i].profileImage + '"'
-							+ ' onerror="this.src=`${pageContext.request.contextPath}/resources/img/profile/default_profile.png`"/>'
-							+ '</a>'
+							+ '<div class="collectionImage mb-4">'
+								+ '<a href="${pageContext.request.contextPath}/collection/collectionDetail.do?no=' + no + '">'
+									+ ' <img src="${pageContext.request.contextPath}/resources/img/profile/' + collectionList[i].profileImage + '"'
+									+ ' onerror="this.src=`${pageContext.request.contextPath}/resources/img/profile/default_profile.png`"/>'
+								+ '</a>'
+							+ '</div>'
 							+ '<h5 class="post-title">' + collectionList[i].nickname + '님의<br /></h5>'
 							+ '<h6>' + collectionList[i].collectionName + '</h6>'
 						+ '</div>'
@@ -55,7 +157,6 @@ $(document).ready(function(){
                                 <div class="welcome-text text-center">
                                     <h6 data-animation="fadeInLeft" data-delay="200ms">Rental &amp; Resale</h6>
                                     <h2 data-animation="fadeInLeft" data-delay="500ms">Welcome To Bookit</h2>
-                                    <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInLeft" data-delay="800ms">Discover Now</a>
                                 </div>
                             </div>
                         </div>
@@ -99,8 +200,8 @@ $(document).ready(function(){
                         </div>
                     </div>
                 </div>
-            </div>
-        </div> -->
+            </div> -->
+        </div>
     </section>
     <!-- Welcome Area End -->
 
@@ -177,12 +278,12 @@ $(document).ready(function(){
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </section>
-    About Us Area End
+    <!-- About Us Area End -->
 
-    Service Area Start
-    <div class="roberto-service-area">
+    <!-- Service Area Start -->
+    <!--<div class="roberto-service-area">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -352,114 +453,52 @@ $(document).ready(function(){
             </div>
         </div>
     </section>
-    Testimonials Area End
+    Testimonials Area End -->
 
-    Projects Area Start
+    <!-- Projects Area Start -->
     <section class="roberto-project-area">
-        Projects Slide
+        <!-- Projects Slide -->
         <div class="projects-slides owl-carousel">
-            Single Project Slide
-            <div class="single-project-slide active bg-img" style="background-image: url(img/bg-img/5.jpg);">
-                Project Text
-                <div class="project-content">
+            <!-- Single Project Slide -->
+            <div class="single-project-slide" style="background-image: url(resources/img/bg-img/aladin_logo.png);" data-img-url="resources/img/bg-img/aladin_logo.png">
+            	<!-- script append -->
+                <!-- Project Text -->
+                <div class="aladin project-content">
                     <div class="text">
-                        <h6>Entertaiment</h6>
-                        <h5>Racing Bike</h5>
+                        <h6>알라딘</h6>
+                        <h5>Best Seller</h5>
                     </div>
-                </div>
-                Hover Effects
-                <div class="hover-effects">
-                    <div class="text">
-                        <h6>Entertaiment</h6>
-                        <h5>Racing Bike</h5>
-                        <p>I focus a lot on helping the first time or inexperienced traveler head out prepared and confident...</p>
-                    </div>
-                    <a href="#" class="btn project-btn">Discover Now <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
                 </div>
             </div>
 
-            Single Project Slide
-            <div class="single-project-slide bg-img" style="background-image: url(img/bg-img/6.jpg);">
-                Project Text
-                <div class="project-content">
+            <!-- Single Project Slide -->
+            <div class="single-project-slide" style="background-color: #F5F5F5;"> 
+            	<div class="mt-1 d-flex align-items-center">
+            		
+            	</div>
+                <!-- Project Text -->
+                <div class="bookit project-content">
                     <div class="text">
-                        <h6>Entertaiment</h6>
-                        <h5>Racing Bike</h5>
+                        <h6>BOOKIT</h6>
+                        <h5>Best</h5>
                     </div>
-                </div>
-                Hover Effects
-                <div class="hover-effects">
-                    <div class="text">
-                        <h6>Entertaiment</h6>
-                        <h5>Racing Bike</h5>
-                        <p>I focus a lot on helping the first time or inexperienced traveler head out prepared and confident...</p>
-                    </div>
-                    <a href="#" class="btn project-btn">Discover Now <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
                 </div>
             </div>
 
-            Single Project Slide
-            <div class="single-project-slide bg-img" style="background-image: url(img/bg-img/7.jpg);">
-                Project Text
-                <div class="project-content">
+            <!-- Single Project Slide -->
+            <div class="single-project-slide" style="background-image: url(resources/img/bg-img/interpark_logo.png);" data-img-url="resources/img/bg-img/interpark_logo.png">
+            	
+                <!-- Project Text -->
+                <div class="interpark project-content">
                     <div class="text">
-                        <h6>Entertaiment</h6>
-                        <h5>Racing Bike</h5>
+                        <h6>인터파크</h6>
+                        <h5>Best Seller</h5>
                     </div>
-                </div>
-                Hover Effects
-                <div class="hover-effects">
-                    <div class="text">
-                        <h6>Entertaiment</h6>
-                        <h5>Racing Bike</h5>
-                        <p>I focus a lot on helping the first time or inexperienced traveler head out prepared and confident...</p>
-                    </div>
-                    <a href="#" class="btn project-btn">Discover Now <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
-                </div>
-            </div>
-
-            Single Project Slide
-            <div class="single-project-slide bg-img" style="background-image: url(img/bg-img/8.jpg);">
-                Project Text
-                <div class="project-content">
-                    <div class="text">
-                        <h6>Entertaiment</h6>
-                        <h5>Racing Bike</h5>
-                    </div>
-                </div>
-                Hover Effects
-                <div class="hover-effects">
-                    <div class="text">
-                        <h6>Entertaiment</h6>
-                        <h5>Racing Bike</h5>
-                        <p>I focus a lot on helping the first time or inexperienced traveler head out prepared and confident...</p>
-                    </div>
-                    <a href="#" class="btn project-btn">Discover Now <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
-                </div>
-            </div>
-
-            Single Project Slide
-            <div class="single-project-slide bg-img" style="background-image: url(img/bg-img/9.jpg);">
-                Project Text
-                <div class="project-content">
-                    <div class="text">
-                        <h6>Entertaiment</h6>
-                        <h5>Racing Bike</h5>
-                    </div>
-                </div>
-                Hover Effects
-                <div class="hover-effects">
-                    <div class="text">
-                        <h6>Entertaiment</h6>
-                        <h5>Racing Bike</h5>
-                        <p>I focus a lot on helping the first time or inexperienced traveler head out prepared and confident...</p>
-                    </div>
-                    <a href="#" class="btn project-btn">Discover Now <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
                 </div>
             </div>
         </div>
     </section>
-    Projects Area End
+    <!-- Projects Area End -->
 
     <!-- Blog Area Start -->
     <section class="roberto-blog-area section-padding-100-0">
@@ -541,7 +580,9 @@ $(document).ready(function(){
         };
     });
 
-
+    //기본값 오늘날짜 설정
+    let startDate = new Date();
+    let endDate = new Date();
     $(function() {
         //대여시작일 설정
         $('#checkIn').datepicker({
@@ -563,20 +604,35 @@ $(document).ready(function(){
             ,startDate : new Date() //오늘날짜 이전의 날짜는 선택 불가
 
         })
-        .on("show", function(e) {
-            //이벤트의 종류
-            //show : datePicker가 보이는 순간 호출
-            //hide : datePicker가 숨겨지는 순간 호출
-            //clearDate: clear 버튼 누르면 호출
-            //changeDate : 사용자가 클릭해서 날짜가 변경되면 호출 (개인적으로 가장 많이 사용함)
-            //changeMonth : 월이 변경되면 호출
-            //changeYear : 년이 변경되는 호출
-            //changeCentury : 한 세기가 변경되면 호출 ex) 20세기에서 21세기가 되는 순간
+        // .on("show", function(e) {
+        //     //이벤트의 종류
+        //     //show : datePicker가 보이는 순간 호출
+        //     //hide : datePicker가 숨겨지는 순간 호출
+        //     //clearDate: clear 버튼 누르면 호출
+        //     //changeDate : 사용자가 클릭해서 날짜가 변경되면 호출 (개인적으로 가장 많이 사용함)
+        //     //changeMonth : 월이 변경되면 호출
+        //     //changeYear : 년이 변경되는 호출
+        //     //changeCentury : 한 세기가 변경되면 호출 ex) 20세기에서 21세기가 되는 순간
             
-            console.log(e);// 찍어보면 event 객체가 나온다.
-            //간혹 e 객체에서 date 를 추출해야 하는 경우가 있는데 
-            // e.date를 찍어보면 Thu Jun 27 2019 00:00:00 GMT+0900 (한국 표준시)
-        });//datepicker end
+        //     console.log(e);// 찍어보면 event 객체가 나온다.
+        //     //간혹 e 객체에서 date 를 추출해야 하는 경우가 있는데 
+        //     // e.date를 찍어보면 Thu Jun 27 2019 00:00:00 GMT+0900 (한국 표준시)
+        // })
+        .on('changeDate', function(e){
+            // console.log(e.date, typeof e.date);
+            endDate = e.date; //선택한 날짜를 대입
+            //대여 시작일보다 전날짜를 대여종료일에서 선택할 수 없음
+            $('#checkOut').datepicker('setStartDate', endDate);
+
+            //종료일보다 시작일이 후라면 자동으로 시작일로 날짜 변경
+            if($('#checkOut').val() != ''){
+                if($('#checkIn').val() > $('#checkOut').val()){
+                    $('#checkIn').datepicker('setDate', new Date($('#checkOut').val()));
+                }
+            }
+
+            
+        });;//datepicker end
 
     });
 
@@ -602,22 +658,31 @@ $(document).ready(function(){
             ,startDate : new Date() //오늘날짜 이전의 날짜는 선택 불가
 
         })
-        .on("show", function(e) {
-            //이벤트의 종류
-            //show : datePicker가 보이는 순간 호출
-            //hide : datePicker가 숨겨지는 순간 호출
-            //clearDate: clear 버튼 누르면 호출
-            //changeDate : 사용자가 클릭해서 날짜가 변경되면 호출 (개인적으로 가장 많이 사용함)
-            //changeMonth : 월이 변경되면 호출
-            //changeYear : 년이 변경되는 호출
-            //changeCentury : 한 세기가 변경되면 호출 ex) 20세기에서 21세기가 되는 순간
+        // .on("show", function(e) {
+        //     //이벤트의 종류
+        //     //show : datePicker가 보이는 순간 호출
+        //     //hide : datePicker가 숨겨지는 순간 호출
+        //     //clearDate: clear 버튼 누르면 호출
+        //     //changeDate : 사용자가 클릭해서 날짜가 변경되면 호출 (개인적으로 가장 많이 사용함)
+        //     //changeMonth : 월이 변경되면 호출
+        //     //changeYear : 년이 변경되는 호출
+        //     //changeCentury : 한 세기가 변경되면 호출 ex) 20세기에서 21세기가 되는 순간
             
-            console.log(e);// 찍어보면 event 객체가 나온다.
-            //간혹 e 객체에서 date 를 추출해야 하는 경우가 있는데 
-            // e.date를 찍어보면 Thu Jun 27 2019 00:00:00 GMT+0900 (한국 표준시)
+        //     console.log(e);// 찍어보면 event 객체가 나온다.
+        //     //간혹 e 객체에서 date 를 추출해야 하는 경우가 있는데 
+        //     // e.date를 찍어보면 Thu Jun 27 2019 00:00:00 GMT+0900 (한국 표준시)
+        // })
+        .on('changeDate', function(e){
+            startDate = e.date; //선택한 날짜를 대입
+            //대여 종료일보다 이후 날짜를 대여 시작일에서 선택할 수 없음
+            $('#checkIn').datepicker('setEndDate', startDate);
+    
+            //시작일보다 전날짜를 선택하면 자동으로 시작일로 날짜 변경
+            if($('#checkIn').val() > $('#checkOut').val()){
+                $('#checkOut').datepicker('setDate', new Date($('#checkIn').val()));
+            }
         });//datepicker end
     });
-
 
 
 

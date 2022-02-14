@@ -311,27 +311,7 @@
         return true;
 
     }
-    // function numToBookStatus(value){
-    //     let status;
-    //     switch(value){
-    //         case 1 :
-    //             status = '최상';
-    //             break;
-    //         case 2 :
-    //             status = '상';
-    //             break;
-    //         case 3 :
-    //             status = '중';
-    //             break;
-    //         case 4 :
-    //             status = '하';
-    //             break;
-    //         case 5 :
-    //             status = '최하';
-    //             break;
-    //     }
-    //     return status;
-    // }
+   
 
 
     //글내용 글자갯수 제한 코드
@@ -421,76 +401,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // //모달 오픈
-    // const open = () => {
-    //     document.querySelector(".modal").classList.remove("hidden");
-    // }
-
-    // //모달 클로즈
-    // const close = () => {
-    //     document.querySelector(".modal").classList.add("hidden");
-    // }
-
-    // document.querySelector(".btn").addEventListener("click", open);
-    // // document.querySelector(".closeBtn").addEventListener("click", close);
-    // document.querySelector(".bg").addEventListener("click", close);
-
-    
-    //책 검색 클릭
-    // document.getElementById('searchBtn').onclick = (() =>{
-
-    //     //모달 창 내부 초기화
-    //     $(() =>{
-    //         $('#query').text("\"\"");
-    //         $('#totalResults').text(0); 
-    //     });
-    //     // console.log($div.find())
-
-    //     // console.log('test');
-
-    //     // $.ajax({
-    //     //     url: `${pageContext.request.contextPath}/booking/bookSearch.do`,
-    //     //     method: "GET",
-    //     //     data: $('input[name=title]').serialize(),
-    //     //     success(result){
-    //     //         console.log(result);
-    //     //         console.log(result.query);
-    //     //         $('#query').text("\"" + result.query + "\"");
-    //     //         $('#totalResults').text(result.totalResults);
-
-    //     //         for(let i = 0; i < result.totalResults; i++){
-    //     //             $('#resultArea').append(
-    //     //                 "<div class='single-blog-post d-flex align-items-center mb-50 wow fadeInUp w-75' data-wow-delay='100ms'>" +
-    //     //                     "<div class='post-thumbnail w-25'>" +
-    //     //                         "<a href='#'><img src='" + result.list[i].cover +"' alt=''></a>" +
-    //     //                     "</div>" +
-    //     //                     "<div class='post-content'>" +
-    //     //                         "<a href='' class='post-title'>" + + "</a>" +
-    //     //                         "<p>${book.author} 저 | ${book.publisher} | <fmt:formatDate value='${book.pubdate }' pattern='yyyy년 MM월'/></p>" +
-                                
-    //     //                     "</div>" +
-    //     //                 "</div>"
-    //     //             );
-    //     //         }
-
-
-    //     //     },
-    //     //     error: console.log()
-    //     // });
-    // });
 
 
 

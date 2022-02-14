@@ -26,7 +26,7 @@
 					<p>신고내역</p>
 					<a href="${pageContext.request.contextPath}/report/reportUserList.do">사용자 신고목록</a><br />
 					<a href="${pageContext.request.contextPath}/report/reportBoardList.do">게시글 신고목록</a><br />
-                    <button type = "button" value = ${loginMember.id} class = "chat">채팅내역</button>
+					<p><a href="${pageContext.request.contextPath}/chat/chatMain.do">채팅 내역</a></p>
 				</div>
 			</div>
 			<!--  

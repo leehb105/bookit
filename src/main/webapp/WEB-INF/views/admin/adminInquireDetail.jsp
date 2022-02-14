@@ -7,7 +7,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <sec:authentication property="principal" var="loginMember"/>
 
-<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<jsp:include page="/WEB-INF/views/member/common/adminSidebar.jsp"/>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/mypage.css" />
 
@@ -21,43 +21,29 @@ function adminInquireValidate(){
 	return true;
 };
 </script>
-
-<div class="container member-profile">
-    <!-- Blog Area Start -->
-    <div class="roberto-news-area">
-        <div class="container">
-            <div class="row">
-				<div class="col-2">
-					<div class="profile-work text-center">
-						<a href="#"><p>회원관리</p></a><br />
-						<a href="${pageContext.request.contextPath}/admin/adminReportList.do"><p>신고접수</p></a><br />
-						<a href="#"><p>회원통계</p></a><br />
-						<a href="${pageContext.request.contextPath}/admin/adminInquireList.do"><p>회원문의</p></a>
-					</div>
+			<div class="col-lg-8 col-md-10 ml-100">
+				<div class="section-heading text-center">
+					<h5>회원문의</h5>
 				</div>
-                <div class="col-lg-8 col-md-10 ml-100">
-                	<div class="section-heading text-center">
-						<h5>회원문의</h5>
-					</div>
-                    <!-- Blog Details Text -->
-                    <div class="comment_area clearfix pb-0">
-                    	<hr />
-                        <p><h5>[${inquire.category}] ${inquire.title}</h5></p>
-                        <ol>
-                            <!-- Single Comment Area -->
-                            <li class="single_comment_area">
-                                <!-- Comment Content -->
-                                <div class="comment-content d-flex">
-                                    <!-- Comment Meta -->
-                                    <div class="comment-meta">
-                                        <a href="#" class="post-date"><fmt:formatDate value="${inquire.regDate}" pattern="yyyy/MM/dd"/></a>
-                                        <h6>${inquire.memberId}</h6>
-                                        <pre class="mt-30">${inquire.content}</pre>
-                                    </div>
-                                </div>
-                            </li>
-                        </ol>
-                    </div>
+				<!-- Blog Details Text -->
+				<div class="comment_area clearfix pb-0">
+					<hr />
+					<p><h5>[${inquire.category}] ${inquire.title}</h5></p>
+					<ol>
+					<!-- Single Comment Area -->
+						<li class="single_comment_area">
+							<!-- Comment Content -->
+							<div class="comment-content d-flex">
+								<!-- Comment Meta -->
+								<div class="comment-meta">
+									<a href="#" class="post-date"><fmt:formatDate value="${inquire.regDate}" pattern="yyyy/MM/dd"/></a>
+									<h6>${inquire.memberId}</h6>
+									<pre class="mt-30">${inquire.content}</pre>
+								</div>
+							</div>
+						</li>
+					</ol>
+				</div>
 		
                     <!-- Comments Area -->
                     <c:if test="${adminInquire.condition eq 1}">
@@ -109,7 +95,5 @@ function adminInquireValidate(){
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Blog Area End -->
 </div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

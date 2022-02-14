@@ -34,12 +34,31 @@ div#board-container label.custom-file-label{text-align:left;}
 	<p>${used.tradeMethod}</p>
 	<p>${used.content}</p>
 	<!-- 파일 이미지 -->
+	<!-- 파일 다운로드 -->
+	
+	<c:forEach items="${community.file}" var="file" varStatus="vs">
+		<a
+			href="${pageContext.request.contextPath}/board/fileDownload.do?fileNo=${file.no}"
+			role="button" class="btn btn-outline-success btn-block"> 첨부파일
+			${vs.count} - ${file.originalFilename}</a>
+		<hr>
+	</c:forEach>
+<div class="likeReport" style="text-align: center;">
+	<h3 id="empty" style="diaplay: inline-block;">
+		<a href="#" onclick="like();"><i class="far fa-thumbs-up"></i></a>
+	</h3>
+	<h3 id="full" style="display: none">
+		<a href="#" onclick="likeCancel();"><i class="fas fa-thumbs-up"></i></a>
+	</h3>
+	<h3>
+		<a href="#" data-toggle="modal" data-target="#reportBoardEnrollModal"><i
+			class="fas fa-ban" style="display: inline-block;"></i></a>
+	</h3>
+</div>
+<br>
 
 
 
-	<a href="#"><i class="far fa-heart"></i></a>
-	<a href="#"><i class="fas fa-heart" style="display:none"></i></a>
-	<a href="#"><i class="fas fa-ban"></i></a>
 </div>
 	<br>
 	<br>

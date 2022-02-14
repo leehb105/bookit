@@ -29,6 +29,8 @@
 							br.start_date NOT BETWEEN #{checkIn} AND #{checkOut}
 							AND
 							br.end_date NOT BETWEEN #{checkIn} AND #{checkOut}
+							AND 
+							br.borrower_id IS NOT null
 							AND
 							b.DELETE_YN = 'N'
 						ORDER BY
@@ -80,9 +82,24 @@
 		<result column="delete_yn" property="deleteYn"/>
 		<result column="isbn13" property="isbn13"/>
 		<result column="reg_date" property="regDate"/>
-		<association property="bookInfo" resultMap="bookInfoMap"/>
 		<association property="member" resultMap="memberMap"/>
-		<collection property="bookReservation" resultMap="bookReservationMap"/>
+		<association property="bookInfo" resultMap="bookInfoMap"/>
+		<collection property="bookReservations" resultMap="bookReservationMap"/>
+	</resultMap>
+	
+	<resultMap type="booking" id="bookingMap_bookInfoList">
+		<id column="board_no" property="boardNo"/>
+		<result column="content" property="content"/>
+		<result column="book_status" property="bookStatus"/>
+		<result column="price" property="price"/>
+		<result column="deposit" property="deposit"/>
+		<result column="writer" property="writer"/>
+		<result column="delete_yn" property="deleteYn"/>
+		<result column="isbn13" property="isbn13"/>
+		<result column="reg_date" property="regDate"/>
+		<association property="member" resultMap="memberMap"/>
+		<collection property="bookInfos" resultMap="bookInfoMap"/>
+		<collection property="bookReservations" resultMap="bookReservationMap"/>
 	</resultMap>
 
 	<select id="selectTotalBookingCount" resultType="_int">
@@ -170,7 +187,7 @@
 		)
 	</insert>
 	
-	<select id="selectMyBookingList" resultMap="bookingMap" resultType="criteria">
+	<select id="selectMyBookingList" resultMap="bookingMap">
 		<![CDATA[
 			SELECT
 				*
@@ -210,7 +227,7 @@
 			REG_DATE DESC
 	</select>
 	
-	<select id="selectLentList" resultMap="bookingMap" resultType="criteria">
+	<select id="selectLentList" resultMap="bookingMap_bookInfoList" resultType="criteria">
 		<![CDATA[
 		SELECT
 			*
@@ -220,7 +237,24 @@
 				tb1.*
 			from
 				(SELECT
-					*
+					b.board_no as board_no,
+					b.content as content,
+					b.book_status,
+					b.price,
+					b.deposit,
+					b.writer,
+					b.delete_yn,
+					b.isbn13,
+					b.reg_date,
+					bi.title as title,
+					bi.AUTHOR,
+					bi.PUBLISHER,
+					bi.ITEM_PAGE,
+					bi.CATEGORY_NAME,
+					bi.COVER,
+					br.RES_NO,
+					br.START_DATE,
+					br.END_DATE
 				FROM
 					booking b join book_info bi ON
 				    b.isbn13 = bi.isbn13
@@ -231,7 +265,7 @@
 					AND
 					DELETE_YN = 'N'
 					AND
-					br.id IS NOT NULL
+					br.borrower_id IS NOT NULL
 				ORDER BY
 					REG_DATE desc
 					,start_date desc) tb1
@@ -266,7 +300,7 @@
 			AND
 			DELETE_YN = 'N'
 			AND
-			br.id IS NOT NULL
+			br.borrower_id IS NOT NULL
 		ORDER BY
 			REG_DATE DESC
 	</select>

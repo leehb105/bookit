@@ -40,13 +40,13 @@ public class Community implements Serializable {
 	private String memberId;
 	
 	private String nickname;
-
-	// private Member member;
 	
 	private List<Comment> comment;
 
 	private List<CommunityAttachment> file;
 	
 	private int commentCount;
+	
+	private String profileImage;
 }
 

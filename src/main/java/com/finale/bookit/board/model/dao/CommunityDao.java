@@ -33,7 +33,6 @@ public interface CommunityDao {
 	
 	void insertReComment(Comment comment);
 	
-	int updateComment(Comment comment);
 	
 	int deleteComment(int no);
 	
@@ -52,4 +51,13 @@ public interface CommunityDao {
 	int updateReadCount(int no);
 	
 	int getCommunityNoCurrval();
+	
+	List<Community> searchCommuntiy(Map<String,Object> map);
+
+	void updateComment(Comment comment);
+
+	int getSearchCommuntiyContentCount(Map<String, Object> param);
+
+
+
 }
