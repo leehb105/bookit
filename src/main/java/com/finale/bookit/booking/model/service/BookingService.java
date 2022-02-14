@@ -1,18 +1,18 @@
 package com.finale.bookit.booking.model.service;
 
 import com.finale.bookit.booking.model.vo.BookInfo;
-import com.finale.bookit.booking.model.vo.Booking;
+import com.finale.bookit.booking.model.vo.BookingEntity;
 import com.finale.bookit.common.util.Criteria;
 
 import java.util.List;
 import java.util.Map;
 
 public interface BookingService {
-	public List<Booking> selectBookingList(Map<String, Object> param);
+	public List<BookingEntity> selectBookingList(Map<String, Object> param);
 
 	int selectTotalBookingCount(Map<String, Object> param);
 
-	public Booking selectBooking(Map<String, Object> param);
+	public BookingEntity selectBooking(Map<String, Object> param);
 
 	public List<BookInfo> selectBook(Map<String, Object> param);
 
@@ -20,13 +20,13 @@ public interface BookingService {
 
 	public int insertBookInfo(BookInfo bookInfo);
 
-	public int insertBooking(Booking booking);
+	public int insertBooking(BookingEntity booking);
 
-	public List<Booking> selectBorrowedList(String id);
+	public List<BookingEntity> selectBorrowedList(String id);
 
-	public List<Booking> selectLentList(Map<String, Object> param);
+	public List<BookingEntity> selectLentList(Map<String, Object> param);
 
-	public List<Booking> selectMyBookingList(Map<String, Object> param);
+	public List<BookingEntity> selectMyBookingList(Map<String, Object> param);
 
 	public int selectTotalMyBookingCount(Map<String, Object> param);
 

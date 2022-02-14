@@ -1,7 +1,7 @@
 package com.finale.bookit.booking.model.dao;
 
 import com.finale.bookit.booking.model.vo.BookInfo;
-import com.finale.bookit.booking.model.vo.Booking;
+import com.finale.bookit.booking.model.vo.BookingEntity;
 import com.finale.bookit.common.util.Criteria;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -22,12 +22,12 @@ public class BookkingDaoImpl implements BookingDao{
     }
 
     @Override
-    public List<Booking> selectBookingList(Map<String, Object> param) {
+    public List<BookingEntity> selectBookingList(Map<String, Object> param) {
         return session.selectList("booking.selectBookingList", param);
     }
 
 	@Override
-	public Booking selectBooking(Map<String, Object> param) {
+	public BookingEntity selectBooking(Map<String, Object> param) {
 		return session.selectOne("booking.selectBooking", param);
 	}
 
@@ -47,22 +47,22 @@ public class BookkingDaoImpl implements BookingDao{
 	}
 
 	@Override
-	public int insertBooking(Booking booking) {
+	public int insertBooking(BookingEntity booking) {
 		return session.insert("booking.insertBooking", booking);
 	}
 
 	@Override
-	public List<Booking> selectBorrowedList(String id) {
+	public List<BookingEntity> selectBorrowedList(String id) {
 		return session.selectList("booking.selectBorrowedList", id);
 	}
 
 	@Override
-	public List<Booking> selectLentList(Map<String, Object> param) {
+	public List<BookingEntity> selectLentList(Map<String, Object> param) {
 		return session.selectList("booking.selectLentList", param);
 	}
 
 	@Override
-	public List<Booking> selectMyBookingList(Map<String, Object> param) {
+	public List<BookingEntity> selectMyBookingList(Map<String, Object> param) {
 		return session.selectList("booking.selectMyBookingList", param);
 	}
 

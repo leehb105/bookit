@@ -27,14 +27,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.finale.bookit.booking.model.service.BookingService;
 import com.finale.bookit.booking.model.vo.BookInfo;
-import com.finale.bookit.booking.model.vo.Booking;
+import com.finale.bookit.booking.model.vo.BookingEntity;
 import com.finale.bookit.common.util.BookitUtils;
 import com.finale.bookit.common.util.Criteria;
 import com.finale.bookit.common.util.Paging;
 import com.finale.bookit.member.model.vo.Member;
 import com.finale.bookit.search.model.service.SearchService;
 import com.finale.bookit.search.model.service.SearchServiceImpl;
-import com.finale.bookit.search.model.vo.BookReview;
+import com.finale.bookit.search.model.vo.BookReviewEntity;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -229,7 +229,7 @@ public class SearchController {
     	param.put("cri", cri);
     	param.put("id", loginMember.getId());
     	
-     	List<BookReview> list = searchService.selectBookReviewByIsbn(param);
+     	List<BookReviewEntity> list = searchService.selectBookReviewByIsbn(param);
     	log.debug("list = {}", list);
     	
     	int total = searchService.selectTotalBookReviewCount(param);
@@ -242,7 +242,6 @@ public class SearchController {
         model.addAttribute("list", list);
         model.addAttribute("page", page);
 		model.addAttribute("book", book);
-		model.addAttribute("list", list);
 		model.addAttribute("idResult", idResult);
 	}
 	
