@@ -1,6 +1,7 @@
 package com.finale.bookit.member.model.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.finale.bookit.member.model.vo.Address;
 import com.finale.bookit.member.model.vo.MemberEntity;
+import com.finale.bookit.search.model.vo.BookReview;
 
 @Repository
 public class MemberDaoImpl implements MemberDao {
@@ -71,6 +73,16 @@ public class MemberDaoImpl implements MemberDao {
 	public int insertAuthority(String id) {
 		// TODO Auto-generated method stub
 		return session.insert("member.insertAuthority", id);
+	}
+
+	@Override
+	public List<BookReview> selectBookReviewList(HashMap<String, Object> param) {
+		return session.selectList("search.selectBookReviewList", param);
+	}
+
+	@Override
+	public int selectTotalBookReviewCountById(HashMap<String, Object> param) {
+		return session.selectOne("search.selectTotalBookReviewCountById", param);
 	}
 
 }

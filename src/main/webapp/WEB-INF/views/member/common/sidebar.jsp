@@ -19,7 +19,7 @@
 					<a href="${pageContext.request.contextPath}/member/payments/charge.do">북토리 충전</a>
 					<p>나의 게시글</p>
 					<a href="">게시글 작성목록</a><br />
-					<a href="">리뷰 작성목록</a><br />
+					<a href="${pageContext.request.contextPath}/member/reviewList.do?pageNum=1">리뷰 작성목록</a><br />
 					<p>1:1 문의</p>
 					<a href="${pageContext.request.contextPath}/inquire/inquireForm.do">1:1 문의하기</a><br />
 					<a href="${pageContext.request.contextPath}/inquire/inquireList.do">1:1 문의내역</a><br />

@@ -1,10 +1,12 @@
 package com.finale.bookit.member.model.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.finale.bookit.member.model.vo.Address;
 import com.finale.bookit.member.model.vo.MemberEntity;
+import com.finale.bookit.search.model.vo.BookReview;
 
 public interface MemberService {
 
@@ -31,5 +33,9 @@ public interface MemberService {
 	MemberEntity getUserInfo(String access_Token);
 
 	int insertAuthority(String id);
+
+	List<BookReview> selectBookReviewList(HashMap<String, Object> param);
+
+	int selectTotalBookReviewCountById(HashMap<String, Object> param);
 
 }
