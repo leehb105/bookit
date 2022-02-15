@@ -19,4 +19,6 @@ public class Trade implements Serializable{
 	private int price; // 대여비
 	private int cash; // 잔액
 	private Date tradeDate;
+	private int deposit;
+	private String refundYn;
 }

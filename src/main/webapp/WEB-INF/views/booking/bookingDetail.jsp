@@ -125,8 +125,8 @@
                             </div>
                             <input type="hidden" id="pay" name="pay" value="">
                             <!-- <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/> -->
-                        </form:form>
-                        <input type="hidden" id="deposit" value="${booking.deposit}">
+							<input type="hidden" name="deposit" id="deposit" value="${booking.deposit}">
+                        </form>
                         <input type="hidden" id="price" value="${booking.price}">
                         <form:form method="post" id="bookingDeleteFrm">
                             <input type="hidden" name="boardNo" value="${booking.boardNo}">
