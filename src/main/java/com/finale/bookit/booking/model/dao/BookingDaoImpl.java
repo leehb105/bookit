@@ -127,5 +127,20 @@ public class BookingDaoImpl implements BookingDao{
 		return session.update("booking.updateBookResStatus", param);
 	}
 
+	@Override
+	public int insertUserReview(HashMap<String, Object> param) {
+		return session.insert("booking.insertUserReview", param);
+	}
+
+	@Override
+	public int selectCountUserReview(Map<String, Object> param) {
+		return session.selectOne("booking.selectCountUserReview", param);
+	}
+
+	@Override
+	public Booking selectBorrowedBooking(Map<String, Object> param) {
+		return session.selectOne("booking.selectBorrowedBooking", param);
+	}
+
 	
 }

@@ -22,7 +22,7 @@
                     <br />
                     <a href="${pageContext.request.contextPath}/booking/lentList.do?pageNum=1&amout=5"><strong>나의 대여 예약 관리</strong></a>
                     <br />
-                    <a href="${pageContext.request.contextPath}/booking/borrowedList.do?pageNum=1&amout=5">나의 빌린 도서</a>
+                    <a href="${pageContext.request.contextPath}/booking/borrowedList.do?pageNum=1&amout=5">내가 빌린 도서</a>
                 </div>
             </div>
 
@@ -44,7 +44,7 @@
                             <table class="table table-borderless table-sm">
                                 <tr>
                                     <td>대여 요청자</td>
-                                    <td>${booking.bookReservation.borrowerId}</td>
+                                    <td>${booking.member.nickname}(${booking.bookReservation.borrowerId})</td>
                                 </tr>
                                 <tr>
                                     <td>대여 시작일</td>
@@ -91,21 +91,29 @@
                                 <span aria-hidden="true">X</span>
                             </button>
                         </div>
-                        <div class="modal-body" id="modalContent"></div>
-                        <div class="modal-footer">
-                            <form:form method="post" id="deleteFrm">
-                                <select class="form-select" id="status" name="status">
-                                    <option value="0" disabled selected>선택</option>
-                                    <option value="1">최상</option>
-                                    <option value="2">상</option>
-                                    <option value="3">중</option>
-                                    <option value="4">하</option>
-                                    <option value="5">최하</option>
-                                </select>
-                                <button class="btn" type="button" onclick="deleteReview();" data-dismiss="modal">리뷰 삭제</button>
-                                <input type="hidden" name="reviewNo" id="reviewNo" value="">
-                            </form:form>
-                        </div>
+                        <form:form method="post" id="reviewEnrollFrm">
+                            <div class="modal-body" id="modalContent">
+                                <h3 class="text-center">거래는 만족스러우셨나요?</h3>
+                                <div class="star-rating space-x-4 mx-auto mt-40">
+                                    <input type="radio" id="5-stars" name="rating" value="5" v-model="ratings"/>
+                                    <label for="5-stars" class="star pr-4">★</label>
+                                    <input type="radio" id="4-stars" name="rating" value="4" v-model="ratings"/>
+                                    <label for="4-stars" class="star">★</label>
+                                    <input type="radio" id="3-stars" name="rating" value="3" v-model="ratings"/>
+                                    <label for="3-stars" class="star">★</label>
+                                    <input type="radio" id="2-stars" name="rating" value="2" v-model="ratings"/>
+                                    <label for="2-stars" class="star">★</label>
+                                    <input type="radio" id="1-star" name="rating" value="1" v-model="ratings" />
+                                    <label for="1-star" class="star">★</label>
+                                </div>
+                               
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn roberto-btn" type="button" id="enrollBtn" onclick="reviewEnroll();" data-dismiss="modal">점수 제출</button>
+                                <input type="hidden" name="resNo" id="resNo" value="${booking.bookReservation.resNo}">
+                                <input type="hidden" name="borrowerId" id="borrowerId" value="${booking.bookReservation.borrowerId}">
+                            </div>
+                        </form:form>
                     </div>
                 </div>
             </div>
@@ -146,13 +154,18 @@
                             </div>
                         </form:form>
                     </c:if>
-                    <c:if test="${booking.bookReservation.status eq '반납완료'}">
+                    <c:if test="${booking.bookReservation.status eq '반납완료' && count == 0}">
                         <form:form method="post" id="reviewForm">
                             <div class="col-12 mb-3">
                                 <button type="button" class="btn btn-primary col-10 btn-lg" id="reviewBtn" onclick="openModal();">사용자 리뷰</button>
                             </div>
                             
                         </form:form>
+                    </c:if>
+                    <c:if test="${count == 1}">
+                        <div class="col-12 mb-3">
+                            <button type="button" class="btn btn-primary col-10 btn-lg" id="reviewBtn" onclick="openModal();" disabled>리뷰 등록 완료</button>
+                        </div>
                     </c:if>
                     
                 </div>
@@ -164,23 +177,24 @@
     <!-- Booking Area End -->
 <script>
         
-    // window.onload = function(){
-    //     // const title = document.getElementsByClassName('title');
-    //     // const author = document.getElementsByClassName('author');
-    //     // console.log(title.length);
-    //     // for(let i = 0; i < title.length; i++){
-    //     //     if(title[i].innerHTML.includes('-')){
-    //     //         //- 하이픈(부제) 있을시에 자르기
-    //     //         title[i].innerHTML = title[i].innerHTML.substr(0, title[i].innerHTML.indexOf('-'));
-    //     //     }
-    //     //     if(author[i].innerHTML.includes('(지은이)')){
-    //     //         //작가명 (지은이)뒤로 자름 -> 뒤는 엮은이임
-    //     //         author[i].innerHTML = author[i].innerHTML.substr(0, author[i].innerHTML.indexOf('(지은이)'));
-    //     //     }
-            
-    //     // }
+    const enrollBtn = document.getElementById('enrollBtn');
 
-    // };
+    $(document).ready(function() {
+        enrollBtn.disabled = 'false'; 
+
+        //별점 입력 체크
+        $('input:radio[name=rating]').on('input', function() {
+
+            //별점입력 안할시 버튼 제출 금지
+            if(!$('input:radio[name=rating]').is(':checked')){
+                enrollBtn.disabled = true;
+            }else{
+                enrollBtn.disabled = false; 
+            }
+        });
+
+
+    });
 	
     // var actionForm = $('#actionForm'); 
 	// $('.page-item a').on('click', function(e) { e.preventDefault(); 
@@ -218,28 +232,18 @@
     }
 
     //모달에 리뷰 등록 출력
-    function openModal(content, no){
-        console.log(content);
-        console.log(no);
-        // e.preventDefault();
+    function openModal(){
+
         $('#reviewModal').modal("show");
-        document.getElementById('modalContent').innerHTML = content;
-        document.getElementById('reviewNo').value = no;
-    }
-    function reviewEnroll(){
-        
-    }
-    
-    //책상태 입력에 대한 처리
-    function checkBookStatus(){
-        const status = $('#status option:selected').val();
-        // console.log(status, typeof status);
-        if(status == '0'){
-            return false;
-        }
-        return true;
 
     }
+    function reviewEnroll(){
+        var url = `${pageContext.request.contextPath}/booking/userReviewEnroll.do`;
+        $('#reviewEnrollFrm').attr("action", url);
+        $('#reviewEnrollFrm').submit(); 
+    }
+
+ 
 
 </script>
 	
