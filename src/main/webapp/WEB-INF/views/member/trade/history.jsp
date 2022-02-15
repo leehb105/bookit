@@ -22,26 +22,46 @@
 <table class="table table-condensed">
     <thead>
       <tr class="table-success">
-        <th>충전 일자</th>
-        <th>충전 금액</th>
+        <th>거래 일자</th>
+        <th>대여비</th>
+        <th>잔액</th>
         <th>추가 지급액</th>
-        <th>추가 지급액</th>
-        <th>환불 여부</th>
       </tr>
     </thead>
     <tbody>
-    <c:forEach items="${list}" var="history">
+    <c:forEach items="${borrowList}" var="history">
 		  <tr>
 			  <td><fmt:formatDate value="${history.tradeDate}" pattern="yyyy.MM.dd HH:mm"/></td>
 			  <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${history.price}" />원</td>
-			  <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${history.cash}" />원</td>
-			  <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${history.deposit}" />원</td>
-			  <td>${history.refundYn}</td>
+			  <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${history.borrowerCash}" />원</td>
+			 <!-- <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${history.deposit}" />원</td> -->
 		  </tr>      
       </c:forEach>
     </tbody>
   </table>
-  <script>console.log("${list}")</script>
+  <script>console.log("${borrowList}")</script>
+
+<table class="table table-condensed">
+    <thead>
+      <tr class="table-success">
+        <th>거래 일자</th>
+        <th>대여비</th>
+        <th>잔액<th>
+        <th>추가 지급액</th>
+      </tr>
+    </thead>
+    <tbody>
+    <c:forEach items="${lendList}" var="history2">
+		  <tr>
+			  <td><fmt:formatDate value="${history2.tradeDate}" pattern="yyyy.MM.dd HH:mm"/></td>
+			  <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${history2.price}" />원</td>
+			  <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${history2.lenderCash}" />원</td>
+			  <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${history2.deposit}" />원</td>
+		  </tr>      
+      </c:forEach>
+    </tbody>
+  </table>
+  <script>console.log("${lendList}")</script>
 </div>
 
 

@@ -26,17 +26,17 @@
 			my_trade_history mth left join booking_reservation br using(res_no)
 		where
 			br.borrower_id = #{id}
+		order by res_no desc
 	</select>
 	
 	<select id="selectLendList" resultType="trade">
 		select
-			mth.price,
-			mth.deposit,
-			mth.trade_date
+			*
 		from
 			my_trade_history mth left join booking_reservation br using(res_no) left join booking using(board_no)
 		where
-			writer = #{lenderId} and status in ('대여중', '대여거부', '반납완료', '분실', '대기')
+			writer = #{id} and status in ('대여중', '대여거부', '반납완료', '분실', '대기')
+		order by res_no desc
 	</select>
 
 </mapper>
