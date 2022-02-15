@@ -40,4 +40,8 @@ public interface BookingService {
 
 	public int selectTotalMyBorrowedBookingCount(HashMap<String, Object> param);
 
+	public int deleteBooking(HashMap<String, Object> param);
+
+	public int selectCountBookingReservation(HashMap<String, Object> param);
+
 }

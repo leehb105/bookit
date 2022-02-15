@@ -42,12 +42,12 @@
                             <div class="col-12 wow fadeInUp form-inline form-group" data-wow-delay="100ms">
                                 <c:forEach var="book" items="${list }" varStatus="status">    
                                     <!-- index시작 -->
-                                    <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp w-75" data-wow-delay="100ms" id="book${status.index}">
+                                    <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp w-100" data-wow-delay="100ms" id="book${status.index}">
                                         <!-- index: [0] -->
-                                        <div class="post-thumbnail w-25">
+                                        <div class="post-thumbnail w-10">
                                             <!-- <input type="hidden" name="bno" value="${booking.boardNo}"> -->
-                                            <!-- index: [0][0][0] -->
-                                            <a href="#"><img src="${book.cover }" alt="" id="cover"></a>
+                                            <!-- index: [0][0] -->
+                                            <img src="${book.cover }" alt="" id="cover">
                                         </div>
                                         <!-- List Content -->
                                         <!-- index: [1] -->
@@ -55,7 +55,7 @@
                                             <!-- List Meta -->
                                             <!-- List Title -->
                                             <!-- index: [1][0] -->
-                                            <a href="${pageContext.request.contextPath}/booking/bookingEnroll.do" class="post-title" id="title">${book.title }</a>
+                                            <h4>${book.title }</h4>
                                             <!-- List Author, publisher, pubdate -->
                                             <!-- index: [1][1] -->
                                             <p><span id="author">${book.author}</span> 저 | <span id="publisher">${book.publisher}</span> | <span id="pubdate"><input type="hidden" value="<fmt:formatDate value='${book.pubdate }' pattern='yyyy-MM-dd'/>"><fmt:formatDate value="${book.pubdate }" pattern="yyyy년 MM월"/></span></p>
@@ -69,7 +69,7 @@
                                             <input type="hidden" value="${book.description}">
                                             <!-- <input type="hidden"> -->
                                         </div>
-                                        <button type="button" class="btn roberto-btn" onclick="setBookInfo(this)">선택</button>
+                                        <button type="button" class="btn roberto-btn" onclick="setBookInfo(this);">선택</button>
                                     </div>
 					            </c:forEach>                                  
                             </div>                         
@@ -108,16 +108,15 @@
 
     function toJson(div){
 
-        const cover = div.children[0].children[0].children[0].src;
+        const cover = div.children[0].children[0].src;
         const title = div.children[1].children[0].innerText;
-        const author = div.children[1].children[1].children[0].innerText;
+        const author = div.children[1].children[0].innerText;
         const publisher = div.children[1].children[1].children[1].innerText;
         const pubdate = div.children[1].children[1].children[2].children[0].value;
         const isbn = div.children[1].children[2].children[0].innerText;
         const itemPage = div.children[1].children[3].value;
         const categoryName = div.children[1].children[4].value;
         const description = div.children[1].children[5].value;
-        // console.log(pubdate, typeof pubdate);
         //json생성
         let book = {
             "cover": cover,
@@ -130,6 +129,7 @@
             "categoryName": categoryName,
             "description":description,
         };
+        console.log(book, typeof book);
 
         return book;
     }

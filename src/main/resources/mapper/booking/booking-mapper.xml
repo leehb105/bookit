@@ -411,4 +411,26 @@
 		)
 	</insert>
 	
+	<update id="deleteBooking">
+		update booking set delete_yn = 'Y' where board_no = #{boardNo}
+	</update>
+	
+	<select id="selectCountBookingReservation" resultType="int">
+		SELECT 
+			count(*)
+		FROM
+			booking b JOIN BOOKING_RESERVATION br
+			ON b.BOARD_NO = br.BOARD_NO
+		WHERE 
+			b.BOARD_NO = #{boardNo}
+			AND
+			CURRENT_DATE BETWEEN br.START_DATE AND br.END_DATE
+			AND
+			br.status = '대여거부'
+	</select>
+	
+	
+	
+	
+	
 </mapper>

@@ -356,7 +356,34 @@ public class BookingController {
     	return "redirect:/";
     }
     
-    
+    @PostMapping("/bookingDelete.do")
+	public String bookingDelete(
+			@RequestParam int boardNo, 
+			RedirectAttributes attributes){
+		log.debug("boardNo = {}", boardNo);
+		
+		HashMap<String, Object> param = new HashMap<String, Object>();
+    	param.put("boardNo", boardNo);
+    	
+    	String msg = "";
+    	int count = bookingService.selectCountBookingReservation(param);
+    	//삭제할 수 없는 경우
+    	if(count > 0) {
+    		msg = "대여 예약이 있어 삭제가 불가능합니다."; 
+    		return "redirect:/booking/bookingDetail.do?bno=" + boardNo;
+    	}
+    	
+		int result = bookingService.deleteBooking(param);
+    	if(result > 0) {
+    		msg = "대여글 삭제가 완료되었습니다.";   		
+    	}else {
+    		msg = "대여글 삭제에 실패하였습니다.";
+    		attributes.addFlashAttribute("msg", msg); 
+    		return "redirect:/booking/bookingDetail.do?bno=" + boardNo;
+    	}
+    	attributes.addFlashAttribute("msg", msg); 
+    	return "redirect:/booking/myBooking.do?pageNum=1&amout=5";
+	}
 
     
     
