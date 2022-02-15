@@ -89,7 +89,7 @@
                                     </div>
                                     
                                     <div class="col-12 mt-30 p-0">
-                                        <button type="button" class="btn roberto-btn" id="enrollBtn" onclick="enrollBooking();">대여 글 등록</button>
+                                        <button type="button" class="btn roberto-btn" id="enrollBtn" onclick="enrollBooking();">리뷰 등록</button>
                                     </div>
                                 </div>
                                 <input type="hidden" name="isbn" value="">
@@ -118,6 +118,36 @@
                                                 <div class="comment-meta">
                                                     <a href="#" class="post-date"><fmt:formatDate value="${review.regDate}" pattern="yyyy년 MM월 dd일"/></a>
                                                     <h5>${review.member.nickname}(${review.member.id})</h5>
+                                                    <!-- 리뷰 별점처리 -->
+                                                    <div class="star-ratings">
+                                                        <div 
+                                                        class="star-ratings-fill space-x-2 text-lg"
+                                                        :style="{ width: ratingToPercent + '%' }"
+                                                        >
+                                                        <c:choose>
+                                                            <c:when test="${review.rating == 1}">
+                                                                <span>★</span>
+                                                            </c:when>
+                                                            <c:when test="${review.rating == 2}">
+                                                                <span>★</span><span>★</span>
+                                                            </c:when>
+                                                            <c:when test="${review.rating == 3}">
+                                                                <span>★</span><span>★</span><span>★</span>
+                                                            </c:when>
+                                                            <c:when test="${review.rating == 4}">
+                                                                <span>★</span><span>★</span><span>★</span><span>★</span>
+                                                            </c:when>
+                                                            <c:when test="${review.rating == 5}">
+                                                                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                                                            </c:when>
+                                                        </c:choose>
+                                                        </div>
+                                                        <div class="star-ratings-base space-x-2 text-lg">
+                                                            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                                                        </div>
+                                                    </div>
+
+
                                                     <p>${review.content}</p>
                                                 </div>
                                             </div>
@@ -202,7 +232,6 @@
         // let input = document.getElementById('1-star');
         console.log(input);
 
-        
     });
 
     //댓글 페이징 관련
@@ -222,9 +251,8 @@
 	});
 
     $('input[type=radio]').change(function(){
-        console.log('값 변경');
         starValue = this.value;
-        console.log(starValue);
+        // console.log(starValue);
     });
 
    
@@ -243,7 +271,6 @@
 
 		enrollFrm.submit(); 
 	});
-
 
 
 

@@ -35,8 +35,8 @@ $(() => {
 	const searchBtn = document.getElementById("searchBtn");
 	searchBtn.disabled = true;
 	
-	document.getElementById('price').addEventListener('keyup', function(){
-	    const price = document.getElementById('price');
+	document.getElementById('wishPrice').addEventListener('keyup', function(){
+	    const price = document.getElementById('wishPrice');
 	    if(price.value.length > 0){
 	        if(Number(price.value) <= 0){
 	            alert('일일대여로는 0원 보다 많아야 합니다.');
@@ -65,7 +65,7 @@ let book;
 //자식창에서 호출할 json 페이지적용 함수
 window.getJson = function(){
     book = JSON.parse(localStorage.getItem("book"));
-    console.log(book.title);
+    console.log(book);
     if(isEmptyObj(book)){
         alert("책정보 없음 - 도서를 다시 선택해주세요.");
     }else if(!checkAllElement(book)){
@@ -75,10 +75,11 @@ window.getJson = function(){
         const date = new Date(book.pubdate);
         const newDate = date.getFullYear() + '년 ' + (date.getMonth()+1) + '월';
         document.getElementById('cover').src = book.cover;
-        document.getElementById('title').innerHTML = book.title;
+        document.getElementById('bookTitle').innerHTML = book.title;
         document.getElementById('author').innerHTML = book.author;
         document.getElementById('publisher').innerHTML = book.publisher;
         document.getElementById('pubdate').innerHTML = newDate;
+        document.getElementById('isbn13').value = book.isbn13;
     }
 }
 //json 객체 비어있는지 검사
@@ -99,63 +100,42 @@ function checkAllElement(obj){
     }        
     return true;
 }
-//일일요금 0원에 대한 처리
-/* document.getElementById('price').addEventListener('keyup', function(){
-    const price = document.getElementById('price');
-    if(price.value.length > 0){
-        if(Number(price.value) <= 0){
-            alert('일일대여로는 0원 보다 많아야 합니다.');
-            price.value = 500;
-        }
-    }
-}); */
-//글 등록
-function enrollBooking(){
-	const csrfHeader = "${_csrf.headerName}";
-	const csrfToken = "${_csrf.token}";
-	const headers = {};
-	headers[csrfHeader] = csrfToken;
-    console.log(JSON.stringify(book));
-    //책 요소에 문제가 없을시
-    if(book != undefined){
-        //책정보 전송부분
-        $.ajax({
-            url: `${pageContext.request.contextPath}/booking/bookInfoEnroll.do`,
-            type: 'POST',
-            data: JSON.stringify(book),
-            // dataType: 'json',
-            headers: headers,
-            contentType: 'application/json;charset=UTF-8',
-            success(data) {
-                console.log('일단 성공');
-                console.log(data);
-            },
-            error: console.log,
-            complete : function() {
-                $('input[name=isbn]').val($('#isbn').text());
-                frmSubmit(); 
-            }
-        });
-    }else{
-        alert('책정보를 검색하세요');
-        document.getElementById('title').focus();
-    }
+// 요청글 등록
+function enrollRequest(){
+	const isbn13 = $("input[id=isbn13]").val();
+	const wishPrice = $("input[id=wishPrice]").val();
+	const bookCondition = $('input[name=bookCondition]:checked').val();
+	let f = document.createElement('form');
+	
+	let obj1 = document.createElement('input');
+	obj1.setAttribute('type', 'hidden');
+	obj1.setAttribute('name', 'isbn13');
+	obj1.setAttribute('value', isbn13);
+	
+	let obj2 = document.createElement('input');
+	obj2.setAttribute('type', 'hidden');
+	obj2.setAttribute('name', 'wishPrice');
+	obj2.setAttribute('value', wishPrice);
+	
+	let obj3 = document.createElement('input');
+	obj3.setAttribute('type', 'hidden');
+	obj3.setAttribute('name', 'bookCondition');
+	obj3.setAttribute('value', bookCondition);
+
+	csrf = document.createElement('input');
+	csrf.setAttribute('type', 'hidden');
+	csrf.setAttribute('name', '${_csrf.parameterName}');
+	csrf.setAttribute('value', '${_csrf.token}');
+	
+	f.appendChild(obj1);
+	f.appendChild(obj2);
+	f.appendChild(obj3);
+	f.appendChild(csrf);
+	f.setAttribute('method', 'post');
+	f.setAttribute('action', '${pageContext.request.contextPath}/board/requestEnroll.do');
+	document.body.appendChild(f);
+	f.submit();
 }
-//폼제출 전 체크
-/* function frmSubmit(){
-    const frm = document.getElementById('enrollFrm');
-    const price = document.getElementById('price');
-    const bookCondition = document.getElementById('bookCondition');
-    
-    if(!bookCondition()){
-        alert('책 상태를 선택해주세요');
-    }else if(price.value == ''){
-        alert('일일 대여로를 해주세요');
-        price.focus();
-    }else {
-        frm.submit();
-    }
-} */
 </script>
 <!-- 등록 폼 시작 -->
 <div class="roberto-contact-form-area section-padding-100">
@@ -203,7 +183,7 @@ function enrollBooking(){
 								<table class="table table-borderless table-sm">
 									<tr>
 										<td>제목</td>
-										<td id="title"></td>
+										<td id="bookTitle"></td>
 									</tr>
 									<tr>
 										<td>저자</td>
@@ -218,6 +198,7 @@ function enrollBooking(){
 										<td id="pubdate"></td>
 									</tr>
 								</table>
+								<input type="hidden" id="isbn13" value=""/>
 							</div>
 						</div>
 						<div class="room-features-area d-flex flex-wrap mb-50 ">
@@ -227,30 +208,29 @@ function enrollBooking(){
 									<td>일당 대여료</td>
 								</tr>
 								<tr>
-									<td id="bookCondition">
-										<input type="radio" name="reason" id="badword" value="욕설">
-										<label for="badword">욕설</label>&nbsp;
-										<input type="radio" name="reason" id="cheat" value="사기">
-										<label for="cheat">사기</label>&nbsp;
-										<input type="radio" name="reason" id="loop" value="도배">
-										<label for="loop">도배</label>&nbsp;
-										<input type="radio" name="reason" id="ad" value="광고">
-										<label for="ad">광고</label>&nbsp;
-										<input type="radio" name="reason" id="weird" value="음란물">
-										<label for="weird">음란물</label>&nbsp;
+									<td>
+										<input type="radio" name="bookCondition" id="best" value="최상">
+										<label for="best">최상</label>&nbsp;
+										<input type="radio" name="bookCondition" id="good" value="상">
+										<label for="good">상</label>&nbsp;
+										<input type="radio" name="bookCondition" id="soso" value="중">
+										<label for="soso">중</label>&nbsp;
+										<input type="radio" name="bookCondition" id="bad" value="하">
+										<label for="bad">하</label>&nbsp;
+										<input type="radio" name="bookCondition" id="worst" value="최하">
+										<label for="worst">최하</label>&nbsp;
 									</td>
 									<td>
 										<div class="form-inline form-group" style="justify-content:center;">
-											<input type="number" class="form-control" placeholder="일일 대여료를 입력하세요" id="price" name="price" min="0" step="500" onKeyup="this.value=this.value.replace(/[^0-9]/g,'500');" required> &nbsp; <span> 원</span>
+											<input type="number" class="form-control" placeholder="일일 대여료를 입력하세요" id="wishPrice" name="wishPrice" min="0" step="500" onKeyup="this.value=this.value.replace(/[^0-9]/g,'500');" required> &nbsp; <span> 원</span>
 										</div>
 									</td>
 								</tr>
 							</table>
 						</div>
 						<div class="col-12 mt-30 p-0">
-							<button type="button" class="btn roberto-btn" id="enrollBtn" onclick="enrollBooking();">요청 등록</button>
+							<button type="button" class="btn roberto-btn" id="enrollBtn" onclick="enrollRequest();">요청 등록</button>
 						</div>
-						<input type="hidden" name="isbn" value="">
 					</form:form>
 				</div>
 			</div>

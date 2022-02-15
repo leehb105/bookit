@@ -53,8 +53,12 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 
 	@Override
 	public String selectIdByNickName(String writer) {
-		// TODO Auto-generated method stub
 		return dao.selectIdByNickName(writer);
+	}
+
+	@Override
+	public String selectChatRoomId(String chatParticipants) {
+		return dao.selectChatRoomId(chatParticipants);
 	}
 
 }

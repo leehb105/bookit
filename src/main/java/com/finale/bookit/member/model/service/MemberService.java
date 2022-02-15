@@ -19,7 +19,7 @@ public interface MemberService {
 	int selectAddress(Address address);
 
 	int insertAddress(Address address);
-	
+
 	int updateAddress(Address address);
 
 	int memberUpdate(Map<String, Object> param, Address address);
@@ -39,5 +39,7 @@ public interface MemberService {
 	int selectTotalBookReviewCountById(HashMap<String, Object> param);
 
 	int selectMemberCash(HashMap<String, Object> param);
+
+	int bookReviewDelete(HashMap<String, Object> param);
 
 }

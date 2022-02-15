@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
     
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%-- spring-webmvc의존 : security의 xss대비 csrf토큰 생성 --%>
@@ -30,12 +30,11 @@
                                 <th colspan="2">제목</th>
                                 <th>작가</th>
                                 <th>별점</th>
-                                <th>평가</th>
                             </tr>
                         </thead>
                         <tbody>
                             <c:forEach items="${list}" var="bookReview" varStatus="status">
-                                <tr onclick="" style="cursor:pointer;">
+                                <tr onclick="openModal('${bookReview.content}', '${bookReview.reviewNo}');" style="cursor:pointer;">
                                     <td class="align-middle">${page.total - ((page.cri.pageNum - 1) * page.cri.amount) - status.index}</td>
                                     <td class="align-middle"><img src="${bookReview.bookInfo.cover}" alt="" style="width: 30%;"></td>
                                     
@@ -43,10 +42,59 @@
                                     <td class="author align-middle">
                                         ${bookReview.bookInfo.author}
                                     </td>
-                                    <td class="rating align-middle">${bookReview.rating}</td>
-                                    <td class="rating align-middle">${bookReview.content}</td>
+                                    <td class="rating align-middle">
+                                        <div class="star-ratings">
+                                            <div 
+                                            class="star-ratings-fill space-x-2 text-lg"
+                                            :style="{ width: ratingToPercent + '%' }"
+                                            >
+                                            <c:choose>
+                                                <c:when test="${bookReview.rating == 1}">
+                                                    <span>★</span>
+                                                </c:when>
+                                                <c:when test="${bookReview.rating == 2}">
+                                                    <span>★</span><span>★</span>
+                                                </c:when>
+                                                <c:when test="${bookReview.rating == 3}">
+                                                    <span>★</span><span>★</span><span>★</span>
+                                                </c:when>
+                                                <c:when test="${bookReview.rating == 4}">
+                                                    <span>★</span><span>★</span><span>★</span><span>★</span>
+                                                </c:when>
+                                                <c:when test="${bookReview.rating == 5}">
+                                                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                                                </c:when>
+                                            </c:choose>
+                                            </div>
+                                            <div class="star-ratings-base space-x-2 text-lg">
+                                                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                    <!-- <input type="hidden" id="content" value=""> -->
     
                                 </tr>
+                                <!-- 모달 -->
+                                <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">100자 평</h5>
+                                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">X</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body" id="modalContent"></div>
+                                            <div class="modal-footer">
+                                                <form:form method="post" id="deleteFrm">
+                                                    <button class="btn" type="button" onclick="deleteReview();" data-dismiss="modal">리뷰 삭제</button>
+                                                    <input type="hidden" name="reviewNo" id="reviewNo" value="">
+                                                </form:form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
     
                             </c:forEach>
                             <c:if test="${empty list}">
@@ -55,6 +103,7 @@
                                 </tr>
                             </c:if>
                         </tbody>
+                        
                     </table>
                     <!-- Pagination -->
                     <nav class="roberto-pagination mb-100">
@@ -78,8 +127,8 @@
                 </div>
                 
             </div>	
+            
         </div>
-
 
         <!-- Booking Area End -->
     <script>
@@ -108,9 +157,25 @@
 		actionForm.submit(); 
 	});
     
+    //모달에 리뷰 상세내용 출력
+    function openModal(content, no){
+        console.log(content);
+        console.log(no);
+        // e.preventDefault();
+        $('#reviewModal').modal("show");
+        document.getElementById('modalContent').innerHTML = content;
+        document.getElementById('reviewNo').value = no;
+    }
     
-    
-    
+    //리뷰 삭제
+    function deleteReview(){
+
+        const url = `${pageContext.request.contextPath}/member/bookReviewDelete.do`;
+        $('#deleteFrm').attr("action", url);
+        $('#deleteFrm').submit();
+
+
+    }
     
     </script>
 

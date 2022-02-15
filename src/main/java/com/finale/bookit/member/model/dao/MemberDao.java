@@ -40,4 +40,6 @@ public interface MemberDao {
 
 	int selectMemberCash(HashMap<String, Object> param);
 
+	int bookReviewDelete(HashMap<String, Object> param);
+
 }

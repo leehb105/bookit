@@ -92,6 +92,9 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public int selectMemberCash(HashMap<String, Object> param) {
 		return session.selectOne("member.selectMemberCash", param);
+
+	public int bookReviewDelete(HashMap<String, Object> param) {
+		return session.update("search.bookReviewDelete", param);
 	}
 
 }

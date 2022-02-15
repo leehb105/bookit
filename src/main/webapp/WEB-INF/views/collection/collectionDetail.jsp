@@ -88,14 +88,15 @@ $(document).ready(function () {
 
 // 검색어 value값 체크
 function checkTitle(){
-	const $title = $('input[name=title]').val();
-	if($title != ""){
-	    $('#searchBtn').attr("disabled", false);
+	const title = $('input[id=title]').val();
+	const searchBtn = document.getElementById("searchBtn");
+	if(title != ""){
+		searchBtn.disabled = false;
 	    return true;
 	}
-	else{
+	else {
 	    //입력값 없을 시 다시 버튼 비활성화
-	    $('#searchBtn').attr("disabled", true);
+		searchBtn.disabled = true;
 	    return false;
 	}
 }
@@ -239,7 +240,7 @@ function insertBook(){
 			                            <h6>출판사<span><small>${collectionDetailList.publisher}</small></span></h6>
 			                        </div>
 			                        <a 
-			                        	href="${pageContext.request.contextPath}/collection/aaaa.do?ibsn13=${collectionDetailList.isbn13}"
+			                        	href="${pageContext.request.contextPath}/search/bookDetail.do?isbn=${collectionDetailList.isbn13}"
 			                        	class="btn view-detail-btn">상세정보 <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
 			                        </a>
 			                    </div>

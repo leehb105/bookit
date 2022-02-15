@@ -11,4 +11,8 @@ public interface RequestService {
 
 	int selectTotalRequest();
 
+	int requestEnroll(Map<String, Object> param);
+
+	int requestDelete(int requestNo);
+
 }

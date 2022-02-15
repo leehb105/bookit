@@ -120,7 +120,7 @@
                                             </li>
                                         </ul> -->
 
-                                    <li><a href="#">컬렉션</a></li>             
+                                    <li><a href="${pageContext.request.contextPath}/collection/collectionList.do">컬렉션</a></li>             
  								</ul>
 
                                 <!-- Search -->
@@ -144,8 +144,7 @@
 		                            		<sec:authentication property="principal.username"/>
 		                            		</a>님 &nbsp
 	                                        <a href="${pageContext.request.contextPath}/booking/myBooking.do?pageNum=1&amout=5"><i class="fa fa-list fa-lg"></i></a> &nbsp
-		                            	<a href="#"><i class="fa fa-heart fa-lg"></i></a>
-		                            	<a href="${pageContext.request.contextPath}/member/memberLogout.do" class="btn roberto-btn mb-15 w-10">로그아웃</a>
+			                            	<a href="${pageContext.request.contextPath}/member/memberLogout.do" class="btn roberto-btn mb-15 w-10">로그아웃</a>
 	                              		</c:when>
 	                              		
 	                              		<c:otherwise>
@@ -153,7 +152,7 @@
 		                            		<sec:authentication property="principal.username"/>
 		                            		</a>님 &nbsp
 	                                        <a href="${pageContext.request.contextPath}/booking/myBooking.do?pageNum=1&amout=5"><i class="fa fa-list fa-lg"></i></a> &nbsp
-		                            		<a href="#"><i class="fa fa-heart fa-lg"></i></a>
+		                            		<a href="${pageContext.request.contextPath}/wishlist/wishlistList.do"><i class="fa fa-heart fa-lg"></i></a>
 		                            		<a href="${pageContext.request.contextPath}/member/memberLogout.do" class="btn roberto-btn mb-15 w-10">로그아웃</a>
 	                              		</c:otherwise>
                               		</c:choose>

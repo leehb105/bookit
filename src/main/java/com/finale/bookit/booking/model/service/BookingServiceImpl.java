@@ -115,4 +115,14 @@ public class BookingServiceImpl implements BookingService {
 		return bookingDao.selectTotalMyBorrowedBookingCount(param);
 	}
 
+	@Override
+	public int deleteBooking(HashMap<String, Object> param) {
+		return bookingDao.deleteBooking(param);
+	}
+
+	@Override
+	public int selectCountBookingReservation(HashMap<String, Object> param) {
+		return bookingDao.selectCountBookingReservation(param);
+	}
+
 }

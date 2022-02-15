@@ -47,4 +47,9 @@
 		insert into report_board
 		values(seq_report_board_no.nextval, #{boardNo}, #{reason}, #{detail}, #{reporter}, default, 2, default)
 	</insert>
+	
+	<insert id="insertReportUser">
+		insert into report_user
+		values(seq_report_user_no.nextval, #{reason}, #{detail}, #{reporter}, #{reportee}, default, default)
+	</insert>
 </mapper>
