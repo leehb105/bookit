@@ -105,7 +105,7 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public int selectMemberCash2(HashMap<String, Object> param) {
-		return session.update("member.chargeMemberCash2", param);
+		return session.selectOne("member.selectMemberCash2", param);
 	}
 
 }
