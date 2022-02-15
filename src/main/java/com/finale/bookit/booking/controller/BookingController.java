@@ -256,15 +256,19 @@ public class BookingController {
     @GetMapping("/lentDetail.do")
     public void lentDetail(
     		@RequestParam int resNo,
+    		@AuthenticationPrincipal Member member,
     		Model model) {
     	
     	log.debug("resNo = {}", resNo);
     	Map<String, Object> param = new HashMap<>();
     	param.put("resNo", resNo);
+    	param.put("id", member.getId());
     	Booking booking = bookingService.selectLentBooking(param);
     	log.debug("booking = {}", booking);
+    	int count = bookingService.selectCountUserReview(param);
     		
     	model.addAttribute("booking", booking);
+    	model.addAttribute("count", count);
     	
     }
     
@@ -297,6 +301,25 @@ public class BookingController {
     	model.addAttribute("list", list);
         model.addAttribute("page", page);
     	
+    	
+    }
+    
+    @GetMapping("/borrowedDetail.do")
+    public void borrowedDetail(
+    		@RequestParam int resNo,
+    		@AuthenticationPrincipal Member member,
+    		Model model) {
+    	
+    	log.debug("resNo = {}", resNo);
+    	Map<String, Object> param = new HashMap<>();
+    	param.put("resNo", resNo);
+    	param.put("id", member.getId());
+    	Booking booking = bookingService.selectBorrowedBooking(param);
+    	log.debug("booking = {}", booking);
+    	int count = bookingService.selectCountUserReview(param);
+    		
+    	model.addAttribute("booking", booking);
+    	model.addAttribute("count", count);
     	
     }
     
@@ -490,6 +513,36 @@ public class BookingController {
     	attributes.addFlashAttribute("msg", msg); 
     	return "redirect:/booking/lentDetail.do?resNo=" + resNo;
     	
+    }
+    
+    @PostMapping("/userReviewEnroll.do")
+    public String userReviewEnroll(
+			@RequestParam int resNo,
+			@RequestParam String borrowerId,
+			@RequestParam int rating,
+			RedirectAttributes attributes,
+    		@AuthenticationPrincipal Member member){
+    	log.debug("resNo = {}", resNo);
+    	log.debug("borrowerId = {}", borrowerId);
+    	log.debug("rating = {}", rating);
+
+    	HashMap<String, Object> param = new HashMap<String, Object>();
+    	param.put("resNo", resNo);
+    	param.put("borrowerId", borrowerId);
+    	param.put("rating", rating);
+    	param.put("id", member.getId());
+    	
+    	int result = bookingService.insertUserReview(param);
+    	
+    	String msg = "";
+    	if(result > 0) {
+    		msg = "사용자 평가가 완료되었습니다.";   		
+    	}else {
+    		msg = "사용자 평가에 실패하였습니다.";
+    	}
+    	
+    	attributes.addFlashAttribute("msg", msg);
+    	return "redirect:/booking/lentDetail.do?resNo=" + resNo;
     }
     
     public String MakeStr(String str1,String str2) {

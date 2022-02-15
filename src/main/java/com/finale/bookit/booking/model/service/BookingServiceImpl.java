@@ -148,5 +148,20 @@ public class BookingServiceImpl implements BookingService {
 		return result;
 	}
 
+	@Override
+	public int insertUserReview(HashMap<String, Object> param) {
+		return bookingDao.insertUserReview(param);
+	}
+
+	@Override
+	public int selectCountUserReview(Map<String, Object> param) {
+		return bookingDao.selectCountUserReview(param);
+	}
+
+	@Override
+	public Booking selectBorrowedBooking(Map<String, Object> param) {
+		return bookingDao.selectBorrowedBooking(param);
+	}
+
 	
 }
