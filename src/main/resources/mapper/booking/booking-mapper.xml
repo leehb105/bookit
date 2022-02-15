@@ -64,6 +64,10 @@
 							#{checkOut} NOT BETWEEN br.start_date AND br.end_date
 							AND
 							b.DELETE_YN = 'N'
+							AND
+							br.borrower_id is not null
+							and
+							br.status is null
 							AND 
 							mv.search_address = #{address}
 						ORDER BY
