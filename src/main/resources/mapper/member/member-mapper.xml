@@ -130,4 +130,8 @@
 		select cash from member where id = #{lenderId}
 	</select>
 	
+	<update id="updateReturnDeposit">
+		update member set cash = cash + #{deposit} where id = #{targetId}
+	</update>
+	
 </mapper>

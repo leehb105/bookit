@@ -445,6 +445,7 @@ public class BookingController {
     	param.put("deposit", deposit);
     	param.put("borrowerId", borrowerId);
     	param.put("status", "분실");
+    	param.put("targetId",  member.getId()); // 도서 분실의 경우 보증금(deposit)을 돌려주는 대상이 도서제공자(member.id)
     	
     	int result = bookingService.updateBookResStatus(param);
     	String msg = "";
@@ -476,6 +477,7 @@ public class BookingController {
     	param.put("deposit", deposit);
     	param.put("borrowerId", borrowerId);
     	param.put("status", "반납완료");
+    	param.put("targetId", borrowerId); // 도서 반납의 경우 보증금(deposit)을 돌려주는 대상이 도서대여자(borrower)
     	
     	int result = bookingService.updateBookResStatus(param);
     	String msg = "";

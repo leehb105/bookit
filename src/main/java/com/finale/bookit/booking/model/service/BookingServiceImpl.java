@@ -138,7 +138,14 @@ public class BookingServiceImpl implements BookingService {
 
 	@Override
 	public int updateBookResStatus(HashMap<String, Object> param) {
-		return bookingDao.updateBookResStatus(param);
+		int result = bookingDao.updateBookResStatus(param);
+		if (result > 0) {
+			result = memberDao.updateReturnDeposit(param);
+			if (result > 0) {
+				result = tradeDao.insertTrade(param);
+			}
+		}
+		return result;
 	}
 
 	
