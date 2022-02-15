@@ -16,8 +16,7 @@ public interface CommunityDao {
 	List<CommunityAttachment> getAttachmentList(int no);
 
 	void deleteCommunityContent(int no);
-	
-	void updateCommunityContent(Map<String, Object> param);
+
 
 	List<Community> getCommunityList(Map<String, Object> param);
 
@@ -65,5 +64,9 @@ public interface CommunityDao {
 	void communityLike(Map<String, Object> map);
 	
 	void communityLikeCancel(Map<String, Object> map);
+
+	void updateCommunityContent(CommunityTest communityDto);
+	
+	int isUserLikeCommunity(Map<String, Object> map);
 	
 }

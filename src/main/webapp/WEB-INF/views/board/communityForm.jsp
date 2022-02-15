@@ -12,8 +12,6 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/community.css"/>
 <script>
-
-
 function goCommunityList(){
 	location.href = "${pageContext.request.contextPath}/board/community.do";
 }
@@ -39,6 +37,7 @@ $(() => {
 });
 
 </script>
+<div class="roberto-contact-form-area section-padding-100">        
 <div class="container">
   <form 		
   		name="communityFrm" 
@@ -46,23 +45,25 @@ $(() => {
 		method="post"
 		enctype="multipart/form-data" 
 		onsubmit="return boardValidate();">
-     <div class="row" style="margin-left: 2%;">
+     <div class="row" >    
+     <div class="col-12">
+          <div class="section-heading text-left wow fadeInUp" data-wow-delay="100ms">
+       	     <input type="submit" class="float-right" value="등록">
+      <input type="button" value="취소" class="float-right" onclick="goCommunityList();">
        	<h2>글쓰기</h2>
-        <hr>
-      <input type="submit" value="등록" style="margin-left: 70%;">
-      <input type="button" value="취소" onclick="goRequestList();">
+                    </div>
+                </div>
+            
+
     </div>
     <div name="form-body" style="margin-left: 2%;">
-        <input type="text" id="title" name="title" placeholder="제목" style="margin-left: 6%;" required>
-     
-        
-        
+        <input type="text" id="title" name="title" placeholder="제목" style="margin-bottom: 3%; margin-left:3%;" required>
         <select id="category" name="category" >
           <option value="사담" >사담</option>
           <option value="독서모임" >독서모임</option>
           <option value="도서추천" >도서추천</option>
         </select>
-        <textarea id="content" name="content" placeholder="내용" style="height:250px"></textarea>
+        <textarea id="content" name="content" placeholder="내용" style="height:300px"></textarea>
         		<div class="input-group mb-3" style="padding:0px;" >
 		  <div class="input-group-prepend" style="padding:0px;">
 		    <span class="input-group-text">첨부파일</span>
@@ -79,5 +80,6 @@ $(() => {
 		</div>
   </form>
   </div>
+</div>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

@@ -7,15 +7,13 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <sec:authentication property="principal" var="loginMember" />
-<jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="게시판 상세보기" name="title" />
-</jsp:include>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/community.css" />
+<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <script src="https://kit.fontawesome.com/01809a491f.js"
 	crossorigin="anonymous"></script>
 
 <script>
+
+
 const csrfHeader = "${_csrf.headerName}";
 const csrfToken = "${_csrf.token}";
 const headers = {};
@@ -23,24 +21,22 @@ headers[csrfHeader] = csrfToken;
 
 function likeCheck(e){
 	$.ajax({
-		url:`${pageContext.request.contextPath}/board/updateComment.do`,
-		headers : headers,
-		type	:"post",
-		data: paramData,
-		contentType: 'application/json;charset=UTF-8',
-		success:function(responseData){
-			// responseData : {isSuccess:true}
-			if(responseData.isSuccess){
-				//폼에 입력한 내용 읽어오기
-				var content=$this.find("textarea").val();
-				//pre 요소에 수정 반영하기 
-				$this.parent().find("pre").text(content);
-			}
-		}
-	})
+
+	url: "${pageContext.request.contextPath}/board/like.do?no="+${community.communityNo}+"&isLike="+e,
+	type: "GET",
+	data : {
+		no : ${community.communityNo},
+		isLike : e
+	}, 
+	
+	success(result){
+		console.log("=====> ", result);
+	},
+	error(e){ console.log(e);
+	
+	}
+	});
 }
-
-
 //댓글 수정
 function updateCommentEvent(e){
 	var className = '.comment_content_'+e;
@@ -60,10 +56,19 @@ function updateCommentEvent(e){
 				// responseData : {isSuccess:true}
 				if(responseData.isSuccess){
 					//폼에 입력한 내용 읽어오기
-					var content=$this.find("textarea").val();
+					var content=$(this).find("textarea").val();
 					//pre 요소에 수정 반영하기 
-					$this.parent().find("pre").text(content);
+					$(this).parent().find("").text(content);
+					
+					$('textarea[name=content]').val('');
+					
+					var className = ".updateCommentFrm_"+e
+					
+					 document.querySelector(className).style.display = 'none';
+					
 				}
+				
+				
 			}
 		});
 
@@ -80,13 +85,13 @@ function writeReComment(){
 	 document.querySelector('.reCommentInput').style.display = 'block';
 }
 //대댓글 입력 
-function btnReCommentSubmit(){
+function btnReCommentSubmit(e){
 		var replyContent = $('#reCommentContent').val();
 		var paramData = JSON.stringify({
 			"content": replyContent
 			, "commentLevel": 2
 			, "communityNo" : "${community.communityNo}"
-			, "commentRef" : "${comment.no}"
+			, "commentRef" : e
 			
 	});
 	 const csrfHeader = "${_csrf.headerName}";
@@ -112,7 +117,7 @@ function btnReCommentSubmit(){
 		});
 }
 
-//삭제 
+//댓글 삭제 
 function deleteComment(no){
 		var isDelete=confirm("댓글을 정말 삭제하겠습니까");
 		if(isDelete){
@@ -132,7 +137,7 @@ function deleteComment(no){
 function showCommentsByAjax() {
 	
 	$.ajax({
-		url: "${pageContext.request.contextPath}/board/commentList.do",
+		url: `${pageContext.request.contextPath}/board/commentList.do`,
 		method: "GET",
 		data:{
 			no: "${community.communityNo}"
@@ -154,6 +159,7 @@ function btnCommentSubmit() {
 		, "communityNo" : "${community.communityNo}"
 		
 });
+	
  const csrfHeader = "${_csrf.headerName}";
 	const csrfToken = "${_csrf.token}";
 	const headers = {};
@@ -195,7 +201,7 @@ $(document.commentFrm).submit((e) => {
 
 
 function updateCommunity(){
-	location.href = "${pageContext.request.contextPath}/board/communityUpdate.do?no=${community.communityNo}";
+	location.href = `${pageContext.request.contextPath}/board/communityUpdate.do?no=${community.communityNo}`;
 }
 function communityDelete(){
 	let check = confirm("정말 삭제하시겠습니까?");
@@ -230,7 +236,6 @@ function adjustHeight() {
 	var textEleHeight = textEle.prop('scrollHeight');
 	textEle.css('height', textEleHeight);
 };
-console.log("${community.comment}");
 </script>
 <style>
 div#board-container {
@@ -264,34 +269,71 @@ textarea {
 	width: auto;
 }
 </style>
-<div id="board-container" class="mx-auto text-center">
-	<input type="submit" value="수정" id="modify" onclick="updateCommunity();"> 
-	<input type="button" value="삭제" id="delete" onclick="communityDelete();"> 
-	<input type="button" value="리스트로" onclick="goCommunityList();">
-	<p>${community.category}</p>
-	<p>${community.title}</p>
-	<p>[${community.commentCount}]</p>
-	<!-- 프로필 이미지 -->
-	<img
-		src="${pageContext.request.contextPath}/resources/img/profile/${community.profileImage}"
-		height="30px" />
-	<p>${community.nickname}</p>
-	<p>${community.regDate}</p>
-	<p>${community.readCount}</p>
-	<p>${community.likeCount}</p>
 
-	<!-- 파일 이미지 -->
+    <div class="roberto-contact-form-area section-padding-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                
+             <div class="section-heading text-left wow fadeInUp" data-wow-delay="100ms">
+                 <input type="button" class="btn btn-outline-danger w-10 float-right" style="margin-left: 5px;" value="삭제" id="delete" onclick="communityDelete();">  
+	<input type="submit" class="btn btn-outline-success w-10 float-right" value="수정" id="modify" onclick="updateCommunity();"> 
+                        <h3>상세 보기</h3>
+                    </div>
+                </div>
+            </div>
+
+	<h5>[${community.category}]<span style="margin-right:30%;"> ${community.title}</span>
+	<div class="float-right">
+	[${community.commentCount}] 
+	<span style="font-size:15px; margin-left:10px">
+	<img src="${pageContext.request.contextPath}/resources/img/profile/${community.profileImage}" height="30" width="30" style="border-radius: 20px; margin-right:5px;"/>
+		${community.nickname} 
+	<span style="font-size:15px; margin-left:10px">조회수 : ${community.readCount} 좋아요 : ${community.likeCount} 작성일 : <fmt:formatDate value="${community.regDate}" pattern="yy/MM/dd HH:mm" /> </span>
+	</span></h5>
+		<div class="post-content requestImg dropdown">
+		                    	<img class="mr-2" src="${pageContext.request.contextPath}/resources/img/profile/${community.profileImage}" height="30" width="30" style="border-radius: 20px; margin-right:5px;""
+		                    	onerror="this.src='${pageContext.request.contextPath}/resources/img/profile/default_profile.png'"/>
+	                    		<h6 class="dropdown-toggle" data-toggle="dropdown">${community.nickname}</h6>
+	                    		<div class="dropdown-menu">
+	                    			<a class="dropdown-item" data-reportee="${community.memberId}" data-toggle="modal" data-target="#reportUserEnrollModal"><small>신고</small></a>
+	                    			<a class="dropdown-item" href=""><small>채팅</small></a>
+	                    		</div>
+		                    </div>
+	</div>
+
+	<div class="container float-center">
+	<!-- 글 내용 -->
+	<hr>
+	<br>
+		<!-- 파일 이미지 -->
+	<center>
 	<c:if test="${!empty community.file}">
 		<c:forEach items="${community.file}" var="file">
 			<img
-				src="${pageContext.request.contextPath}/resources/img/board/${file.renamedFilename}">
+				src="${pageContext.request.contextPath}/resources/img/board/${file.renamedFilename}" >
+		
 		</c:forEach>
 	</c:if>
+	<p style="margin-bottom: 300px; margin-top:50px">${community.content}</p>	</center>
+<div class="likeReport" style="text-align: center;">
+	<c:if test="${community.userLikeCommunity == 0}">
+	<h3 id="empty" style="diaplay: inline;">
+		<a href="#" onclick="likeCheck(1);"><i class="far fa-thumbs-up"></i></a>
+	</h3>
+	</c:if>
+	<c:if test="${community.userLikeCommunity  > 0}">
+	<h3 id="full" style="display: inline">
+		<a href="#" onclick="likeCheck(0);"><i class="fas fa-thumbs-up"></i></a>
+	</h3>
+	</c:if>
+	
+	<h3 style="display: inline">
+		<a href="#" data-toggle="modal" data-target="#reportBoardEnrollModal"><i
+			class="fas fa-ban" style="display: inline;"></i></a>
+	</h3>
 
-	<!-- 글 내용 -->
-	<p>${community.content}</p>
-	<p>${community.likeCount}</p>
-
+</div>
 	<!-- 파일 다운로드 -->
 	<c:forEach items="${community.file}" var="file" varStatus="vs">
 		<a
@@ -300,9 +342,10 @@ textarea {
 			${vs.count} - ${file.originalFilename}</a>
 		<hr>
 	</c:forEach>
-
+</div>
 	<hr>
-
+	<div class="container">
+	<!-- 댓글 -->
 	<table>
 		<c:choose>
 			<c:when test="${community.comment ne null}">
@@ -311,64 +354,64 @@ textarea {
 						<c:choose>
 							<c:when test="${comment.deleteYn == 'N'}">
 								<td>${comment.nickname}</td>
-								<td><fmt:formatDate value="${comment.regDate}"
-										pattern="yy/MM/dd HH:mm" /></td>
-								<td><pre>${comment.content}</pre></td>
+								<td><span>${comment.content}<fmt:formatDate value="${comment.regDate}"
+										pattern="yy/MM/dd HH:mm" /></span></td>
 								<td><c:if test="${comment.writer != loginMember.id}">
-										<button class="btn btn-primary btn-icon-split"
+										<button class="btn btn-light"
 											value="${comment.no}" onclick="writeReComment();"
-											style="padding: 5px; margin-top: 20px;">답글</button>
+											style="padding: 5px; margin-top: 20px; margin-left:700px;">답글</button>
 
 										<form>
-											<input type="hidden" name="no"
-												value="${community.communityNo}" /> <input type="hidden"
-												name="commentLevel" value="2" /> <input type="hidden"
-												name="commentRef" value="0" />
+											<input type="hidden" name="no"value="${community.communityNo}" /> 
+												<input type="hidden"name="commentLevel" value="2" /> 
+												<input type="hidden"name="commentRef" value="0" />
+												
 											<div class="reCommentInput" style="display: none;">
-												<textarea id="reCommentContent" name="content" cols="120"
+												<textarea id="reCommentContent" name="content" cols="100"
 													rows="3" style="resize: none;" placeholder="댓글을 입력해주세요"></textarea>
-												<br />
-												<button id="reComment" onClick="btnReCommentSubmit()"
-													class="btn btn-primary btn-icon-split"
+												<button id="reComment" onClick="btnReCommentSubmit(${comment.no})"
+											 class="btn btn-icon-split"
 													style="padding: 5px; margin-top: 20px;">등록</button>
+												<br />
+												
 											</div>
 										</form>
 
 									</c:if> <c:if test="${comment.writer == loginMember.id}">
 
-										<button type="button" class="btn btn-primary btn-icon-split"
+										<button type="button" class="btn btn-light float-right"
 											onclick="showUpdateCommentFrm(${comment.no});" name="btn-update"
 											id="showUpdateCommentFrm" value="${comment.no}"
-											style="padding: 5px; margin-top: 20px;">수정</button>
+											style="padding: 5px; margin-top: 20px; margin-left:520px;">수정</button>
 
 										<div class="updateCommentFrm_${comment.no}" style="display: none;">
 											<form class="comment-update-form" action="comment_update.do"
 												method="post">
 												<input type="hidden" name="num" value="${comment.no}" />
 												<textarea class="comment_content_${comment.no}">${comment.content}</textarea>
-
+												<br>
 												<button type="button" id="updateComment"
 													onClick="updateCommentEvent(${comment.no});"
-													class="btn btn-primary btn-icon-split"
+													 class="btn btn-link"
 													style="padding: 5px; margin-top: 20px;">수정</button>
 
 											</form>
 										</div>
 
-										<button class="btn btn-primary btn-icon-split"
+										<button class="btn btn-light text-danger"
 											onclick="deleteComment();" value="${comment.no}"
-											style="padding: 5px; margin-top: 20px;">삭제</button>
+											style="padding: 5px; margin-top: 20px; font-color:red;">삭제</button>
 
 									</c:if></td>
 								<c:choose>
 									<c:when test="${comment.isParent == 'Y'}">
 										<c:forEach items="${comment.reComments}" var="reComment">
-											<tr data-no="${reComment.no}">
+											<tr height="40px" data-no="${reComment.no}">
 
-												<td>${reComment.nickname}</td>
-												<td><fmt:formatDate value="${reComment.regDate}"
+												<td width="15%"><span style="margin-left:30px;">${reComment.nickname}</span></td>
+												<td width="30%"><fmt:formatDate value="${reComment.regDate}"
 														pattern="yy/MM/dd HH:mm" /></td>
-												<td>${reComment.content}</td>
+												<td width="50%">${reComment.content}</td>
 										</c:forEach>
 									</c:when>
 								</c:choose>
@@ -386,55 +429,44 @@ textarea {
 										<td>${reComment.content}</td>
 								</c:forEach>
 							</c:when>
+							
 						</c:choose>
 					</tr>
 				</c:forEach>
 
 			</c:when>
 
-			<c:otherwise>
-						테스트
-					</c:otherwise>
 		</c:choose>
 	</table>
+	<br>
+									
 	<!--  댓글이 없으면 = 출력 안함 -->
 	<!-- 댓글입력칸 -->
+<div class="roberto-contact-form mb-50" >
+
 	<form>
 
 		<input type="hidden" name="no" value="${community.communityNo}" /> <input
 			type="hidden" name="commentLevel" value="1" /> <input type="hidden"
 			name="commentRef" value="0" />
-		<div id="comment-input">
-
-			<textarea id="comment_content" name="content" cols="120" rows="3"
-				style="resize: none;" placeholder="댓글을 입력해주세요"></textarea>
-
-			<br />
-
+		<div id="comment-input" class="float-left" style="display:inline-block;">
+					<div class="col-12 wow fadeInUp form-inline form-group"
+							data-wow-delay="100ms">		
+							<div class="col-lg-6">
+<textarea id="comment_content" name="content" cols="105" rows="3" style="resize: none; width:70%" placeholder="댓글을 입력해주세요"></textarea>
+<div class="btn float-right">
 			<button type="submit" onClick="btnCommentSubmit()"
-				class="btn btn-primary btn-icon-split"
-				style="padding: 5px; margin-top: 20px;">등록</button>
-		</div>
+				 class="btn btn-light float-right text-primary"
+				>등록</button></div></div>
+</div>
+</div>
 	</form>
+	</div>
 </div>
 
-
-<div class="likeReport" style="text-align: center;">
-	<h3 id="empty" style="diaplay: inline-block;">
-		<a href="#" onclick="likeCheck(0);"><i class="far fa-thumbs-up"></i></a>
-	</h3>
-	<h3 id="full" style="display: none">
-		<a href="#" onclick="likeCheck(1);"><i class="fas fa-thumbs-up"></i></a>
-	</h3>
-	<h3>
-		<a href="#" data-toggle="modal" data-target="#reportBoardEnrollModal"><i
-			class="fas fa-ban" style="display: inline-block;"></i></a>
-	</h3>
 </div>
+
 <br>
-
-
-
 
 <!-- 게시글 신고 등록 Modal -->
 <div class="modal fade" id="reportBoardEnrollModal" tabindex="-1"
@@ -493,5 +525,5 @@ textarea {
 		</div>
 	</div>
 </div>
-
+</div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

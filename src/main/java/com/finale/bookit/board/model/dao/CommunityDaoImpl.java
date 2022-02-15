@@ -36,8 +36,8 @@ public class CommunityDaoImpl implements CommunityDao{
 	}
 
 	@Override
-	public void updateCommunityContent(Map<String, Object> param) {
-		session.update("community.updateCommunityContent", param);
+	public void updateCommunityContent(CommunityTest communityDto) {
+		session.update("community.updateCommunityContent", communityDto);
 	}
 
 	@Override
@@ -149,8 +149,13 @@ public class CommunityDaoImpl implements CommunityDao{
 
 	@Override
 	public void communityLikeCancel(Map<String, Object> map) {
-		session.delete("community.communityLikeCancle", map);
+		session.delete("community.communityLikeCancel", map);
 		
+	}
+
+	@Override
+	public int isUserLikeCommunity(Map<String, Object> map) {
+		return session.selectOne("community.isUserLikeCommunity", map);
 	}
 
 

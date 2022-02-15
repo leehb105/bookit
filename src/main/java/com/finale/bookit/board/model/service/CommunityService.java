@@ -13,7 +13,7 @@ import com.finale.bookit.board.model.vo.CommunityTest;
 
 public interface CommunityService {
 	
-	Community getCommunity(int no);
+	Community getCommunity(int no, String memberId);
 
 	void deleteCommunityContent(int no, String string) throws Exception;
 
@@ -39,7 +39,7 @@ public interface CommunityService {
 
 	List<Community> searchCommuntiy(Map<String, Object> map);
 
-	void updateCommunityContent(String memberId, Map<String, Object> param) throws Exception;
+	void updateCommunityContent(String memberId, CommunityTest communityDto) throws Exception;
 
 	void updateComment(Comment comment);
 
@@ -48,6 +48,8 @@ public interface CommunityService {
 	void likeCountUp(Map<String, Object> param);
 	
 	void likeCountDown(Map<String, Object> param);
+
+
 }	
 
 
