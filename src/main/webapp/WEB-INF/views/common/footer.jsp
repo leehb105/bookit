@@ -46,7 +46,6 @@
 
                             <!-- Footer Nav -->
                             <ul class="footer-nav" style="display: flex">
-                                <li><a href="${pageContext.request.contextPath}/booking/bookingEnroll.do"><i class="fa fa-caret-right" aria-hidden="true"></i> 대여등록 </a></li>
                                 <li><a href="${pageContext.request.contextPath}/board/used.do"><i class="fa fa-caret-right" aria-hidden="true"></i> 중고거래 </a></li>
                                 <li><a href="${pageContext.request.contextPath}/board/community.do"><i class="fa fa-caret-right" aria-hidden="true"></i> 커뮤니티 </a></li>
                                 <li><a href="${pageContext.request.contextPath}/board/request.do"><i class="fa fa-caret-right" aria-hidden="true"></i> 도서요청 </a></li>
