@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.finale.bookit.collection.model.vo.BookCollection;
+import com.finale.bookit.wishlist.model.vo.Wishlist;
 
 @Repository
 public class IndexDaoImpl implements IndexDao {
@@ -17,6 +18,11 @@ public class IndexDaoImpl implements IndexDao {
 	@Override
 	public List<BookCollection> selectAllCollection() {
 		return session.selectList("index.selectAllCollection");
+	}
+
+	@Override
+	public Wishlist selectOneBestWishBook() {
+		return session.selectOne("index.selectOneBestWishBook");
 	}
 	
 	
