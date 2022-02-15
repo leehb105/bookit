@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <script src="https://kit.fontawesome.com/01809a491f.js" crossorigin="anonymous"></script>
 <sec:authentication property="principal" var="loginMember"/>
@@ -92,7 +93,7 @@
                 <div class="col-12 col-lg-4">
                     <!-- Hotel Reservation Area -->
                     <div class="hotel-reservation--area mt-100">
-                        <form th:action method="post" id="resEnrollFrm">
+                        <form:form method="post" id="resEnrollFrm">
                         	<div>
                         		<input type="hidden" id="bookingNo" name="boardNo" value="${booking.boardNo}"/>
                         		<c:if test="${wishlistCount eq 0}">
@@ -105,22 +106,31 @@
 								</c:if>
 							</div>
                             <label for="checkInDate">대여일자</label>
-                            <div class="row no-gutters">
-                                <div class="col-6">
-                                    <input type="text" class="input-small form-control" name="checkIn" id="checkIn" autocomplete="off" placeholder="대여 시작일">
+                            <c:if test="${booking.member.id eq loginMember.id}">
+                                <button type="button" class="btn roberto-btn w-100" id="bookingDeleteBtn" onclick="bookingDelete();">대여 삭제</button>
+                            </c:if>
+                            <c:if test="${booking.member.id ne loginMember.id}">
+                                <div class="row no-gutters">
+                                    <div class="col-6">
+                                        <input type="text" class="input-small form-control" name="checkIn" id="checkIn" autocomplete="off" placeholder="대여 시작일">
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="text" class="input-small form-control" name="checkOut" id="checkOut" autocomplete="off" placeholder="대여 종료일">
+                                    </div>
                                 </div>
-                                <div class="col-6">
-                                    <input type="text" class="input-small form-control" name="checkOut" id="checkOut" autocomplete="off" placeholder="대여 종료일">
-                                </div>
-                            </div>
-                            <div class="form-group mt-30">
-                                <button type="button" class="btn roberto-btn w-100" id="bookResBtn" onclick="bookResEnroll();">대여 신청</button>
+                                <div class="form-group mt-30">
+                                    <button type="button" class="btn roberto-btn w-100" id="bookResBtn" onclick="bookResEnroll();">대여 신청</button>
+
+                            </c:if>
                             </div>
                             <input type="hidden" id="pay" name="pay" value="">
-                            <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
-                        </form>
+                            <!-- <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/> -->
+                        </form:form>
                         <input type="hidden" id="deposit" value="${booking.deposit}">
                         <input type="hidden" id="price" value="${booking.price}">
+                        <form:form method="post" id="bookingDeleteFrm">
+                            <input type="hidden" name="boardNo" value="${booking.boardNo}">
+                        </form:form>
                     </div>
                 </div>
             </div>
@@ -363,6 +373,22 @@
 
 
     }
+
+    function bookingDelete(){
+        let url = `${pageContext.request.contextPath}/booking/bookingDelete.do`;
+        
+        var delConfirm = confirm('대여글을 삭제하시겠습니까?');
+        if (delConfirm) {
+            $("#bookingDeleteFrm").attr("action", url);
+            $("#bookingDeleteFrm").submit();
+        }
+        else {
+            return;
+        }
+
+    }
+
+
 
 
 
