@@ -38,4 +38,6 @@ public interface MemberDao {
 
 	int selectTotalBookReviewCountById(HashMap<String, Object> param);
 
+	int selectMemberCash(HashMap<String, Object> param);
+
 }

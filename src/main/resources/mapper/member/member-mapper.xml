@@ -117,4 +117,8 @@
 		update member set cash = cash + -1 * #{pay} where id = #{id}
 	</update>
 	
+	<select id="selectMemberCash" resultType="_int">
+		select cash from member where id = #{id}
+	</select>
+	
 </mapper>

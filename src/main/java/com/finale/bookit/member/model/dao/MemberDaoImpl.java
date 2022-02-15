@@ -89,4 +89,9 @@ public class MemberDaoImpl implements MemberDao {
 		return session.selectOne("search.selectTotalBookReviewCountById", param);
 	}
 
+	@Override
+	public int selectMemberCash(HashMap<String, Object> param) {
+		return session.selectOne("member.selectMemberCash", param);
+	}
+
 }

@@ -228,6 +228,11 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectTotalBookReviewCountById(param);
 	}
 
+	@Override
+	public int selectMemberCash(HashMap<String, Object> param) {
+		return memberDao.selectMemberCash(param);
+	}
+
 
 	
 }

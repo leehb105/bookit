@@ -6,13 +6,17 @@ import com.finale.bookit.booking.model.vo.Booking;
 import com.finale.bookit.common.util.BookitUtils;
 import com.finale.bookit.common.util.Criteria;
 import com.finale.bookit.common.util.Paging;
+import com.finale.bookit.member.model.service.MemberService;
 import com.finale.bookit.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
 import oracle.jdbc.proxy.annotation.Post;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import lombok.extern.log4j.Log4j;
@@ -40,6 +44,9 @@ public class BookingController {
 
     @Autowired
     private BookingService bookingService;
+    
+    @Autowired
+    private MemberService memberService;
 
 //    @GetMapping("/bookingList.do")
 //    public void bookingList(){
@@ -299,21 +306,11 @@ public class BookingController {
     		return "redirect:/booking/bookingDetail.do?bno=" + boardNo;
     	}
     	
-    	//사용자 잔액 차감 및 거래내역 추가 부분 이 밑으로 구현하세요 
-    	
-    	//잔액 차감 메소드만들어놓은거 필요하면 수정해서 쓰세요
-//    	result = bookingService.updateUserCash(param);
-//    	if(result > 0) {
-//    		
-//    	}else {
-//    		msg = "대여 신청에 실패하였습니다.";
-//    		attributes.addFlashAttribute("msg", msg); 
-//    		return "redirect:/booking/bookingDetail.do?bno=" + boardNo;
-//    	}
-    	
-    	
-    	
     	attributes.addFlashAttribute("msg", msg); 
+    	
+    	member.setCash(member.getCash() - pay);
+    	Authentication newAuthentication =  new UsernamePasswordAuthenticationToken(member, member.getPassword(), member.getAuthorities());
+    	SecurityContextHolder.getContext().setAuthentication(newAuthentication);
     	
     	
     	return "redirect:/";
