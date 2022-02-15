@@ -78,7 +78,7 @@
                 	
                 	
                 	<div class="msg-send">
-                        <input type="text" value="chatMain" id = "msg" class="inputChat"/>
+                        <input type="text" id = "msg" class="inputChat" placeholder="채팅을 입력해 주세요."/>
                         <button class="btn btn-outline-secondary" type="button" id="button-send">전송</button>
                 	</div>
                 	
@@ -178,6 +178,15 @@ function detail(roomid,loginId) {
 					str = "<li class ='selfLi'>";
 					str += "<span class = 'selfWriter'>" + chatHistory[i].writer + "</span>"
 					str += "<div class = 'self'>" + chatHistory[i].message + "</div>";
+					str += "</li>"
+					
+					$(".chat-history").append(str);
+					str = '';
+				}
+				else if(chatHistory[i].writer === "bookit"){
+					str = "<li class = 'memberLi'>";
+					str += "<span class = 'memberWriter'>" + chatHistory[i].writer + "</span>"
+					str += "<pre class = 'member'>" + chatHistory[i].message + "</pre>";
 					str += "</li>"
 					
 					$(".chat-history").append(str);

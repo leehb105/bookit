@@ -21,7 +21,7 @@ canvas#myChart {
 }
 
 #chart-category-second{
-	left: 370px;
+    left: 650px;
     position: absolute;
-    top: 160px;
+    top: 185px;
 }
