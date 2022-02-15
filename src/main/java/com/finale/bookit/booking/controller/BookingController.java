@@ -151,13 +151,13 @@ public class BookingController {
     	String msg = "";
     	if(result > 0) {
     		msg = "대여 등록이 완료되었습니다.";
-    		attributes.addFlashAttribute("msg", "대여 등록이 완료되었습니다.");    		
+    		attributes.addFlashAttribute("msg", msg);    		
     	}else {
     		msg = "글 등록에 실패하였습니다.";
     	}
     	attributes.addFlashAttribute("msg", msg);  
     	
-    	return "redirect:/";
+    	return "redirect:/booking/myBooking.do?pageNum=1&amout=5";
     }
     
     @PostMapping("/bookInfoEnroll.do")
@@ -333,20 +333,10 @@ public class BookingController {
     	}else {
     		msg = "대여 신청에 실패하였습니다.";
     		attributes.addFlashAttribute("msg", msg);
-    		return "redirect:/booking/bookingDetail.do?bno=" + boardNo;
+    		return "redirect:/booking/borrowedList.do?pageNum=1&amout=5";
     	}
     	
-    	//사용자 잔액 차감 및 거래내역 추가 부분 이 밑으로 구현하세요 
-    	
-    	//잔액 차감 메소드만들어놓은거 필요하면 수정해서 쓰세요
-//    	result = bookingService.updateUserCash(param);
-//    	if(result > 0) {
-//    		
-//    	}else {
-//    		msg = "대여 신청에 실패하였습니다.";
-//    		attributes.addFlashAttribute("msg", msg); 
-//    		return "redirect:/booking/bookingDetail.do?bno=" + boardNo;
-//    	}
+
     	
     	
     	

@@ -59,6 +59,7 @@
                             <h6>책 상태: <span>${booking.bookStatus}</span></h6>
                             <h6>보증금: <span><fmt:formatNumber type="number" maxFractionDigits="3" value="${booking.deposit }" />원</span></h6>
                             <h6>일 대여료: <span><fmt:formatNumber type="number" maxFractionDigits="3" value="${booking.price }" />원</span></h6>
+                            <h6>상세주소: <span>${booking.member.jibunAddress}</span></h6>
 
                         </div>
 
@@ -78,7 +79,6 @@
                         &nbsp;&nbsp;
                         <span>${newDate}</span>
                         &nbsp;&nbsp;
-                        <span>${booking.member.jibunAddress}</span>
                         
                         <div class="hotel-reservation--area m-3">
                             <p>${booking.content}</p>
@@ -126,7 +126,7 @@
                             <input type="hidden" id="pay" name="pay" value="">
                             <!-- <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/> -->
 							<input type="hidden" name="deposit" id="deposit" value="${booking.deposit}">
-                        </form>
+                        </form:form>
                         <input type="hidden" id="price" value="${booking.price}">
                         <form:form method="post" id="bookingDeleteFrm">
                             <input type="hidden" name="boardNo" value="${booking.boardNo}">
