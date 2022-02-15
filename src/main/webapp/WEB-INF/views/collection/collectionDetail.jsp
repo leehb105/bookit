@@ -240,7 +240,7 @@ function insertBook(){
 			                            <h6>출판사<span><small>${collectionDetailList.publisher}</small></span></h6>
 			                        </div>
 			                        <a 
-			                        	href="${pageContext.request.contextPath}/collection/aaaa.do?ibsn13=${collectionDetailList.isbn13}"
+			                        	href="${pageContext.request.contextPath}/search/bookDetail.do?isbn=${collectionDetailList.isbn13}"
 			                        	class="btn view-detail-btn">상세정보 <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
 			                        </a>
 			                    </div>
