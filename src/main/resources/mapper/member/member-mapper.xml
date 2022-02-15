@@ -9,9 +9,10 @@
 	</select>
 	<insert id="kakaoInsert">
 		insert into 
-			member(id, name, nickname)
+			member(id, email, name, nickname)
 			values(
 				#{email}, 
+				#{email},
 				#{nickname},
 				#{nickname}
 			)
@@ -113,8 +114,5 @@
 		)
 	</insert>
 	
-	<update id="updateMemberCash">
-		update member set cash = cash + -1 * #{pay} where id = #{id}
-	</update>
 	
 </mapper>
