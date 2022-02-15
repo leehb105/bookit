@@ -118,6 +118,8 @@
                         </form>
                         <input type="hidden" id="deposit" value="${booking.deposit}">
                         <input type="hidden" id="price" value="${booking.price}">
+                        
+                        
                     </div>
                 </div>
             </div>

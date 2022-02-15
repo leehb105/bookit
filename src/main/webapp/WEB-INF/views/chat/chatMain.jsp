@@ -183,6 +183,15 @@ function detail(roomid,loginId) {
 					$(".chat-history").append(str);
 					str = '';
 				}
+				else if(chatHistory[i].writer === "bookit"){
+					str = "<li class = 'memberLi'>";
+					str += "<span class = 'memberWriter'>" + chatHistory[i].writer + "</span>"
+					str += "<pre class = 'member'>" + chatHistory[i].message + "</pre>";
+					str += "</li>"
+					
+					$(".chat-history").append(str);
+					str = '';
+				}
 				else{
 					str = "<li class = 'memberLi'>";
 					str += "<span class = 'memberWriter'>" + chatHistory[i].writer + "</span>"

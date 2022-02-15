@@ -102,6 +102,7 @@ public class RoomController {
     	List<Chat> ChatList = service.selectChatHistory(id);
     	ChatRoom room = service.findRoomById(id);
     	
+    	
     	int result = service.updateRead_check(id);
     	
     	log.debug("ChatList = {}", ChatList);
