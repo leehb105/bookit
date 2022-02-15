@@ -118,7 +118,7 @@
 	</update>
 	
 	<update id="chargeMemberCash">
-		update member set cash = cash + #{pay} where id = #{lenderId}
+		update member set cash = cash + #{price} where id = #{lenderId}
 	</update>
 	
 	

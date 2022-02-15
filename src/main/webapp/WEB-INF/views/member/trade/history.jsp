@@ -54,9 +54,8 @@
     <c:forEach items="${lendList}" var="history2">
 		  <tr>
 			  <td><fmt:formatDate value="${history2.tradeDate}" pattern="yyyy.MM.dd HH:mm"/></td>
-			  <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${history2.price}" />원</td>
+			  <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${history2.price - history2.deposit}" />원</td>
 			  <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${history2.lenderCash}" />원</td>
-			  <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${history2.deposit}" />원</td>
 		  </tr>      
       </c:forEach>
     </tbody>

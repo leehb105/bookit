@@ -310,6 +310,7 @@ public class BookingController {
     	param.put("pay", pay);
     	param.put("boardNo", boardNo);
     	param.put("deposit", deposit);
+    	param.put("price", pay - deposit);
     	param.put("id", member.getId());
     	param.put("lenderId", bookingMemberId);
     	log.debug("param = {}", param);
