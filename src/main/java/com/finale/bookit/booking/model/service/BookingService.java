@@ -44,4 +44,8 @@ public interface BookingService {
 
 	public int selectCountBookingReservation(HashMap<String, Object> param);
 
+	public Booking selectLentBooking(Map<String, Object> param);
+
+	public int updateBookResStatus(HashMap<String, Object> param);
+
 }

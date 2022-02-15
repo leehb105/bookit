@@ -129,4 +129,15 @@ public class BookingServiceImpl implements BookingService {
 		return bookingDao.selectCountBookingReservation(param);
 	}
 
+	@Override
+	public Booking selectLentBooking(Map<String, Object> param) {
+		return bookingDao.selectLentBooking(param);
+	}
+
+	@Override
+	public int updateBookResStatus(HashMap<String, Object> param) {
+		return bookingDao.updateBookResStatus(param);
+	}
+
+	
 }
