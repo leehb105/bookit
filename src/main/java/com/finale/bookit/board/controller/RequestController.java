@@ -62,16 +62,16 @@ public class RequestController {
     }
     
     @PostMapping("/requestEnroll.do")
-    public String requestEnroll(@RequestParam int wishPrice, @RequestParam String bookCondtion,
+    public String requestEnroll(@RequestParam int wishPrice, @RequestParam String bookCondition,
     		@RequestParam String isbn13, @AuthenticationPrincipal Member loginMember,
     		RedirectAttributes redirectAttr) {
     	log.debug("isbn13 = {}", isbn13);
     	log.debug("wishPrice = {}", wishPrice);
-    	log.debug("bookCondtion = {}", bookCondtion);
+    	log.debug("bookCondition = {}", bookCondition);
     	String id = loginMember.getId();
     	Map<String, Object> param = new HashMap<>();
     	param.put("wishPrice", wishPrice);
-    	param.put("bookCondtion", bookCondtion);
+    	param.put("bookCondition", bookCondition);
     	param.put("isbn13", isbn13);
     	param.put("id", id);
     	
