@@ -184,7 +184,7 @@ table {
 						<tbody>
 							<c:forEach items="${wishlistList}" var="wishlistList">
 								<tr class="selectWishlist">
-									<td><input type="checkbox" name="wishlistBoardNo" id="wishlistBoardNo" value="1"/></td>
+									<td><input type="checkbox" name="wishlistBoardNo" id="wishlistBoardNo" value="${wishlistList.boardNo}"/></td>
 									<td>${wishlistList.boardNo}</td>
 									<td data-no="${wishlistList.boardNo}">${wishlistList.writer}</td>
 									<td class="detail" data-no="${wishlistList.boardNo}">${wishlistList.content}</td>
