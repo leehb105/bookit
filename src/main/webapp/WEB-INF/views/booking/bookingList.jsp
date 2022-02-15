@@ -105,6 +105,8 @@
 					</div> -->
 					
                 </div>
+			</div>
+		</div>
 
     <!-- Booking Area End -->
 <script>
@@ -128,17 +130,9 @@
 		actionForm.submit(); 
 	});
 
-	
-
-
-
-
-
-
-
 
 </script>
 	
 
-    <!-- Partner Area End -->
-    <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+<!-- Partner Area End -->
+<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
