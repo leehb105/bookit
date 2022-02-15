@@ -290,7 +290,7 @@
 	<resultMap type="booking" id="bookingMap_bookInfoList">
 		<result column="rn" property="rowNum"/>
 		<result column="board_no" property="boardNo"/>
-		<result column="b_content" property="content"/>
+		<result column="content" property="content"/>
 		<result column="book_status" property="bookStatus"/>
 		<result column="price" property="price"/>
 		<result column="deposit" property="deposit"/>
@@ -355,8 +355,8 @@
 				tb1.*
 			from
 				(SELECT
-					b.board_no as board_no,
-					b.content as b_content,
+					b.board_no,
+					b.content,
 					b.book_status,
 					b.price,
 					b.deposit,
