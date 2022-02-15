@@ -462,6 +462,7 @@ CREATE TABLE booking_reservation(
 	id VARCHAR(50),
 	reg_date DATE DEFAULT current_date,
 	status varchar(20),
+	status_date DATE default null
 
 	CONSTRAINT pk_booking_reservation_res_no PRIMARY KEY(res_no)
 	,CONSTRAINT fk_booking_reservation_board_no FOREIGN key(board_no) REFERENCES booking(board_no)

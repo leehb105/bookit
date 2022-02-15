@@ -48,4 +48,8 @@ public interface BookingDao {
 	int deleteBooking(HashMap<String, Object> param);
 
 	int selectCountBookingReservation(HashMap<String, Object> param);
+
+	Booking selectLentBooking(Map<String, Object> param);
+
+	int updateBookResStatus(HashMap<String, Object> param);
 }

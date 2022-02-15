@@ -253,6 +253,21 @@ public class BookingController {
     	model.addAttribute("page", page);
     }
     
+    @GetMapping("/lentDetail.do")
+    public void lentDetail(
+    		@RequestParam int resNo,
+    		Model model) {
+    	
+    	log.debug("resNo = {}", resNo);
+    	Map<String, Object> param = new HashMap<>();
+    	param.put("resNo", resNo);
+    	Booking booking = bookingService.selectLentBooking(param);
+    	log.debug("booking = {}", booking);
+    		
+    	model.addAttribute("booking", booking);
+    	
+    }
+    
     
     @GetMapping("/borrowedList.do")
     public void borrowedList(
@@ -411,6 +426,68 @@ public class BookingController {
     	return "redirect:/booking/myBooking.do?pageNum=1&amout=5";
 	}
 
+    @PostMapping("/lostBook.do")
+    public String lostBook(
+    		@RequestParam int resNo, 
+    		@RequestParam int deposit,
+    		@RequestParam String borrowerId,
+    		Model model,
+    		@AuthenticationPrincipal Member member,
+			RedirectAttributes attributes) {
+    	log.debug("resNo = {}", resNo);
+    	log.debug("deposit = {}", deposit);
+    	log.debug("borrowerId = {}", borrowerId);
+    	
+    	HashMap<String, Object> param = new HashMap<String, Object>();
+    	param.put("id",  member.getId());
+    	param.put("resNo", resNo);
+    	param.put("deposit", deposit);
+    	param.put("borrowerId", borrowerId);
+    	param.put("status", "분실");
+    	
+    	int result = bookingService.updateBookResStatus(param);
+    	String msg = "";
+    	if(result > 0) {
+    		msg = "분실처리가 완료되었습니다.";   		
+    	}else {
+    		msg = "분실처리에 실패하였습니다.";
+    	}
+    	
+    	attributes.addFlashAttribute("msg", msg); 
+    	return "redirect:/booking/lentDetail.do?resNo=" + resNo;
+    }
+    
+    @PostMapping("/returnBook.do")
+    public String returnBook( 		
+    		@RequestParam int resNo, 
+    		@RequestParam int deposit,
+    		@RequestParam String borrowerId,
+    		Model model,
+    		@AuthenticationPrincipal Member member,
+			RedirectAttributes attributes) {
+    	log.debug("resNo = {}", resNo);
+    	log.debug("deposit = {}", deposit);
+    	log.debug("borrowerId = {}", borrowerId);
+    	
+    	HashMap<String, Object> param = new HashMap<String, Object>();
+    	param.put("id",  member.getId());
+    	param.put("resNo", resNo);
+    	param.put("deposit", deposit);
+    	param.put("borrowerId", borrowerId);
+    	param.put("status", "반납완료");
+    	
+    	int result = bookingService.updateBookResStatus(param);
+    	String msg = "";
+    	if(result > 0) {
+    		msg = "반납처리가 완료되었습니다.";   		
+    	}else {
+    		msg = "반납처리에 실패하였습니다.";
+    	}
+    	
+    	attributes.addFlashAttribute("msg", msg); 
+    	return "redirect:/booking/lentDetail.do?resNo=" + resNo;
+    	
+    }
     
     public String MakeStr(String str1,String str2) {
     	

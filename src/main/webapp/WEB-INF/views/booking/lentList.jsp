@@ -34,28 +34,43 @@
                         <tr>
                             <th>번호</th>
                             <th colspan="2">제목</th>
-                            <th>작가</th>
-                            <th>출판사</th>
                             <th>책상태</th>
                             <th>보증금</th>
                             <th>대여비</th>
+                            <th>대여기간</th>
+                            <th>대여요청자</th>
+                            <th>대여상태</th>
                         </tr>
                     </thead>
                     <tbody>
                         <c:forEach items="${list}" var="booking" varStatus="status">
 
-                            <tr onclick="location.href='${pageContext.request.contextPath}/booking/bookingDetail.do?bno=${booking.boardNo}'" style="cursor:pointer;">
+                            <tr onclick="location.href='${pageContext.request.contextPath}/booking/lentDetail.do?resNo=${booking.bookReservation.resNo}'" style="cursor:pointer;">
                                 <td class="align-middle">${page.total - ((page.cri.pageNum - 1) * page.cri.amount) - status.index}</td>
                                 <td class="align-middle"><img src="${booking.bookInfo.cover}" alt="" style="width: 30%;"></td>
-                                
                                 <td class="title align-middle" style="text-align: left;">${booking.bookInfo.title}</td>
-                                <td class="author align-middle">
-                                    ${booking.bookInfo.author}
-                                </td>
-                                <td class="align-middle">${booking.bookInfo.publisher}</td>
                                 <td class="align-middle">${booking.bookStatus}</td>
                                 <td class="align-middle"><fmt:formatNumber type="number" maxFractionDigits="3" value="${booking.deposit }" />원</td>
                                 <td class="align-middle"><fmt:formatNumber type="number" maxFractionDigits="3" value="${booking.price }" />원</td>
+                                <td class="align-middle">
+                                    <fmt:formatDate value="${booking.bookReservation.startDate}" pattern="yyyy년 MM월 dd일"/>
+									<br>
+									~
+									<br>
+									<fmt:formatDate value="${booking.bookReservation.endDate}" pattern="yyyy년 MM월 dd일"/>
+                                </td>
+                                <td class="align-middle">${booking.bookReservation.borrowerId}</td>
+                                <td class="align-middle">
+                                    
+                                    ${booking.bookReservation.status}
+                                    <c:set var="today" value="<%= new java.util.Date()%>" />
+                                    <!-- 현재날짜 -->
+                                    <c:set var="today_date"><fmt:formatDate value="${today}" pattern="yyyyMMdd" /></c:set>
+                                    <c:set var="end_Date"><fmt:formatDate value="${booking.bookReservation.endDate}" pattern="yyyyMMdd"/></c:set>
+                                    
+                                </td>
+
+                                
 
                             </tr>
 
@@ -96,20 +111,20 @@
 <script>
         
     window.onload = function(){
-        const title = document.getElementsByClassName('title');
-        const author = document.getElementsByClassName('author');
-        console.log(title.length);
-        for(let i = 0; i < title.length; i++){
-            if(title[i].innerHTML.includes('-')){
-                //- 하이픈(부제) 있을시에 자르기
-                title[i].innerHTML = title[i].innerHTML.substr(0, title[i].innerHTML.indexOf('-'));
-            }
-            if(author[i].innerHTML.includes('(지은이)')){
-                //작가명 (지은이)뒤로 자름 -> 뒤는 엮은이임
-                author[i].innerHTML = author[i].innerHTML.substr(0, author[i].innerHTML.indexOf('(지은이)'));
-            }
+        // const title = document.getElementsByClassName('title');
+        // const author = document.getElementsByClassName('author');
+        // console.log(title.length);
+        // for(let i = 0; i < title.length; i++){
+        //     if(title[i].innerHTML.includes('-')){
+        //         //- 하이픈(부제) 있을시에 자르기
+        //         title[i].innerHTML = title[i].innerHTML.substr(0, title[i].innerHTML.indexOf('-'));
+        //     }
+        //     if(author[i].innerHTML.includes('(지은이)')){
+        //         //작가명 (지은이)뒤로 자름 -> 뒤는 엮은이임
+        //         author[i].innerHTML = author[i].innerHTML.substr(0, author[i].innerHTML.indexOf('(지은이)'));
+        //     }
             
-        }
+        // }
 
     };
 	

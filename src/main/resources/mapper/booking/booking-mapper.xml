@@ -102,6 +102,7 @@
 		<result column="borrower_id" property="borrowerId"/>
 		<result column="reg_date" property="regDate"/>
 		<result column="status" property="status"/>
+		<result column="status_date" property="statusDate"/>
 	</resultMap>
 
 	
@@ -326,6 +327,7 @@
 		<result column="borrower_id" property="borrowerId"/>
 		<result column="reg_date" property="regDate"/>
 		<result column="status" property="status"/>
+		<result column="status_date" property="statusDate"/>
 	</resultMap>
 
 
@@ -376,7 +378,9 @@
 					bi.COVER,
 					br.RES_NO,
 					br.START_DATE,
-					br.END_DATE
+					br.END_DATE,
+					br.borrower_id,
+					br.status
 				FROM
 					booking b join book_info bi ON
 				    b.isbn13 = bi.isbn13
@@ -479,6 +483,51 @@
 			br.status = '대여거부'
 	</select>
 	
+	
+	<resultMap type="booking" id="selectLentBookingMap">
+		<id column="board_no" property="boardNo"/>
+		<result column="content" property="content"/>
+		<result column="book_status" property="bookStatus"/>
+		<result column="price" property="price"/>
+		<result column="deposit" property="deposit"/>
+		<result column="writer" property="writer"/>
+		<result column="delete_yn" property="deleteYn"/>
+		<result column="isbn13" property="isbn13"/>
+		<result column="reg_date" property="regDate"/>
+		<association property="bookInfo" resultMap="bookInfoMap"/>
+		<association property="bookReservation" resultMap="bookReservationMap"/>
+	</resultMap>
+	<select id="selectLentBooking" resultMap="selectLentBookingMap">
+		SELECT
+			b.board_no,
+			b.content,
+			b.book_status,
+			b.price,
+			b.deposit,
+			b.writer,
+			b.delete_yn,
+			b.isbn13,
+			bi.title,
+			bi.COVER,
+			br.RES_NO,
+			br.START_DATE,
+			br.END_DATE,
+			br.REG_DATE,
+			br.borrower_id,
+			br.status
+		FROM
+			booking b join book_info bi ON
+		    b.isbn13 = bi.isbn13
+		    JOIN BOOKING_RESERVATION br ON
+		    b.board_no = br.board_no
+		WHERE
+			br.res_no = #{resNo}
+	</select>
+	
+	<update id="updateBookResStatus">
+		update BOOKING_RESERVATION set status = #{status}, status_date = current_date where res_no = #{resNo}
+	</update>
+		
 	
 	
 	
