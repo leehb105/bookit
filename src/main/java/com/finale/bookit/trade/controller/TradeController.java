@@ -30,9 +30,10 @@ public class TradeController {
 		param.put("id", member.getId());
 		List<Trade> borrowList = tradeService.selectBorrowList(param);
 		
-		List<Trade> LendList = tradeService.selectLendList(param);
+		List<Trade> lendList = tradeService.selectLendList(param);
 		
 		model.addAttribute("borrowList", borrowList);
+		model.addAttribute("lendList", lendList);
 	}
 
 }

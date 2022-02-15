@@ -543,7 +543,7 @@ AFTER INSERT ON booking
 FOR EACH ROW
 BEGIN
     INSERT INTO BOOKING_RESERVATION values(
-   		seq_booking_reservation_res_no.nextval, :NEW.board_no, to_date('1900-01-01'), to_date('1900-01-01'), NULL, DEFAULT, ''
+   		seq_booking_reservation_res_no.nextval, :NEW.board_no, to_date('1900-01-01'), to_date('1900-01-01'), NULL, DEFAULT, '', ''
     );
 END tr_book_reservation;
 

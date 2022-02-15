@@ -118,7 +118,7 @@
 	</update>
 	
 	<update id="chargeMemberCash">
-		update member set cash = cash + #{pay} where id = #{lenderId}
+		update member set cash = cash + #{price} where id = #{lenderId}
 	</update>
 	
 	
@@ -127,7 +127,11 @@
 	</select>
 
 	<select id="selectMemberCash2" resultType="_int">
-		select cash from member where id = #{id}
+		select cash from member where id = #{lenderId}
 	</select>
+	
+	<update id="updateReturnDeposit">
+		update member set cash = cash + #{deposit} where id = #{targetId}
+	</update>
 	
 </mapper>
