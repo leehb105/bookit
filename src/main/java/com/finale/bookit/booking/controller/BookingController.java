@@ -278,6 +278,8 @@ public class BookingController {
     		@RequestParam int pay,
     		@RequestParam int boardNo,
     		@RequestParam int deposit,
+    		@RequestParam String title,
+    		@RequestParam String bookingMemberId,
     		RedirectAttributes attributes,
     		@AuthenticationPrincipal Member member) {
     	
@@ -299,16 +301,14 @@ public class BookingController {
     	String msg = "";
     	String loginMemberId = member.getId();
     	String bookit = "bookit";
-    	String chatMsg = "체크인 : "+ checkIn + "\n 체크아웃 : " + checkOut + "\n 대여 신청완료";
+    	String chatMsg = "체크인 : "+ checkIn + "\n 체크아웃 : " + checkOut + "\n 도서 : " + title + "\n 대여 신청 완료";
+    	String chatMsg2 = "체크인 : "+ checkIn + "\n 체크아웃 : " + checkOut + "\n 도서 : " + title + "\n 대여자 : " + member.getNickname() + "\n 대여 신청 완료";
     	
     	if(result > 0) {
     		
-        	StringBuilder sb = new StringBuilder();
-            sb.append(bookit);
-            sb.append(",");
-            sb.append(loginMemberId);
+    		
             
-            String chatParticipants = sb.toString();
+            String chatParticipants = MakeStr(bookit,loginMemberId);
             
             String roomId = chatRoomService.selectChatRoomId(chatParticipants);
             
@@ -329,6 +329,25 @@ public class BookingController {
         		result = chatService.insertChatHistory(chat);
         	}
         	
+        	
+        	chatParticipants = MakeStr(bookit,bookingMemberId);
+        	roomId = chatRoomService.selectChatRoomId(chatParticipants);
+        	
+        	if(roomId != null) {
+        		Chat chat = new Chat(roomId,bookit,chatMsg2);
+    	        result = chatService.insertChatHistory(chat);
+    	        		
+    	    } 	
+        	else {
+	            result = chatRoomService.createChatRoom(chatParticipants);
+	            
+	            roomId = chatRoomService.selectChatRoomId(chatParticipants);
+	            
+        		Chat chat = new Chat(roomId,bookit,chatMsg2);     		
+        		log.debug("chat = {}",chat);
+        		result = chatService.insertChatHistory(chat);
+        	}
+
     		msg = "대여 신청이 완료되었습니다.";   		
     	}else {
     		msg = "대여 신청에 실패하였습니다.";
@@ -386,5 +405,15 @@ public class BookingController {
 	}
 
     
-    
+    public String MakeStr(String str1,String str2) {
+    	
+    	StringBuilder sb = new StringBuilder();
+        sb.append(str1);
+        sb.append(",");
+        sb.append(str2);
+        
+        String chatParticipants = sb.toString();
+        
+        return chatParticipants;
+    }
 }

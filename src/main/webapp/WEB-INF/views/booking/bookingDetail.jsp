@@ -124,9 +124,11 @@
                             </c:if>
                             </div>
                             <input type="hidden" id="pay" name="pay" value="">
+                            <input type="hidden" id="title" name="title" value="${booking.bookInfo.title}">
+                            <input type="hidden" id="bookingMemberId" name="bookingMemberId" value="${booking.member.id}">
                             <!-- <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/> -->
 							<input type="hidden" name="deposit" id="deposit" value="${booking.deposit}">
-                        </form>
+                        </form:form>
                         <input type="hidden" id="price" value="${booking.price}">
                         <form:form method="post" id="bookingDeleteFrm">
                             <input type="hidden" name="boardNo" value="${booking.boardNo}">
