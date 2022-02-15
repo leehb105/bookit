@@ -117,5 +117,15 @@ public class BookingDaoImpl implements BookingDao{
 		return session.selectOne("booking.selectCountBookingReservation", param);
 	}
 
+	@Override
+	public Booking selectLentBooking(Map<String, Object> param) {
+		return session.selectOne("booking.selectLentBooking", param);
+	}
+
+	@Override
+	public int updateBookResStatus(HashMap<String, Object> param) {
+		return session.update("booking.updateBookResStatus", param);
+	}
+
 	
 }

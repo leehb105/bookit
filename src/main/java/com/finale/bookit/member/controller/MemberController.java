@@ -211,7 +211,9 @@ public class MemberController {
 			Address address,
 			RedirectAttributes redirectAttr) throws IllegalStateException, IOException {
 		log.debug("profileImg = {}", profileImg);
+		
 		String saveDirectory = application.getRealPath("/resources/img/profile");
+		
 		if(!profileImg.isEmpty()) {
 			String originalFilename = profileImg.getOriginalFilename();
 			String renamedFilename = BookitUtils.rename(originalFilename);
@@ -224,12 +226,15 @@ public class MemberController {
 		String id = loginMember.getId();
 		String profileImage = loginMember.getProfileImage();
 		Map<String, Object> param = new HashMap<>();
+		
 		log.debug("loginMember = {}", loginMember);
+		
 		param.put("id", id);
 		param.put("profileImage", profileImage);
 		param.put("nickname", nickname);
 		param.put("email", email);
 		param.put("phone", phone);
+		
 		if(!newPassword.isEmpty()) {
 			String encodedNewPassword = bcryptPasswordEncoder.encode(newPassword);			
 			param.put("encodedNewPassword", encodedNewPassword);

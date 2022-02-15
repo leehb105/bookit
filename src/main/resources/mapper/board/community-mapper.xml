@@ -61,20 +61,23 @@
 	</update>
 	
 	<update id="updateCommunityContent" parameterType="map">
-		update community set title = #{title}, content = #{content}, category = #{category} where community_no = #{no}
+		update community set title = #{title}, content = #{content}, category = #{category} where community_no = #{communityNo}
 	</update>
 	
 	<select id="getCommunityList" resultType="community" parameterType="map">
 		select community_no, category, title, (select m.nickname from member m where c.member_id = m.id) nickname, 
-		reg_date, read_count, like_count from community c where delete_yn = 'N' 
+		reg_date, read_count, like_count,(select count(*) from community_comment where community_no = c.community_no) comment_count 
+		from community c where delete_yn = 'N' 
 		
 		<choose>
 			<when test="category eq 'writer'">
 			and m.nickname like '%' ||  #{keyword} || '%'
 			</when>
 			<otherwise>
-			and (c.title like '%' ||  #{keyword} || '%') 
-			or (c.content like '%' ||  #{keyword} || '%')
+			and (
+			(c.title like '%' ||  #{keyword} || '%') or 
+			(c.content like '%' ||  #{keyword} || '%')
+			)
 			</otherwise>
 			</choose>
 			
@@ -113,12 +116,12 @@
 	
 	
 	<select id="writerCheck" resultType="String" parameterType="Integer">
-		select member_id from community where no=#{no} 
+		select member_id from community where community_no=#{no} 
 	</select>
 	
 	
 	<!-- 댓글 -->
-	<insert id="insertComment" parameterType="map">
+	<insert id="insertComment" parameterType="comment">
 		insert into community_comment (community_no, no, content, writer, comment_level) values(
 			#{communityNo},
 			SEQ_COMMUNITY_COMMENT_NO.nextval,
@@ -138,21 +141,20 @@
 		update community_comment set deleteYn ='Y' where no = #{no}
 	</delete>
 	<update id="updateComment" parameterType="comment">
-		update community_comment set content = #{content}, reg_date = sysdate where no = #{no} 
+		update community_comment set content = #{content} where no = #{no} 
 	</update>
 	<!-- 대댓글 -->
-		<insert id="insertReComment" parameterType="map">
+		<insert id="insertReComment" parameterType="comment">
 		insert into community_comment (community_no, no, content, writer, comment_ref, comment_level) values(
 			#{communityNo},
 			SEQ_COMMUNITY_COMMENT_NO.nextval,
 			#{content},
 			#{writer},
-			#{comment_ref},
+			#{commentRef},
 			2
 		)
 		</insert>
-		
-		
+	
 	<!-- 조회수 -->
 	<update id="updateReadCount">
 		update community set read_count = read_count + 1 where community_no = #{no}
@@ -160,21 +162,25 @@
 	
 	<!-- 좋아요 -->
 	 <update id="likeCountUp" parameterType="HashMap">
-    update likeCount set likeCount = likeCount + 1 
-    where community_no=#{no}
+    update community set like_count = like_count + 1 
+    where community_no=#{communityNo}
   </update>
   
   <update id="likeCountDown" parameterType="HashMap">
-    update likeCount set likeCount = likeCount - 1 
-    where community_no=#{no}
+    update community set like_count = like_count - 1 
+    where community_no=#{communityNo}
   </update>
  
  	<insert id="communityLike" parameterType="map">
  		insert into community_like (like_no, community_no, member_id) values (seq_community_like.nextval, #{communityNo}, #{memberId})
  	</insert>
 	<delete id="communityLikeCancel" parameterType="Integer">
-	    delete from community_like where like_no = #{no}
+	    delete from community_like where like_no = #{communityNo}
 	</delete>
+	
+	<select id ="isUserLikeCommunity" parameterType="map" resultType="Integer">
+		select count(*) from community_like where member_id = #{memberId} and community_no = #{communityNo}
+	</select>
 	
 	<!-- 검색 -->
 	<select id="searchCommuntiy" parameterType="map" resultType="community">

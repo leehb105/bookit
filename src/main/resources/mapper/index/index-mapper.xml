@@ -14,4 +14,19 @@
     	order by 
     		dbms_random.random
 	</select>
+	<select id="selectOneBestWishBook" resultType="wishlist">
+		select 
+		    s.*,
+		    b.isbn13,
+		    i.cover,
+		    i.title,
+		    i.author
+		from(
+		    (select board_no, count(*) c from wishlist group by board_no order by c desc) s join booking b
+		    on s.board_no = b.board_no
+		    join book_info i
+		    on b.isbn13 = i.isbn13
+		)
+		where rownum=1
+	</select>
 </mapper>

@@ -144,6 +144,15 @@ function collectionInsert(){
 </script>
 
 <style>
+table {
+	table-layout: fixed;
+}
+.detail{
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
 .selectWishlist:hover {
 	cursor: pointer;
 	background: #f7fff6;
@@ -166,19 +175,19 @@ function collectionInsert(){
 					<table class="table text-center">
 						<thead>
 							<tr>
-								<th><input type="checkbox" id="checkAll"/></th>
-								<th>게시판No</th>
-								<th>작성자</th>
+								<th style="width:10%"><input type="checkbox" id="checkAll"/></th>
+								<th style="width:20%">게시판No</th>
+								<th style="width:20%">작성자</th>
 								<th>내용</th>
 							</tr>
 						</thead>
 						<tbody>
 							<c:forEach items="${wishlistList}" var="wishlistList">
 								<tr class="selectWishlist">
-									<td><input type="checkbox" name="wishlistBoardNo" id="wishlistBoardNo" value="1"/></td>
+									<td><input type="checkbox" name="wishlistBoardNo" id="wishlistBoardNo" value="${wishlistList.boardNo}"/></td>
 									<td>${wishlistList.boardNo}</td>
 									<td data-no="${wishlistList.boardNo}">${wishlistList.writer}</td>
-									<td data-no="${wishlistList.boardNo}">${wishlistList.content}</td>
+									<td class="detail" data-no="${wishlistList.boardNo}">${wishlistList.content}</td>
 								</tr>
 							</c:forEach>
 							<c:if test="${empty wishlistList}">

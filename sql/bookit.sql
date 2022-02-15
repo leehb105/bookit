@@ -1,6 +1,6 @@
 ﻿CREATE TABLE member (
 	id	varchar2(20)		NOT NULL,
-	password	varchar2(300)		NOT NULL,
+	password	varchar2(300),
 	email	varchar2(30)		NOT NULL,
 	nickname	varchar2(20)		NOT NULL,
 	name	varchar2(20)		NOT NULL,
@@ -8,7 +8,8 @@
 	enabled	number	DEFAULT 1	NOT NULL,
 	enroll_date	date	DEFAULT current_date	NULL,
 	report_yn	varchar2(1)	DEFAULT 'N'	NOT NULL,
-	cash	number	DEFAULT 0	NOT NULL
+	cash	number	DEFAULT 0	NOT NULL,
+    profile_image varchar2(255)
 
 	,CONSTRAINT pk_member_id PRIMARY KEY(id)
 	,CONSTRAINT ck_member_enabled check(enabled in (0, 1))
@@ -165,15 +166,6 @@ CREATE TABLE community_comment (
 	,constraint ck_community_comment_delete_yn check(delete_yn IN ('Y', 'N'))
 );
 CREATE SEQUENCE seq_community_comment_no nocache;
-
-CREATE TABLE profile_image (
-	member_id	varchar2(20)		NOT NULL,
-	original_filename	varchar2(255)		NULL,
-	renamed_filename	varchar2(255)		NULL
-
-	,constraint pk_profile_image PRIMARY KEY(member_id)
-	,constraint fk_profile_image_member_id FOREIGN key(member_id) REFERENCES member(id)
-);
 
 CREATE TABLE review (
 	no	number		NOT NULL,
@@ -470,6 +462,7 @@ CREATE TABLE booking_reservation(
 	id VARCHAR(50),
 	reg_date DATE DEFAULT current_date,
 	status varchar(20),
+	status_date DATE default null
 
 	CONSTRAINT pk_booking_reservation_res_no PRIMARY KEY(res_no)
 	,CONSTRAINT fk_booking_reservation_board_no FOREIGN key(board_no) REFERENCES booking(board_no)
