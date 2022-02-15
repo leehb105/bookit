@@ -11,7 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -180,8 +183,15 @@ public class MemberController {
 	}
 	
 	@GetMapping("/mypageMain.do")
-	public void memberProfile() {
+	public void memberProfile(@AuthenticationPrincipal Member member) {
+		HashMap<String, Object> param = new HashMap<>();
+		param.put("id", member.getId());
+		int result = memberService.selectMemberCash(param);
+		member.setCash(result);
+		Authentication newAuthentication = new UsernamePasswordAuthenticationToken(member, member.getPassword(), member.getAuthorities());
 		
+		SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+
 	}
 	
 	@GetMapping("/editProfile.do")
