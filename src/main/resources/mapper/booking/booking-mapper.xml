@@ -65,7 +65,7 @@
 							AND
 							b.DELETE_YN = 'N'
 							AND
-							br.borrower_id is not null
+							br.borrower_id is null
 							and
 							br.status is null
 							AND 
@@ -140,6 +140,8 @@
 		    b.isbn13 = bi.isbn13
 		    JOIN BOOKING_RESERVATION br ON
 		    b.board_no = br.board_no
+		    JOIN member_view mv ON
+   			b.writer = mv.id
 		WHERE
 			bi.title LIKE '%' || #{bookTitle} || '%' 
 			AND
@@ -148,6 +150,12 @@
 			#{checkOut} NOT BETWEEN br.start_date AND br.end_date
 			AND
 			b.DELETE_YN = 'N'
+			AND
+			br.borrower_id is not null
+			and
+			br.status is null
+			AND 
+			mv.search_address = #{address}
     </select>
 
 	<select id="selectBooking" resultMap="bookingMap">
@@ -514,7 +522,8 @@
 			br.END_DATE,
 			br.REG_DATE,
 			br.borrower_id,
-			br.status
+			br.status,
+			br.status_date
 		FROM
 			booking b join book_info bi ON
 		    b.isbn13 = bi.isbn13

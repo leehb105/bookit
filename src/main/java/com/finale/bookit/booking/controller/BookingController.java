@@ -394,7 +394,7 @@ public class BookingController {
     	SecurityContextHolder.getContext().setAuthentication(newAuthentication);
     	
     	
-    	return "redirect:/borrowedList.do?pageNum=1&amout=5";
+    	return "redirect:/booking/borrowedList.do?pageNum=1&amout=5";
     }
     
     @PostMapping("/bookingDelete.do")
