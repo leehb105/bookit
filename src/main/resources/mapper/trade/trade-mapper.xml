@@ -11,7 +11,7 @@
 			seq_my_trade_history_rent_no.nextval,
 			#{resNo},
 			#{pay},
-			0,
+			#{cash},
 			default,
 			#{deposit},
 			default

@@ -1,5 +1,13 @@
 package com.finale.bookit.booking.controller;
 
+import com.finale.bookit.booking.model.service.BookingService;
+import com.finale.bookit.booking.model.vo.BookInfo;
+import com.finale.bookit.booking.model.vo.Booking;
+import com.finale.bookit.common.util.BookitUtils;
+import com.finale.bookit.common.util.Criteria;
+import com.finale.bookit.common.util.Paging;
+import com.finale.bookit.member.model.service.MemberService;
+import com.finale.bookit.member.model.vo.Member;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,7 +16,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +53,9 @@ public class BookingController {
     private BookingService bookingService;
     
     @Autowired
+    private MemberService memberService;
+
+	@Autowired
     private ChatRoomService chatRoomService;
 
     @Autowired
@@ -287,6 +301,8 @@ public class BookingController {
     	log.debug("checkOut = {}", checkOut);
     	log.debug("pay = {}", pay);
     	log.debug("boardNo = {}", boardNo);
+    	log.debug("lender = {}", bookingMemberId);
+    	
     	
     	HashMap<String, Object> param = new HashMap<String, Object>();
     	param.put("checkIn", BookitUtils.getFormatDate(checkIn));
@@ -295,6 +311,7 @@ public class BookingController {
     	param.put("boardNo", boardNo);
     	param.put("deposit", deposit);
     	param.put("id", member.getId());
+    	param.put("lenderId", bookingMemberId);
     	log.debug("param = {}", param);
     	
     	int result = bookingService.insertBookingReservation(param);
@@ -355,11 +372,11 @@ public class BookingController {
     		return "redirect:/booking/borrowedList.do?pageNum=1&amout=5";
     	}
     	
-
-    	
-    	
-    	
     	attributes.addFlashAttribute("msg", msg); 
+    	
+    	member.setCash(member.getCash() - pay);
+    	Authentication newAuthentication =  new UsernamePasswordAuthenticationToken(member, member.getPassword(), member.getAuthorities());
+    	SecurityContextHolder.getContext().setAuthentication(newAuthentication);
     	
     	
     	return "redirect:/";
