@@ -42,4 +42,6 @@ public interface MemberDao {
 
 	int bookReviewDelete(HashMap<String, Object> param);
 
+	int chargeMemberCash(HashMap<String, Object> param);
+
 }

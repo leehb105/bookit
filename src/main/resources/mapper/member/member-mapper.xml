@@ -12,7 +12,6 @@
 			member(id, email, name, nickname)
 			values(
 				#{email}, 
-				#{email},
 				#{nickname},
 				#{nickname}
 			)
@@ -113,6 +112,14 @@
 			#{id}
 		)
 	</insert>
+	
+	<update id="updateMemberCash">
+		update member set cash = cash + -1 * #{pay} where id = #{id}
+	</update>
+	
+	<update id="chargeMemberCash">
+		update member set cash = cash + #{pay} where id = #{lenderId}
+	</update>
 	
 	
 	<select id="selectMemberCash" resultType="_int">

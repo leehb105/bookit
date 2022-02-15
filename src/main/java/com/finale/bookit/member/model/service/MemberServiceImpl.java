@@ -231,6 +231,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int selectMemberCash(HashMap<String, Object> param) {
 		return memberDao.selectMemberCash(param);
+	}
 
 	@Override
 	public int bookReviewDelete(HashMap<String, Object> param) {

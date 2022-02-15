@@ -301,6 +301,8 @@ public class BookingController {
     	log.debug("checkOut = {}", checkOut);
     	log.debug("pay = {}", pay);
     	log.debug("boardNo = {}", boardNo);
+    	log.debug("lender = {}", bookingMemberId);
+    	
     	
     	HashMap<String, Object> param = new HashMap<String, Object>();
     	param.put("checkIn", BookitUtils.getFormatDate(checkIn));
@@ -309,6 +311,7 @@ public class BookingController {
     	param.put("boardNo", boardNo);
     	param.put("deposit", deposit);
     	param.put("id", member.getId());
+    	param.put("lenderId", bookingMemberId);
     	log.debug("param = {}", param);
     	
     	int result = bookingService.insertBookingReservation(param);
