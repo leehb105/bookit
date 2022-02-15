@@ -20,15 +20,15 @@
                     <hr class="my-2">
                     <a href="${pageContext.request.contextPath}/booking/myBooking.do?pageNum=1&amout=5">나의 대여 게시글</a>
                     <br />
-                    <a href="${pageContext.request.contextPath}/booking/lentList.do?pageNum=1&amout=5"><strong>나의 대여 예약 관리</strong></a>
+                    <a href="${pageContext.request.contextPath}/booking/lentList.do?pageNum=1&amout=5">나의 대여 예약 관리</a>
                     <br />
-                    <a href="${pageContext.request.contextPath}/booking/borrowedList.do?pageNum=1&amout=5">내가 빌린 도서</a>
+                    <a href="${pageContext.request.contextPath}/booking/borrowedList.do?pageNum=1&amout=5"><strong>내가 빌린 도서</strong></a>
                 </div>
             </div>
 
             <div class="col-6">
                 <!-- Single Room Details Area -->
-                <h4><a href="${pageContext.request.contextPath}/booking/lentList.do?pageNum=1&amout=5"> 나의 대여 예약 관리 </a>> 대여 예약 상세</h4>
+                <h4><a href="${pageContext.request.contextPath}/booking/borrowedList.do?pageNum=1&amout=5"> 내가 빌린 도서 </a>> 대여 예약 상세</h4>
                 <hr class="my-2">
                 <div class="single-room-details-area mt-30 mb-50">
                     <div class="single-blog-post d-flex align-items-center mb-50">
@@ -43,8 +43,8 @@
                             <!-- 저자, 출판사, 출판일 -->
                             <table class="table table-borderless table-sm">
                                 <tr>
-                                    <td>대여 요청자</td>
-                                    <td>${booking.member.nickname}(${booking.bookReservation.borrowerId})</td>
+                                    <td>도서 제공자</td>
+                                    <td>${booking.member.nickname}(${booking.writer})</td>
                                 </tr>
                                 <tr>
                                     <td>대여 시작일</td>
@@ -120,40 +120,6 @@
             <div class="col-2">
                 <!-- Hotel Reservation Area -->
                 <div class="hotel-reservation--area mt-100">
-                    <c:if test="${booking.bookReservation.status eq '대여중'}">
-                        <form:form method="post" id="actionForm">
-                            <div class="col-12 mb-3">
-                                <button type="button" class="btn btn-primary col-10 btn-lg" id="returnBtn" onclick="returnBook();">반납처리</button>
-                            </div>
-                            <div class="col-12 mb-3">
-                                
-                                <c:set var="today" value="<%= new java.util.Date()%>" />
-                                <!-- 현재날짜 -->
-                                <c:set var="today" value="<%= new java.util.Date()%>" />
-                                <fmt:formatDate var="today" value="${today}" pattern="yyyyMMdd" />
-                                <fmt:formatDate var="end_date" value="${booking.bookReservation.endDate}" pattern="yyyyMMdd"/>
-                                <fmt:formatDate var="start_date" value="${booking.bookReservation.startDate}" pattern="yyyyMMdd"/>
-                                <c:if test="${today >= end_date}">
-                                    <!-- 대여종료일이 오늘이거나 오늘이후일때 -->
-                                    <button type="button" class="btn btn-danger col-10 btn-lg" id="lostBookBtn" onclick="lostBook();" >분실처리</button>
-
-                                </c:if>
-                                <c:if test="${today < end_date}">
-                                    <!-- 대여종료일이 오늘 이전일때 -->
-                                    <button type="button" class="btn btn-danger col-10 btn-lg" id="lostBookBtn" onclick="lostBook();" disabled >분실처리</button>
-
-                                </c:if>
-
-                                
-
-
-                                <input type="hidden" id="resNo" name="resNo" value="${booking.bookReservation.resNo}">
-                                <input type="hidden" id="borrowerId" name="borrowerId" value="${booking.bookReservation.borrowerId}">
-                                <input type="hidden" name="deposit" id="deposit" value="${booking.deposit}">
-                                
-                            </div>
-                        </form:form>
-                    </c:if>
                     <c:if test="${booking.bookReservation.status eq '반납완료' && count == 0}">
                         <form:form method="post" id="reviewForm">
                             <div class="col-12 mb-3">
@@ -195,41 +161,7 @@
 
 
     });
-	
-    // var actionForm = $('#actionForm'); 
-	// $('.page-item a').on('click', function(e) { e.preventDefault(); 
-	// 	//걸어둔 링크로 이동하는 것을 일단 막음 
-	// 	actionForm.find('input[name="pageNum"]').val($(this).attr('href')); 
-	// 	actionForm.submit(); 
-	// });
 
-    function lostBook(){
-
-        var lostConfirm = confirm('분실처리 하게 되면 취소할 수 없으며 보증금을 돌려받습니다.\n 분실처리하시겠습니까?');
-        if (lostConfirm) {
-            //분실처리
-            var url = `${pageContext.request.contextPath}/booking/lostBook.do`;
-            $('#actionForm').attr("action", url);
-            $('#actionForm').submit(); 
-
-        }
-        else {
-            return;
-        }
-    }
-
-    function returnBook(){
-        var lostConfirm = confirm('반납처리는 반드시 도서를 돌려받은 후 진행해주세요.\n 반납처리하시겠습니까?');
-        if (lostConfirm) {
-            //분실처리
-            var url = `${pageContext.request.contextPath}/booking/returnBook.do`;
-            $('#actionForm').attr("action", url);
-            $('#actionForm').submit(); 
-        }
-        else {
-            return;
-        }
-    }
 
     //모달에 리뷰 등록 출력
     function openModal(){

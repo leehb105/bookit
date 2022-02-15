@@ -503,6 +503,7 @@
 		<result column="isbn13" property="isbn13"/>
 		<result column="reg_date" property="regDate"/>
 		<association property="bookInfo" resultMap="bookInfoMap"/>
+		<association property="member" resultMap="memberMap"/>
 		<association property="bookReservation" resultMap="bookReservationMap"/>
 	</resultMap>
 	<select id="selectLentBooking" resultMap="selectLentBookingMap">
@@ -523,20 +524,86 @@
 			br.REG_DATE,
 			br.borrower_id,
 			br.status,
-			br.status_date
+			br.status_date,
+			m.nickname
 		FROM
 			booking b join book_info bi ON
 		    b.isbn13 = bi.isbn13
 		    JOIN BOOKING_RESERVATION br ON
 		    b.board_no = br.board_no
+		    join member m on 
+		    br.borrower_id = m.id
 		WHERE
 			br.res_no = #{resNo}
 	</select>
+	
 	
 	<update id="updateBookResStatus">
 		update BOOKING_RESERVATION set status = #{status}, status_date = current_date where res_no = #{resNo}
 	</update>
 		
+	<insert id="insertUserReview">
+		insert into review values(
+			seq_review_no.nextval,
+			#{resNo},
+			#{rating},
+			#{id},
+			#{borrowerId}
+		)
+	</insert>
+	
+	<select id="selectCountUserReview" resultType="int">
+		select 
+			count(*)
+		FROM
+			review
+		WHERE
+			res_no = #{resNo}
+			AND
+			SENDER_ID = #{id}
+			
+	</select>
+	
+	<select id="selectBorrowedBooking" resultMap="selectLentBookingMap">
+		SELECT
+			b.board_no,
+			b.content,
+			b.book_status,
+			b.price,
+			b.deposit,
+			b.writer,
+			b.delete_yn,
+			b.isbn13,
+			bi.title,
+			bi.COVER,
+			br.RES_NO,
+			br.START_DATE,
+			br.END_DATE,
+			br.REG_DATE,
+			br.borrower_id,
+			br.status,
+			br.status_date,
+			m.nickname
+		FROM
+			booking b join book_info bi ON
+		    b.isbn13 = bi.isbn13
+		    JOIN BOOKING_RESERVATION br ON
+		    b.board_no = br.board_no
+		    join member m on 
+		    b.writer = m.id
+		WHERE
+			br.res_no = #{resNo}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

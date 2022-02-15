@@ -52,4 +52,10 @@ public interface BookingDao {
 	Booking selectLentBooking(Map<String, Object> param);
 
 	int updateBookResStatus(HashMap<String, Object> param);
+
+	int insertUserReview(HashMap<String, Object> param);
+
+	int selectCountUserReview(Map<String, Object> param);
+
+	Booking selectBorrowedBooking(Map<String, Object> param);
 }

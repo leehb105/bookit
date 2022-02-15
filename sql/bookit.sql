@@ -169,13 +169,15 @@ CREATE SEQUENCE seq_community_comment_no nocache;
 
 CREATE TABLE review (
 	no	number		NOT NULL,
+	res_no NUMBER,
 	rating	number		NULL,
-	sender_id	varchar2(20)		NOT NULL, 
-	receiver_id	varchar2(20)		NOT NULL 
+	sender_id	varchar2(150)		NOT NULL, 
+	receiver_id	varchar2(150)		NOT NULL 
 
 	,constraint pk_review_no PRIMARY KEY(no)
 	,constraint fk_review_sender_id FOREIGN key(sender_id) REFERENCES member(id)
 	,constraint fk_review_receiver_id FOREIGN key(receiver_id) REFERENCES member(id)
+	,constraint fk_review_res_no FOREIGN key(res_no) REFERENCES BOOKING_RESERVATION(res_no)
 
 );
 CREATE SEQUENCE seq_review_no nocache;

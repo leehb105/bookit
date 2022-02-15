@@ -48,4 +48,10 @@ public interface BookingService {
 
 	public int updateBookResStatus(HashMap<String, Object> param);
 
+	public int insertUserReview(HashMap<String, Object> param);
+
+	public int selectCountUserReview(Map<String, Object> param);
+
+	public Booking selectBorrowedBooking(Map<String, Object> param);
+
 }
