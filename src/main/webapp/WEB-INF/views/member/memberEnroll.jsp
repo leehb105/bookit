@@ -84,15 +84,19 @@
                            
                            <!-- 시작  -->
 	                   	<div> 
-							<div>
-								지번: <input type='text' id='jibunAddr' name='jibunAddress' size=50 readonly/>
+
+	                   		<div class="form-group">
+	                   			<label for="jibunAddr">지번</label>
+								<input type='text' id='jibunAddr' name='jibunAddress' class='form-control' size=35 readonly/>
 							</div>
-							<div>
-								도로명: <input type='text' id='detailRoadAddr' name='detailRoadAddress' size=50 readonly />
+							<div class="form-group">
+								<label for="detailRoadAddr">도로명</label>
+								<input type='text' id='detailRoadAddr' name='detailRoadAddress' class='form-control' size=35 readonly />
 							</div>
-							<div>
-								<input type='text' id='searchAddr' name='searchAddr' />
-								<input type='button' onclick="generateMap(false, 'addr')" value="검색">
+							<div class="form-group">
+								<label for="searchAddr">주소 검색</label>
+								<input type='text' id='searchAddr' name='searchAddr' class='form-control' />
+								<input type='button' onclick="generateMap(false, 'addr')" class='form-control btn btn-success' value="검색">
 							</div>
 
 							<div id="map_wrapper">
@@ -102,35 +106,35 @@
 								<!-- 아래 폼은 hidden 처리 예정 -->
 							<div class='hidden'>
 								<div>
-									도로명: <input type='text' id='roadAddr' name='roadAddress' size=50 readonly/>
+									<input type='hidden' id='roadAddr' name='roadAddress' size=35 readonly/>
 								</div>
 								<div>
-									건물명: <input type='text' id='extraAddr' name='extraAddress' size=50 readonly/>
+									<input type='hidden' id='extraAddr' name='extraAddress' size=35 readonly/>
 								</div>
 								<div>
-									시/도: <input type='text' id='region_1depth_name' name='depth1' readonly/>
+									<input type='hidden' id='region_1depth_name' name='depth1' readonly/>
 								</div>
 								<div>
-									시/군/구: <input type='text' id='region_2depth_name' name='depth2' readonly/>
+									<input type='hidden' id='region_2depth_name' name='depth2' readonly/>
 								</div>
 								<div>
-									동/읍/면: <input type='text' id='region_3depth_name' name='depth3' readonly/>
+									<input type='hidden' id='region_3depth_name' name='depth3' readonly/>
 								</div>
 								<div>
-									번지1:<input type='text' id='main_address_no' name='bunji1' readonly/>
+									<input type='hidden' id='main_address_no' name='bunji1' readonly/>
 								</div>
 								<div>
-									번지2:<input type='text' id='sub_address_no' name='bunji2' readonly/>
+									<input type='hidden' id='sub_address_no' name='bunji2' readonly/>
 								</div>
 						
 								<div>
-									위도:<input type='text' id='latitude' name='latitude' readonly required/>
+									<input type='hidden' id='latitude' name='latitude' readonly required/>
 								</div>
 								<div>
-									경도:<input type='text' id='longitude' name='longitude' readonly required/>
+									<input type='hidden' id='longitude' name='longitude' readonly required/>
 								</div>
 								<div>
-									<input type='text' name='detailAddress'/>
+									<input type='hidden' name='detailAddress'/>
 								</div>
 					
 							</div>
@@ -347,5 +351,13 @@ $("#phone").focusout(function() {
 
 <script>
 	generateMap(true, "coord", '${loginMember.latitude}', '${loginMember.longitude}');
+	$(document).ready(function() {
+		  $(window).keydown(function(event){
+		    if(event.keyCode == 13) {
+		      event.preventDefault();
+		      return false;
+		    }
+		  });
+		});
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
