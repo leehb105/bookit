@@ -1,6 +1,8 @@
 package com.finale.bookit.trade.model.service;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,5 +23,16 @@ public class TradeServiceImpl implements TradeService {
 	@Override
 	public int insertTrade(HashMap<String, Object> param) {
 		return tradeDao.insertTrade(param);
+	}
+
+
+	@Override
+	public List<Trade> selectBorrowList(Map<String, Object> param) {
+		return tradeDao.selectBorrowList(param);
+	}
+
+	@Override
+	public List<Trade> selectLendList(Map<String, Object> param) {
+		return tradeDao.selectLendList(param);
 	}
 }

@@ -15,14 +15,9 @@
 </style>
 <div class="container col-10">
  <div class="col-7">
-	<a href="${pageContext.request.contextPath}/member/memberProfile.do">마이페이지</a> > 북토리 관리 > 결제 내역 
-	<h2>결제 내역</h2>
+	<a href="${pageContext.request.contextPath}/member/memberProfile.do">마이페이지</a> > 북토리 관리 > 거래 내역 
+	<h2>거래 내역</h2>
 </div>
-
-<p>
-<span>내 북토리:<fmt:formatNumber type="number" maxFractionDigits="3" value="${loginMember.cash}" />토리</span>
-<button type="button" class="btn btn-success" onclick="location.href='${pageContext.request.contextPath}/member/payments/charge.do'">북토리 충전</button>
-</p>
 
 <table class="table table-condensed">
     <thead>
@@ -30,18 +25,23 @@
         <th>충전 일자</th>
         <th>충전 금액</th>
         <th>추가 지급액</th>
+        <th>추가 지급액</th>
+        <th>환불 여부</th>
       </tr>
     </thead>
     <tbody>
-    <c:forEach items="${borrowList}" var="borrow">
+    <c:forEach items="${list}" var="history">
 		  <tr>
-			  <td><fmt:formatDate value="${borrow.chargeDate}" pattern="yyyy.MM.dd HH:mm"/></td>
-			  <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${borrow.chargeCash}" />원</td>
-			  <td>${borrow.bonusCash}토리</td>
+			  <td><fmt:formatDate value="${history.tradeDate}" pattern="yyyy.MM.dd HH:mm"/></td>
+			  <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${history.price}" />원</td>
+			  <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${history.cash}" />원</td>
+			  <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${history.deposit}" />원</td>
+			  <td>${history.refundYn}</td>
 		  </tr>      
       </c:forEach>
     </tbody>
   </table>
+  <script>console.log("${list}")</script>
 </div>
 
 

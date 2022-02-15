@@ -125,5 +125,9 @@
 	<select id="selectMemberCash" resultType="_int">
 		select cash from member where id = #{id}
 	</select>
+
+	<select id="selectMemberCash2" resultType="_int">
+		select cash from member where id = #{id}
+	</select>
 	
 </mapper>

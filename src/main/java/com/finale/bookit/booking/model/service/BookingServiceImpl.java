@@ -104,8 +104,10 @@ public class BookingServiceImpl implements BookingService {
 			if (result > 0) {
 				result = memberDao.chargeMemberCash(param);
 			}
-			int cash = memberDao.selectMemberCash(param);
-			param.put("cash", cash);
+			int borrowerCash = memberDao.selectMemberCash(param);
+			param.put("borrowerCash", borrowerCash);
+			int lenderCash = memberDao.selectMemberCash2(param);
+			param.put("lenderCash", lenderCash);
 			
 			if(result > 0) {
 				result = tradeDao.insertTrade(param);
