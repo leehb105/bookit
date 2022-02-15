@@ -141,9 +141,6 @@ public class BookingServiceImpl implements BookingService {
 		int result = bookingDao.updateBookResStatus(param);
 		if (result > 0) {
 			result = memberDao.updateReturnDeposit(param);
-			if (result > 0) {
-				result = tradeDao.insertTrade(param);
-			}
 		}
 		return result;
 	}
