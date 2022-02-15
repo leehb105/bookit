@@ -68,13 +68,46 @@
                     <!-- Room Features -->
                     <div class="room-features-area d-flex flex-wrap mb-50">
                         <h6>대여 상태: <span>${booking.bookReservation.status}</span></h6>
+                        <c:if test="${booking.bookReservation.status eq '반납완료'}">
+                            <h6>반납완료일: <span><fmt:formatDate value="${booking.bookReservation.statusDate}" pattern="yyyy년 MM월 dd일" /></span></h6>
+                        </c:if>
+                        <c:if test="${booking.bookReservation.status eq '분실'}">
+                            <h6>분실처리일: <span><fmt:formatDate value="${booking.bookReservation.statusDate}" pattern="yyyy년 MM월 dd일" /></span></h6>
+                        </c:if>
                         <h6>보증금: <span><fmt:formatNumber type="number" maxFractionDigits="3" value="${booking.deposit }" />원</span></h6>
                         <h6>일 대여료: <span><fmt:formatNumber type="number" maxFractionDigits="3" value="${booking.price }" />원</span></h6>
-
                     </div>
 
                 </div>
                 
+            </div>
+            <!-- 모달 -->
+            <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">사용자 평가</h5>
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">X</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" id="modalContent"></div>
+                        <div class="modal-footer">
+                            <form:form method="post" id="deleteFrm">
+                                <select class="form-select" id="status" name="status">
+                                    <option value="0" disabled selected>선택</option>
+                                    <option value="1">최상</option>
+                                    <option value="2">상</option>
+                                    <option value="3">중</option>
+                                    <option value="4">하</option>
+                                    <option value="5">최하</option>
+                                </select>
+                                <button class="btn" type="button" onclick="deleteReview();" data-dismiss="modal">리뷰 삭제</button>
+                                <input type="hidden" name="reviewNo" id="reviewNo" value="">
+                            </form:form>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-2">
                 <!-- Hotel Reservation Area -->
@@ -113,6 +146,15 @@
                             </div>
                         </form:form>
                     </c:if>
+                    <c:if test="${booking.bookReservation.status eq '반납완료'}">
+                        <form:form method="post" id="reviewForm">
+                            <div class="col-12 mb-3">
+                                <button type="button" class="btn btn-primary col-10 btn-lg" id="reviewBtn" onclick="openModal();">사용자 리뷰</button>
+                            </div>
+                            
+                        </form:form>
+                    </c:if>
+                    
                 </div>
             </div>
         </div>	
@@ -175,7 +217,29 @@
         }
     }
 
+    //모달에 리뷰 등록 출력
+    function openModal(content, no){
+        console.log(content);
+        console.log(no);
+        // e.preventDefault();
+        $('#reviewModal').modal("show");
+        document.getElementById('modalContent').innerHTML = content;
+        document.getElementById('reviewNo').value = no;
+    }
+    function reviewEnroll(){
+        
+    }
+    
+    //책상태 입력에 대한 처리
+    function checkBookStatus(){
+        const status = $('#status option:selected').val();
+        // console.log(status, typeof status);
+        if(status == '0'){
+            return false;
+        }
+        return true;
 
+    }
 
 </script>
 	

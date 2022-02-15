@@ -67,7 +67,7 @@
                                     <!-- 현재날짜 -->
                                     <c:set var="today_date"><fmt:formatDate value="${today}" pattern="yyyyMMdd" /></c:set>
                                     <c:set var="end_Date"><fmt:formatDate value="${booking.bookReservation.endDate}" pattern="yyyyMMdd"/></c:set>
-                                    
+                                  
                                 </td>
 
                                 
