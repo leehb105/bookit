@@ -1,16 +1,7 @@
 * {
   box-sizing: border-box;
 }
-input[type=text] {
-  width: 78%;
-  padding: 7px;
-  margin-left: 3px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  resize: vertical;
 
-}
 
 #category {
   width: 120px;;
@@ -31,37 +22,9 @@ textarea {
   resize: vertical;
 }
 
-input[type=submit] {
-  background-color: #8de610;
-  color: white;
-  padding: 7px 18px;
-  border: none;
-  border-radius: 4px;
-  margin: 8px;
-  cursor: pointer;
-   margin: 50px 10px;
-}
 
-input[type=submit]:hover {
-  background-color: #45a049;
-}
 
-input[type=button]:hover {
-  background-color: #820e0e;
-}
 
-input[type=button] {
-  background-color: #d41128;
-  color: white;
-  padding: 7px 18px;
-  border: none;
-  border-radius: 4px;
-  margin: 8px;
-  cursor: pointer;
-  float: right;
-  text-align: right;
-  margin: 50px 10px;
-}
 h2 {
   margin: 50px 10px;
     display: flex;

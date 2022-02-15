@@ -1,5 +1,13 @@
 package com.finale.bookit.booking.controller;
 
+import com.finale.bookit.booking.model.service.BookingService;
+import com.finale.bookit.booking.model.vo.BookInfo;
+import com.finale.bookit.booking.model.vo.Booking;
+import com.finale.bookit.common.util.BookitUtils;
+import com.finale.bookit.common.util.Criteria;
+import com.finale.bookit.common.util.Paging;
+import com.finale.bookit.member.model.service.MemberService;
+import com.finale.bookit.member.model.vo.Member;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,7 +16,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +53,9 @@ public class BookingController {
     private BookingService bookingService;
     
     @Autowired
+    private MemberService memberService;
+
+	@Autowired
     private ChatRoomService chatRoomService;
 
     @Autowired
@@ -151,13 +165,13 @@ public class BookingController {
     	String msg = "";
     	if(result > 0) {
     		msg = "대여 등록이 완료되었습니다.";
-    		attributes.addFlashAttribute("msg", "대여 등록이 완료되었습니다.");    		
+    		attributes.addFlashAttribute("msg", msg);    		
     	}else {
     		msg = "글 등록에 실패하였습니다.";
     	}
     	attributes.addFlashAttribute("msg", msg);  
     	
-    	return "redirect:/";
+    	return "redirect:/booking/myBooking.do?pageNum=1&amout=5";
     }
     
     @PostMapping("/bookInfoEnroll.do")
@@ -287,6 +301,8 @@ public class BookingController {
     	log.debug("checkOut = {}", checkOut);
     	log.debug("pay = {}", pay);
     	log.debug("boardNo = {}", boardNo);
+    	log.debug("lender = {}", bookingMemberId);
+    	
     	
     	HashMap<String, Object> param = new HashMap<String, Object>();
     	param.put("checkIn", BookitUtils.getFormatDate(checkIn));
@@ -295,6 +311,7 @@ public class BookingController {
     	param.put("boardNo", boardNo);
     	param.put("deposit", deposit);
     	param.put("id", member.getId());
+    	param.put("lenderId", bookingMemberId);
     	log.debug("param = {}", param);
     	
     	int result = bookingService.insertBookingReservation(param);
@@ -352,27 +369,17 @@ public class BookingController {
     	}else {
     		msg = "대여 신청에 실패하였습니다.";
     		attributes.addFlashAttribute("msg", msg);
-    		return "redirect:/booking/bookingDetail.do?bno=" + boardNo;
+    		return "redirect:/booking/borrowedList.do?pageNum=1&amout=5";
     	}
-    	
-    	//사용자 잔액 차감 및 거래내역 추가 부분 이 밑으로 구현하세요 
-    	
-    	//잔액 차감 메소드만들어놓은거 필요하면 수정해서 쓰세요
-//    	result = bookingService.updateUserCash(param);
-//    	if(result > 0) {
-//    		
-//    	}else {
-//    		msg = "대여 신청에 실패하였습니다.";
-//    		attributes.addFlashAttribute("msg", msg); 
-//    		return "redirect:/booking/bookingDetail.do?bno=" + boardNo;
-//    	}
-    	
-    	
     	
     	attributes.addFlashAttribute("msg", msg); 
     	
+    	member.setCash(member.getCash() - pay);
+    	Authentication newAuthentication =  new UsernamePasswordAuthenticationToken(member, member.getPassword(), member.getAuthorities());
+    	SecurityContextHolder.getContext().setAuthentication(newAuthentication);
     	
-    	return "redirect:/";
+    	
+    	return "redirect:/borrowedList.do?pageNum=1&amout=5";
     }
     
     @PostMapping("/bookingDelete.do")

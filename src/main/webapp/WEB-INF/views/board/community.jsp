@@ -113,7 +113,7 @@ $(() => {
 		type="button" value="글쓰기" id="btn-add" class="btn btn-outline-success" 
 		onclick="goCommunityForm();" style="margin-top: 2%;"/>
 	<table id="tbl-board" class="table table-striped table-hover">
-		<tr>
+		<tr class="table-success">
 			<th>번호</th>
 			<th>카테고리</th>
 			<th>제목</th>
@@ -125,7 +125,7 @@ $(() => {
 		<c:forEach items="${list}" var="community">
 			<tr data-no="${community.communityNo}">
 				<td>${community.communityNo}</td>
-				<td>${community.category}</td>
+				<td>[${community.category}]</td>
 				<td class = "title">${community.title}&nbsp;[${community.commentCount}]</td>
 				<td class="writer" id="${community.nickname}">${community.nickname}</td>
 				<td><fmt:formatDate value="${community.regDate}" pattern="yy/MM/dd HH:mm"/> </td>
@@ -147,7 +147,7 @@ $(() => {
 				      </form>
 	
 	<br>
-	<div class="pagebar"  style="margin-bottom: 2%;">
+	<div class="pagebar" style="margin-bottom: 2%;" >
 	${pagebar}
 	</div>
 	<div class="modal_chat">

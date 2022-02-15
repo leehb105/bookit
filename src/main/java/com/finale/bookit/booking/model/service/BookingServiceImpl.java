@@ -99,10 +99,14 @@ public class BookingServiceImpl implements BookingService {
 		int result = bookingDao.insertBookingReservation(param);
 		int resNo = bookingDao.selectOneBookingReservation(param);
 		param.put("resNo", resNo);
-//		int rentNo = bookingDao.selectOneBookingReservation2(param);
-//		param.put("rentNo", rentNo);
 		if(result > 0) {
 			result = memberDao.updateMemberCash(param);
+			if (result > 0) {
+				result = memberDao.chargeMemberCash(param);
+			}
+			int cash = memberDao.selectMemberCash(param);
+			param.put("cash", cash);
+			
 			if(result > 0) {
 				result = tradeDao.insertTrade(param);
 			}

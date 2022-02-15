@@ -69,7 +69,10 @@
 	                    </div>
 					</c:forEach> 
 					<c:if test="${empty list}">
-						<h2>검색 결과가 없습니다.</h2>
+						<div class="col-12 md-5">
+							<h2>검색 결과가 없습니다.</h2>
+						</div>
+						
 					</c:if>
 					<c:if test="${!empty list}">
 						<hr class="my-2 wow fadeInUp">
@@ -99,12 +102,11 @@
 					</form>
 
 
-					<!-- <div class="col-12">
-							${pagebar}
 
-					</div> -->
 					
                 </div>
+			</div>
+		</div>
 
     <!-- Booking Area End -->
 <script>
@@ -128,17 +130,9 @@
 		actionForm.submit(); 
 	});
 
-	
-
-
-
-
-
-
-
 
 </script>
 	
 
-    <!-- Partner Area End -->
-    <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+<!-- Partner Area End -->
+<jsp:include page="/WEB-INF/views/common/footer.jsp"/>

@@ -64,6 +64,10 @@
 							#{checkOut} NOT BETWEEN br.start_date AND br.end_date
 							AND
 							b.DELETE_YN = 'N'
+							AND
+							br.borrower_id is not null
+							and
+							br.status is null
 							AND 
 							mv.search_address = #{address}
 						ORDER BY
@@ -125,20 +129,7 @@
 		<collection property="bookReservations" resultMap="bookReservationMap"/>
 	</resultMap>
 	
-	<resultMap type="booking" id="bookingMap_bookInfoList">
-		<id column="board_no" property="boardNo"/>
-		<result column="content" property="content"/>
-		<result column="book_status" property="bookStatus"/>
-		<result column="price" property="price"/>
-		<result column="deposit" property="deposit"/>
-		<result column="writer" property="writer"/>
-		<result column="delete_yn" property="deleteYn"/>
-		<result column="isbn13" property="isbn13"/>
-		<result column="reg_date" property="regDate"/>
-		<association property="member" resultMap="memberMap"/>
-		<collection property="bookInfos" resultMap="bookInfoMap"/>
-		<collection property="bookReservations" resultMap="bookReservationMap"/>
-	</resultMap>
+	
 
 	<select id="selectTotalBookingCount" resultType="_int">
        SELECT
@@ -300,7 +291,65 @@
 		]]>
 	</select>
 	
-	<select id="selectLentList" resultMap="bookingMap_bookInfoList" resultType="criteria">
+	<resultMap type="booking" id="bookingMap_bookInfoList">
+		<result column="rn" property="rowNum"/>
+		<result column="board_no" property="boardNo"/>
+		<result column="content" property="content"/>
+		<result column="book_status" property="bookStatus"/>
+		<result column="price" property="price"/>
+		<result column="deposit" property="deposit"/>
+		<result column="writer" property="writer"/>
+		<result column="delete_yn" property="deleteYn"/>
+		<result column="isbn13" property="isbn13"/>
+		<result column="reg_date" property="regDate"/>
+		<association property="bookInfo" resultMap="bookInfoMap" />
+		<collection property="bookReservation" resultMap="bookReservationMap"/>
+	</resultMap>
+	
+	<resultMap type="bookInfo" id="bookInfoList">
+		<id column="isbn13" property="isbn13"/>
+		<result column="title" property="title"/>
+		<result column="author" property="author"/>
+		<result column="publisher" property="publisher"/>
+		<result column="pubdate" property="pubdate"/>
+		<result column="item_page" property="itemPage"/>
+		<result column="category_name" property="categoryName"/>
+		<result column="cover" property="cover"/>
+		<result column="description" property="description"/>
+	</resultMap>
+	
+	<resultMap type="bookReservation" id="bookReservationList">
+		<id column="res_no" property="resNo"/>
+		<result column="board_no" property="boardNo"/>
+		<result column="start_date" property="startDate"/>
+		<result column="end_date" property="endDate"/>
+		<result column="borrower_id" property="borrowerId"/>
+		<result column="reg_date" property="regDate"/>
+		<result column="status" property="status"/>
+	</resultMap>
+
+
+		
+	<!-- <select id="selectLentList" resultMap="bookingMap_bookInfoList">
+		<![CDATA[
+		SELECT
+			*
+		FROM
+			(SELECT
+				rownum rn,
+				v.*
+			from
+				(SELECT
+					*
+				FROM
+				 	LENT_LIST_VIEW) v
+			WHERE
+				ROWNUM <= 5) t
+		WHERE
+			rn > 0
+		]]>
+	</select> -->
+	<select id="selectLentList" resultMap="bookingMap_bookInfoList">
 		<![CDATA[
 		SELECT
 			*
@@ -310,8 +359,8 @@
 				tb1.*
 			from
 				(SELECT
-					b.board_no as board_no,
-					b.content as content,
+					b.board_no,
+					b.content,
 					b.book_status,
 					b.price,
 					b.deposit,
@@ -346,6 +395,7 @@
 				ROWNUM <= #{cri.pageNum} * #{cri.amount}) tb2
 		WHERE
 			rn > (#{cri.pageNum} - 1) * #{cri.amount}
+
 		]]>
 	</select>
 	
