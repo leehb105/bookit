@@ -37,20 +37,19 @@ $(() => {
 	});
 });
 </script>
-
-
 <div class="container">
   <form 		
   		name="communityFrm" 
-		action="${pageContext.request.contextPath}/updateCommunity.do?${_csrf.parameterName}=${_csrf.token}" 
+		action="${pageContext.request.contextPath}/board/updateCommunity.do?${_csrf.parameterName}=${_csrf.token}" 
 		method="post"
 		enctype="multipart/form-data" 
 		onsubmit="return boardValidate();">
      <div class="row" style="margin-left: 2%;">
-       	<h2>글쓰기</h2>
+       	<h2>수정</h2>
         <hr>
-      <input type="submit" value="등록" style="margin-left: 70%;">
-      <input type="button" value="취소" onclick="goRequestList();">
+	<input type="submit" value="등록" id="modify" onclick="updateCommunity();"> 
+	<input type="button" value="리스트로" onclick="goCommunityList();">
+	<input type="hidden" name ="communityNo" value="${community.communityNo}">
     </div>
     <div name="form-body" style="margin-left: 2%;">
         <input type="text" value = "${community.title}" id="title" name="title" placeholder="제목" style="margin-left: 6%;" required>
@@ -71,7 +70,7 @@ $(() => {
 		    <input type="file" class="custom-file-input" name="upFiles" id="upFiles" multiple>
 		    <label class="custom-file-label" for="upFiles">파일을 선택하세요</label>
 		  </div>
-		  		  		  <div class="custom-file">
+		  	<div class="custom-file">
 		    <input type="file" class="custom-file-input" name="upFiles" id="upFiles2" multiple>
 		    <label class="custom-file-label" for="upFiles2">파일을 선택하세요</label>
 		  </div>

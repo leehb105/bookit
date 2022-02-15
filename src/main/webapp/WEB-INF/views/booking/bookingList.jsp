@@ -104,11 +104,9 @@
 
 
 					
-
+                </div>
 			</div>
 		</div>
-	</div>
-	
 
     <!-- Booking Area End -->
 <script>
@@ -131,14 +129,6 @@
 
 		actionForm.submit(); 
 	});
-
-	
-
-
-
-
-
-
 
 
 </script>

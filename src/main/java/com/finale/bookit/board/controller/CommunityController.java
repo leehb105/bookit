@@ -105,7 +105,7 @@ public class CommunityController {
 		Community community = new Community();
 
 		try {
-			community = communityService.getCommunity(no);
+			community = communityService.getCommunity(no, member.getId());
 			communityService.updateReadCount(no);
 			log.info("community {}", community);
 		} catch (Exception e) {
@@ -175,23 +175,57 @@ public class CommunityController {
 	@GetMapping("/communityUpdate.do")
 	public void communityUpdate(@RequestParam int no, Model model, @AuthenticationPrincipal Member member) {
 
-		Community community = communityService.getCommunity(no);
+		Community community = communityService.getCommunity(no, member.getId());
 
 		model.addAttribute("community", community);
 
 	};
 
 	@PostMapping("/updateCommunity.do")
-	public String updateCommunity(@RequestBody Map<String, Object> param, HttpServletRequest request, Model model,
-			@AuthenticationPrincipal Member loginMember) {
+	public String updateCommunity( HttpServletRequest request, CommunityTest communityDto, Model model,
+			@AuthenticationPrincipal Member loginMember,@RequestParam(name = "upFiles", required = false) MultipartFile[] upFiles
+) {
+		String saveDirectory = application.getRealPath("/resources/img/board");
 
+		List<CommunityAttachment> attachments = new ArrayList<>();
+
+		log.info("upFiles {}", upFiles);
+		if (upFiles.length > 0)
+			log.info("===== file length {}", upFiles.length);
+		
 		try {
-			communityService.updateCommunityContent(loginMember.getId(), param);
+			
+			for (int i = 0; i < upFiles.length; i++) {
+				MultipartFile upFile = upFiles[i];
+				if (!upFile.isEmpty()) {
+					// 1. 저장경로 | renamedFilename
+					String originalFilename = upFile.getOriginalFilename();
+					String renamedFilename = BookitUtils.rename(originalFilename);
+					File dest = new File(saveDirectory, renamedFilename);
+					upFile.transferTo(dest);
+
+					// 2
+					CommunityAttachment attach = new CommunityAttachment();
+					attach.setOriginalFilename(originalFilename);
+					attach.setRenamedFilename(renamedFilename);
+					attachments.add(attach);
+				}
+			}
+
+			if (!attachments.isEmpty())
+				communityDto.setFiles(attachments);
+			log.debug("communityDto = {}", communityDto);
+
+			communityService.updateCommunityContent(loginMember.getId(), communityDto);
+
+			log.info("communityTest : {}", communityDto);
+
+			
 		} catch (Exception e) {
 
 			e.printStackTrace();
 		}
-		return "redirect:/community.do";
+		return "redirect:/board/community.do";
 
 	}
 
@@ -261,16 +295,19 @@ public class CommunityController {
 
 		try {
 
+			log.info("commnetMap{} ", commentMap);
+			
 			Comment comment = new Comment();
 
 			comment.setCommunityNo(Integer.parseInt(commentMap.get("communityNo").toString()));
 			comment.setCommentLevel(Integer.parseInt(commentMap.get("commentLevel").toString()));
 			comment.setContent(commentMap.get("content").toString());
-
+			
 			String writer = member.getId();
 			comment.setWriter(writer);
 
 			if (comment.getCommentLevel() == 2) {
+				comment.setCommentRef(Integer.parseInt(commentMap.get("commentRef").toString()));
 				communityService.insertReComment(comment);
 			} else {
 				communityService.insertComment(comment);
@@ -349,6 +386,35 @@ public class CommunityController {
 
 		}
 		return mav;
+	}
+	
+	@ResponseBody
+	@GetMapping("/like.do")
+	public Map<String, Object> CommunityLike(@RequestParam int no, @RequestParam boolean isLike, 
+			@AuthenticationPrincipal Member member){
+		Map<String, Object> resultMap = new HashMap<>();
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("memberId", member.getId());
+		paramMap.put("communityNo", no);
+	
+		
+		log.info("isLike {} paramMap {}", isLike, paramMap);
+		
+		try{
+			if(isLike) {
+				communityService.likeCountUp(paramMap);
+			} else {
+				communityService.likeCountDown(paramMap);
+			}
+
+			resultMap.put("result", true);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			resultMap.put("result", false);
+		}
+		
+		return resultMap;
 	}
 	
 
