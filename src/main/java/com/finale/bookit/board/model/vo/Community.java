@@ -48,5 +48,10 @@ public class Community implements Serializable {
 	private int commentCount;
 	
 	private String profileImage;
+	
+	private int userLikeCommunity;
+
+	
+	
 }
 

@@ -26,5 +26,6 @@ public class CommunityTest implements Serializable {
 	private String memberId;
 	
 	private List<CommunityAttachment> files;
-	
+
+
 }
