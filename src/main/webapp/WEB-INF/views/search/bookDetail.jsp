@@ -213,8 +213,19 @@
                 $('#count').html("100");
             }
 
-            //리뷰 입력 0글자일경우 버튼 제출 금지
-            if(content.value.length == 0){
+            //리뷰 입력 0글자일경우, 별점입력 안할시 버튼 제출 금지
+            if(content.value.length == 0 || !$('input:radio[name=rating]').is(':checked')){
+                enrollBtn.disabled = true;
+            }else{
+                enrollBtn.disabled = false; 
+            }
+
+        });
+        //별점 입력 체크
+        $('input:radio[name=rating]').on('input', function() {
+
+            //리뷰 입력 0글자일경우, 별점입력 안할시 버튼 제출 금지
+            if(content.value.length == 0 || !$('input:radio[name=rating]').is(':checked')){
                 enrollBtn.disabled = true;
             }else{
                 enrollBtn.disabled = false; 
@@ -271,6 +282,9 @@
 
 		enrollFrm.submit(); 
 	});
+
+    
+
 
 
 
