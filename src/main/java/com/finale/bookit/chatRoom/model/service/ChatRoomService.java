@@ -20,5 +20,7 @@ public interface ChatRoomService {
 
 	String selectIdByNickName(String writer);
 
+	String selectChatRoomId(String chatParticipants);
+
 	
 }

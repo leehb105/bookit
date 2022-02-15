@@ -5,6 +5,15 @@
 
 <mapper namespace="chat">
 
+	<select id="selectChatRoomId" resultType="string">
+		select
+			chat_room_id
+		from
+			chat_room
+		where
+            chat_member_id = #{chatParticipants}
+	
+	</select>
 
 	<update id="updateRead_Check">
 		update
