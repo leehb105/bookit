@@ -165,13 +165,13 @@ public class BookingController {
     	String msg = "";
     	if(result > 0) {
     		msg = "대여 등록이 완료되었습니다.";
-    		attributes.addFlashAttribute("msg", "대여 등록이 완료되었습니다.");    		
+    		attributes.addFlashAttribute("msg", msg);    		
     	}else {
     		msg = "글 등록에 실패하였습니다.";
     	}
     	attributes.addFlashAttribute("msg", msg);  
     	
-    	return "redirect:/";
+    	return "redirect:/booking/myBooking.do?pageNum=1&amout=5";
     }
     
     @PostMapping("/bookInfoEnroll.do")
@@ -369,7 +369,7 @@ public class BookingController {
     	}else {
     		msg = "대여 신청에 실패하였습니다.";
     		attributes.addFlashAttribute("msg", msg);
-    		return "redirect:/booking/bookingDetail.do?bno=" + boardNo;
+    		return "redirect:/booking/borrowedList.do?pageNum=1&amout=5";
     	}
     	
     	attributes.addFlashAttribute("msg", msg); 

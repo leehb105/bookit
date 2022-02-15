@@ -43,22 +43,22 @@
                     </thead>
                     <tbody>
                         <c:forEach items="${list}" var="booking" varStatus="status">
-                        <c:forEach items="${booking.bookInfos}" var="bookInfo">
+
                             <tr onclick="location.href='${pageContext.request.contextPath}/booking/bookingDetail.do?bno=${booking.boardNo}'" style="cursor:pointer;">
                                 <td class="align-middle">${page.total - ((page.cri.pageNum - 1) * page.cri.amount) - status.index}</td>
-                                <td class="align-middle"><img src="${bookInfo.cover}" alt="" style="width: 30%;"></td>
+                                <td class="align-middle"><img src="${booking.bookInfo.cover}" alt="" style="width: 30%;"></td>
                                 
-                                <td class="title align-middle" style="text-align: left;">${bookInfo.title}</td>
+                                <td class="title align-middle" style="text-align: left;">${booking.bookInfo.title}</td>
                                 <td class="author align-middle">
-                                    ${bookInfo.author}
+                                    ${booking.bookInfo.author}
                                 </td>
-                                <td class="align-middle">${bookInfo.publisher}</td>
+                                <td class="align-middle">${booking.bookInfo.publisher}</td>
                                 <td class="align-middle">${booking.bookStatus}</td>
                                 <td class="align-middle"><fmt:formatNumber type="number" maxFractionDigits="3" value="${booking.deposit }" />원</td>
                                 <td class="align-middle"><fmt:formatNumber type="number" maxFractionDigits="3" value="${booking.price }" />원</td>
 
                             </tr>
-                        </c:forEach>
+
                         </c:forEach>
                         <c:if test="${empty list}">
                             <tr>
@@ -82,7 +82,7 @@
                     </ul>
                 </nav>
 
-                <form id='actionForm' action="${pageContext.request.contextPath}/booking/myBooking.do" method="get"> 
+                <form id='actionForm' action="${pageContext.request.contextPath}/booking/lentList.do" method="get"> 
                     <input type="hidden" name="pageNum" value="${page.cri.pageNum}"> 
                     <input type="hidden" name="amount" value="${page.cri.amount}"> 
                 </form>

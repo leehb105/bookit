@@ -5,6 +5,8 @@ import com.finale.bookit.booking.model.vo.Booking;
 import com.finale.bookit.booking.model.vo.BookingEntity;
 import com.finale.bookit.common.util.Criteria;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -14,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
+@Slf4j
 public class BookingDaoImpl implements BookingDao{
     @Autowired
     private SqlSessionTemplate session;
@@ -60,6 +63,7 @@ public class BookingDaoImpl implements BookingDao{
 
 	@Override
 	public List<Booking> selectLentList(Map<String, Object> param) {
+		log.debug("dao list = {}  ", session.selectList("booking.selectLentList", param));
 		return session.selectList("booking.selectLentList", param);
 	}
 

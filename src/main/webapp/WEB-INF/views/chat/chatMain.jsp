@@ -78,7 +78,7 @@
                 	
                 	
                 	<div class="msg-send">
-                        <input type="text" value="chatMain" id = "msg" class="inputChat"/>
+                        <input type="text" id = "msg" class="inputChat" placeholder="채팅을 입력해 주세요."/>
                         <button class="btn btn-outline-secondary" type="button" id="button-send">전송</button>
                 	</div>
                 	
