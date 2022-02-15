@@ -103,4 +103,9 @@ public class MemberDaoImpl implements MemberDao {
 		return session.update("member.chargeMemberCash", param);
 	}
 
+	@Override
+	public int selectMemberCash2(HashMap<String, Object> param) {
+		return session.update("member.chargeMemberCash2", param);
+	}
+
 }

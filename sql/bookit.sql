@@ -448,10 +448,11 @@ CREATE TABLE my_trade_history (
     rent_no    number,
     res_no NUMBER ,
     price    number        NOT NULL,
-    cash    number        NOT NULL,
+    borrower_cash    number        NOT NULL,
     trade_date    date        DEFAULT current_date,
     deposit NUMBER			NOT NULL,
-    refund_yn varchar2(1)	DEFAULT 'N'
+    refund_yn varchar2(1)	DEFAULT 'N',
+    lender_cash    number        NOT NULL
 
     ,constraint pk_my_trade_history_rent_no PRIMARY KEY(rent_no)
     ,constraint fk_my_trade_history_res_no FOREIGN key(res_no) REFERENCES BOOKING_RESERVATION(res_no)

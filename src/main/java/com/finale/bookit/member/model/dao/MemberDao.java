@@ -44,4 +44,6 @@ public interface MemberDao {
 
 	int chargeMemberCash(HashMap<String, Object> param);
 
+	int selectMemberCash2(HashMap<String, Object> param);
+
 }
