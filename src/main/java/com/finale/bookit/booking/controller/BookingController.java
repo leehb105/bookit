@@ -69,9 +69,9 @@ public class BookingController {
     @GetMapping("/bookingList.do")
     public void bookingList(
     		@RequestParam(defaultValue = "1") int pageNum, 
-    		@RequestParam(value = "bookTitle") String bookTitle, 
-    		@RequestParam(value = "checkIn") String checkIn, 
-    		@RequestParam(value = "checkOut") String checkOut, 
+    		@RequestParam String bookTitle, 
+    		@RequestParam String checkIn, 
+    		@RequestParam String checkOut, 
     		@AuthenticationPrincipal Member loginMember,
     		Model model, 
     		HttpServletRequest request ){
@@ -101,10 +101,17 @@ public class BookingController {
         
         model.addAttribute("list", list);
         model.addAttribute("page", page);
+        model.addAttribute("checkIn", checkIn);
+    	model.addAttribute("checkOut", checkOut);
+
     }
 
     @GetMapping("/bookingDetail.do")
-    public void bookingDetail(@RequestParam(value = "bno") int bno, Model model,
+    public void bookingDetail(
+    		@RequestParam int bno, 
+    		@RequestParam String checkIn, 
+    		@RequestParam String checkOut, 
+    		Model model,
     		@AuthenticationPrincipal Member loginMember) {
     	String id = loginMember.getId();
     	Map<String, Object> param = new HashMap<>();
@@ -131,6 +138,8 @@ public class BookingController {
     	model.addAttribute("startDateList", startDateList);
     	model.addAttribute("endDateList", endDateList);
     	model.addAttribute("wishlistCount", wishlistCount);
+    	model.addAttribute("checkIn", checkIn);
+    	model.addAttribute("checkOut", checkOut);
     }
     
     @GetMapping("/bookingEnroll.do")
