@@ -129,50 +129,53 @@ table {
 </style>
 	<!-- 나의 게시글 -->
 	
-	<div class="container mb-50 mt-100">
-		<div class="row mb-50">
-			<div class="col-lg-10 col-md-10 ml-auto mr-auto">
-				<div class="section-heading text-center">
-					<h5>나의 게시글</h5>
-				</div>
-				<div class="table-responsive">
-					<table class="table text-center">
-						<thead>
-							<tr>
-								<th style="width:10%"></th>
-								<th style="width:20%">게시판</th>
-								<th style="width:20%">게시글 번호</th>
-								<th style="width:20%">제목</th>
-								<th style="width:20%">작성일</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach items="${posts}" var="posts">
-								<tr data-no="${posts.no}" onClick="viewPost( )" class="selectPosts">
-									<td><input type="radio" name="postsNo" id="postsNo" value="${posts.no}"/>
-									<input type="hidden" name="postTableName" id="postsTableName" value="${posts.tableName}"/>
-									</td>
-									<td>${posts.tableName}</td>
-									<td >${posts.no}</td>
-									<td class="category" >${posts.category}</td>
-									<td class="title" >${posts.title}</td>
-									<td><fmt:formatDate value="${posts.regDate}" pattern="yy/MM/dd HH:mm"/> </td>
-								</tr>
-							</c:forEach>
-							<c:if test="${empty posts}">
+	<div class="col-10">
+		<div class="container mb-50">
+			<div class="row mb-50">
+				<div class="col-lg-10 col-md-10">
+					<div class="section-heading text-center">
+						<h5>나의 게시글</h5>
+					</div>
+					<div class="table-responsive">
+						<table class="table text-center">
+							<thead>
 								<tr>
-									<td colspan="4"><p>작성한 글이 없습니다</p></td>
+									<th style="width:10%"></th>
+									<th style="width:20%">게시판</th>
+									<th style="width:20%">게시글 번호</th>
+									<th style="width:20%">제목</th>
+									<th style="width:20%" colspan="2">작성일</th>
 								</tr>
-							</c:if>
-						</tbody>
-					</table>
+							</thead>
+							<tbody>
+								<c:forEach items="${posts}" var="posts">
+									<tr data-no="${posts.no}" onClick="viewPost( )" class="selectPosts">
+										<td><input type="radio" name="postsNo" id="postsNo" value="${posts.no}"/>
+										<input type="hidden" name="postTableName" id="postsTableName" value="${posts.tableName}"/>
+										</td>
+										<td>${posts.tableName}</td>
+										<td >${posts.no}</td>
+										<td class="category" >${posts.category}</td>
+										<td class="title" >${posts.title}</td>
+										<td><fmt:formatDate value="${posts.regDate}" pattern="yy/MM/dd HH:mm"/> </td>
+									</tr>
+								</c:forEach>
+								<c:if test="${empty posts}">
+									<tr>
+										<td colspan="4"><p>작성한 글이 없습니다</p></td>
+									</tr>
+								</c:if>
+							</tbody>
+						</table>
+					</div>
+					<input type="button" value="삭제" class="btn btn-outline-danger float-right mb-30" onclick="wishlistDelete();"/>
 				</div>
-				<input type="button" value="삭제" class="btn btn-outline-danger float-right mb-30" onclick="wishlistDelete();"/>
 			</div>
+			${pagebar}
 		</div>
-		${pagebar}
+		<hr />
 	</div>
-	<hr />
-
+</div>	
+</div>
 	
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
