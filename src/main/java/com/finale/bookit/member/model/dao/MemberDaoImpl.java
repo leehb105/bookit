@@ -98,6 +98,7 @@ public class MemberDaoImpl implements MemberDao {
 	public int bookReviewDelete(HashMap<String, Object> param) {
 		return session.update("search.bookReviewDelete", param);
 	}
+
 	
 	@Override
 	public int selectMemberRating(HashMap<String, Object> param) {
@@ -118,6 +119,7 @@ public class MemberDaoImpl implements MemberDao {
 		return session.update("search.deleteMyPosts", param);
 	}
 
+
 	@Override
 	public int chargeMemberCash(HashMap<String, Object> param) {
 		return session.update("member.chargeMemberCash", param);
@@ -131,6 +133,16 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public int updateReturnDeposit(HashMap<String, Object> param) {
 		return session.update("member.updateReturnDeposit", param);
+	}
+
+	@Override
+	public List<Posts> selectAllPosts(String loginMember) {
+		return session.selectList("member.selectMyPosts", loginMember);
+	}
+
+	@Override
+	public int selectTotalPosts(String loginMember) {
+		return session.selectOne("member.selectMyPostsTotalCount", loginMember);
 	}
 
 }

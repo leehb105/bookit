@@ -153,7 +153,7 @@ public class UsedController {
 
 		try {
 			usedService.deleteUsedContent(no, member.getId());
-
+			
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			e.printStackTrace();
@@ -216,7 +216,7 @@ public class UsedController {
 
 			e.printStackTrace();
 		}
-		return "redirect:/board/community.do";
+		return "redirect:/used/used.do";
 
 	}
 	@PostMapping("/usedEnroll")
@@ -259,7 +259,7 @@ public class UsedController {
 
 		usedService.insertUsed(usedDto);
 
-		ModelAndView mav = new ModelAndView("redirect:/board/used.do");
+		ModelAndView mav = new ModelAndView("redirect:/used/used.do");
 		log.info("usedTest : {}", usedDto);
 
 		return mav;

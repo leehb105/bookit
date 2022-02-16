@@ -106,8 +106,9 @@ public class UsedServiceImpl implements UsedService{
 		return usedDao.getTotalUsedContent();
 	}
 
+
 	@Override
-	public void deleteUsedContent(int no, String id) {
+	public void deleteUsedContent(int no, String memberId) throws Exception {
 		usedDao.deleteUsedContent(no);
 	}
 
