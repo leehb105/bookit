@@ -3,10 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/used.css"/>
 <script>
-function goCommunityList(){
+function goUsedList(){
 	location.href = "${pageContext.request.contextPath}/board/used.do";
 }
 function boardValidate(){
@@ -33,7 +35,7 @@ $(() => {
 <div class="container">
   <form 		
   		name="communityFrm" 
-		action="${pageContext.request.contextPath}/board/usedEnroll.do" 
+		action="${pageContext.request.contextPath}/board/usedEnroll?${_csrf.parameterName}=${_csrf.token}" 
 		method="post"
 		enctype="multipart/form-data" 
 		onsubmit="return boardValidate();">
@@ -58,22 +60,22 @@ $(() => {
          </div>
          
          <div class="trade-method">
-          <label for="method">판매 가격 : </label>
+          <label for="method">거래 방법: </label>
           <input type="checkbox" id="direct" name="method" checked>
   		  <label for="direct">직거래</label>
   		  <input type="checkbox" id="post" name="method" checked>
   		  <label for="post">택배</label>
         </div>
         
-        <div class="quality">
+        <div class="book-state">
         <label for="method">책 상태 : </label>
-  		<input type="radio" id="A" name="quality" value="A" checked>
+  		<input type="radio" id="A" name="book-state" value="A" checked>
   		<label for="A">최상</label>
-  		<input type="radio" id="B" name="quality" value="B" checked>
+  		<input type="radio" id="B" name="book-state" value="B" checked>
   		<label for="B">상</label>
-  		<input type="radio" id="C" name="quality" value="C" checked>
+  		<input type="radio" id="C" name="book-state" value="C" checked>
   		<label for="C">중</label>
-  		<input type="radio" id="D" name="quality" value="D" checked>
+  		<input type="radio" id="D" name="book-state" value="D" checked>
   		<label for="D">하</label>
 		</div>
 		</div>

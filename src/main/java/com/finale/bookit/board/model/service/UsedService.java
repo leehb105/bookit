@@ -3,14 +3,12 @@ package com.finale.bookit.board.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.finale.bookit.board.model.vo.CommunityTest;
 import com.finale.bookit.board.model.vo.Used;
 import com.finale.bookit.board.model.vo.UsedAttachment;
 
 public interface UsedService {
 
-	Used getUsed(int no);
-
-	void updateUsedContent(Map<String, Object> param);
 	
 	List<Used> getUsedList(Map<String, Object> param);
 
@@ -25,6 +23,14 @@ public interface UsedService {
 	int getSearchUsedContentCount(Map<String, Object> param);
 
 	int getUsedNoCurrval();
+
+	List<Used> searchUsed(Map<String, Object> paramMap);
+
+	void updateUsedContent(String memberId, Used used) throws Exception;
+
+	int updateReadCount(int no);
+	
+	Used getUsed(int no, String id);
 	
 	
 }

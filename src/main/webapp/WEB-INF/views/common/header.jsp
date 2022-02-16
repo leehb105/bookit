@@ -99,7 +99,7 @@
                                 <ul id="nav">
                                     
                                     <li><a href="${pageContext.request.contextPath}/booking/bookingEnroll.do">대여등록</a></li>  
-                                    <li><a href="${pageContext.request.contextPath}/board/used.do">중고거래</a></li>  
+                                    <li><a href="${pageContext.request.contextPath}/used/used.do">중고거래</a></li>  
                                     <li><a href="${pageContext.request.contextPath}/board/community.do">커뮤니티</a></li>  
                                   	<li><a href="${pageContext.request.contextPath}/board/request.do">도서요청</a></li>  
                                         <!-- <ul class="dropdown">
