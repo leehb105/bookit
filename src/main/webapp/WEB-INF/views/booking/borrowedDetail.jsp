@@ -74,6 +74,9 @@
                         <c:if test="${booking.bookReservation.status eq '분실'}">
                             <h6>분실처리일: <span><fmt:formatDate value="${booking.bookReservation.statusDate}" pattern="yyyy년 MM월 dd일" /></span></h6>
                         </c:if>
+                        <c:if test="${booking.bookReservation.status eq '대여거부'}">
+                            <h6>대여거부일: <span><fmt:formatDate value="${booking.bookReservation.statusDate}" pattern="yyyy년 MM월 dd일" /></span></h6>
+                        </c:if>
                         <h6>보증금: <span><fmt:formatNumber type="number" maxFractionDigits="3" value="${booking.deposit }" />원</span></h6>
                         <h6>일 대여료: <span><fmt:formatNumber type="number" maxFractionDigits="3" value="${booking.price }" />원</span></h6>
                     </div>
