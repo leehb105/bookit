@@ -54,10 +54,10 @@
 		},
 		error: console.log
 	});
-}); */
+});
 
 // 알라딘 베스트셀러
-/* $(() => {
+$(() => {
     const csrfHeader = "${_csrf.headerName}";
 	const csrfToken = "${_csrf.token}";
 	const headers = {};

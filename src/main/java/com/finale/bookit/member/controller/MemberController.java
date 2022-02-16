@@ -190,8 +190,11 @@ public class MemberController {
 		param.put("id", member.getId());
 		int result = memberService.selectMemberCash(param);
 		member.setCash(result);
+		int rating = memberService.selectMemberRating(param);
+		member.setRating(rating);
 		Authentication newAuthentication = new UsernamePasswordAuthenticationToken(member, member.getPassword(), member.getAuthorities());
-		
+
+
 		SecurityContextHolder.getContext().setAuthentication(newAuthentication);
 
 	}

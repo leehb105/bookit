@@ -42,10 +42,13 @@ public interface MemberService {
 	int selectMemberCash(HashMap<String, Object> param);
 
 	int bookReviewDelete(HashMap<String, Object> param);
+	
+	int selectMemberRating(HashMap<String, Object> param);
 
 	List<Posts> selectMyPostsList(HashMap<String, Object> param);
 
 	int selectTotalMyPostsCountById(HashMap<String, Object> param);
 
 	int deleteMyPosts(HashMap<String, Object> param);
+
 }
