@@ -13,5 +13,7 @@ public interface TradeDao {
 	List<Trade> selectBorrowList(Map<String, Object> param);
 
 	List<Trade> selectLendList(Map<String, Object> param);
-	
+
+	Trade selectOneTrade(HashMap<String, Object> param);
+
 }

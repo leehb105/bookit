@@ -31,5 +31,11 @@ public class TradeDaoImpl implements TradeDao {
 	public List<Trade> selectLendList(Map<String, Object> param) {
 		return session.selectList("trade.selectLendList", param);
 	}
+
+
+	@Override
+	public Trade selectOneTrade(HashMap<String, Object> param) {
+		return session.selectOne("trade.selectOneTrade", param);
+	}
 	
 }

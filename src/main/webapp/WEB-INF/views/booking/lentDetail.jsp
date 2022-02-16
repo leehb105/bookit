@@ -155,6 +155,7 @@
                                 <input type="hidden" id="resNo" name="resNo" value="${booking.bookReservation.resNo}">
                                 <input type="hidden" id="borrowerId" name="borrowerId" value="${booking.bookReservation.borrowerId}">
                                 <input type="hidden" name="deposit" id="deposit" value="${booking.deposit}">
+                                <input type="hidden" name="price" id="price" value="${booking.price}">
                                 
                             </div>
                         </form:form>
