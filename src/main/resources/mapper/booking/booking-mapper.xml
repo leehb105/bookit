@@ -469,7 +469,8 @@
 			#{checkOut}, 
 			#{id},
 			default,
-			'대여중'
+			'대여중',
+			null
 		)
 	</insert>
 	
