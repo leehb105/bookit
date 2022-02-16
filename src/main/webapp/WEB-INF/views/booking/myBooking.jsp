@@ -43,7 +43,7 @@
                     </thead>
                     <tbody>
                         <c:forEach items="${list}" var="booking" varStatus="status">
-                            <tr onclick="location.href='${pageContext.request.contextPath}/booking/bookingDetail.do?bno=${booking.boardNo}'" style="cursor:pointer;">
+                            <tr onclick="location.href='${pageContext.request.contextPath}/booking/bookingDetail.do?bno=${booking.boardNo}&checkIn=&checkOut='" style="cursor:pointer;">
                                 <td class="align-middle">${page.total - ((page.cri.pageNum - 1) * page.cri.amount) - status.index}</td>
                                 <td class="align-middle"><img src="${booking.bookInfo.cover}" alt="" style="width: 30%;"></td>
                                 
