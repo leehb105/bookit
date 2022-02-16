@@ -520,17 +520,17 @@ public class BookingController {
     @PostMapping("/userReviewEnroll.do")
     public String userReviewEnroll(
 			@RequestParam int resNo,
-			@RequestParam String borrowerId,
+			@RequestParam String userId,
 			@RequestParam int rating,
 			RedirectAttributes attributes,
     		@AuthenticationPrincipal Member member){
     	log.debug("resNo = {}", resNo);
-    	log.debug("borrowerId = {}", borrowerId);
+    	log.debug("userId = {}", userId);
     	log.debug("rating = {}", rating);
 
     	HashMap<String, Object> param = new HashMap<String, Object>();
     	param.put("resNo", resNo);
-    	param.put("borrowerId", borrowerId);
+    	param.put("userId", userId);
     	param.put("rating", rating);
     	param.put("id", member.getId());
     	
