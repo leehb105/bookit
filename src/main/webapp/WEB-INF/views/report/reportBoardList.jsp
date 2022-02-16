@@ -36,13 +36,13 @@
 	};
 	// 신고한 게시글로 이동
 	$(() => {
-		$(".btn-link[data-no]").click((e) => {
+		$(".btn-link[data-boardno]").click((e) => {
 			const $td = $(e.target);
 			const boardname = $td.data("boardname");
-			const no = $td.data("no");
+			const boardNo = $td.data("boardno");
 			console.log(boardname);
-			console.log(no);
-			location.href = `${pageContext.request.contextPath}/board/\${boardname}Content.do?no=\${no}`;
+			console.log(boardNo);
+			location.href = `${pageContext.request.contextPath}/board/\${boardname}Content.do?no=\${boardNo}`;
 		});
 	});
 </script>
@@ -86,7 +86,7 @@ textarea {
 							<c:forEach items="${reportBoardList}" var="reportBoardList">
 								<tr class="selectReport">
 									<td>${reportBoardList.no}</td>
-									<td class="btn-link" data-no="${reportBoardList.no}" data-boardname="${reportBoardList.boardName}">
+									<td class="btn-link" data-boardno="${reportBoardList.boardNo}" data-boardname="${reportBoardList.boardName}">
 										<c:if test="${reportBoardList.boardName eq 'community'}">커뮤니티-${reportBoardList.boardNo}</c:if>
 										<c:if test="${reportBoardList.boardName eq 'used'}">중고거래-${reportBoardList.boardNo}</c:if>
 										<c:if test="${reportBoardList.boardName eq 'request'}">도서요청-${reportBoardList.boardNo}</c:if>

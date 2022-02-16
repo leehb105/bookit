@@ -114,7 +114,7 @@ $(() => {
 		const $td = $(e.target);
 		const no = $td.data("no");
 		console.log(no);
-		location.href = `${pageContext.request.contextPath}/booking/bookingDetail.do?bno=\${no}`;
+		location.href = `${pageContext.request.contextPath}/booking/bookingDetail.do?bno=\${no}&checkIn=&checkOut=`;
 	});
 });
 $(document).ready(function() {
