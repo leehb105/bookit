@@ -372,22 +372,22 @@ textarea {
 							<c:when test="${comment.deleteYn == 'N'}">
 							<td>
 							
-								<span style="display:inline-block; width:100px; "><img src="${pageContext.request.contextPath}/resources/img/profile/${community.profileImage}" height="30" width="30" style="border-radius: 20px; margin-right:5px;"/>${comment.nickname}</span></td>
-								<td><span style="display:inline-block; width:700px; margin-left: 30px;">${comment.content}
+								<span style="display:inline-block; width:100px; "><img src="${pageContext.request.contextPath}/resources/img/profile/${comment.profileImage}" height="30" width="30" style="border-radius: 20px; margin-right:5px;"/>${comment.nickname}</span></td>
+								<td><span style="display:inline-block; width:200px; margin-left: 10px;">${comment.content}
 								</span></td>
 								<td><fmt:formatDate value="${comment.regDate}"
 										pattern="yy/MM/dd HH:mm" /></td>
 								<td><c:if test="${comment.writer != loginMember.id}">
 										<button class="btn btn-light"
 											value="${comment.no}" onclick="writeReComment(${comment.no});"
-											style="padding: 5px; margin-top: 20px; margin-left:50px;">답글</button>
+											style="padding: 5px; margin-top: 20px; ">답글</button>
 										
 										<form>
 											<input type="hidden" name="no"value="${community.communityNo}" /> 
 												<input type="hidden"name="commentLevel" value="2" /> 
 									
 											<div class="reCommentInput_${comment.no}" style="display: none;">
-												<textarea id="reCommentContent" name="content" cols="500"
+												<textarea id="reCommentContent" name="content" cols="40"
 													rows="3" style="resize: none;" placeholder="댓글을 입력해주세요"></textarea>
 											<button id="reComment" onClick="btnReCommentSubmit(${comment.no})"
 											 class="btn btn-icon-split"
@@ -400,10 +400,10 @@ textarea {
 
 									</c:if> <c:if test="${comment.writer == loginMember.id}">
 
-										<button type="button" class="btn btn-light float-right"
+										<button type="button" class="btn btn-light"
 											onclick="showUpdateCommentFrm(${comment.no});" name="btn-update"
 											id="showUpdateCommentFrm" value="${comment.no}"
-											style="padding: 5px; margin-top: 20px; margin-left:520px;">수정</button>
+											style="padding: 5px; margin-top: 20px;">수정</button>
 
 										<div class="updateCommentFrm_${comment.no}" style="display: none;">
 											<form class="comment-update-form" action="comment_update.do"
@@ -430,10 +430,11 @@ textarea {
 										<c:forEach items="${comment.reComments}" var="reComment">
 											<tr height="40px" data-no="${reComment.no}">
 
-												<td width="15%"><span style="margin-left:30px;">${reComment.nickname}</span></td>
-												<td width="30%"><fmt:formatDate value="${reComment.regDate}"
+												<td width="15%"><span style="margin-left:30px;">→ ${reComment.nickname}</span></td>
+												<td width="55%">${reComment.content}</td>
+												<td width="20%"><fmt:formatDate value="${reComment.regDate}"
 														pattern="yy/MM/dd HH:mm" /></td>
-												<td width="50%">${reComment.content}</td>
+											
 										</c:forEach>
 									</c:when>
 								</c:choose>

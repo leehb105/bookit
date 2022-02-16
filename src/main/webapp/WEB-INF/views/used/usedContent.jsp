@@ -11,6 +11,7 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <sec:authentication property="principal" var="loginMember" />
+
 <script src="https://kit.fontawesome.com/01809a491f.js" crossorigin="anonymous"></script>
 <script>
 function goUsedList(){
@@ -69,8 +70,7 @@ div#board-container label.custom-file-label{text-align:left;}
                       </c:if>
                         <h3>상세 보기</h3>
                     </div>
-                </div>
-            </div>
+
 
 <h5>[${used.category}]<span style="margin-right:30%;"> ${used.title}</span>
 	<div class="float-right">

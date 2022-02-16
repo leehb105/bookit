@@ -32,6 +32,7 @@ $(() => {
 	});
 });
 </script>
+<div class="roberto-contact-form-area section-padding-100">       
 <div class="container">
   <form 		
   		name="usedFrm" 
@@ -39,36 +40,39 @@ $(() => {
 		method="post"
 		enctype="multipart/form-data" 
 		onsubmit="return boardValidate();">
-     <div class="row" >
-       	<h2 >글 쓰기</h2>
-       <div class="buttons" style="margin-left: 70%;">
-      <input type="submit" value="등록" >
-      <input type="button" id="cancel" value="취소" onclick="goUsedList();">
-    </div>
-    </div>
-        <input type="text" id="title" name="title" placeholder="제목">
-        
+  <div class="row" >    
+     <div class="col-12">
+         <div class="section-heading text-left wow fadeInUp" data-wow-delay="100ms">
+       	     <input type="submit" class="btn btn-outline-success float-right" value="등록">
+       	<h2>글쓰기</h2>
+                    </div>
+    <div name="form-body" style="margin-left: 2%;">
+            <input type="text" id="title" name="title" placeholder="제목" 
+        style="margin-bottom: 3%; padding: 7px;   margin-left: 10px; width:80%;   border-radius: 4px;   border: 1px solid #ccc; margin-bottom: 10px;"
+        required>
         <select id="category" name="category">
           <option value="팝니다">팝니다</option>
           <option value="삽니다">삽니다</option>
         </select>
         
-        <div class="select">
+
         <div class="price">
-         <label for="price">판매 가격</label>
-        <input type="text" id="price" name="price" placeholder="가격을 입력해주세요">
+        <h5>판매 가격 : <input type="text" id="price" name="price" placeholder="가격" 
+        style="margin-bottom: 3%; padding: 5px;   margin-left: 5px; width:30%;   border-radius: 4px;   border: 1px solid #ccc; margin-bottom: 10px;"
+        required></h5>
+           
          </div>
          
          <div class="trade_method">
-          <label for="method">거래 방법: </label>
+           <h5><label for="method">거래 방법 : </label>
           <input type="checkbox" id="direct" name="tradeMethod" value="직거래" checked>
   		  <label for="direct">직거래</label>
   		  <input type="checkbox" id="post" name="tradeMethod" value="택배" checked>
-  		  <label for="post">택배</label>
+  		  <label for="post">택배</label></h5>
         </div>
         
         <div class="book-state">
-        <label for="method">책 상태 : </label>
+       <h5><label for="method">책 상태 :&nbsp; &nbsp;</label>
   		<input type="radio" id="A" name="bookState" value="최상" checked>
   		<label for="최상">최상</label>
   		<input type="radio" id="B" name="bookState" value="상" checked>
@@ -76,25 +80,27 @@ $(() => {
   		<input type="radio" id="C" name="bookState" value="중" checked>
   		<label for="중">중</label>
   		<input type="radio" id="D" name="bookState" value="하" checked>
-  		<label for="하">하</label>
+  		<label for="하">하</label></h5>
 		</div>
+		      <textarea rows="12" cols="130" id="content" name="content" placeholder="내용" style="margin-bottom: 3%; padding: 7px;  border-radius: 4px;  border: 1px solid #ccc; margin-bottom: 10px;"></textarea>
 		</div>
         
-           <div class="input-group mb-3" style="padding:0px;" >
-		  <div class="input-group-prepend" style="padding:0px;">
-		    <span class="input-group-text">첨부파일</span>
-		  </div>
+
 		  <div class="custom-file">
 		    <input type="file" class="custom-file-input" name="upFiles" id="upFile1" multiple>
 		    <label class="custom-file-label" for="upFile1">파일을 선택하세요</label>
 		  </div>
+		  <br>
+  <br>
 		  <div class="custom-file">
 		    <input type="file" class="custom-file-input" name="upFiles" id="upFile2" multiple>
 		    <label class="custom-file-label" for="upFile2">파일을 선택하세요</label>
 		  </div>
 		</div>
-        <textarea id="content" name="content" placeholder="내용" style="height:250px"></textarea>
+  </div>
   </form>
-</div>
 
+  </div>
+</div>
+  <br>  <br>  <br>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

@@ -37,6 +37,7 @@ $(() => {
 	});
 });
 </script>
+<div class="roberto-contact-form-area section-padding-100">        
 <div class="container">
   <form 		
   		name="communityFrm" 
@@ -44,23 +45,25 @@ $(() => {
 		method="post"
 		enctype="multipart/form-data" 
 		onsubmit="return boardValidate();">
-     <div class="row" style="margin-left: 2%;">
-       	<h2>수정</h2>
-        <hr>
-	<input type="submit" value="등록" id="modify" onclick="updateCommunity();"> 
-	<input type="button" value="리스트로" onclick="goCommunityList();">
+     <div class="row" >    
+     <div class="col-12">
+         <div class="section-heading text-left wow fadeInUp" data-wow-delay="100ms">       
+ 	     <input type="submit" class="btn btn-outline-success float-right" value="수정 완료">
+ 	      	<h2>게시글 수정</h2>
+ 	      	</div>
+ 	      	</div>  <div name="form-body" style="margin-left: 2%;">
 	<input type="hidden" name ="communityNo" value="${community.communityNo}">
     </div>
-    <div name="form-body" style="margin-left: 2%;">
-        <input type="text" value = "${community.title}" id="title" name="title" placeholder="제목" style="margin-left: 6%;" required>
-     
-        
-        
+    </div>    
+                      
         <select id="category" name="category" >
           <option value="사담" >사담</option>
           <option value="독서모임" >독서모임</option>
           <option value="도서추천" >도서추천</option>
         </select>
+            <input type="text" value = "${community.title}" id="title" name="title" placeholder="제목" style="width: 90%; padding: 8px;
+  				margin-bottom: 10px; margin-left:10px; border: 1px solid #ccc; border-radius: 4px;
+resize: vertical;" required>
         <textarea id="content" name="content" placeholder="내용" style="height:250px">${community.content}</textarea>
         		<div class="input-group mb-3" style="padding:0px;" >
 		  <div class="input-group-prepend" style="padding:0px;">
@@ -74,9 +77,10 @@ $(() => {
 		    <input type="file" class="custom-file-input" name="upFiles" id="upFiles2" multiple>
 		    <label class="custom-file-label" for="upFiles2">파일을 선택하세요</label>
 		  </div>
+		
 		</div>
+		</form>
 		</div>
-  </form>
   </div>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
