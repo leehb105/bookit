@@ -387,20 +387,6 @@ $(document).ready(function(){
             ,startDate : new Date() //오늘날짜 이전의 날짜는 선택 불가
 
         })
-        // .on("show", function(e) {
-        //     //이벤트의 종류
-        //     //show : datePicker가 보이는 순간 호출
-        //     //hide : datePicker가 숨겨지는 순간 호출
-        //     //clearDate: clear 버튼 누르면 호출
-        //     //changeDate : 사용자가 클릭해서 날짜가 변경되면 호출 (개인적으로 가장 많이 사용함)
-        //     //changeMonth : 월이 변경되면 호출
-        //     //changeYear : 년이 변경되는 호출
-        //     //changeCentury : 한 세기가 변경되면 호출 ex) 20세기에서 21세기가 되는 순간
-            
-        //     console.log(e);// 찍어보면 event 객체가 나온다.
-        //     //간혹 e 객체에서 date 를 추출해야 하는 경우가 있는데 
-        //     // e.date를 찍어보면 Thu Jun 27 2019 00:00:00 GMT+0900 (한국 표준시)
-        // })
         .on('changeDate', function(e){
             // console.log(e.date, typeof e.date);
             endDate = e.date; //선택한 날짜를 대입
