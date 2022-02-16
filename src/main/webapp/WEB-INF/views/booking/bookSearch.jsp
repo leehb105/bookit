@@ -87,6 +87,25 @@
 
 
 <script>
+    //부모창으로 값 전달
+    function setBookInfo(btn){
+        // console.log(btn);
+        // console.log(document.getElementById('title').innerText);
+        // console.log(this.document.getElementById('title'));
+        const div = btn.parentNode;
+        book = toJson(div);
+        console.log(book);
+        
+
+        // //json 데이터 전달
+        localStorage.setItem("book", JSON.stringify(book));
+        // opener.document.getElementById('testInput').value = book;
+        opener.getJson();
+        window.close();
+
+        
+    }
+
     function toJson(div){
 
         const cover = div.children[0].children[0].src;
@@ -114,26 +133,5 @@
 
         return book;
     }
-
-    //부모창으로 값 전달
-    function setBookInfo(btn){
-        // console.log(btn);
-        // console.log(document.getElementById('title').innerText);
-        // console.log(this.document.getElementById('title'));
-        const div = btn.parentNode;
-        book = toJson(div);
-        console.log(book);
-        
-
-        // //json 데이터 전달
-        localStorage.setItem("book", JSON.stringify(book));
-        // opener.document.getElementById('testInput').value = book;
-        opener.getJson();
-        window.close();
-
-        
-    }
-
-
 </script>
 </html>

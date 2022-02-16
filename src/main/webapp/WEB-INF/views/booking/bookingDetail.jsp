@@ -105,11 +105,11 @@
 									<h3 id="full" style="display: inline-block"><a href="#" onclick="dislike();"><i class="fas fa-heart"></i></a></h3>
 								</c:if>
 							</div>
+                            <label for="checkInDate">대여일자</label>
                             <c:if test="${booking.member.id eq loginMember.id}">
                                 <button type="button" class="btn roberto-btn w-100" id="bookingDeleteBtn" onclick="bookingDelete();">대여 삭제</button>
                             </c:if>
                             <c:if test="${booking.member.id ne loginMember.id}">
-                                <label for="checkInDate">대여일자</label>
                                 <div class="row no-gutters">
                                     <div class="col-6">
                                         <input type="text" class="input-small form-control" name="checkIn" id="checkIn" autocomplete="off" placeholder="대여 시작일" readonly>
@@ -120,7 +120,7 @@
                                 </div>
                                 <div class="form-group mt-30">
                                     <button type="button" class="btn roberto-btn w-100" id="bookResBtn" onclick="bookResEnroll();">대여 신청</button>
-                                </div>
+
                             </c:if>
                             </div>
                             <input type="hidden" id="pay" name="pay" value="">

@@ -48,17 +48,15 @@ $(() => {
      <div class="row" >    
      <div class="col-12">
           <div class="section-heading text-left wow fadeInUp" data-wow-delay="100ms">
-       	     <input type="submit" class="float-right" value="등록">
-      <input type="button" value="취소" class="float-right" onclick="goCommunityList();">
+       	     <input type="submit" class="btn btn-outline-success float-right" value="등록">
        	<h2>글쓰기</h2>
                     </div>
-                </div>
-            
-
-    </div>
+                
     <div name="form-body" style="margin-left: 2%;">
-        <input type="text" id="title" name="title" placeholder="제목" style="margin-bottom: 3%; margin-left:3%;" required>
-        <select id="category" name="category" >
+        <input type="text" id="title" name="title" placeholder="제목" 
+        style="margin-bottom: 3%; padding: 7px;   margin-left: 10px; width:90%;   border-radius: 4px;   border: 1px solid #ccc; margin-bottom: 10px;"
+        required>
+        <select id="category" name="category" style="margin-bottom: 3%;">
           <option value="사담" >사담</option>
           <option value="독서모임" >독서모임</option>
           <option value="도서추천" >도서추천</option>

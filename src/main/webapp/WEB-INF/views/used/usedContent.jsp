@@ -11,6 +11,7 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <sec:authentication property="principal" var="loginMember" />
+
 <script src="https://kit.fontawesome.com/01809a491f.js" crossorigin="anonymous"></script>
 <script>
 function goUsedList(){
@@ -57,6 +58,22 @@ function adjustHeight() {
 	/* 부트스트랩 : 파일라벨명 정렬*/
 	div#board-container label.custom-file-label{text-align:left;}
 </style>
+<<<<<<< HEAD
+    <div class="roberto-contact-form-area section-padding-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                
+             <div class="section-heading text-left wow fadeInUp" data-wow-delay="100ms">
+                      <c:if test="${used.writer == loginMember.id}">
+                 <input type="button" class="btn btn-outline-danger w-10 float-right" style="margin-left: 5px;" value="삭제" id="delete" onclick="usedDelete();">  
+	<input type="submit" class="btn btn-outline-success w-10 float-right" value="수정" id="modify" onclick="updateUsed();"> 
+                      </c:if>
+                        <h3>상세 보기</h3>
+                    </div>
+
+=======
+>>>>>>> branch 'master' of https://github.com/jinmae1/bookit.git
 
 <div class="roberto-contact-form-area section-padding-100 wow fadeInUp">
 	<div class="container">

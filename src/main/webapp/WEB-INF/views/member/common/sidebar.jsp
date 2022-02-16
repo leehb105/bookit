@@ -18,7 +18,7 @@
 					<a href="${pageContext.request.contextPath}/member/trade/history.do">거래 내역</a><br />
 					<a href="${pageContext.request.contextPath}/member/payments/charge.do">북토리 충전</a>
 					<p>나의 게시글</p>
-					<a href="${pageContext.request.contextPath}/member/myPosts.do">나의 게시글</a><br />
+					<a href="${pageContext.request.contextPath}/member/myPosts.do">나의 게시글</a>
 					<a href="${pageContext.request.contextPath}/member/bookReviewList.do?pageNum=1">도서 리뷰 작성목록</a><br />
 					<a href="${pageContext.request.contextPath}/member/reviewList.do?pageNum=1">사용자 리뷰 작성목록</a><br />
 					<p>1:1 문의</p>
