@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.finale.bookit.board.model.vo.Posts;
 import com.finale.bookit.member.model.vo.Address;
 import com.finale.bookit.member.model.vo.MemberEntity;
 import com.finale.bookit.search.model.vo.BookReview;
@@ -92,6 +93,20 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public int bookReviewDelete(HashMap<String, Object> param) {
 		return session.update("search.bookReviewDelete", param);
+	}
+	
+	public List<Posts> selectMyPostsList(HashMap<String, Object> param) {
+		return session.selectList("search.selectMyPostsList", param);
+	}
+
+	@Override
+	public int selectTotalMyPostsCountById(HashMap<String, Object> param) {
+		return session.selectOne("search.selectTotalMyPostsCountById", param);
+	}
+
+	@Override
+	public int deleteMyPosts(HashMap<String, Object> param) {
+		return session.update("search.deleteMyPosts", param);
 	}
 
 }

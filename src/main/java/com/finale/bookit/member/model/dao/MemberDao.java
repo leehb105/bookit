@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.finale.bookit.board.model.vo.Posts;
 import com.finale.bookit.member.model.vo.Address;
 import com.finale.bookit.member.model.vo.MemberEntity;
 import com.finale.bookit.search.model.vo.BookReview;
@@ -39,5 +40,11 @@ public interface MemberDao {
 	int selectTotalBookReviewCountById(HashMap<String, Object> param);
 
 	int bookReviewDelete(HashMap<String, Object> param);
+	
+	List<Posts> selectMyPostsList(HashMap<String, Object> param);
+
+	int selectTotalMyPostsCountById(HashMap<String, Object> param);
+
+	int deleteMyPosts(HashMap<String, Object> param);
 
 }

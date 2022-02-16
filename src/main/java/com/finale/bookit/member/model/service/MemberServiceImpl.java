@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.finale.bookit.board.model.vo.Posts;
 import com.finale.bookit.member.model.dao.MemberDao;
 import com.finale.bookit.member.model.vo.Address;
 import com.finale.bookit.member.model.vo.Member;
@@ -231,6 +232,21 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int bookReviewDelete(HashMap<String, Object> param) {
 		return memberDao.bookReviewDelete(param);
+	}
+
+	@Override
+	public List<Posts> selectMyPostsList(HashMap<String, Object> param) {
+		return memberDao.selectMyPostsList(param);
+	}
+
+	@Override
+	public int selectTotalMyPostsCountById(HashMap<String, Object> param) {
+		return memberDao.selectTotalMyPostsCountById(param);
+	}
+
+	@Override
+	public int deleteMyPosts(HashMap<String, Object> param) {
+		return memberDao.deleteMyPosts(param);
 	}
 
 
