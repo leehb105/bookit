@@ -1,6 +1,6 @@
 ﻿CREATE TABLE member (
 	id	varchar2(20)		NOT NULL,
-	password	varchar2(300)		NOT NULL,
+	password	varchar2(300),
 	email	varchar2(30)		NOT NULL,
 	nickname	varchar2(20)		NOT NULL,
 	name	varchar2(20)		NOT NULL,
@@ -8,7 +8,8 @@
 	enabled	number	DEFAULT 1	NOT NULL,
 	enroll_date	date	DEFAULT current_date	NULL,
 	report_yn	varchar2(1)	DEFAULT 'N'	NOT NULL,
-	cash	number	DEFAULT 0	NOT NULL
+	cash	number	DEFAULT 0	NOT NULL,
+    profile_image varchar2(255)
 
 	,CONSTRAINT pk_member_id PRIMARY KEY(id)
 	,CONSTRAINT ck_member_enabled check(enabled in (0, 1))
@@ -19,15 +20,12 @@
 
 CREATE TABLE book_info (
 	isbn13	varchar2(13)		NOT NULL,
-	title	varchar2(100)		NOT NULL,
-	author	varchar2(50)		NOT NULL,
-	publisher	varchar2(50)		NOT NULL,
+	title	varchar2(500)		NOT NULL,
+	author	varchar2(500)		NOT NULL,
+	publisher	varchar2(500)		NOT NULL,
 	pubdate	date		NOT NULL,
 	item_page	number		NULL,
-	category_name	varchar2(100)		NULL,
-	toc	varchar2(4000)		NULL,
-	original_title	varchar2(200)		NULL,
-	sub_title	varchar2(200)		NULL,
+	category_name	varchar2(500)		NULL,
 	cover	varchar2(500)		NULL,
 	description	varchar2(2000)		NULL
 
@@ -169,24 +167,17 @@ CREATE TABLE community_comment (
 );
 CREATE SEQUENCE seq_community_comment_no nocache;
 
-CREATE TABLE profile_image (
-	member_id	varchar2(20)		NOT NULL,
-	original_filename	varchar2(255)		NULL,
-	renamed_filename	varchar2(255)		NULL
-
-	,constraint pk_profile_image PRIMARY KEY(member_id)
-	,constraint fk_profile_image_member_id FOREIGN key(member_id) REFERENCES member(id)
-);
-
 CREATE TABLE review (
 	no	number		NOT NULL,
+	res_no NUMBER,
 	rating	number		NULL,
-	sender_id	varchar2(20)		NOT NULL, 
-	receiver_id	varchar2(20)		NOT NULL 
+	sender_id	varchar2(150)		NOT NULL, 
+	receiver_id	varchar2(150)		NOT NULL 
 
 	,constraint pk_review_no PRIMARY KEY(no)
 	,constraint fk_review_sender_id FOREIGN key(sender_id) REFERENCES member(id)
 	,constraint fk_review_receiver_id FOREIGN key(receiver_id) REFERENCES member(id)
+	,constraint fk_review_res_no FOREIGN key(res_no) REFERENCES BOOKING_RESERVATION(res_no)
 
 );
 CREATE SEQUENCE seq_review_no nocache;
@@ -230,7 +221,7 @@ create sequence seq_book_collection_list_no nocache;
 
 CREATE TABLE book_review (
 	isbn13	varchar2(13)		NOT NULL,
-	content	varchar2(300)		NULL,
+	content	varchar2(400)		NULL,
 	rating	number		NOT NULL,
 	writer	varchar2(20)		NOT NULL,
 	delete_yn	varchar2(1)	DEFAULT 'N'	NOT NULL
@@ -259,13 +250,14 @@ CREATE TABLE board_id (
 
 CREATE TABLE booking (
 	board_no	number		NOT NULL,
-	content	varchar2(400)		NOT NULL,
+	content	varchar2(2000)		NOT NULL,
 	book_status	varchar2(20)		NOT NULL,
 	price	number		NULL,
 	deposit	number		NOT NULL,
 	writer	varchar2(20)		NOT NULL,
 	delete_yn	varchar2(1)	DEFAULT 'N'	NULL,
-	isbn13	varchar2(13)		NOT NULL
+	isbn13	varchar2(13)		NOT NULL,
+	reg_date DATE DEFAULT current_date
 
 	,constraint pk_booking_board_no PRIMARY KEY(board_no)
 	,constraint fk_booking_writer FOREIGN key(writer) REFERENCES member(id)
@@ -450,10 +442,11 @@ CREATE TABLE my_trade_history (
     rent_no    number,
     res_no NUMBER ,
     price    number        NOT NULL,
-    cash    number        NOT NULL,
+    borrower_cash    number        NOT NULL,
     trade_date    date        DEFAULT current_date,
     deposit NUMBER			NOT NULL,
-    refund_yn varchar2(1)	DEFAULT 'N'
+    refund_yn varchar2(1)	DEFAULT 'N',
+    lender_cash    number        NOT NULL
 
     ,constraint pk_my_trade_history_rent_no PRIMARY KEY(rent_no)
     ,constraint fk_my_trade_history_res_no FOREIGN key(res_no) REFERENCES BOOKING_RESERVATION(res_no)
@@ -461,6 +454,39 @@ CREATE TABLE my_trade_history (
 );
 create sequence seq_my_trade_history_rent_no nocache;
 
+
+
+CREATE TABLE booking_reservation(
+	res_no NUMBER,
+	board_no NUMBER,
+	start_date DATE,
+	end_date DATE,
+	id VARCHAR(50),
+	reg_date DATE DEFAULT current_date,
+	status varchar(20),
+	status_date DATE default null
+
+	CONSTRAINT pk_booking_reservation_res_no PRIMARY KEY(res_no)
+	,CONSTRAINT fk_booking_reservation_board_no FOREIGN key(board_no) REFERENCES booking(board_no)
+	,CONSTRAINT BOOKING_RESERVATION_fk_borrower_id FOREIGN KEY(borrower_id) REFERENCES member(id)
+	,CONSTRAINT BOOKING_RESERVATION_ck_status CHECK(status IN('대여중', '대여거부','반납완료','분실', '대기', ''))
+);
+CREATE SEQUENCE seq_booking_reservation_res_no nocache;
+
+CREATE TABLE book_review (
+	review_no NUMBER,
+	isbn13	varchar2(13)		NOT NULL,
+	content	varchar2(400)		NULL,
+	rating	number		NOT NULL,
+	writer	varchar2(20)		NOT NULL,
+	reg_date DATE DEFAULT current_date,
+	delete_yn	varchar2(1)	DEFAULT 'N'	NOT NULL
+
+	,constraint pk_book_review_review_no PRIMARY KEY(review_no)
+	,constraint fk_book_review_isbn13 FOREIGN key(isbn13) REFERENCES book_info(isbn13)
+	,constraint fk_book_review_writer FOREIGN key(writer) REFERENCES member(id)
+	,constraint ck_book_review_delete_yn check(delete_yn IN ('Y', 'N'))
+);
 
 --DROP TRIGGER trig_member;
 --SQL Error [4098] [42000]: ORA-04098 오류 발생시 trigger drop 후에 재생성
@@ -475,5 +501,50 @@ BEGIN
 	WHERE id = :NEW.member_id;
 END;
 /;	
+CREATE OR REPLACE VIEW lent_list_view 
+AS
+    SELECT
+		b.board_no,
+		b.content,
+		b.book_status,
+		b.price,
+		b.deposit,
+		b.writer,
+		b.delete_yn,
+		b.isbn13,
+		b.reg_date,
+		bi.title,
+		bi.AUTHOR,
+		bi.PUBLISHER,
+		bi.ITEM_PAGE,
+		bi.CATEGORY_NAME,
+		bi.COVER,
+		br.RES_NO,
+		br.START_DATE,
+		br.END_DATE,
+		br.borrower_id
+	FROM
+		booking b join book_info bi ON
+	    b.isbn13 = bi.isbn13
+	    JOIN BOOKING_RESERVATION br ON
+	    b.board_no = br.board_no
+	WHERE
+		writer = 'sinsa'
+		AND
+		DELETE_YN = 'N'
+		AND
+		br.borrower_id IS NOT NULL
+	ORDER BY
+		REG_DATE desc
+		,start_date DESC
+;
+CREATE OR REPLACE TRIGGER tr_book_reservation
+AFTER INSERT ON booking
+FOR EACH ROW
+BEGIN
+    INSERT INTO BOOKING_RESERVATION values(
+   		seq_booking_reservation_res_no.nextval, :NEW.board_no, to_date('1900-01-01'), to_date('1900-01-01'), NULL, DEFAULT, '', ''
+    );
+END tr_book_reservation;
 
 

@@ -18,12 +18,18 @@ public class Wishlist extends WishlistEntity implements Serializable {
 	private String content;
 	private String writer;
 	private Date regDate;
+	private String cover;
+	private String title;
+	private String author;
 
-	public Wishlist(String memberId, int boardNo, String content, String writer, Date regDate) {
+	public Wishlist(String memberId, int boardNo, String content, String writer, Date regDate, String cover, String title, String author) {
 		super(memberId, boardNo);
 		this.content = content;
 		this.writer = writer;
 		this.regDate = regDate;
+		this.cover = cover;
+		this.title = title;
+		this.author = author;
 	}
 	
 	

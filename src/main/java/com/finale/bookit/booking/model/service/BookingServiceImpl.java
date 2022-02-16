@@ -7,6 +7,7 @@ import com.finale.bookit.booking.model.vo.BookingEntity;
 import com.finale.bookit.common.util.Criteria;
 import com.finale.bookit.member.model.dao.MemberDao;
 import com.finale.bookit.trade.model.dao.TradeDao;
+import com.finale.bookit.trade.model.vo.Trade;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -99,10 +100,16 @@ public class BookingServiceImpl implements BookingService {
 		int result = bookingDao.insertBookingReservation(param);
 		int resNo = bookingDao.selectOneBookingReservation(param);
 		param.put("resNo", resNo);
-//		int rentNo = bookingDao.selectOneBookingReservation2(param);
-//		param.put("rentNo", rentNo);
 		if(result > 0) {
 			result = memberDao.updateMemberCash(param);
+			if (result > 0) {
+				result = memberDao.chargeMemberCash(param);
+			}
+			int borrowerCash = memberDao.selectMemberCash(param);
+			param.put("borrowerCash", borrowerCash);
+			int lenderCash = memberDao.selectMemberCash2(param);
+			param.put("lenderCash", lenderCash);
+			
 			if(result > 0) {
 				result = tradeDao.insertTrade(param);
 			}
@@ -115,4 +122,56 @@ public class BookingServiceImpl implements BookingService {
 		return bookingDao.selectTotalMyBorrowedBookingCount(param);
 	}
 
+	@Override
+	public int deleteBooking(HashMap<String, Object> param) {
+		return bookingDao.deleteBooking(param);
+	}
+
+	@Override
+	public int selectCountBookingReservation(HashMap<String, Object> param) {
+		return bookingDao.selectCountBookingReservation(param);
+	}
+
+	@Override
+	public Booking selectLentBooking(Map<String, Object> param) {
+		return bookingDao.selectLentBooking(param);
+	}
+
+	@Override
+	public int updateBookResStatus(HashMap<String, Object> param) {
+		int result = bookingDao.updateBookResStatus(param);
+		if (result > 0) {
+			if(param.get("status").equals("대여거부")) {
+				Trade trade = tradeDao.selectOneTrade(param);
+				param.put("targetId", param.get("id"));
+				param.put("deposit", -1 * (int)param.get("deposit"));
+				result = memberDao.updateReturnDeposit(param); // 도서 제공자에게서 일대여비 * 날짜만큼 차감
+				if(result > 0) {
+					param.put("targetId", param.get("borrowerId"));
+					param.put("deposit", trade.getPrice());
+					result = memberDao.updateReturnDeposit(param); // 도서 대여자에게 보증금 + 일대여비 * 날짜만큼 지급
+				}
+			} else {
+				result = memberDao.updateReturnDeposit(param);
+			}
+		}
+		return result;
+	}
+
+	@Override
+	public int insertUserReview(HashMap<String, Object> param) {
+		return bookingDao.insertUserReview(param);
+	}
+
+	@Override
+	public int selectCountUserReview(Map<String, Object> param) {
+		return bookingDao.selectCountUserReview(param);
+	}
+
+	@Override
+	public Booking selectBorrowedBooking(Map<String, Object> param) {
+		return bookingDao.selectBorrowedBooking(param);
+	}
+
+	
 }

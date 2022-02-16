@@ -16,5 +16,7 @@ public interface SearchDao {
 
 	int bookReviewEnroll(HashMap<String, Object> param);
 
+	float selectAvgRating(HashMap<String, Object> param);
+
 	
 }

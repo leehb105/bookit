@@ -35,6 +35,11 @@ public class SearchDaoImpl implements SearchDao {
 	public int bookReviewEnroll(HashMap<String, Object> param) {
 		return session.insert("search.bookReviewEnroll", param);
 	}
+
+	@Override
+	public float selectAvgRating(HashMap<String, Object> param) {
+		return session.selectOne("search.selectAvgRating", param);
+	}
 	
 	
 }

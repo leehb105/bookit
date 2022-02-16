@@ -60,8 +60,6 @@ textarea {
 				<div class="section-heading text-center">
 					<h5>사용자 신고 목록</h5>
 				</div>
-				<input type="button" value="사용자 신고" id="btn-add" class="btn btn-outline-success float-right mb-30"
-					data-toggle="modal" data-target="#reportUserEnrollModal"/>
 				<div class="table-responsive">
 					<table class="table text-center">
 						<thead>

@@ -33,16 +33,15 @@
       </tr>
     </thead>
     <tbody>
-    <c:forEach items="${list}" var="history">
+    <c:forEach items="${list}" var="charge">
 		  <tr>
-			  <td><fmt:formatDate value="${history.chargeDate}" pattern="yyyy.MM.dd HH:mm"/></td>
-			  <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${history.chargeCash}" />원</td>
-			  <td>${history.bonusCash}토리</td>
+			  <td><fmt:formatDate value="${charge.chargeDate}" pattern="yyyy.MM.dd HH:mm"/></td>
+			  <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${charge.chargeCash}" />원</td>
+			  <td>${charge.bonusCash}토리</td>
 		  </tr>      
       </c:forEach>
     </tbody>
   </table>
-  <script>console.log("${list}")</script>
 </div>
 
 

@@ -26,12 +26,11 @@
                         <form method="get" id="searchFrm">       
                             <div class="col-12 wow fadeInUp form-inline form-group" data-wow-delay="100ms">
                                 <div class="col-lg-6">
-                                    <input type="text" class="form-control" name="title" id="title" placeholder="책 이름을 입력하세요">
+                                    <input type="text" class="form-control" name="title" id="inputTitle" placeholder="책 이름을 입력하세요">
                                 </div>
                                 <div class="col-lg-3">
                                     <button type="button" class="btn roberto-btn" id="searchBtn" onclick="openSearchWindow();">책 검색</button>
                                     <!-- <button type="submit" class="btn roberto-btn" formtarget="_blank">책 검색</button> -->
-                                    <!-- <button type="button" class="btn roberto-btn" id="searchBtn">책 검색</button> -->
                                     <!-- <button type="button" class="btn roberto-btn" data-toggle="modal" data-target="#exampleModal">책 검색</button> -->
                                 </div>                                    
                             </div>                        
@@ -48,7 +47,7 @@
                     <!-- Single Room Details Area -->
                     <div class="single-room-details-area mb-50 wow fadeInUp">
                         <!-- <form method="post" id="enrollFrm"> -->
-                        <form th:action method="post" id="enrollFrm">
+                        <form:form method="post" id="enrollFrm">
                             <h3>책 정보 입력 <span id="errorTxt"> - 책 정보 등록 필요!</span> </h3>
                             <hr class="my-2">
                             <div class="single-blog-post d-flex align-items-center mt-5 mb-50 wow fadeInUp" data-wow-delay="100ms">
@@ -127,6 +126,7 @@
                                 </table>
     
                             </div>
+            
     
                             <h3>대여정보 입력</h3>
                             <hr class="my-2">
@@ -141,8 +141,8 @@
                                 </div>
                             </div>
                             <input type="hidden" name="isbn" value="">
-                            <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
-                        </form>
+                            <!-- <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/> -->
+                        </form:form>
                     </div>
 
                     
@@ -160,26 +160,43 @@
 
 
     // 검색 input
-    const $title = $('input[name=title]');
+    const $title = $('#inputTitle');
 
     //책 검색 버튼 비활성화
     window.onload = function(){
+        //페이지 로드시 에러메세지 보임
+        document.getElementById('errorTxt').style.color = 'red';
         $('#searchBtn').attr("disabled", true);
         setInitBookInfo();
-    }
 
-    //검색창 입력시 검색 버튼 활성화
-    $(function(){
+        //검색창 입력시 검색 버튼 활성화
         $title.on('input', function(){
-            // console.log($title);
             if($title.val() != ''){
+                console.log('입력값이 있음');
                 $('#searchBtn').attr("disabled", false);
             }else{
                 //입력값 없을 시 다시 버튼 비활성화
                 $('#searchBtn').attr("disabled", true);
             }
         });
+
+    };
+
+    //글내용 글자갯수 제한 코드
+    $('#content').on('keyup', function() {
+        // console.log($(this).val().length);
+        
+        $('#count').html($(this).val().length);
+        
+        if($(this).val().length > 1500) {
+            alert("1500자까지만 입력할 수 있습니다.");
+            $(this).val($(this).val().substring(0, 1500));
+            $('#count').html("1500");
+        }
     });
+
+    
+
 
     let childWin;
     // const searchFrm = document.getElementById('searchFrm');
@@ -241,7 +258,7 @@
     }
     
     //도서 검색창 엔터 이벤트
-    document.getElementById('title').addEventListener('keydown', function(event) {
+    document.getElementById('inputTitle').addEventListener('keydown', function(event) {
         if (event.keyCode === 13) {
             event.preventDefault();
             // console.log('엔터 눌림');
@@ -314,25 +331,9 @@
    
 
 
-    //글내용 글자갯수 제한 코드
-    $(document).ready(function() {
-        $('#content').on('keyup', function() {
-            // console.log($(this).val().length);
-            
-            $('#count').html($(this).val().length);
-            
-            if($(this).val().length > 1500) {
-                alert("1500자까지만 입력할 수 있습니다.");
-                $(this).val($(this).val().substring(0, 1500));
-                $('#count').html("1500");
-            }
-        });
-    });
+    
 
-    //페이지 로드시 에러메세지 보임
-    window.onload = function(){
-        document.getElementById('errorTxt').style.color = 'red';
-    };
+    
 
     //글 등록
     function enrollBooking(){
@@ -366,7 +367,7 @@
             });
         }else{
             alert('책정보를 검색하세요');
-            document.getElementById('title').focus();
+            document.getElementById('inputTitle').focus();
         }
 
 

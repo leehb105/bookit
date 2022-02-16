@@ -22,7 +22,7 @@
                     <br />
                     <a href="${pageContext.request.contextPath}/booking/lentList.do?pageNum=1&amout=5">나의 대여 예약 관리</a>
                     <br />
-                    <a href="${pageContext.request.contextPath}/booking/borrowedList.do?pageNum=1&amout=5"><strong>나의 빌린 도서</strong></a>
+                    <a href="${pageContext.request.contextPath}/booking/borrowedList.do?pageNum=1&amout=5"><strong>내가 빌린 도서</strong></a>
                 </div>
             </div>
 
@@ -44,7 +44,7 @@
                     </thead>
                     <tbody>
                         <c:forEach items="${list}" var="booking" varStatus="status">
-                            <tr onclick="location.href='${pageContext.request.contextPath}/booking/bookingDetail.do?bno=${booking.boardNo}'" style="cursor:pointer;">
+                            <tr onclick="location.href='${pageContext.request.contextPath}/booking/borrowedDetail.do?resNo=${booking.bookReservation.resNo}'" style="cursor:pointer;">
                                 <td class="align-middle">${page.total - ((page.cri.pageNum - 1) * page.cri.amount) - status.index}</td>
                                 <td class="align-middle"><img src="${booking.bookInfo.cover}" alt="" style="width: 30%;"></td>
                                 
@@ -66,7 +66,7 @@
                         </c:forEach>
                         <c:if test="${empty list}">
                             <tr>
-                                <td colspan="9"><p>작성하신 대여 도서가 없습니다.</p></td>
+                                <td colspan="9"><p>대여한 도서가 없습니다.</p></td>
                             </tr>
                         </c:if>
                     </tbody>

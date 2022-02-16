@@ -22,7 +22,7 @@
                     <br />
                     <a href="${pageContext.request.contextPath}/booking/lentList.do?pageNum=1&amout=5"><strong>나의 대여 예약 관리</strong></a>
                     <br />
-                    <a href="${pageContext.request.contextPath}/booking/borrowedList.do?pageNum=1&amout=5">나의 빌린 도서</a>
+                    <a href="${pageContext.request.contextPath}/booking/borrowedList.do?pageNum=1&amout=5">내가 빌린 도서</a>
                 </div>
             </div>
 
@@ -34,31 +34,46 @@
                         <tr>
                             <th>번호</th>
                             <th colspan="2">제목</th>
-                            <th>작가</th>
-                            <th>출판사</th>
                             <th>책상태</th>
                             <th>보증금</th>
                             <th>대여비</th>
+                            <th>대여기간</th>
+                            <th>대여요청자</th>
+                            <th>대여상태</th>
                         </tr>
                     </thead>
                     <tbody>
                         <c:forEach items="${list}" var="booking" varStatus="status">
-                        <c:forEach items="${booking.bookInfos}" var="bookInfo">
-                            <tr onclick="location.href='${pageContext.request.contextPath}/booking/bookingDetail.do?bno=${booking.boardNo}'" style="cursor:pointer;">
+
+                            <tr onclick="location.href='${pageContext.request.contextPath}/booking/lentDetail.do?resNo=${booking.bookReservation.resNo}'" style="cursor:pointer;">
                                 <td class="align-middle">${page.total - ((page.cri.pageNum - 1) * page.cri.amount) - status.index}</td>
-                                <td class="align-middle"><img src="${bookInfo.cover}" alt="" style="width: 30%;"></td>
-                                
-                                <td class="title align-middle" style="text-align: left;">${bookInfo.title}</td>
-                                <td class="author align-middle">
-                                    ${bookInfo.author}
-                                </td>
-                                <td class="align-middle">${bookInfo.publisher}</td>
+                                <td class="align-middle"><img src="${booking.bookInfo.cover}" alt="" style="width: 30%;"></td>
+                                <td class="title align-middle" style="text-align: left;">${booking.bookInfo.title}</td>
                                 <td class="align-middle">${booking.bookStatus}</td>
                                 <td class="align-middle"><fmt:formatNumber type="number" maxFractionDigits="3" value="${booking.deposit }" />원</td>
                                 <td class="align-middle"><fmt:formatNumber type="number" maxFractionDigits="3" value="${booking.price }" />원</td>
+                                <td class="align-middle">
+                                    <fmt:formatDate value="${booking.bookReservation.startDate}" pattern="yyyy년 MM월 dd일"/>
+									<br>
+									~
+									<br>
+									<fmt:formatDate value="${booking.bookReservation.endDate}" pattern="yyyy년 MM월 dd일"/>
+                                </td>
+                                <td class="align-middle">${booking.bookReservation.borrowerId}</td>
+                                <td class="align-middle">
+                                    
+                                    ${booking.bookReservation.status}
+                                    <c:set var="today" value="<%= new java.util.Date()%>" />
+                                    <!-- 현재날짜 -->
+                                    <c:set var="today_date"><fmt:formatDate value="${today}" pattern="yyyyMMdd" /></c:set>
+                                    <c:set var="end_Date"><fmt:formatDate value="${booking.bookReservation.endDate}" pattern="yyyyMMdd"/></c:set>
+                                  
+                                </td>
+
+                                
 
                             </tr>
-                        </c:forEach>
+
                         </c:forEach>
                         <c:if test="${empty list}">
                             <tr>
@@ -82,7 +97,7 @@
                     </ul>
                 </nav>
 
-                <form id='actionForm' action="${pageContext.request.contextPath}/booking/myBooking.do" method="get"> 
+                <form id='actionForm' action="${pageContext.request.contextPath}/booking/lentList.do" method="get"> 
                     <input type="hidden" name="pageNum" value="${page.cri.pageNum}"> 
                     <input type="hidden" name="amount" value="${page.cri.amount}"> 
                 </form>

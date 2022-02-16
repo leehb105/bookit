@@ -19,4 +19,6 @@ public interface ChatRoomDao {
 
 	String selectIdByNickName(String writer);
 
+	String selectChatRoomId(String chatParticipants);
+
 }

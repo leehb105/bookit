@@ -104,7 +104,7 @@ function checkAllElement(obj){
 function enrollRequest(){
 	const isbn13 = $("input[id=isbn13]").val();
 	const wishPrice = $("input[id=wishPrice]").val();
-	const bookCondtion = $('input[name=bookCondition]:checked').val();
+	const bookCondition = $('input[name=bookCondition]:checked').val();
 	let f = document.createElement('form');
 	
 	let obj1 = document.createElement('input');
@@ -119,8 +119,8 @@ function enrollRequest(){
 	
 	let obj3 = document.createElement('input');
 	obj3.setAttribute('type', 'hidden');
-	obj3.setAttribute('name', 'bookCondtion');
-	obj3.setAttribute('value', bookCondtion);
+	obj3.setAttribute('name', 'bookCondition');
+	obj3.setAttribute('value', bookCondition);
 
 	csrf = document.createElement('input');
 	csrf.setAttribute('type', 'hidden');

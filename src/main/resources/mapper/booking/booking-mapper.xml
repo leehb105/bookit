@@ -64,6 +64,10 @@
 							#{checkOut} NOT BETWEEN br.start_date AND br.end_date
 							AND
 							b.DELETE_YN = 'N'
+							AND
+							br.borrower_id is null
+							and
+							br.status is null
 							AND 
 							mv.search_address = #{address}
 						ORDER BY
@@ -98,6 +102,7 @@
 		<result column="borrower_id" property="borrowerId"/>
 		<result column="reg_date" property="regDate"/>
 		<result column="status" property="status"/>
+		<result column="status_date" property="statusDate"/>
 	</resultMap>
 
 	
@@ -125,20 +130,7 @@
 		<collection property="bookReservations" resultMap="bookReservationMap"/>
 	</resultMap>
 	
-	<resultMap type="booking" id="bookingMap_bookInfoList">
-		<id column="board_no" property="boardNo"/>
-		<result column="content" property="content"/>
-		<result column="book_status" property="bookStatus"/>
-		<result column="price" property="price"/>
-		<result column="deposit" property="deposit"/>
-		<result column="writer" property="writer"/>
-		<result column="delete_yn" property="deleteYn"/>
-		<result column="isbn13" property="isbn13"/>
-		<result column="reg_date" property="regDate"/>
-		<association property="member" resultMap="memberMap"/>
-		<collection property="bookInfos" resultMap="bookInfoMap"/>
-		<collection property="bookReservations" resultMap="bookReservationMap"/>
-	</resultMap>
+	
 
 	<select id="selectTotalBookingCount" resultType="_int">
        SELECT
@@ -148,6 +140,8 @@
 		    b.isbn13 = bi.isbn13
 		    JOIN BOOKING_RESERVATION br ON
 		    b.board_no = br.board_no
+		    JOIN member_view mv ON
+   			b.writer = mv.id
 		WHERE
 			bi.title LIKE '%' || #{bookTitle} || '%' 
 			AND
@@ -156,6 +150,12 @@
 			#{checkOut} NOT BETWEEN br.start_date AND br.end_date
 			AND
 			b.DELETE_YN = 'N'
+			AND
+			br.borrower_id is not null
+			and
+			br.status is null
+			AND 
+			mv.search_address = #{address}
     </select>
 
 	<select id="selectBooking" resultMap="bookingMap">
@@ -300,7 +300,66 @@
 		]]>
 	</select>
 	
-	<select id="selectLentList" resultMap="bookingMap_bookInfoList" resultType="criteria">
+	<resultMap type="booking" id="bookingMap_bookInfoList">
+		<result column="rn" property="rowNum"/>
+		<result column="board_no" property="boardNo"/>
+		<result column="content" property="content"/>
+		<result column="book_status" property="bookStatus"/>
+		<result column="price" property="price"/>
+		<result column="deposit" property="deposit"/>
+		<result column="writer" property="writer"/>
+		<result column="delete_yn" property="deleteYn"/>
+		<result column="isbn13" property="isbn13"/>
+		<result column="reg_date" property="regDate"/>
+		<association property="bookInfo" resultMap="bookInfoMap" />
+		<collection property="bookReservation" resultMap="bookReservationMap"/>
+	</resultMap>
+	
+	<resultMap type="bookInfo" id="bookInfoList">
+		<id column="isbn13" property="isbn13"/>
+		<result column="title" property="title"/>
+		<result column="author" property="author"/>
+		<result column="publisher" property="publisher"/>
+		<result column="pubdate" property="pubdate"/>
+		<result column="item_page" property="itemPage"/>
+		<result column="category_name" property="categoryName"/>
+		<result column="cover" property="cover"/>
+		<result column="description" property="description"/>
+	</resultMap>
+	
+	<resultMap type="bookReservation" id="bookReservationList">
+		<id column="res_no" property="resNo"/>
+		<result column="board_no" property="boardNo"/>
+		<result column="start_date" property="startDate"/>
+		<result column="end_date" property="endDate"/>
+		<result column="borrower_id" property="borrowerId"/>
+		<result column="reg_date" property="regDate"/>
+		<result column="status" property="status"/>
+		<result column="status_date" property="statusDate"/>
+	</resultMap>
+
+
+		
+	<!-- <select id="selectLentList" resultMap="bookingMap_bookInfoList">
+		<![CDATA[
+		SELECT
+			*
+		FROM
+			(SELECT
+				rownum rn,
+				v.*
+			from
+				(SELECT
+					*
+				FROM
+				 	LENT_LIST_VIEW) v
+			WHERE
+				ROWNUM <= 5) t
+		WHERE
+			rn > 0
+		]]>
+	</select> -->
+	<select id="selectLentList" resultMap="bookingMap_bookInfoList">
 		<![CDATA[
 		SELECT
 			*
@@ -310,8 +369,8 @@
 				tb1.*
 			from
 				(SELECT
-					b.board_no as board_no,
-					b.content as content,
+					b.board_no,
+					b.content,
 					b.book_status,
 					b.price,
 					b.deposit,
@@ -327,7 +386,9 @@
 					bi.COVER,
 					br.RES_NO,
 					br.START_DATE,
-					br.END_DATE
+					br.END_DATE,
+					br.borrower_id,
+					br.status
 				FROM
 					booking b join book_info bi ON
 				    b.isbn13 = bi.isbn13
@@ -346,6 +407,7 @@
 				ROWNUM <= #{cri.pageNum} * #{cri.amount}) tb2
 		WHERE
 			rn > (#{cri.pageNum} - 1) * #{cri.amount}
+
 		]]>
 	</select>
 	
@@ -407,8 +469,144 @@
 			#{checkOut}, 
 			#{id},
 			default,
-			'대여중'
+			'대여중',
+			null
 		)
 	</insert>
+	
+	<update id="deleteBooking">
+		update booking set delete_yn = 'Y' where board_no = #{boardNo}
+	</update>
+	
+	<select id="selectCountBookingReservation" resultType="int">
+		SELECT 
+			count(*)
+		FROM
+			booking b JOIN BOOKING_RESERVATION br
+			ON b.BOARD_NO = br.BOARD_NO
+		WHERE 
+			b.BOARD_NO = #{boardNo}
+			AND
+			CURRENT_DATE BETWEEN br.START_DATE AND br.END_DATE
+			AND
+			br.status = '대여중'
+	</select>
+	
+	
+	<resultMap type="booking" id="selectLentBookingMap">
+		<id column="board_no" property="boardNo"/>
+		<result column="content" property="content"/>
+		<result column="book_status" property="bookStatus"/>
+		<result column="price" property="price"/>
+		<result column="deposit" property="deposit"/>
+		<result column="writer" property="writer"/>
+		<result column="delete_yn" property="deleteYn"/>
+		<result column="isbn13" property="isbn13"/>
+		<result column="reg_date" property="regDate"/>
+		<association property="bookInfo" resultMap="bookInfoMap"/>
+		<association property="member" resultMap="memberMap"/>
+		<association property="bookReservation" resultMap="bookReservationMap"/>
+	</resultMap>
+	<select id="selectLentBooking" resultMap="selectLentBookingMap">
+		SELECT
+			b.board_no,
+			b.content,
+			b.book_status,
+			b.price,
+			b.deposit,
+			b.writer,
+			b.delete_yn,
+			b.isbn13,
+			bi.title,
+			bi.COVER,
+			br.RES_NO,
+			br.START_DATE,
+			br.END_DATE,
+			br.REG_DATE,
+			br.borrower_id,
+			br.status,
+			br.status_date,
+			m.nickname
+		FROM
+			booking b join book_info bi ON
+		    b.isbn13 = bi.isbn13
+		    JOIN BOOKING_RESERVATION br ON
+		    b.board_no = br.board_no
+		    join member m on 
+		    br.borrower_id = m.id
+		WHERE
+			br.res_no = #{resNo}
+	</select>
+	
+	
+	<update id="updateBookResStatus">
+		update BOOKING_RESERVATION set status = #{status}, status_date = current_date where res_no = #{resNo}
+	</update>
+		
+	<insert id="insertUserReview">
+		insert into review values(
+			seq_review_no.nextval,
+			#{resNo},
+			#{rating},
+			#{id},
+			#{borrowerId}
+		)
+	</insert>
+	
+	<select id="selectCountUserReview" resultType="int">
+		select 
+			count(*)
+		FROM
+			review
+		WHERE
+			res_no = #{resNo}
+			AND
+			SENDER_ID = #{id}
+			
+	</select>
+	
+	<select id="selectBorrowedBooking" resultMap="selectLentBookingMap">
+		SELECT
+			b.board_no,
+			b.content,
+			b.book_status,
+			b.price,
+			b.deposit,
+			b.writer,
+			b.delete_yn,
+			b.isbn13,
+			bi.title,
+			bi.COVER,
+			br.RES_NO,
+			br.START_DATE,
+			br.END_DATE,
+			br.REG_DATE,
+			br.borrower_id,
+			br.status,
+			br.status_date,
+			m.nickname
+		FROM
+			booking b join book_info bi ON
+		    b.isbn13 = bi.isbn13
+		    JOIN BOOKING_RESERVATION br ON
+		    b.board_no = br.board_no
+		    join member m on 
+		    b.writer = m.id
+		WHERE
+			br.res_no = #{resNo}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 </mapper>

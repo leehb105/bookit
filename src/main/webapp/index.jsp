@@ -106,6 +106,34 @@
 	});
 }); */
 
+//베스트 관심책(BOOKIT)
+$(document).ready(function(){
+	var header = "${_csrf.headerName}";
+	var token = "${_csrf.token}";
+	console.log(header);
+	console.log(token);
+	$.ajax({
+		url: `${pageContext.request.contextPath}/bestWishBook.do`,
+		method: "POST",
+		dataType : 'json',
+		beforeSend : function(xhr){
+            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+        },
+		success(wishlist){
+        	console.log(wishlist);
+				$(".bookit").before(
+					'<div class="mb-4" style="padding-top: 110px">'
+						+  '<img class="mr-100 ml-100" src="' + wishlist.cover + '" style="display: inline-block; width: 50%" />'
+							+ '<div style="padding-top: 50px; text-align: center;">'
+								+ '<h6><strong>' + wishlist.title + '</strong></h6>'
+								+ '<h6>' + wishlist.author + '</h6>'
+							+ '</div>'
+					+ '</div>');
+		},
+		error: console.log
+	});
+});
+
 // 컬렉션 불러오기(랜덤으로 3개). 475번줄 collection-area
 $(document).ready(function(){
 	var header = "${_csrf.headerName}";
@@ -205,7 +233,8 @@ $(document).ready(function(){
     </section>
     <!-- Welcome Area End -->
 
-    <!-- About Us Area Start -->
+
+    <!-- Booking Area Start -->
     <section class="roberto-about-area section-padding-100-0">
         <!-- Hotel Search Form Area -->
         <div class="book-search-form-area">
@@ -242,220 +271,10 @@ $(document).ready(function(){
                 </div>
             </div>
         </div>
+    <!-- Booking Area End -->
 
-        <!-- <div class="container mt-100">
-            <div class="row align-items-center">
-                <div class="col-12 col-lg-6">
-                    Section Heading
-                    <div class="section-heading wow fadeInUp" data-wow-delay="100ms">
-                        <h6>About Us</h6>
-                        <h2>Welcome to <br>Roberto Hotel Luxury</h2>
-                    </div>
-                    <div class="about-us-content mb-100">
-                        <h5 class="wow fadeInUp" data-wow-delay="300ms">With over 340 hotels worldwide, NH Hotel Group offers a wide variety of hotels catering for a perfect stay no matter where your destination.</h5>
-                        <p class="wow fadeInUp" data-wow-delay="400ms">Manager: <span>Michen Taylor</span></p>
-                        <img src="img/core-img/signature.png" alt="" class="wow fadeInUp" data-wow-delay="500ms">
-                    </div>
-                </div>
 
-                <div class="col-12 col-lg-6">
-                    <div class="about-us-thumbnail mb-100 wow fadeInUp" data-wow-delay="700ms">
-                        <div class="row no-gutters">
-                            <div class="col-6">
-                                <div class="single-thumb">
-                                    <img src="img/bg-img/13.jpg" alt="">
-                                </div>
-                                <div class="single-thumb">
-                                    <img src="img/bg-img/14.jpg" alt="">
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="single-thumb">
-                                    <img src="img/bg-img/15.jpg" alt="">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-    </section>
-    <!-- About Us Area End -->
-
-    <!-- Service Area Start -->
-    <!--<div class="roberto-service-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="service-content d-flex align-items-center justify-content-between">
-                        Single Service Area
-                        <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="100ms">
-                            <img src="img/core-img/icon-1.png" alt="">
-                            <h5>Transportion</h5>
-                        </div>
-
-                        Single Service Area
-                        <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="300ms">
-                            <img src="img/core-img/icon-2.png" alt="">
-                            <h5>Reiseservice</h5>
-                        </div>
-
-                        Single Service Area
-                        <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="500ms">
-                            <img src="img/core-img/icon-3.png" alt="">
-                            <h5>Spa Relaxtion</h5>
-                        </div>
-
-                        Single Service Area
-                        <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="700ms">
-                            <img src="img/core-img/icon-4.png" alt="">
-                            <h5>Restaurant</h5>
-                        </div>
-
-                        Single Service Area
-                        <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="900ms">
-                            <img src="img/core-img/icon-1.png" alt="">
-                            <h5>Bar &amp; Drink</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    Service Area End
-
-    Our Room Area Start
-    <section class="roberto-rooms-area">
-        <div class="rooms-slides owl-carousel">
-            Single Room Slide
-            <div class="single-room-slide d-flex align-items-center">
-                Thumbnail
-                <div class="room-thumbnail h-100 bg-img" style="background-image: url(img/bg-img/16.jpg);"></div>
-
-                Content
-                <div class="room-content">
-                    <h2 data-animation="fadeInUp" data-delay="100ms">Premium King Room</h2>
-                    <h3 data-animation="fadeInUp" data-delay="300ms">400$ <span>/ Day</span></h3>
-                    <ul class="room-feature" data-animation="fadeInUp" data-delay="500ms">
-                        <li><span><i class="fa fa-check"></i> Size</span> <span>: 30 ft</span></li>
-                        <li><span><i class="fa fa-check"></i> Capacity</span> <span>: Max persion 5</span></li>
-                        <li><span><i class="fa fa-check"></i> Bed</span> <span>: King Beds</span></li>
-                        <li><span><i class="fa fa-check"></i> Services</span> <span>: Wifi, Television, Bathroom</span></li>
-                    </ul>
-                    <a href="#" class="btn roberto-btn mt-30" data-animation="fadeInUp" data-delay="700ms">View Details</a>
-                </div>
-            </div>
-
-            Single Room Slide
-            <div class="single-room-slide d-flex align-items-center">
-                Thumbnail
-                <div class="room-thumbnail h-100 bg-img" style="background-image: url(img/bg-img/17.jpg);"></div>
-
-                Content
-                <div class="room-content">
-                    <h2 data-animation="fadeInUp" data-delay="100ms">Best King Room</h2>
-                    <h3 data-animation="fadeInUp" data-delay="300ms">125$ <span>/ Day</span></h3>
-                    <ul class="room-feature" data-animation="fadeInUp" data-delay="500ms">
-                        <li><span><i class="fa fa-check"></i> Size</span> <span>: 30 ft</span></li>
-                        <li><span><i class="fa fa-check"></i> Capacity</span> <span>: Max persion 5</span></li>
-                        <li><span><i class="fa fa-check"></i> Bed</span> <span>: King Beds</span></li>
-                        <li><span><i class="fa fa-check"></i> Services</span> <span>: Wifi, Television, Bathroom</span></li>
-                    </ul>
-                    <a href="#" class="btn roberto-btn mt-30" data-animation="fadeInUp" data-delay="700ms">View Details</a>
-                </div>
-            </div>
-        </div>
-    </section>
-    Our Room Area End
-
-    Testimonials Area Start
-    <section class="roberto-testimonials-area section-padding-100-0">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-12 col-md-6">
-                    <div class="testimonial-thumbnail owl-carousel mb-100">
-                        <img src="img/bg-img/10.jpg" alt="">
-                        <img src="img/bg-img/11.jpg" alt="">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-6">
-                    Section Heading
-                    <div class="section-heading">
-                        <h6>Testimonials</h6>
-                        <h2>Our Guests Love Us</h2>
-                    </div>
-                    Testimonial Slide
-                    <div class="testimonial-slides owl-carousel mb-100">
-
-                        Single Testimonial Slide
-                        <div class="single-testimonial-slide">
-                            <h5>âThis can be achieved by applying search engine optimization or popularly known as SEO. This is a marketing strategy which increases the quality and quantity of traffic flow to a particular website via search engines.â</h5>
-                            <div class="rating-title">
-                                <div class="rating">
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                </div>
-                                <h6>Robert Downey <span>- CEO Deercreative</span></h6>
-                            </div>
-                        </div>
-
-                        Single Testimonial Slide
-                        <div class="single-testimonial-slide">
-                            <h5>âLorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus delectus facilis molestias, error vitae praesentium quos eaque qui ea, tempore blanditiis sint reprehenderit, quaerat. Commodi ab architecto sit suscipit exercitationem!â</h5>
-                            <div class="rating-title">
-                                <div class="rating">
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                </div>
-                                <h6>Akash Downey <span>- CEO Deercreative</span></h6>
-                            </div>
-                        </div>
-
-                        Single Testimonial Slide
-                        <div class="single-testimonial-slide">
-                            <h5>âLorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor, ex quos. Alias a rem maiores, possimus dicta sit distinctio quis iusto!â</h5>
-                            <div class="rating-title">
-                                <div class="rating">
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                </div>
-                                <h6>Downey Sarah <span>- CEO Deercreative</span></h6>
-                            </div>
-                        </div>
-
-                        Single Testimonial Slide
-                        <div class="single-testimonial-slide">
-                            <h5>âLorem ipsum dolor sit amet, consectetur adipisicing elit. Labore sequi laboriosam fugit suscipit aspernatur, minima minus voluptatum, id ab atque similique ex earum. Magni.â</h5>
-                            <div class="rating-title">
-                                <div class="rating">
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                </div>
-                                <h6>Robert Brown <span>- CEO Deercreative</span></h6>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    Testimonials Area End -->
-
-    <!-- Projects Area Start -->
+    <!-- BestSeller Area Start -->
     <section class="roberto-project-area">
         <!-- Projects Slide -->
         <div class="projects-slides owl-carousel">
@@ -472,10 +291,7 @@ $(document).ready(function(){
             </div>
 
             <!-- Single Project Slide -->
-            <div class="single-project-slide" style="background-color: #F5F5F5;"> 
-            	<div class="mt-1 d-flex align-items-center">
-            		
-            	</div>
+            <div class="single-project-slide" style="background-color: #F5F5F5;">
                 <!-- Project Text -->
                 <div class="bookit project-content">
                     <div class="text">
@@ -498,9 +314,10 @@ $(document).ready(function(){
             </div>
         </div>
     </section>
-    <!-- Projects Area End -->
+    <!-- BestSeller Area End -->
 
-    <!-- Blog Area Start -->
+
+    <!-- Collection Area Start -->
     <section class="roberto-blog-area section-padding-100-0">
         <div class="container">
             <div class="row">
@@ -518,50 +335,8 @@ $(document).ready(function(){
             </div>
         </div>
     </section>
-    <!-- Blog Area End -->
+    <!-- Collection Area End -->
 
-    <!-- Call To Action Area Start
-    <section class="roberto-cta-area">
-        <div class="container">
-            <div class="cta-content bg-img bg-overlay jarallax" style="background-image: url(img/bg-img/1.jpg);">
-                <div class="row align-items-center">
-                    <div class="col-12 col-md-7">
-                        <div class="cta-text mb-50">
-                            <h2>Contact us now!</h2>
-                            <h6>Contact (+12) 345-678-9999 to book directly or for advice</h6>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-5 text-right">
-                        <a href="#" class="btn roberto-btn mb-50">Contact Now</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    Call To Action Area End
-
-    Partner Area Start
-    <div class="partner-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="partner-logo-content d-flex align-items-center justify-content-between wow fadeInUp" data-wow-delay="300ms">
-                        Single Partner Logo
-                        <a href="#" class="partner-logo"><img src="img/core-img/p1.png" alt=""></a>
-                        Single Partner Logo
-                        <a href="#" class="partner-logo"><img src="img/core-img/p2.png" alt=""></a>
-                        Single Partner Logo
-                        <a href="#" class="partner-logo"><img src="img/core-img/p3.png" alt=""></a>
-                        Single Partner Logo
-                        <a href="#" class="partner-logo"><img src="img/core-img/p4.png" alt=""></a>
-                        Single Partner Logo
-                        <a href="#" class="partner-logo"><img src="img/core-img/p5.png" alt=""></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <!-- Partner Area End -->
 
 <script>
     //도서 명 input

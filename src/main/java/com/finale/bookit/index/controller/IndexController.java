@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.finale.bookit.collection.model.vo.BookCollection;
 import com.finale.bookit.index.model.service.IndexService;
+import com.finale.bookit.wishlist.model.vo.Wishlist;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,4 +29,15 @@ public class IndexController {
 		model.addAttribute("collectionList", collectionList);
 		return collectionList;
 	}
+	
+	
+	@ResponseBody
+	@PostMapping("/bestWishBook.do")
+	public Wishlist bestWishBook(Model model) throws Exception {
+		Wishlist wishlist = indexService.selectOneBestWishBook();
+		log.debug("bestWishBook = {}", wishlist);
+		model.addAttribute("bestWishBook", wishlist);
+		return wishlist;
+	}
+	
 }

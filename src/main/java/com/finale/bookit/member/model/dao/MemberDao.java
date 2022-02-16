@@ -39,6 +39,8 @@ public interface MemberDao {
 
 	int selectTotalBookReviewCountById(HashMap<String, Object> param);
 
+	int selectMemberCash(HashMap<String, Object> param);
+
 	int bookReviewDelete(HashMap<String, Object> param);
 	
 	List<Posts> selectMyPostsList(HashMap<String, Object> param);
@@ -46,5 +48,11 @@ public interface MemberDao {
 	int selectTotalMyPostsCountById(HashMap<String, Object> param);
 
 	int deleteMyPosts(HashMap<String, Object> param);
+
+	int chargeMemberCash(HashMap<String, Object> param);
+
+	int selectMemberCash2(HashMap<String, Object> param);
+
+	int updateReturnDeposit(HashMap<String, Object> param);
 
 }

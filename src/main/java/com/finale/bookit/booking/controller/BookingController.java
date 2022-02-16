@@ -6,19 +6,23 @@ import com.finale.bookit.booking.model.vo.Booking;
 import com.finale.bookit.common.util.BookitUtils;
 import com.finale.bookit.common.util.Criteria;
 import com.finale.bookit.common.util.Paging;
+import com.finale.bookit.member.model.service.MemberService;
 import com.finale.bookit.member.model.vo.Member;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import lombok.extern.slf4j.Slf4j;
-import oracle.jdbc.proxy.annotation.Post;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-
-import lombok.extern.log4j.Log4j;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,12 +30,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
+import com.finale.bookit.booking.model.service.BookingService;
+import com.finale.bookit.booking.model.vo.BookInfo;
+import com.finale.bookit.booking.model.vo.Booking;
+import com.finale.bookit.chat.model.service.ChatService;
+import com.finale.bookit.chat.model.vo.Chat;
+import com.finale.bookit.chatRoom.model.service.ChatRoomService;
+import com.finale.bookit.chatRoom.model.vo.ChatRoom;
+import com.finale.bookit.common.util.BookitUtils;
+import com.finale.bookit.common.util.Criteria;
+import com.finale.bookit.common.util.Paging;
+import com.finale.bookit.member.model.vo.Member;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
+import oracle.jdbc.proxy.annotation.Post;
 
 @Controller
 @Slf4j
@@ -40,7 +52,16 @@ public class BookingController {
 
     @Autowired
     private BookingService bookingService;
+    
+    @Autowired
+    private MemberService memberService;
 
+	@Autowired
+    private ChatRoomService chatRoomService;
+
+    @Autowired
+    private ChatService chatService;
+    
 //    @GetMapping("/bookingList.do")
 //    public void bookingList(){
 //    	
@@ -145,13 +166,13 @@ public class BookingController {
     	String msg = "";
     	if(result > 0) {
     		msg = "대여 등록이 완료되었습니다.";
-    		attributes.addFlashAttribute("msg", "대여 등록이 완료되었습니다.");    		
+    		attributes.addFlashAttribute("msg", msg);    		
     	}else {
     		msg = "글 등록에 실패하였습니다.";
     	}
     	attributes.addFlashAttribute("msg", msg);  
     	
-    	return "redirect:/";
+    	return "redirect:/booking/myBooking.do?pageNum=1&amout=5";
     }
     
     @PostMapping("/bookInfoEnroll.do")
@@ -233,6 +254,25 @@ public class BookingController {
     	model.addAttribute("page", page);
     }
     
+    @GetMapping("/lentDetail.do")
+    public void lentDetail(
+    		@RequestParam int resNo,
+    		@AuthenticationPrincipal Member member,
+    		Model model) {
+    	
+    	log.debug("resNo = {}", resNo);
+    	Map<String, Object> param = new HashMap<>();
+    	param.put("resNo", resNo);
+    	param.put("id", member.getId());
+    	Booking booking = bookingService.selectLentBooking(param);
+    	log.debug("booking = {}", booking);
+    	int count = bookingService.selectCountUserReview(param);
+    		
+    	model.addAttribute("booking", booking);
+    	model.addAttribute("count", count);
+    	
+    }
+    
     
     @GetMapping("/borrowedList.do")
     public void borrowedList(
@@ -265,6 +305,25 @@ public class BookingController {
     	
     }
     
+    @GetMapping("/borrowedDetail.do")
+    public void borrowedDetail(
+    		@RequestParam int resNo,
+    		@AuthenticationPrincipal Member member,
+    		Model model) {
+    	
+    	log.debug("resNo = {}", resNo);
+    	Map<String, Object> param = new HashMap<>();
+    	param.put("resNo", resNo);
+    	param.put("id", member.getId());
+    	Booking booking = bookingService.selectBorrowedBooking(param);
+    	log.debug("booking = {}", booking);
+    	int count = bookingService.selectCountUserReview(param);
+    		
+    	model.addAttribute("booking", booking);
+    	model.addAttribute("count", count);
+    	
+    }
+    
     @PostMapping("/bookingReservation.do")
     public String bookingReservation(
     		@RequestParam String checkIn,
@@ -272,6 +331,8 @@ public class BookingController {
     		@RequestParam int pay,
     		@RequestParam int boardNo,
     		@RequestParam int deposit,
+    		@RequestParam String title,
+    		@RequestParam String bookingMemberId,
     		RedirectAttributes attributes,
     		@AuthenticationPrincipal Member member) {
     	
@@ -279,6 +340,8 @@ public class BookingController {
     	log.debug("checkOut = {}", checkOut);
     	log.debug("pay = {}", pay);
     	log.debug("boardNo = {}", boardNo);
+    	log.debug("lender = {}", bookingMemberId);
+    	
     	
     	HashMap<String, Object> param = new HashMap<String, Object>();
     	param.put("checkIn", BookitUtils.getFormatDate(checkIn));
@@ -286,41 +349,243 @@ public class BookingController {
     	param.put("pay", pay);
     	param.put("boardNo", boardNo);
     	param.put("deposit", deposit);
+    	param.put("price", pay - deposit);
     	param.put("id", member.getId());
+    	param.put("lenderId", bookingMemberId);
     	log.debug("param = {}", param);
     	
     	int result = bookingService.insertBookingReservation(param);
     	String msg = "";
+    	String loginMemberId = member.getId();
+    	String bookit = "bookit";
+    	String chatMsg = "체크인 : "+ checkIn + "\n 체크아웃 : " + checkOut + "\n 도서 : " + title + "\n 대여 신청 완료";
+    	String chatMsg2 = "체크인 : "+ checkIn + "\n 체크아웃 : " + checkOut + "\n 도서 : " + title + "\n 대여자 : " + member.getNickname() + "\n 대여 신청 완료";
+    	
     	if(result > 0) {
+    		
+    		
+            
+            String chatParticipants = MakeStr(bookit,loginMemberId);
+            
+            String roomId = chatRoomService.selectChatRoomId(chatParticipants);
+            
+    		//기존에 채팅방이 존재하는지 체크
+        	if(roomId != null) {
+        		Chat chat = new Chat(roomId,bookit,chatMsg);
+        		log.debug("chat = {}",chat);
+    	        result = chatService.insertChatHistory(chat);
+    	        		
+    	    } 	
+        	else {
+	            result = chatRoomService.createChatRoom(chatParticipants);
+	            
+	            roomId = chatRoomService.selectChatRoomId(chatParticipants);
+	            
+        		Chat chat = new Chat(roomId,bookit,chatMsg);     		
+        		log.debug("chat = {}",chat);
+        		result = chatService.insertChatHistory(chat);
+        	}
+        	
+        	
+        	chatParticipants = MakeStr(bookit,bookingMemberId);
+        	roomId = chatRoomService.selectChatRoomId(chatParticipants);
+        	
+        	if(roomId != null) {
+        		Chat chat = new Chat(roomId,bookit,chatMsg2);
+    	        result = chatService.insertChatHistory(chat);
+    	        		
+    	    } 	
+        	else {
+	            result = chatRoomService.createChatRoom(chatParticipants);
+	            
+	            roomId = chatRoomService.selectChatRoomId(chatParticipants);
+	            
+        		Chat chat = new Chat(roomId,bookit,chatMsg2);     		
+        		log.debug("chat = {}",chat);
+        		result = chatService.insertChatHistory(chat);
+        	}
+
     		msg = "대여 신청이 완료되었습니다.";   		
     	}else {
     		msg = "대여 신청에 실패하였습니다.";
+    		attributes.addFlashAttribute("msg", msg);
+    		return "redirect:/booking/borrowedList.do?pageNum=1&amout=5";
+    	}
+    	
+    	attributes.addFlashAttribute("msg", msg); 
+    	
+    	member.setCash(member.getCash() - pay);
+    	Authentication newAuthentication =  new UsernamePasswordAuthenticationToken(member, member.getPassword(), member.getAuthorities());
+    	SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+    	
+    	
+    	return "redirect:/booking/borrowedList.do?pageNum=1&amout=5";
+    }
+    
+    @PostMapping("/bookingDelete.do")
+	public String bookingDelete(
+			@RequestParam int boardNo, 
+			RedirectAttributes attributes){
+		log.debug("boardNo = {}", boardNo);
+		
+		HashMap<String, Object> param = new HashMap<String, Object>();
+    	param.put("boardNo", boardNo);
+    	
+    	String msg = "";
+    	int count = bookingService.selectCountBookingReservation(param);
+    	//삭제할 수 없는 경우
+    	if(count > 0) {
+    		msg = "대여 예약이 있어 삭제가 불가능합니다."; 
     		attributes.addFlashAttribute("msg", msg); 
     		return "redirect:/booking/bookingDetail.do?bno=" + boardNo;
     	}
     	
-    	//사용자 잔액 차감 및 거래내역 추가 부분 이 밑으로 구현하세요 
+		int result = bookingService.deleteBooking(param);
+    	if(result > 0) {
+    		msg = "대여글 삭제가 완료되었습니다.";   		
+    	}else {
+    		msg = "대여글 삭제에 실패하였습니다.";
+    		attributes.addFlashAttribute("msg", msg); 
+    		return "redirect:/booking/bookingDetail.do?bno=" + boardNo;
+    	}
+    	attributes.addFlashAttribute("msg", msg); 
+    	return "redirect:/booking/myBooking.do?pageNum=1&amout=5";
+	}
+
+    @PostMapping("/lostBook.do")
+    public String lostBook(
+    		@RequestParam int resNo, 
+    		@RequestParam int deposit,
+    		@RequestParam String borrowerId,
+    		Model model,
+    		@AuthenticationPrincipal Member member,
+			RedirectAttributes attributes) {
+    	log.debug("resNo = {}", resNo);
+    	log.debug("deposit = {}", deposit);
+    	log.debug("borrowerId = {}", borrowerId);
     	
-    	//잔액 차감 메소드만들어놓은거 필요하면 수정해서 쓰세요
-//    	result = bookingService.updateUserCash(param);
-//    	if(result > 0) {
-//    		
-//    	}else {
-//    		msg = "대여 신청에 실패하였습니다.";
-//    		attributes.addFlashAttribute("msg", msg); 
-//    		return "redirect:/booking/bookingDetail.do?bno=" + boardNo;
-//    	}
+    	HashMap<String, Object> param = new HashMap<String, Object>();
+    	param.put("id",  member.getId());
+    	param.put("resNo", resNo);
+    	param.put("deposit", deposit);
+    	param.put("borrowerId", borrowerId);
+    	param.put("status", "분실");
+    	param.put("targetId",  member.getId()); // 도서 분실의 경우 보증금(deposit)을 돌려주는 대상이 도서제공자(member.id)
     	
-    	
+    	int result = bookingService.updateBookResStatus(param);
+    	String msg = "";
+    	if(result > 0) {
+    		msg = "분실처리가 완료되었습니다.";   		
+    	}else {
+    		msg = "분실처리에 실패하였습니다.";
+    	}
     	
     	attributes.addFlashAttribute("msg", msg); 
-    	
-    	
-    	return "redirect:/";
+    	return "redirect:/booking/lentDetail.do?resNo=" + resNo;
     }
     
+    @PostMapping("/returnBook.do")
+    public String returnBook( 		
+    		@RequestParam int resNo, 
+    		@RequestParam int deposit,
+    		@RequestParam String borrowerId,
+    		Model model,
+    		@AuthenticationPrincipal Member member,
+			RedirectAttributes attributes) {
+    	log.debug("resNo = {}", resNo);
+    	log.debug("deposit = {}", deposit);
+    	log.debug("borrowerId = {}", borrowerId);
+    	
+    	HashMap<String, Object> param = new HashMap<String, Object>();
+    	param.put("id",  member.getId());
+    	param.put("resNo", resNo);
+    	param.put("deposit", deposit);
+    	param.put("borrowerId", borrowerId);
+    	param.put("status", "반납완료");
+    	param.put("targetId", borrowerId); // 도서 반납의 경우 보증금(deposit)을 돌려주는 대상이 도서대여자(borrower)
+    	
+    	int result = bookingService.updateBookResStatus(param);
+    	String msg = "";
+    	if(result > 0) {
+    		msg = "반납처리가 완료되었습니다.";   		
+    	}else {
+    		msg = "반납처리에 실패하였습니다.";
+    	}
+    	
+    	attributes.addFlashAttribute("msg", msg); 
+    	return "redirect:/booking/lentDetail.do?resNo=" + resNo;
+    	
+    }
     
+    @PostMapping("/userReviewEnroll.do")
+    public String userReviewEnroll(
+			@RequestParam int resNo,
+			@RequestParam String borrowerId,
+			@RequestParam int rating,
+			RedirectAttributes attributes,
+    		@AuthenticationPrincipal Member member){
+    	log.debug("resNo = {}", resNo);
+    	log.debug("borrowerId = {}", borrowerId);
+    	log.debug("rating = {}", rating);
 
+    	HashMap<String, Object> param = new HashMap<String, Object>();
+    	param.put("resNo", resNo);
+    	param.put("borrowerId", borrowerId);
+    	param.put("rating", rating);
+    	param.put("id", member.getId());
+    	
+    	int result = bookingService.insertUserReview(param);
+    	
+    	String msg = "";
+    	if(result > 0) {
+    		msg = "사용자 평가가 완료되었습니다.";   		
+    	}else {
+    		msg = "사용자 평가에 실패하였습니다.";
+    	}
+    	
+    	attributes.addFlashAttribute("msg", msg);
+    	return "redirect:/booking/lentDetail.do?resNo=" + resNo;
+    }
     
-    
+    @PostMapping("/rejectBooking.do")
+    public String rejectBooking(
+    		@RequestParam int resNo, 
+    		@RequestParam int deposit,
+    		@RequestParam String borrowerId,
+    		Model model,
+    		@AuthenticationPrincipal Member member,
+			RedirectAttributes attributes) {
+    	log.debug("resNo = {}", resNo);
+    	log.debug("deposit = {}", deposit);
+    	log.debug("borrowerId = {}", borrowerId);
+    	
+    	HashMap<String, Object> param = new HashMap<String, Object>();
+    	param.put("id",  member.getId());
+    	param.put("resNo", resNo);
+    	param.put("deposit", deposit);
+    	param.put("borrowerId", borrowerId);
+    	param.put("status", "대여거부");
+    	
+    	int result = bookingService.updateBookResStatus(param);
+    	String msg = "";
+    	if(result > 0) {
+    		msg = "대여 거부가 완료되었습니다.";   		
+    	}else {
+    		msg = "대여 거부 실패하였습니다.";
+    	}
+    	
+    	attributes.addFlashAttribute("msg", msg); 
+    	return "redirect:/booking/lentDetail.do?resNo=" + resNo;
+    }
+    public String MakeStr(String str1,String str2) {
+    	
+    	StringBuilder sb = new StringBuilder();
+        sb.append(str1);
+        sb.append(",");
+        sb.append(str2);
+        
+        String chatParticipants = sb.toString();
+        
+        return chatParticipants;
+    }
 }

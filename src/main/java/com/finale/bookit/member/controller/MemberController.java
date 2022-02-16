@@ -11,7 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -182,8 +185,15 @@ public class MemberController {
 	}
 	
 	@GetMapping("/mypageMain.do")
-	public void memberProfile() {
+	public void memberProfile(@AuthenticationPrincipal Member member) {
+		HashMap<String, Object> param = new HashMap<>();
+		param.put("id", member.getId());
+		int result = memberService.selectMemberCash(param);
+		member.setCash(result);
+		Authentication newAuthentication = new UsernamePasswordAuthenticationToken(member, member.getPassword(), member.getAuthorities());
 		
+		SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+
 	}
 	
 	@GetMapping("/editProfile.do")
@@ -203,7 +213,9 @@ public class MemberController {
 			Address address,
 			RedirectAttributes redirectAttr) throws IllegalStateException, IOException {
 		log.debug("profileImg = {}", profileImg);
+		
 		String saveDirectory = application.getRealPath("/resources/img/profile");
+		
 		if(!profileImg.isEmpty()) {
 			String originalFilename = profileImg.getOriginalFilename();
 			String renamedFilename = BookitUtils.rename(originalFilename);
@@ -216,12 +228,15 @@ public class MemberController {
 		String id = loginMember.getId();
 		String profileImage = loginMember.getProfileImage();
 		Map<String, Object> param = new HashMap<>();
+		
 		log.debug("loginMember = {}", loginMember);
+		
 		param.put("id", id);
 		param.put("profileImage", profileImage);
 		param.put("nickname", nickname);
 		param.put("email", email);
 		param.put("phone", phone);
+		
 		if(!newPassword.isEmpty()) {
 			String encodedNewPassword = bcryptPasswordEncoder.encode(newPassword);			
 			param.put("encodedNewPassword", encodedNewPassword);
@@ -354,6 +369,7 @@ public class MemberController {
 		
 	}
 
+	
 	
 	
 }
