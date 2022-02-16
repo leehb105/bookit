@@ -6,7 +6,7 @@
 	<select id="selectUsedContent" parameterType="Integer" resultMap="usedMap">
 	select 
 	u.used_board_no, u.title, u.book_state, u.trade_method, u.price, u.category, u.content, u.writer, u.read_count, TO_CHAR(u.reg_date, 'YYYY-MM-DD  HH24:MI') reg_date,
-	(select m.nickname from member m where u.writer = m.id) nickname, (select m.profile_image from member m where c.member_id = m.id) profile_image
+	(select m.nickname from member m where u.writer = m.id) nickname, (select m.profile_image from member m where u.writer = m.id) profile_image
 	from used_board u
 	where u.used_board_no = #{no}
 	</select>
@@ -28,20 +28,32 @@
 	
 
 	<select id="selectUsedAttachment" parameterType="Integer" resultType="usedAttachment">
-		select no, ORIGINAL_FILENMAE, renamed_filename, used_board_no from used_board_attachment where used_board_no = #{no} order by reg_date
+		select no, ORIGINAL_FILENAME, renamed_filename, used_board_no from used_board_attachment where used_board_no = #{no} order by reg_date
 	</select>
 	
 	<update id="deleteUsedContent" parameterType="Integer">
-		update used_board set delete_yn = 'Y' where used_board_no = #{used_board_no}
+		update used_board set delete_yn = 'Y' where used_board_no = #{no}
 	</update>
 	
 	<update id="updateUsedContent" parameterType="map">
 		update used_board set title = #{title}, category = #{category},trade_method=#{trade_method}, content = #{content} where used_board_no =#{used_board_no};
 	</update>
 	
-	<select id="getUsedList" resultType="used">
+	<select id="getUsedList" resultType="used" parameterType="map">
 		select used_board_no, category, title, (select m.nickname from member m where u.writer = m.id) nickname, 
-		reg_date, read_count from used_board u order by reg_date
+		reg_date, read_count from used_board u where delete_yn = 'N'
+			<choose>
+			<when test="category eq 'writer'">
+			and m.nickname like '%' ||  #{keyword} || '%'
+			</when>
+			<otherwise>
+			and (
+			(u.title like '%' ||  #{keyword} || '%') or 
+			(u.content like '%' ||  #{keyword} || '%')
+			)
+			</otherwise>
+			</choose>
+		order by reg_date desc
 	</select>
 	
 	<select id="getTotalUsedContent" resultType="Integer">
@@ -56,8 +68,8 @@
 			#{category},
 			#{title},
 			#{price},
-			#{trade_method},
-			#{book_state},
+			#{tradeMethod},
+			#{bookState},
 			#{writer},
 			#{content}
 		)
@@ -65,7 +77,7 @@
 	
 	<insert id="insertUsedAttachment" parameterType="usedAttachment">
 		insert into
-			used_board_attachment(no, used_board_no, original_filename, renamed_filename)
+			used_board_attachment(no, used_board_no, ORIGINAL_FILENAME, renamed_filename)
 		values(
 			SEQ_USED_BOARD_ATTACHMENT_NO.nextval,
 			#{usedBoardNo},

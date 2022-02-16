@@ -21,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,6 +35,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.finale.bookit.board.model.vo.Community;
 import com.finale.bookit.board.model.vo.Posts;
+import com.finale.bookit.collection.model.vo.BookCollection;
 import com.finale.bookit.common.util.BookitUtils;
 import com.finale.bookit.common.util.Criteria;
 import com.finale.bookit.common.util.Paging;
@@ -43,6 +45,7 @@ import com.finale.bookit.member.model.vo.Address;
 import com.finale.bookit.member.model.vo.Member;
 import com.finale.bookit.member.model.vo.MemberEntity;
 import com.finale.bookit.search.model.vo.BookReview;
+import com.finale.bookit.wishlist.model.vo.Wishlist;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -322,53 +325,62 @@ public class MemberController {
 		
 	}
 	//나의 게시글 
-	@GetMapping("/myPostsList.do")
-	public void myPostsList(
-			@RequestParam(defaultValue = "1") int pageNum, 
-			@AuthenticationPrincipal Member loginMember,
-			Model model) {
+	@GetMapping("/myPosts.do")
+	public void myPosts(
+			@RequestParam(defaultValue = "1") int cPage,
+			HttpServletRequest request,
+			Model model,
+			@AuthenticationPrincipal Member loginMember) {
+		String id = loginMember.getId();
+		// 페이지 당 게시글 갯수
+		int limit = 10;
+		int offset = (cPage - 1) * limit;
+		Map<String, Object> param = new HashMap<>();
+		param.put("offset", offset);
+		param.put("limit", limit);
+		param.put("id", id);
 		
-		int amount = 10;
-        Criteria cri = new Criteria();
-        cri.setPageNum(pageNum);
-        cri.setAmount(amount);
-        
-		HashMap<String, Object> param = new HashMap<String, Object>();
-		param.put("id", loginMember.getId());
-		param.put("cri", cri);
+		List<Posts> posts = memberService.selectMyPosts(id);
 		
-		List<Posts> list = memberService.selectMyPostsList(param);
+		log.debug("posts = {}", posts);
+	
 		
-		int total = memberService.selectTotalMyPostsCountById(param);
+		// 페이지 영역
+		int totalContent = memberService.selectMyPostsTotalCount(id);
+		String url = request.getRequestURI();
+		String pagebar = BookitUtils.getPagebar(cPage, limit, totalContent, url);
 		
-		log.debug("list = {}", list);
-        Paging page = new Paging(cri, total);
-        log.debug("paging = {}", page);
-        
-        model.addAttribute("list", list);
-        model.addAttribute("page", page);
+		model.addAttribute("posts", posts);
+		model.addAttribute("pagebar", pagebar);
 	}
 	
-	@PostMapping("/deleteMyPost.do")
-	public String deleteMyPost(
-			@RequestParam int postNo, 
-			RedirectAttributes attributes) {
-		log.debug("postNo = {}", postNo);
-		HashMap<String, Object> param = new HashMap<String, Object>();
-		param.put("postNo", postNo);
-		int result = memberService.deleteMyPosts(param);
+	// 찜 목록 삭제
+	@PostMapping("/postDelete.do")
+	public String wishlistDelete(HttpServletRequest request, Map<String, Object> paramMap) {
+		int result;
+	 // = request.getParameterValues("checkedArr");
 		
-		String msg = "";
-    	if(result > 0) {
-    		msg = "해당 게시글이 삭제되었습니다.";   		
-    	}else {
-    		msg = "해당 게시글 삭제에 실패했습니다.";
-    	}
-    	attributes.addFlashAttribute("msg", msg); 
-    	return "redirect:/member/myPostsList.do?pageNum=1";
+		try {
+			boolean isCommunity = Boolean.parseBoolean(request.getParameter("isCommunity").toString());
+			int no = Integer.parseInt(request.getParameter("no").toString()); 
+			
+			log.info("isCom {}, no {}", isCommunity, no);
+			
+			//for(int i = 0; i < checkedArr.length; i++) {
+				if(isCommunity) {
+					memberService.deleteCommunityContent(no);
+				}else {
+					memberService.deleteUsedContent(no);
+				}	
+				result =1;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		
+			
+		//}
+		return "redirect:/member/myPosts.do";
 	}
-
 	
 	
 	

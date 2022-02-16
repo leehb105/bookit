@@ -15,10 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.finale.bookit.board.model.dao.CommunityDao;
+import com.finale.bookit.board.model.dao.UsedDao;
 import com.finale.bookit.board.model.vo.Posts;
 import com.finale.bookit.member.model.dao.MemberDao;
 import com.finale.bookit.member.model.vo.Address;
-import com.finale.bookit.member.model.vo.Member;
 import com.finale.bookit.member.model.vo.MemberEntity;
 import com.finale.bookit.search.model.vo.BookReview;
 import com.google.gson.JsonElement;
@@ -34,6 +35,12 @@ public class MemberServiceImpl implements MemberService {
 
 	@Autowired
 	private MemberDao memberDao;
+	
+	@Autowired
+	private CommunityDao communityDao;
+	
+	@Autowired
+	private UsedDao usedDao;
 	
 	@Override
 	public int insertMember(MemberEntity member) {
@@ -240,19 +247,26 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public List<Posts> selectMyPostsList(HashMap<String, Object> param) {
-		return memberDao.selectMyPostsList(param);
+	public int selectMyPostsTotalCount(String member) {
+		return memberDao.selectTotalPosts(member);
 	}
 
 	@Override
-	public int selectTotalMyPostsCountById(HashMap<String, Object> param) {
-		return memberDao.selectTotalMyPostsCountById(param);
+	public List<Posts> selectMyPosts(String member) {
+		return memberDao.selectAllPosts(member);
 	}
 
 	@Override
-	public int deleteMyPosts(HashMap<String, Object> param) {
-		return memberDao.deleteMyPosts(param);
+	public void deleteCommunityContent(int no) {
+		communityDao.deleteCommunityContent(no);
 	}
+
+	@Override
+	public void deleteUsedContent(int no) {
+		usedDao.deleteUsedContent(no);
+	}
+
+	
 
 
 	
