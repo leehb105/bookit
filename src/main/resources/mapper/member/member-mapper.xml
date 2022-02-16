@@ -134,4 +134,14 @@
 		update member set cash = cash + #{deposit} where id = #{targetId}
 	</update>
 	
+	<select id="selectMemberRating" resultType="_int">
+		SELECT
+		    sum(RATING)
+		FROM
+		    REVIEW r join member m
+		    on r.receiver_id = m.id
+		WHERE
+		    RECEIVER_ID = #{id}
+	</select>
+	
 </mapper>

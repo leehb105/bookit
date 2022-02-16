@@ -192,6 +192,9 @@ public class MemberController {
 		member.setCash(result);
 		Authentication newAuthentication = new UsernamePasswordAuthenticationToken(member, member.getPassword(), member.getAuthorities());
 		
+		int rating = memberService.selectMemberRating(param);
+		member.setRating(rating);
+
 		SecurityContextHolder.getContext().setAuthentication(newAuthentication);
 
 	}
