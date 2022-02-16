@@ -357,7 +357,7 @@ public class MemberController {
 		model.addAttribute("pagebar", pagebar);
 	}
 	
-	// 찜 목록 삭제
+	// 게시글 삭제
 	@PostMapping("/postDelete.do")
 	public String wishlistDelete(HttpServletRequest request, Map<String, Object> paramMap) {
 		int result;

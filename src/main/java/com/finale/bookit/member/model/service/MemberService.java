@@ -53,10 +53,5 @@ public interface MemberService {
 
 	int selectMemberRating(HashMap<String, Object> param);
 
-	List<Posts> selectMyPostsList(HashMap<String, Object> param);
-
-	int selectTotalMyPostsCountById(HashMap<String, Object> param);
-
-	int deleteMyPosts(HashMap<String, Object> param);
 
 }
