@@ -32,6 +32,8 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.finale.bookit.board.model.vo.Community;
+import com.finale.bookit.board.model.vo.Posts;
 import com.finale.bookit.common.util.BookitUtils;
 import com.finale.bookit.common.util.Criteria;
 import com.finale.bookit.common.util.Paging;
@@ -319,7 +321,54 @@ public class MemberController {
     	return "redirect:/member/reviewList.do?pageNum=1";
 		
 	}
+	//나의 게시글 
+	@GetMapping("/myPostsList.do")
+	public void myPostsList(
+			@RequestParam(defaultValue = "1") int pageNum, 
+			@AuthenticationPrincipal Member loginMember,
+			Model model) {
+		
+		int amount = 10;
+        Criteria cri = new Criteria();
+        cri.setPageNum(pageNum);
+        cri.setAmount(amount);
+        
+		HashMap<String, Object> param = new HashMap<String, Object>();
+		param.put("id", loginMember.getId());
+		param.put("cri", cri);
+		
+		List<Posts> list = memberService.selectMyPostsList(param);
+		
+		int total = memberService.selectTotalMyPostsCountById(param);
+		
+		log.debug("list = {}", list);
+        Paging page = new Paging(cri, total);
+        log.debug("paging = {}", page);
+        
+        model.addAttribute("list", list);
+        model.addAttribute("page", page);
+	}
 	
+	@PostMapping("/deleteMyPost.do")
+	public String deleteMyPost(
+			@RequestParam int postNo, 
+			RedirectAttributes attributes) {
+		log.debug("postNo = {}", postNo);
+		HashMap<String, Object> param = new HashMap<String, Object>();
+		param.put("postNo", postNo);
+		int result = memberService.deleteMyPosts(param);
+		
+		String msg = "";
+    	if(result > 0) {
+    		msg = "해당 게시글이 삭제되었습니다.";   		
+    	}else {
+    		msg = "해당 게시글 삭제에 실패했습니다.";
+    	}
+    	attributes.addFlashAttribute("msg", msg); 
+    	return "redirect:/member/myPostsList.do?pageNum=1";
+		
+	}
+
 	
 	
 	

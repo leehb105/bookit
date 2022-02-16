@@ -20,6 +20,17 @@ const headers = {};
 headers[csrfHeader] = csrfToken;
 
 function likeCheck(e){
+	
+	if(e){
+		//like
+		document.getElementById('full').style.display = 'inline-block';
+		document.getElementById('empty').style.display = 'none';		
+	}else{
+		// dislike
+		document.getElementById('full').style.display = 'none';
+		document.getElementById('empty').style.display = 'inline-block';
+	}
+	
 	$.ajax({
 
 	url: "${pageContext.request.contextPath}/board/like.do?no="+${community.communityNo}+"&isLike="+e,
@@ -28,9 +39,14 @@ function likeCheck(e){
 		no : ${community.communityNo},
 		isLike : e
 	}, 
-	
 	success(result){
-		console.log("=====> ", result);
+	
+		if(e){
+			alert("추천했습니다.")
+		}else{
+			alert("추천을 취소했습니다.")
+		}
+	
 	},
 	error(e){ console.log(e);
 	
@@ -309,14 +325,12 @@ textarea {
 	<p style="margin-bottom: 300px; margin-top:50px">${community.content}</p>	</center>
 <div class="likeReport" style="text-align: center;">
 	<c:if test="${community.userLikeCommunity == 0}">
-	<h3 id="empty" style="diaplay: inline;">
-		<a href="#" onclick="likeCheck(1);"><i class="far fa-thumbs-up"></i></a>
-	</h3>
+		<h3 id="empty" style="display: inline-block;"><a href="#" onclick="likeCheck(1);" ><i class="far fa-thumbs-up" ></i></a></h3>
+		<h3 id="full" style="display: none"><a href="#" onclick="likeCheck(0);"><i class="fas fa-thumbs-up"></i></a></h3>
 	</c:if>
-	<c:if test="${community.userLikeCommunity  > 0}">
-	<h3 id="full" style="display: inline">
-		<a href="#" onclick="likeCheck(0);"><i class="fas fa-thumbs-up"></i></a>
-	</h3>
+	<c:if test="${community.userLikeCommunity > 0}">
+		<h3 id="empty" style="display: none;"><a href="#" onclick="likeCheck(1);" ><i class="far fa-thumbs-up" ></i></a></h3>
+		<h3 id="full" style="display: inline-block"><a href="#" onclick="likeCheck(0);"><i class="fas fa-thumbs-up"></i></a></h3>
 	</c:if>
 	
 	<h3 style="display: inline">
@@ -407,7 +421,7 @@ textarea {
 									</c:when>
 								</c:choose>
 							</c:when>
-
+ 
 
 							<c:when
 								test="${comment.isParent == 'Y' && comment.deleteYn == 'Y' && comment.commentLevel == 1}">

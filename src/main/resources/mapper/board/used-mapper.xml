@@ -6,7 +6,7 @@
 	<select id="selectUsedContent" parameterType="Integer" resultMap="usedMap">
 	select 
 	u.used_board_no, u.title, u.book_state, u.trade_method, u.price, u.category, u.content, u.writer, u.read_count, TO_CHAR(u.reg_date, 'YYYY-MM-DD  HH24:MI') reg_date,
-	(select m.nickname from member m where u.writer = m.id) nickname
+	(select m.nickname from member m where u.writer = m.id) nickname, (select m.profile_image from member m where c.member_id = m.id) profile_image
 	from used_board u
 	where u.used_board_no = #{no}
 	</select>
@@ -23,6 +23,7 @@
 		<result column="read_count" property="readCount"/>
 		<result column="reg_date" property="regDate"/>
 		<result column="nickname" property="nickname"/>	
+		<result column="profile_image" property="profileImage"/>
 	</resultMap>
 	
 
