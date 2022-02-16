@@ -446,7 +446,7 @@ public class BookingController {
     	if(count > 0) {
     		msg = "대여 예약이 있어 삭제가 불가능합니다."; 
     		attributes.addFlashAttribute("msg", msg); 
-    		return "redirect:/booking/bookingDetail.do?bno=" + boardNo;
+    		return "redirect:/booking/bookingDetail.do?bno=" + boardNo + "&checkIn=&checkOut=";
     	}
     	
 		int result = bookingService.deleteBooking(param);
@@ -455,7 +455,7 @@ public class BookingController {
     	}else {
     		msg = "대여글 삭제에 실패하였습니다.";
     		attributes.addFlashAttribute("msg", msg); 
-    		return "redirect:/booking/bookingDetail.do?bno=" + boardNo;
+    		return "redirect:/booking/bookingDetail.do?bno=" + boardNo + "&checkIn=&checkOut=";
     	}
     	attributes.addFlashAttribute("msg", msg); 
     	return "redirect:/booking/myBooking.do?pageNum=1&amout=5";
