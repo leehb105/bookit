@@ -136,7 +136,7 @@
 	
 	<select id="selectMemberRating" resultType="_int">
 		SELECT
-		    sum(RATING)
+		    nvl(sum(RATING), 0)
 		FROM
 		    REVIEW r join member m
 		    on r.receiver_id = m.id
