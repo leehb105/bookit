@@ -74,6 +74,9 @@
                         <c:if test="${booking.bookReservation.status eq '분실'}">
                             <h6>분실처리일: <span><fmt:formatDate value="${booking.bookReservation.statusDate}" pattern="yyyy년 MM월 dd일" /></span></h6>
                         </c:if>
+                        <c:if test="${booking.bookReservation.status eq '대여거부'}">
+                            <h6>대여거부일: <span><fmt:formatDate value="${booking.bookReservation.statusDate}" pattern="yyyy년 MM월 dd일" /></span></h6>
+                        </c:if>
                         <h6>보증금: <span><fmt:formatNumber type="number" maxFractionDigits="3" value="${booking.deposit }" />원</span></h6>
                         <h6>일 대여료: <span><fmt:formatNumber type="number" maxFractionDigits="3" value="${booking.price }" />원</span></h6>
                     </div>
@@ -126,6 +129,9 @@
                                 <button type="button" class="btn btn-primary col-10 btn-lg" id="returnBtn" onclick="returnBook();">반납처리</button>
                             </div>
                             <div class="col-12 mb-3">
+                                <button type="button" class="btn btn-danger col-10 btn-lg" id="rejectBookingBtn" onclick="rejectBooking();" >대여거절</button>
+                            </div>
+                            <div class="col-12 mb-3">
                                 
                                 <c:set var="today" value="<%= new java.util.Date()%>" />
                                 <!-- 현재날짜 -->
@@ -143,7 +149,6 @@
                                     <button type="button" class="btn btn-danger col-10 btn-lg" id="lostBookBtn" onclick="lostBook();" disabled >분실처리</button>
 
                                 </c:if>
-
                                 
 
 
@@ -243,6 +248,17 @@
         $('#reviewEnrollFrm').submit(); 
     }
 
+    function rejectBooking(){
+        var lostConfirm = confirm('대여거부하게 되면 결제가 취소됩니다. \n 대여거부 하시겠습니까?');
+        if (lostConfirm) {
+            var url = `${pageContext.request.contextPath}/booking/rejectBooking.do`;
+            $('#actionForm').attr("action", url);
+            $('#actionForm').submit(); 
+        }else{
+            return;
+        }
+
+    }
  
 
 </script>
