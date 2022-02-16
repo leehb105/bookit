@@ -19,4 +19,5 @@ public interface SearchService {
 	public int selectTotalBookReviewCount(HashMap<String, Object> param);
 	public int selectReviewIdCount(HashMap<String, Object> param);
 	public int bookReviewEnroll(HashMap<String, Object> param);
+	public float selectAvgRating(HashMap<String, Object> param);
 }

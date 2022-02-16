@@ -111,20 +111,20 @@
 <script>
         
     window.onload = function(){
-        // const title = document.getElementsByClassName('title');
-        // const author = document.getElementsByClassName('author');
-        // console.log(title.length);
-        // for(let i = 0; i < title.length; i++){
-        //     if(title[i].innerHTML.includes('-')){
-        //         //- 하이픈(부제) 있을시에 자르기
-        //         title[i].innerHTML = title[i].innerHTML.substr(0, title[i].innerHTML.indexOf('-'));
-        //     }
-        //     if(author[i].innerHTML.includes('(지은이)')){
-        //         //작가명 (지은이)뒤로 자름 -> 뒤는 엮은이임
-        //         author[i].innerHTML = author[i].innerHTML.substr(0, author[i].innerHTML.indexOf('(지은이)'));
-        //     }
+        const title = document.getElementsByClassName('title');
+        const author = document.getElementsByClassName('author');
+        console.log(title.length);
+        for(let i = 0; i < title.length; i++){
+            if(title[i].innerHTML.includes('-')){
+                //- 하이픈(부제) 있을시에 자르기
+                title[i].innerHTML = title[i].innerHTML.substr(0, title[i].innerHTML.indexOf('-'));
+            }
+            if(author[i].innerHTML.includes('(지은이)')){
+                //작가명 (지은이)뒤로 자름 -> 뒤는 엮은이임
+                author[i].innerHTML = author[i].innerHTML.substr(0, author[i].innerHTML.indexOf('(지은이)'));
+            }
             
-        // }
+        }
 
     };
 	

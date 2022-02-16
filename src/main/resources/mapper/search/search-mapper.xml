@@ -77,6 +77,18 @@
 			<result property="discription" column="discription"/>
 		</association>
 	</resultMap>
+	
+	<select id="selectAvgRating" resultType="float">
+		SELECT
+			avg(RATING)
+		FROM 
+			BOOK_REVIEW
+		WHERE
+			DELETE_YN = 'N'
+			AND
+			ISBN13 = #{isbn}
+	</select>
+
 
 	<select id="selectTotalBookReviewCount" resultType="int">
 		SELECT

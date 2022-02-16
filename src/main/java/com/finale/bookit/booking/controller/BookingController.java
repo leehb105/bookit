@@ -43,6 +43,7 @@ import com.finale.bookit.common.util.Paging;
 import com.finale.bookit.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
+import oracle.jdbc.proxy.annotation.Post;
 
 @Controller
 @Slf4j
@@ -435,6 +436,7 @@ public class BookingController {
     	//삭제할 수 없는 경우
     	if(count > 0) {
     		msg = "대여 예약이 있어 삭제가 불가능합니다."; 
+    		attributes.addFlashAttribute("msg", msg); 
     		return "redirect:/booking/bookingDetail.do?bno=" + boardNo;
     	}
     	
@@ -545,6 +547,36 @@ public class BookingController {
     	return "redirect:/booking/lentDetail.do?resNo=" + resNo;
     }
     
+    @PostMapping("/rejectBooking.do")
+    public String rejectBooking(
+    		@RequestParam int resNo, 
+    		@RequestParam int deposit,
+    		@RequestParam String borrowerId,
+    		Model model,
+    		@AuthenticationPrincipal Member member,
+			RedirectAttributes attributes) {
+    	log.debug("resNo = {}", resNo);
+    	log.debug("deposit = {}", deposit);
+    	log.debug("borrowerId = {}", borrowerId);
+    	
+    	HashMap<String, Object> param = new HashMap<String, Object>();
+    	param.put("id",  member.getId());
+    	param.put("resNo", resNo);
+    	param.put("deposit", deposit);
+    	param.put("borrowerId", borrowerId);
+    	param.put("status", "대여거부");
+    	
+    	int result = bookingService.updateBookResStatus(param);
+    	String msg = "";
+    	if(result > 0) {
+    		msg = "대여 거부가 완료되었습니다.";   		
+    	}else {
+    		msg = "대여 거부 실패하였습니다.";
+    	}
+    	
+    	attributes.addFlashAttribute("msg", msg); 
+    	return "redirect:/booking/lentDetail.do?resNo=" + resNo;
+    }
     public String MakeStr(String str1,String str2) {
     	
     	StringBuilder sb = new StringBuilder();

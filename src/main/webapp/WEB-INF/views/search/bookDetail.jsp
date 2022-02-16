@@ -4,6 +4,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<sec:authentication property="principal" var="loginMember"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <c:if test="${not empty msg}">
     <script>
@@ -97,7 +100,9 @@
                             </form>
                             <div class="comment_area mt-50 clearfix">
                                 <ol>
-                                    <h2>리뷰</h2>
+                                    <h2>
+                                        리뷰평점  &nbsp; <span style="color: #1cc3b2;">${avg}</span> 점
+                                    </h2>
                                     <hr class="my-2">
                                     <!-- Single Comment Area -->
                                     <c:forEach var="review" items="${list}" varStatus="status">
@@ -115,9 +120,12 @@
                                                     
                                                 </div>
                                                 <!-- Comment Meta -->
-                                                <div class="comment-meta">
+                                                <div class="comment-meta col-3">
                                                     <a href="#" class="post-date"><fmt:formatDate value="${review.regDate}" pattern="yyyy년 MM월 dd일"/></a>
-                                                    <h5>${review.member.nickname}(${review.member.id})</h5>
+                                                    <h5>${review.member.nickname}(${review.member.id})
+                                                    
+                                                        
+                                                    </h5> 
                                                     <!-- 리뷰 별점처리 -->
                                                     <div class="star-ratings">
                                                         <div 
@@ -138,7 +146,7 @@
                                                                 <span>★</span><span>★</span><span>★</span><span>★</span>
                                                             </c:when>
                                                             <c:when test="${review.rating == 5}">
-                                                                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                                                                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
                                                             </c:when>
                                                         </c:choose>
                                                         </div>
@@ -149,7 +157,15 @@
 
 
                                                     <p>${review.content}</p>
+                                                    
                                                 </div>
+                                                <c:if test="${review.member.id eq loginMember.id}">
+                                                    <form:form method="post" id="delReviewFrm" action="${pageContext.request.contextPath}/search/bookReviewDelete.do">
+                                                        <button type="submit" class="btn btn-outline-success mt-25">삭제</button>
+                                                        <input type="hidden" name="reviewNo" value="${review.reviewNo}">
+                                                        <input type="hidden" name="isbn" value="${book.isbn13}">
+                                                    </form:form>
+                                                </c:if>
                                             </div>
                                         </li>
                                     </c:forEach>
@@ -199,6 +215,9 @@
     const content = document.getElementById('content');
     const enrollBtn = document.getElementById('enrollBtn');
     let starValue = 1;
+
+    
+
     $(document).ready(function() {
         enrollBtn.disabled = 'false'; 
 
@@ -242,6 +261,10 @@
 
         // let input = document.getElementById('1-star');
         console.log(input);
+
+     
+
+        
 
     });
 

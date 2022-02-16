@@ -30,6 +30,7 @@ import com.finale.bookit.booking.model.vo.BookInfo;
 import com.finale.bookit.common.util.BookitUtils;
 import com.finale.bookit.common.util.Criteria;
 import com.finale.bookit.common.util.Paging;
+import com.finale.bookit.member.model.service.MemberService;
 import com.finale.bookit.member.model.vo.Member;
 import com.finale.bookit.search.model.service.SearchService;
 import com.finale.bookit.search.model.service.SearchServiceImpl;
@@ -49,6 +50,8 @@ public class SearchController {
 	private SearchService searchService;
 	@Autowired
 	private BookingService bookingService;
+	@Autowired
+	private MemberService memberService;
 
 	@GetMapping("/booking/bookSearch.do")
 //	@ResponseBody
@@ -232,16 +235,24 @@ public class SearchController {
     	log.debug("list = {}", list);
     	
     	int total = searchService.selectTotalBookReviewCount(param);
+    	float avg = 0;
+    	if(total > 0) {
+    		avg = searchService.selectAvgRating(param);
+    		avg = Math.round(avg*10)/10.0f;
+    		log.debug("avg = {}", avg);
+    	}
 		Paging page = new Paging(cri, total);
 		log.debug("paging = {}", page);
 		
 		int idResult = searchService.selectReviewIdCount(param);
 		log.debug("idResult = {}", idResult);
-         
+		 
+		
         model.addAttribute("list", list);
         model.addAttribute("page", page);
 		model.addAttribute("book", book);
 		model.addAttribute("idResult", idResult);
+		model.addAttribute("avg", avg);
 	}
 	
 	@PostMapping("/search/bookReviewEnroll.do")
@@ -272,6 +283,31 @@ public class SearchController {
     	attributes.addFlashAttribute("msg", msg);
     	
     	return "redirect:" + url;
+	}
+	
+	@PostMapping("/search/bookReviewDelete.do")
+	public String reviewDelete(
+			@RequestParam int reviewNo, 
+			@RequestParam String isbn, 
+			HttpServletRequest request,
+			RedirectAttributes attributes) {
+		log.debug("reviewNo = {}", reviewNo);
+		HashMap<String, Object> param = new HashMap<String, Object>();
+		param.put("reviewNo", reviewNo);
+		int result = memberService.bookReviewDelete(param);
+		
+		String msg = "";
+    	if(result > 0) {
+    		msg = "도서 리뷰가 삭제되었습니다.";   		
+    	}else {
+    		msg = "도서 리뷰삭제를 실패했습니다.";
+    	}
+    	String referer = (String)request.getHeader("REFERER");
+    	log.debug("referer = {}", referer);
+    		
+    	attributes.addFlashAttribute("msg", msg); 
+    	return "redirect:/search/bookDetail.do?isbn=" + isbn + "&pageNum=1&amout=1";
+		
 	}
 }
 
