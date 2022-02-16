@@ -35,7 +35,7 @@
                     <h5>
                         ${loginMember.nickname}
                     </h5>
-                    <p class="proile-rate">나의 평점 : <span>38점</span></p>
+                    <p class="proile-rate">나의 평점 : <span><fmt:formatNumber type="number" maxFractionDigits="3" value="${loginMember.rating}" />점</span></span></p>
                     <p class="proile-point">나의 북토리 : <span><fmt:formatNumber type="number" maxFractionDigits="3" value="${loginMember.cash}" />토리</span></p>
                     <form method="get" action="${pageContext.request.contextPath}/member/editProfile.do">
                     	<button class="profile-edit-btn">프로필 수정</button>
@@ -48,7 +48,7 @@
                     <h5>
                         ${sessionScope.kakaoN}
                     </h5>
-                    <p class="proile-rate">나의 평점 : <span>38점</span></p>
+                    <p class="proile-rate">나의 평점 : <span><fmt:formatNumber type="number" maxFractionDigits="3" value="${sessionScope.kakaoCash}" />점</span></p>
                     <p class="proile-point">나의 북토리 : <span><fmt:formatNumber type="number" maxFractionDigits="3" value="${sessionScope.kakaoCash}" />토리</span></p>
                     <form method="get" action="${pageContext.request.contextPath}/member/editProfile.do">
                     <button class="profile-edit-btn">프로필 수정</button>

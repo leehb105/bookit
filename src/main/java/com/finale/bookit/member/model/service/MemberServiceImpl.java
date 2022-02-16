@@ -245,6 +245,11 @@ public class MemberServiceImpl implements MemberService {
 	public int bookReviewDelete(HashMap<String, Object> param) {
 		return memberDao.bookReviewDelete(param);
 	}
+	
+	@Override
+	public int selectMemberRating(HashMap<String, Object> param) {
+		return memberDao.selectMemberRating(param);
+	}
 
 	@Override
 	public int selectMyPostsTotalCount(String member) {

@@ -31,7 +31,7 @@ public class Member extends MemberEntity implements Serializable, UserDetails {
 	private static final long serialVersionUID = 1L;
 	
 	private List<SimpleGrantedAuthority> authorities;
-	
+	private int rating;
 	
 
 
@@ -67,10 +67,11 @@ public class Member extends MemberEntity implements Serializable, UserDetails {
 
 	public Member(String id, String password, String email, String nickname, String name, String phone, boolean enabled,
             Date enrollDate, String reportYn, int cash, String profileImage, String searchAddress, String roadAddress, String jibunAddress,
-            float latitude, float longitude, List<SimpleGrantedAuthority> authorities) {
+            float latitude, float longitude, List<SimpleGrantedAuthority> authorities, int rating) {
         super(id, password, email, nickname, name, phone, enabled, enrollDate, reportYn, cash, profileImage, searchAddress,
                 roadAddress, jibunAddress, latitude, longitude);
         this.authorities = authorities;
+        this.rating = rating;
     }
 	
 	

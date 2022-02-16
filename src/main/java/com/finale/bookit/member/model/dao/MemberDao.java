@@ -41,6 +41,8 @@ public interface MemberDao {
 
 	int selectTotalBookReviewCountById(HashMap<String, Object> param);
 
+	int selectMemberRating(HashMap<String, Object> param);
+
 	int selectMemberCash(HashMap<String, Object> param);
 
 	int bookReviewDelete(HashMap<String, Object> param);

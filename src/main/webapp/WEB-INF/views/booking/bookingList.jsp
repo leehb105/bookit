@@ -24,7 +24,7 @@
     <div class="roberto-news-area section-padding-30-0 mt-5">
         <div class="container">
             <div class="row">
-                <div class="col-12">
+                <div class="col-12 mb-100">
                     <!-- Single Booking List Area -->
 					<c:forEach var="booking" items="${list }">     
 						<hr class="my-2 wow fadeInUp">              
@@ -38,7 +38,7 @@
 	                        <div class="post-content">
 	                            <!-- List Meta -->
 	                            <!-- List Title -->
-	                            <a href="${pageContext.request.contextPath}/booking/bookingDetail.do?bno=${booking.boardNo}" class="post-title">${booking.bookInfo.title }</a>
+	                            <a href="${pageContext.request.contextPath}/booking/bookingDetail.do?bno=${booking.boardNo}&checkIn=${checkIn}&checkOut=${checkOut}" class="post-title">${booking.bookInfo.title }</a>
 	                            <!-- List Author, publisher, pubdate -->
 	                            <p>${booking.bookInfo.author} 저 | ${booking.bookInfo.publisher} | <fmt:formatDate value="${booking.bookInfo.pubdate }" pattern="yyyy년 MM월"/></p>
 	                            
@@ -69,7 +69,7 @@
 	                    </div>
 					</c:forEach> 
 					<c:if test="${empty list}">
-						<div class="col-12 md-5">
+						<div class="col-12 mb-100">
 							<h2>검색 결과가 없습니다.</h2>
 						</div>
 						

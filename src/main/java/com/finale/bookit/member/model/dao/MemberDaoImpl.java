@@ -99,6 +99,27 @@ public class MemberDaoImpl implements MemberDao {
 		return session.update("search.bookReviewDelete", param);
 	}
 
+	
+	@Override
+	public int selectMemberRating(HashMap<String, Object> param) {
+		return session.selectOne("member.selectMemberRating", param);
+	}
+
+	public List<Posts> selectMyPostsList(HashMap<String, Object> param) {
+		return session.selectList("search.selectMyPostsList", param);
+	}
+
+	@Override
+	public int selectTotalMyPostsCountById(HashMap<String, Object> param) {
+		return session.selectOne("search.selectTotalMyPostsCountById", param);
+	}
+
+	@Override
+	public int deleteMyPosts(HashMap<String, Object> param) {
+		return session.update("search.deleteMyPosts", param);
+	}
+
+
 	@Override
 	public int chargeMemberCash(HashMap<String, Object> param) {
 		return session.update("member.chargeMemberCash", param);
