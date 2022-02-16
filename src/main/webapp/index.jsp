@@ -233,6 +233,7 @@ $(document).ready(function(){
     </section>
     <!-- Welcome Area End -->
 
+
     <!-- Booking Area Start -->
     <section class="roberto-about-area section-padding-100-0">
         <!-- Hotel Search Form Area -->
@@ -270,45 +271,8 @@ $(document).ready(function(){
                 </div>
             </div>
         </div>
-
-        <!-- <div class="container mt-100">
-            <div class="row align-items-center">
-                <div class="col-12 col-lg-6">
-                    Section Heading
-                    <div class="section-heading wow fadeInUp" data-wow-delay="100ms">
-                        <h6>About Us</h6>
-                        <h2>Welcome to <br>Roberto Hotel Luxury</h2>
-                    </div>
-                    <div class="about-us-content mb-100">
-                        <h5 class="wow fadeInUp" data-wow-delay="300ms">With over 340 hotels worldwide, NH Hotel Group offers a wide variety of hotels catering for a perfect stay no matter where your destination.</h5>
-                        <p class="wow fadeInUp" data-wow-delay="400ms">Manager: <span>Michen Taylor</span></p>
-                        <img src="img/core-img/signature.png" alt="" class="wow fadeInUp" data-wow-delay="500ms">
-                    </div>
-                </div>
-
-                <div class="col-12 col-lg-6">
-                    <div class="about-us-thumbnail mb-100 wow fadeInUp" data-wow-delay="700ms">
-                        <div class="row no-gutters">
-                            <div class="col-6">
-                                <div class="single-thumb">
-                                    <img src="img/bg-img/13.jpg" alt="">
-                                </div>
-                                <div class="single-thumb">
-                                    <img src="img/bg-img/14.jpg" alt="">
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="single-thumb">
-                                    <img src="img/bg-img/15.jpg" alt="">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-    </section>
     <!-- Booking Area End -->
+
 
     <!-- BestSeller Area Start -->
     <section class="roberto-project-area">
@@ -352,7 +316,8 @@ $(document).ready(function(){
     </section>
     <!-- BestSeller Area End -->
 
-    <!-- Blog Area Start -->
+
+    <!-- Collection Area Start -->
     <section class="roberto-blog-area section-padding-100-0">
         <div class="container">
             <div class="row">
@@ -370,50 +335,8 @@ $(document).ready(function(){
             </div>
         </div>
     </section>
-    <!-- Blog Area End -->
+    <!-- Collection Area End -->
 
-    <!-- Call To Action Area Start
-    <section class="roberto-cta-area">
-        <div class="container">
-            <div class="cta-content bg-img bg-overlay jarallax" style="background-image: url(img/bg-img/1.jpg);">
-                <div class="row align-items-center">
-                    <div class="col-12 col-md-7">
-                        <div class="cta-text mb-50">
-                            <h2>Contact us now!</h2>
-                            <h6>Contact (+12) 345-678-9999 to book directly or for advice</h6>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-5 text-right">
-                        <a href="#" class="btn roberto-btn mb-50">Contact Now</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    Call To Action Area End
-
-    Partner Area Start
-    <div class="partner-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="partner-logo-content d-flex align-items-center justify-content-between wow fadeInUp" data-wow-delay="300ms">
-                        Single Partner Logo
-                        <a href="#" class="partner-logo"><img src="img/core-img/p1.png" alt=""></a>
-                        Single Partner Logo
-                        <a href="#" class="partner-logo"><img src="img/core-img/p2.png" alt=""></a>
-                        Single Partner Logo
-                        <a href="#" class="partner-logo"><img src="img/core-img/p3.png" alt=""></a>
-                        Single Partner Logo
-                        <a href="#" class="partner-logo"><img src="img/core-img/p4.png" alt=""></a>
-                        Single Partner Logo
-                        <a href="#" class="partner-logo"><img src="img/core-img/p5.png" alt=""></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <!-- Partner Area End -->
 
 <script>
     //도서 명 input
