@@ -488,7 +488,7 @@
 			AND
 			CURRENT_DATE BETWEEN br.START_DATE AND br.END_DATE
 			AND
-			br.status = '대여거부'
+			br.status = '대여중'
 	</select>
 	
 	

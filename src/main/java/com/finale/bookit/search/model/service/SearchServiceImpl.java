@@ -235,6 +235,12 @@ public class SearchServiceImpl implements SearchService{
 		return searchDao.bookReviewEnroll(param);
 	}
 
+
+	@Override
+	public float selectAvgRating(HashMap<String, Object> param) {
+		return searchDao.selectAvgRating(param);
+	}
+
 	
 
 
