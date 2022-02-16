@@ -63,8 +63,10 @@ div#board-container label.custom-file-label{text-align:left;}
                 <div class="col-12">
                 
              <div class="section-heading text-left wow fadeInUp" data-wow-delay="100ms">
-                 <input type="button" class="btn btn-outline-danger w-10 float-right" style="margin-left: 5px;" value="삭제" id="delete" onclick="updateDelete();">  
+                      <c:if test="${used.writer == loginMember.id}">
+                 <input type="button" class="btn btn-outline-danger w-10 float-right" style="margin-left: 5px;" value="삭제" id="delete" onclick="usedDelete();">  
 	<input type="submit" class="btn btn-outline-success w-10 float-right" value="수정" id="modify" onclick="updateUsed();"> 
+                      </c:if>
                         <h3>상세 보기</h3>
                     </div>
                 </div>
@@ -74,15 +76,24 @@ div#board-container label.custom-file-label{text-align:left;}
 	<div class="float-right">
 	<span style="font-size:15px; margin-left:10px">
 	<img src="${pageContext.request.contextPath}/resources/img/profile/${used.profileImage}" height="30" width="30" style="border-radius: 20px; margin-right:5px;"/>
-		${community.nickname} 
+		${used.nickname} 
 	<span style="font-size:15px; margin-left:10px">조회수 : ${used.readCount} 작성일 : <fmt:formatDate value="${used.regDate}" pattern="yy/MM/dd HH:mm" /> </span>
-	</span></h5>
+	</span>
+	
+	<form:form
+                    action="${pageContext.request.contextPath}/chatroom/create"
+                    method="post">
+                    <input type="hidden" name = "writer" value="${used.nickname}"/>
+                    <input type="button" class="btn btn-outline-success"  value="채팅" />
+                </form:form>
+	</h5>
    
 	<hr>
 	<div >
-	<p>희망 가격 : ${used.price} 원/일</p>
-	<p>도서 상태 : ${used.bookState} </p>
-	<p>거래 방법 : ${used.tradeMethod}</p>
+	<p>
+	<span><strong>희망 가격 :</strong></span><span> ${used.price} <strong>원/일</strong></span><p>
+	<p><span><strong>도서 상태 :</strong></span><span> ${used.bookState} </span>
+	<p><span><strong>거래 방법 :</strong></span><span>${used.tradeMethod}</span>
 
 </div>
 </div>
@@ -92,18 +103,19 @@ div#board-container label.custom-file-label{text-align:left;}
 	<c:if test="${!empty used.files}">
 		<c:forEach items="${used.files}" var="file">
 			<img
-				src="${pageContext.request.contextPath}/resources/img/board/${files.renamedFilename}">
+				src="${pageContext.request.contextPath}/resources/img/board/${file.renamedFilename}">
 		</c:forEach>
 	</c:if>
 	<br>
 	<div class="container float-center">
 	<p style="margin-bottom: 300px; margin-top:50px">${used.content}</p>
 </div></center>
+<div class="container">
 	<!-- 파일 다운로드 -->
 	<c:forEach items="${used.files}" var="files" varStatus="vs">
 		<a
 			href="${pageContext.request.contextPath}/board/fileDownload.do?fileNo=${files.no}"
-			role="button" class="btn btn-outline-success btn-block"> 첨부파일
+			> 첨부파일
 			${vs.count} - ${files.originalFilename}</a>
 		<hr>
 	</c:forEach>
@@ -116,7 +128,7 @@ div#board-container label.custom-file-label{text-align:left;}
 	</h3>
 
 </div>
-<br>
+<br></div>
 <!-- 게시글 신고 등록 Modal -->
 <div class="modal fade" id="reportBoardEnrollModal" tabindex="-1"
 	role="dialog" aria-labelledby="reportBoardEnrollModalLabel"

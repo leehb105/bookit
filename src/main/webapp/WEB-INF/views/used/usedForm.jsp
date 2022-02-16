@@ -21,7 +21,7 @@ function boardValidate(){
 }
 
 $(() => {
-	$("[name=upFile]").change((e) => {
+	$("[name=upFiles]").change((e) => {
 		const file = $(e.target).prop('files')[0];
 		const $label = $(e.target).next();
 		
@@ -49,8 +49,8 @@ $(() => {
         <input type="text" id="title" name="title" placeholder="제목">
         
         <select id="category" name="category">
-          <option value="sell">팝니다</option>
-          <option value="buy">삽니다</option>
+          <option value="팝니다">팝니다</option>
+          <option value="삽니다">삽니다</option>
         </select>
         
         <div class="select">
@@ -61,22 +61,22 @@ $(() => {
          
          <div class="trade_method">
           <label for="method">거래 방법: </label>
-          <input type="checkbox" id="direct" name="trade_method" value="직거래" checked>
+          <input type="checkbox" id="direct" name="tradeMethod" value="직거래" checked>
   		  <label for="direct">직거래</label>
-  		  <input type="checkbox" id="post" name="trade_method" value="" checked>
+  		  <input type="checkbox" id="post" name="tradeMethod" value="택배" checked>
   		  <label for="post">택배</label>
         </div>
         
         <div class="book-state">
         <label for="method">책 상태 : </label>
-  		<input type="radio" id="A" name="book-state" value="최상" checked>
-  		<label for="A">최상</label>
-  		<input type="radio" id="B" name="book-state" value="상" checked>
-  		<label for="B">상</label>
-  		<input type="radio" id="C" name="book-state" value="중" checked>
-  		<label for="C">중</label>
-  		<input type="radio" id="D" name="book-state" value="하" checked>
-  		<label for="D">하</label>
+  		<input type="radio" id="A" name="bookState" value="최상" checked>
+  		<label for="최상">최상</label>
+  		<input type="radio" id="B" name="bookState" value="상" checked>
+  		<label for="상">상</label>
+  		<input type="radio" id="C" name="bookState" value="중" checked>
+  		<label for="중">중</label>
+  		<input type="radio" id="D" name="bookState" value="하" checked>
+  		<label for="하">하</label>
 		</div>
 		</div>
         
@@ -85,12 +85,12 @@ $(() => {
 		    <span class="input-group-text">첨부파일</span>
 		  </div>
 		  <div class="custom-file">
-		    <input type="file" class="custom-file-input" name="upFile" id="upFile1" multiple>
+		    <input type="file" class="custom-file-input" name="upFiles" id="upFile1" multiple>
 		    <label class="custom-file-label" for="upFile1">파일을 선택하세요</label>
 		  </div>
 		  <div class="custom-file">
-		    <input type="file" class="custom-file-input" name="upFile" id="upFile1" multiple>
-		    <label class="custom-file-label" for="upFile1">파일을 선택하세요</label>
+		    <input type="file" class="custom-file-input" name="upFiles" id="upFile2" multiple>
+		    <label class="custom-file-label" for="upFile2">파일을 선택하세요</label>
 		  </div>
 		</div>
         <textarea id="content" name="content" placeholder="내용" style="height:250px"></textarea>

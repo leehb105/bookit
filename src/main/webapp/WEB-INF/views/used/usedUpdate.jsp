@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/used.css"/>
 <script>
 function goUsedList(){
-	location.href = "${pageContext.request.contextPath}/board/used.do";
+	location.href = "${pageContext.request.contextPath}/used/used.do";
 }
 function boardValidate(){
 	var $content = $("[name=content]");

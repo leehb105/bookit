@@ -14,7 +14,7 @@ public interface UsedService {
 
 	int getTotalUsedContent();
 
-	void deleteUsedContent(int no, String id);
+	void deleteUsedContent(int no, String id) throws Exception;
 
 	void insertUsed(Used used);
 	

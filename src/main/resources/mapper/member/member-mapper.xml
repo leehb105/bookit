@@ -134,6 +134,52 @@
 		update member set cash = cash + #{deposit} where id = #{targetId}
 	</update>
 	
+	<select id="selectMyPosts" resultType="posts" parameterType="string">
+		select a.*  from
+(
+      select '커뮤니티' as tableName, c.community_no as no, c.category as category, c.title as title, c.reg_date as regDate
+     from community c
+     join member m on c.member_id = m.id
+     where c.member_id = #{memberId}
+     and c.delete_yn = 'N' 
+   
+   
+     union all
+	
+	select '중고' as tableName , u.used_board_no as no, u.category as category, u.title as title, u.reg_date as regDate
+     from used_board u
+     join member m on u.writer = m.id
+     where u.writer = #{memberId}
+     and u.delete_yn = 'N'
+     ) a
+     
+     order by regDate desc
+	
+	</select>
+	<select id="selectMyPostsTotalCount" resultType="int" parameterType="string">
+		select count(*) from (
+      select '커뮤니티' as tableName, c.community_no as no, c.category as category, c.title as title, c.reg_date as regDate
+     from community c
+     join member m on c.member_id = m.id
+     where c.member_id = #{memberId}
+     and c.delete_yn = 'N' 
+   
+     union all
+	
+	select '중고'  as tableName , u.used_board_no as no, u.category as category, u.title as title, u.reg_date as regDate
+     from used_board u
+     join member m on u.writer = m.id
+     where u.writer = #{memberId}
+     and u.delete_yn = 'N'
+     ) a
+	</select>
+	<update id="deleteCommunityContent" parameterType="Integer">
+		update community set delete_yn = 'Y' where community_no = #{communiy_no}
+	</update>
+	<update id="deleteUsedContent" parameterType="Integer">
+		update used_board set delete_yn = 'Y' where used_board_no = #{used_board_no}
+	</update>
+
 	<select id="selectMemberRating" resultType="_int">
 		SELECT
 		    nvl(sum(RATING), 0)
@@ -143,5 +189,6 @@
 		WHERE
 		    RECEIVER_ID = #{id}
 	</select>
+
 	
 </mapper>

@@ -97,8 +97,8 @@ function showUpdateCommentFrm(e){
 }
 
 //대댓글 폼 출력 
-function writeReComment(){
-	 document.querySelector('.reCommentInput').style.display = 'block';
+function writeReComment(e){
+	 document.querySelector('.reCommentInput_'+e).style.display = 'block';
 }
 //대댓글 입력 
 function btnReCommentSubmit(e){
@@ -138,15 +138,22 @@ function deleteComment(no){
 		var isDelete=confirm("댓글을 정말 삭제하겠습니까");
 		if(isDelete){
 			$.ajax({
-				url:"deleteComment.do",
-				method:"post",
-				data:{"no":no}, 
-				success:function(responseData){
-					if(responseData.isSuccess){
-						
-					}
+				url: `${pageContext.request.contextPath}/board/deleteComment.do`+"?no="+no
+				, headers : headers
+			
+				, type : 'POST'
+				,  contentType: 'application/json;charset=UTF-8'
+				, success: function(result){
+					console.log(result)
+					
+					
+				}
+				, error: function(error){
+					console.log("에러 : " + error);
 				}
 			});
+			
+		
 		}
 	}
 
@@ -252,6 +259,8 @@ function adjustHeight() {
 	var textEleHeight = textEle.prop('scrollHeight');
 	textEle.css('height', textEleHeight);
 };
+
+
 </script>
 <style>
 div#board-container {
@@ -290,10 +299,12 @@ textarea {
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                
-             <div class="section-heading text-left wow fadeInUp" data-wow-delay="100ms">
+                 <div class="section-heading text-left wow fadeInUp" data-wow-delay="100ms">
+                <c:if test="${community.memberId == loginMember.id}">
+  
                  <input type="button" class="btn btn-outline-danger w-10 float-right" style="margin-left: 5px;" value="삭제" id="delete" onclick="communityDelete();">  
 	<input type="submit" class="btn btn-outline-success w-10 float-right" value="수정" id="modify" onclick="updateCommunity();"> 
+                        </c:if>
                         <h3>상세 보기</h3>
                     </div>
                 </div>
@@ -339,13 +350,14 @@ textarea {
 	</h3>
 
 </div>
+<br>
 	<!-- 파일 다운로드 -->
 	<c:forEach items="${community.file}" var="file" varStatus="vs">
 		<a
 			href="${pageContext.request.contextPath}/board/fileDownload.do?fileNo=${file.no}"
-			role="button" class="btn btn-outline-success btn-block"> 첨부파일
+			 > 첨부파일
 			${vs.count} - ${file.originalFilename}</a>
-		<hr>
+		
 	</c:forEach>
 </div>
 	<hr>
@@ -358,29 +370,33 @@ textarea {
 					<tr data-no="${comment.no}">
 						<c:choose>
 							<c:when test="${comment.deleteYn == 'N'}">
-								<td>${comment.nickname}</td>
-								<td><span>${comment.content}<fmt:formatDate value="${comment.regDate}"
-										pattern="yy/MM/dd HH:mm" /></span></td>
+							<td>
+							
+								<span style="display:inline-block; width:100px; "><img src="${pageContext.request.contextPath}/resources/img/profile/${community.profileImage}" height="30" width="30" style="border-radius: 20px; margin-right:5px;"/>${comment.nickname}</span></td>
+								<td><span style="display:inline-block; width:700px; margin-left: 30px;">${comment.content}
+								</span></td>
+								<td><fmt:formatDate value="${comment.regDate}"
+										pattern="yy/MM/dd HH:mm" /></td>
 								<td><c:if test="${comment.writer != loginMember.id}">
 										<button class="btn btn-light"
-											value="${comment.no}" onclick="writeReComment();"
-											style="padding: 5px; margin-top: 20px; margin-left:700px;">답글</button>
-
+											value="${comment.no}" onclick="writeReComment(${comment.no});"
+											style="padding: 5px; margin-top: 20px; margin-left:50px;">답글</button>
+										
 										<form>
 											<input type="hidden" name="no"value="${community.communityNo}" /> 
 												<input type="hidden"name="commentLevel" value="2" /> 
-												<input type="hidden"name="commentRef" value="0" />
-												
-											<div class="reCommentInput" style="display: none;">
-												<textarea id="reCommentContent" name="content" cols="100"
+									
+											<div class="reCommentInput_${comment.no}" style="display: none;">
+												<textarea id="reCommentContent" name="content" cols="500"
 													rows="3" style="resize: none;" placeholder="댓글을 입력해주세요"></textarea>
-												<button id="reComment" onClick="btnReCommentSubmit(${comment.no})"
+											<button id="reComment" onClick="btnReCommentSubmit(${comment.no})"
 											 class="btn btn-icon-split"
 													style="padding: 5px; margin-top: 20px;">등록</button>
 												<br />
 												
 											</div>
 										</form>
+									
 
 									</c:if> <c:if test="${comment.writer == loginMember.id}">
 
@@ -395,6 +411,7 @@ textarea {
 												<input type="hidden" name="num" value="${comment.no}" />
 												<textarea class="comment_content_${comment.no}">${comment.content}</textarea>
 												<br>
+												<!-- 댓글 수정 삭제 -->
 												<button type="button" id="updateComment"
 													onClick="updateCommentEvent(${comment.no});"
 													 class="btn btn-link"
@@ -404,7 +421,7 @@ textarea {
 										</div>
 
 										<button class="btn btn-light text-danger"
-											onclick="deleteComment();" value="${comment.no}"
+											onclick="deleteComment(${comment.no});" value="${comment.no}"
 											style="padding: 5px; margin-top: 20px; font-color:red;">삭제</button>
 
 									</c:if></td>
@@ -444,7 +461,7 @@ textarea {
 		</c:choose>
 	</table>
 	<br>
-									
+							<hr>			
 	<!--  댓글이 없으면 = 출력 안함 -->
 	<!-- 댓글입력칸 -->
 <div class="roberto-contact-form mb-50" >
@@ -457,12 +474,12 @@ textarea {
 		<div id="comment-input" class="float-left" style="display:inline-block;">
 					<div class="col-12 wow fadeInUp form-inline form-group"
 							data-wow-delay="100ms">		
-							<div class="col-lg-6">
-<textarea id="comment_content" name="content" cols="105" rows="3" style="resize: none; width:70%" placeholder="댓글을 입력해주세요"></textarea>
+						<center>
+<textarea id="comment_content" name="content" cols="600" rows="3" style="resize: none; width:80%" placeholder="댓글을 입력해주세요"></textarea>
 <div class="btn float-right">
 			<button type="submit" onClick="btnCommentSubmit()"
 				 class="btn btn-light float-right text-primary"
-				>등록</button></div></div>
+				>등록</button></div></div></center>
 </div>
 </div>
 	</form>

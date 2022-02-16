@@ -31,7 +31,7 @@ public class Used implements Serializable{
 	
 	private String writer;
 	
-	private boolean deleteYn;
+	private String deleteYn;
 	
 	private int price;
 	
