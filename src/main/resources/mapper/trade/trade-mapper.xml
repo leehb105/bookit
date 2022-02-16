@@ -38,5 +38,14 @@
 			writer = #{id} and status in ('대여중', '대여거부', '반납완료', '분실', '대기')
 		order by res_no desc
 	</select>
+	
+	<select id="selectOneTrade" resultType="trade">
+		select
+			price, deposit
+		from
+			my_trade_history
+		where
+			res_no = #{resNo}
+	</select>
 
 </mapper>

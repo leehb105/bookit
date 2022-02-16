@@ -33,8 +33,8 @@ public class UsedDaoImpl implements UsedDao{
 	}
 	
 	@Override
-	public void updateUsedContent(Map<String, Object> param) {
-		session.update("used.updateUsedContent", param);
+	public void updateUsedContent(Used used) {
+		session.update("used.updateUsedContent", used);
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class UsedDaoImpl implements UsedDao{
 
 	@Override
 	public int insertUsed(Used used) {
-		return session.insert("used.inserUsed", used);
+		return session.insert("used.insertUsed", used);
 	}
 
 	@Override
@@ -67,7 +67,7 @@ public class UsedDaoImpl implements UsedDao{
 
 	@Override
 	public int insertUsedAttachment(UsedAttachment attach) {
-		return session.insert("used.inserUsedAttachment", attach);
+		return session.insert("used.insertUsedAttachment", attach);
 	}
 
 	@Override
@@ -83,6 +83,11 @@ public class UsedDaoImpl implements UsedDao{
 	@Override
 	public int getSearchUsedContentCount(Map<String, Object> param) {
 		return session.selectOne("used.getSearchUsedContentCount", param);
+	}
+
+	@Override
+	public int updateReadCount(int no) {
+		return session.update("used.updateReadCount", no);
 	}
 
 

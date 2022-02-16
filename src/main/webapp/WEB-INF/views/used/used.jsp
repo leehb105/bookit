@@ -3,11 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="게시판" name="title" />
-</jsp:include>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/used.css" />
+<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <style>
 /*글쓰기버튼*/
 input#btn-add {
@@ -20,23 +16,39 @@ tr[data-no] {
 }
 </style>
 <script>
+var category = "titleAndContent";
+var keyword = "파일";
+
+function searchUsed(){
+	var searchType = $("select[name=searchType]").val();
+	var keyword = $("input[name=keyword]").val();
+		
+	console.log("searchType: "+ searchType, " keyword: ", keyword);	
+	
+	location.href = "${pageContext.request.contextPath}/used/search.do?searchType="+searchType+"&keyword="+keyword
+}
+function goCommunityForm(){
+	location.href = "${pageContext.request.contextPath}/used/usedForm.do";
+}
+
+
 function goUsedForm(){
-	location.href = "${pageContext.request.contextPath}/board/usedForm.do";
+	location.href = "${pageContext.request.contextPath}/used/usedForm.do";
 }
 $(() => {
 	$("tr[data-no]").click((e) => {
 		const $tr = $(e.target).parent();
 		const no = $tr.data("no");
-		location.href = `${pageContext.request.contextPath}/board/usedContent.do?no=\${no}`;
+		location.href = `${pageContext.request.contextPath}/used/usedContent.do?no=\${no}`;
 	});
 });
 </script>
 <section id="board-container" class="container">
-	<input type="button" value="글쓰기" id="btn-add"
-		class="btn btn-outline-success" onclick="goUsedForm();"
-		style="margin-top: 2%;" />
+	<input 
+		type="button" value="글쓰기" id="btn-add" class="btn btn-outline-success" 
+		onclick="goUsedForm();" style="margin-top: 2%;"/>
 	<table id="tbl-board" class="table table-striped table-hover">
-		<tr>
+		<tr class="table-success">
 			<th>번호</th>
 			<th>카테고리</th>
 			<th>제목</th>
@@ -47,7 +59,7 @@ $(() => {
 		<c:forEach items="${list}" var="used">
 			<tr data-no="${used.usedBoardNo}">
 				<td>${used.usedBoardNo}</td>
-				<td>${used.category}</td>
+				<td>[${used.category}]</td>
 				<td>${used.title}</td>
 				<td>${used.nickname}</td>
 				<td><fmt:formatDate value="${used.regDate}"
@@ -59,12 +71,12 @@ $(() => {
 
 				      <form method="get" id="searchFrm">
 				      	<div >
-				      	    <select name = "f" >
-                            <option ${(param.f == "category")? "selected" : ""} value = "title">카테고리</option>
-                            <option ${(param.f == "title")? "selected" : ""} value = "title">제목</option>
+				      	    <select name = "searchType" >
+                            <option ${(param.searchType == "titleAndContent")? "selected" : ""} value = "titleAndContent">제목/내용</option>
+                            <option ${(param.searchType == "writer")? "selected" : ""} value = "writer">작성자</option>
                         </select>
-				        <input type = "text" name = "q" value = "${param.q}" style="margin: 5px;"/>
-                   		<button type="submit" class="btn btn-outline-info" id="searchBtn">검색</button>
+				        <input type = "text" name = "keyword" value = "${param.keyword}" style="margin: 5px;"/>
+                   		<button type="submit" class="btn btn-outline-info" onClick="searchUsed()" id="searchBtn">검색</button>
 				      	</div>
 				      </form>
 

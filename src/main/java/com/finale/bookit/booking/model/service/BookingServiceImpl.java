@@ -7,6 +7,7 @@ import com.finale.bookit.booking.model.vo.BookingEntity;
 import com.finale.bookit.common.util.Criteria;
 import com.finale.bookit.member.model.dao.MemberDao;
 import com.finale.bookit.trade.model.dao.TradeDao;
+import com.finale.bookit.trade.model.vo.Trade;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -140,7 +141,19 @@ public class BookingServiceImpl implements BookingService {
 	public int updateBookResStatus(HashMap<String, Object> param) {
 		int result = bookingDao.updateBookResStatus(param);
 		if (result > 0) {
-			result = memberDao.updateReturnDeposit(param);
+			if(param.get("status").equals("대여거부")) {
+				Trade trade = tradeDao.selectOneTrade(param);
+				param.put("targetId", param.get("id"));
+				param.put("deposit", -1 * (int)param.get("deposit"));
+				result = memberDao.updateReturnDeposit(param); // 도서 제공자에게서 일대여비 * 날짜만큼 차감
+				if(result > 0) {
+					param.put("targetId", param.get("borrowerId"));
+					param.put("deposit", trade.getPrice());
+					result = memberDao.updateReturnDeposit(param); // 도서 대여자에게 보증금 + 일대여비 * 날짜만큼 지급
+				}
+			} else {
+				result = memberDao.updateReturnDeposit(param);
+			}
 		}
 		return result;
 	}

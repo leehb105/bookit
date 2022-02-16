@@ -20,6 +20,17 @@ const headers = {};
 headers[csrfHeader] = csrfToken;
 
 function likeCheck(e){
+	
+	if(e){
+		//like
+		document.getElementById('full').style.display = 'inline-block';
+		document.getElementById('empty').style.display = 'none';		
+	}else{
+		// dislike
+		document.getElementById('full').style.display = 'none';
+		document.getElementById('empty').style.display = 'inline-block';
+	}
+	
 	$.ajax({
 
 	url: "${pageContext.request.contextPath}/board/like.do?no="+${community.communityNo}+"&isLike="+e,
@@ -28,9 +39,14 @@ function likeCheck(e){
 		no : ${community.communityNo},
 		isLike : e
 	}, 
-	
 	success(result){
-		console.log("=====> ", result);
+	
+		if(e){
+			alert("추천했습니다.")
+		}else{
+			alert("추천을 취소했습니다.")
+		}
+	
 	},
 	error(e){ console.log(e);
 	
@@ -291,16 +307,7 @@ textarea {
 		${community.nickname} 
 	<span style="font-size:15px; margin-left:10px">조회수 : ${community.readCount} 좋아요 : ${community.likeCount} 작성일 : <fmt:formatDate value="${community.regDate}" pattern="yy/MM/dd HH:mm" /> </span>
 	</span></h5>
-		<div class="post-content requestImg dropdown">
-		                    	<img class="mr-2" src="${pageContext.request.contextPath}/resources/img/profile/${community.profileImage}" height="30" width="30" style="border-radius: 20px; margin-right:5px;""
-		                    	onerror="this.src='${pageContext.request.contextPath}/resources/img/profile/default_profile.png'"/>
-	                    		<h6 class="dropdown-toggle" data-toggle="dropdown">${community.nickname}</h6>
-	                    		<div class="dropdown-menu">
-	                    			<a class="dropdown-item" data-reportee="${community.memberId}" data-toggle="modal" data-target="#reportUserEnrollModal"><small>신고</small></a>
-	                    			<a class="dropdown-item" href=""><small>채팅</small></a>
-	                    		</div>
-		                    </div>
-	</div>
+
 
 	<div class="container float-center">
 	<!-- 글 내용 -->
@@ -318,19 +325,17 @@ textarea {
 	<p style="margin-bottom: 300px; margin-top:50px">${community.content}</p>	</center>
 <div class="likeReport" style="text-align: center;">
 	<c:if test="${community.userLikeCommunity == 0}">
-	<h3 id="empty" style="diaplay: inline;">
-		<a href="#" onclick="likeCheck(1);"><i class="far fa-thumbs-up"></i></a>
-	</h3>
+		<h3 id="empty" style="display: inline-block;"><a href="#" onclick="likeCheck(1);" ><i class="far fa-thumbs-up" ></i></a></h3>
+		<h3 id="full" style="display: none"><a href="#" onclick="likeCheck(0);"><i class="fas fa-thumbs-up"></i></a></h3>
 	</c:if>
-	<c:if test="${community.userLikeCommunity  > 0}">
-	<h3 id="full" style="display: inline">
-		<a href="#" onclick="likeCheck(0);"><i class="fas fa-thumbs-up"></i></a>
-	</h3>
+	<c:if test="${community.userLikeCommunity > 0}">
+		<h3 id="empty" style="display: none;"><a href="#" onclick="likeCheck(1);" ><i class="far fa-thumbs-up" ></i></a></h3>
+		<h3 id="full" style="display: inline-block"><a href="#" onclick="likeCheck(0);"><i class="fas fa-thumbs-up"></i></a></h3>
 	</c:if>
 	
 	<h3 style="display: inline">
 		<a href="#" data-toggle="modal" data-target="#reportBoardEnrollModal"><i
-			class="fas fa-ban" style="display: inline;"></i></a>
+			class="fas fa-ban" style="display: inline;  color:red;"></i></a>
 	</h3>
 
 </div>
@@ -416,7 +421,7 @@ textarea {
 									</c:when>
 								</c:choose>
 							</c:when>
-
+ 
 
 							<c:when
 								test="${comment.isParent == 'Y' && comment.deleteYn == 'Y' && comment.commentLevel == 1}">
