@@ -291,16 +291,7 @@ textarea {
 		${community.nickname} 
 	<span style="font-size:15px; margin-left:10px">조회수 : ${community.readCount} 좋아요 : ${community.likeCount} 작성일 : <fmt:formatDate value="${community.regDate}" pattern="yy/MM/dd HH:mm" /> </span>
 	</span></h5>
-		<div class="post-content requestImg dropdown">
-		                    	<img class="mr-2" src="${pageContext.request.contextPath}/resources/img/profile/${community.profileImage}" height="30" width="30" style="border-radius: 20px; margin-right:5px;""
-		                    	onerror="this.src='${pageContext.request.contextPath}/resources/img/profile/default_profile.png'"/>
-	                    		<h6 class="dropdown-toggle" data-toggle="dropdown">${community.nickname}</h6>
-	                    		<div class="dropdown-menu">
-	                    			<a class="dropdown-item" data-reportee="${community.memberId}" data-toggle="modal" data-target="#reportUserEnrollModal"><small>신고</small></a>
-	                    			<a class="dropdown-item" href=""><small>채팅</small></a>
-	                    		</div>
-		                    </div>
-	</div>
+
 
 	<div class="container float-center">
 	<!-- 글 내용 -->
@@ -330,7 +321,7 @@ textarea {
 	
 	<h3 style="display: inline">
 		<a href="#" data-toggle="modal" data-target="#reportBoardEnrollModal"><i
-			class="fas fa-ban" style="display: inline;"></i></a>
+			class="fas fa-ban" style="display: inline;  color:red;"></i></a>
 	</h3>
 
 </div>

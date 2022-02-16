@@ -18,7 +18,7 @@ public interface UsedDao {
 	
 	void deleteUsedContent(int no);
 	
-	void updateUsedContent(Map<String, Object> param);
+	void updateUsedContent(Used used);
 	
 	List<Used> getUsedList(Map<String, Object> param);
 	
@@ -36,6 +36,7 @@ public interface UsedDao {
 	
 	int getUsedNoCurrval();
 	
+	int updateReadCount(int no);
 	
 	//검색
 	List<Used> searchUsed(Map<String,Object> map);

@@ -92,7 +92,7 @@
 	join member m on m.id = u.writer
 	where u.delete_yn = 'N'
 	<choose>
-	<when test=" == 'writer'">
+	<when test="category eq 'writer'">
 	and m.nickname like '%' ||  #{keyword} || '%'
 	</when>
 	<otherwise>
@@ -100,7 +100,24 @@
 	or (u.content like '%' ||  #{keyword} || '%')
 	</otherwise>
 	</choose>
+	
 	order by u.reg_date
+	</select>
+
+	<select id="selectSearchUsedContentCount" parameterType="map" resultType="Integer">
+	select count(*) 
+	 from used_board u where delete_yn = 'N' 
+		
+		<choose>
+			<when test="category eq 'writer'">
+			and m.nickname like '%' ||  #{keyword} || '%'
+			</when>
+			<otherwise>
+			and (u.title like '%' ||  #{keyword} || '%') 
+			or (u.content like '%' ||  #{keyword} || '%')
+			</otherwise>
+			</choose>
+	
 	</select>
 	
 </mapper>
