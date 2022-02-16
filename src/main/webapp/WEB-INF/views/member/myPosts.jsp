@@ -7,7 +7,9 @@
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/collectionImage.css" />
 
-<jsp:include page="/WEB-INF/views/common/header.jsp" />
+
+
+<jsp:include page="/WEB-INF/views/member/common/sidebar.jsp"/>    
 
 <script>
 // 게시글 목록 삭제 시 전체체크 기능
@@ -33,33 +35,25 @@ $(function(){
 });
 
 
-//$("input[id=postsNo]").click(function(){
-//	const radioVal = $('input[id="postsNo"]:checked').val();
-//	const tableName = $('input[id="postsTableName"]').val();
-	
-
-	//console.log(radioVal, tableName);
-//});
-
 // 게시글 목록 삭제 기능
 function wishlistDelete(){
 	// var checkedArr = new Array();
 	
+	
 
 	const radioVal = $('input[id="postsNo"]:checked').val();
-	const tableName = $('input[id="postsTableName"]').val();
-	var isCommunity = tableName=='커뮤니티';
 	
-	if(isCommunity == '커뮤니티'){
+	const tableName = $('input[id="postsNo"]:checked').next().val();
+
+
 	
-	var real = confirm("정말 삭제하시겠습니까?");
 	$.ajax({
 		url: `${pageContext.request.contextPath}/member/postDelete.do`,
 		type: "POST",
 		// traditional: true,
 		data: {
 			no : radioVal,
-			isCommunity : isCommunity
+			tableName : tableName
 		},
 		beforeSend : function(xhr){
 			/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
@@ -73,12 +67,17 @@ function wishlistDelete(){
 			//else{
 			//	alert("다시 시도해주세요.");
 			//}
-		},
-		error: console.log
+		}
+		
 	});
+	
+	
+
+	var real = confirm("정말 삭제하시겠습니까?");
+
 	}
 	
-}
+
 
 function viewPost(t, n){
 	
@@ -129,6 +128,7 @@ table {
 }
 </style>
 	<!-- 나의 게시글 -->
+	
 	<div class="container mb-50 mt-100">
 		<div class="row mb-50">
 			<div class="col-lg-10 col-md-10 ml-auto mr-auto">

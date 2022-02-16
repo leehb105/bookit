@@ -138,15 +138,22 @@ function deleteComment(no){
 		var isDelete=confirm("댓글을 정말 삭제하겠습니까");
 		if(isDelete){
 			$.ajax({
-				url:"deleteComment.do",
-				method:"post",
-				data:{"no":no}, 
-				success:function(responseData){
-					if(responseData.isSuccess){
-						
-					}
+				url: `${pageContext.request.contextPath}/board/deleteComment.do`+"?no="+no
+				, headers : headers
+			
+				, type : 'POST'
+				,  contentType: 'application/json;charset=UTF-8'
+				, success: function(result){
+					console.log(result)
+					
+					
+				}
+				, error: function(error){
+					console.log("에러 : " + error);
 				}
 			});
+			
+		
 		}
 	}
 
@@ -414,7 +421,7 @@ textarea {
 										</div>
 
 										<button class="btn btn-light text-danger"
-											onclick="deleteComment();" value="${comment.no}"
+											onclick="deleteComment(${comment.no});" value="${comment.no}"
 											style="padding: 5px; margin-top: 20px; font-color:red;">삭제</button>
 
 									</c:if></td>

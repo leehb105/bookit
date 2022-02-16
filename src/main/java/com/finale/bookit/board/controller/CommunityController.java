@@ -348,14 +348,16 @@ public class CommunityController {
 	@ResponseBody
 	@PostMapping("/deleteComment.do")
 	public Map<String, Object> deleteComment(HttpServletRequest request, @RequestParam int no) {
-
+		Map<String, Object> map = new HashMap<>();
 		try {
 			communityService.deleteComment(no);
+			map.put("isSuccess", true);
 		} catch (Exception e) {
 			e.printStackTrace();
+			map.put("isSuccess", false);
 		}
-		Map<String, Object> map = new HashMap<>();
-		map.put("isSuccess", true);
+	
+		
 		return map;
 	}
 

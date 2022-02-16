@@ -364,13 +364,13 @@ public class MemberController {
 	 // = request.getParameterValues("checkedArr");
 		
 		try {
-			boolean isCommunity = Boolean.parseBoolean(request.getParameter("isCommunity").toString());
+			String tableName = request.getParameter("tableName").toString();
 			int no = Integer.parseInt(request.getParameter("no").toString()); 
 			
-			log.info("isCom {}, no {}", isCommunity, no);
+			log.info("isCom {}, no {}", tableName, no);
 			
 			//for(int i = 0; i < checkedArr.length; i++) {
-				if(isCommunity) {
+				if(tableName.trim().equals("커뮤니티")) {
 					memberService.deleteCommunityContent(no);
 				}else {
 					memberService.deleteUsedContent(no);
