@@ -114,7 +114,7 @@
                             <div class="modal-footer">
                                 <button class="btn roberto-btn" type="button" id="enrollBtn" onclick="reviewEnroll();" data-dismiss="modal">점수 제출</button>
                                 <input type="hidden" name="resNo" id="resNo" value="${booking.bookReservation.resNo}">
-                                <input type="hidden" name="borrowerId" id="borrowerId" value="${booking.bookReservation.borrowerId}">
+                                <input type="hidden" name="userId" id="userId" value="${booking.bookReservation.borrowerId}">
                             </div>
                         </form:form>
                     </div>
