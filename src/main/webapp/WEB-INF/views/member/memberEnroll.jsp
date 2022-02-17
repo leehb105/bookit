@@ -159,8 +159,6 @@
 <script src="${pageContext.request.contextPath}/resources/js/kakaoMap.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/kakaoPostcode.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6572b946baab53e064d0fc558f5af389&libraries=services,clusterer,drawing"></script>
          
 
 <br /><br /><br /><br /><br /><br />
