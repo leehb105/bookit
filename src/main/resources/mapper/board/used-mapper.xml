@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="used">
+	<select id="selectUsedContent" parameterType="Integer" resultMap="usedMap">
+	select 
+	u.used_board_no, u.title, u.book_state, u.trade_method, u.price, u.category, u.content, u.writer, u.read_count, TO_CHAR(u.reg_date, 'YYYY-MM-DD  HH24:MI') reg_date,
+	(select m.nickname from member m where u.writer = m.id) nickname, (select m.profile_image from member m where u.writer = m.id) profile_image
+	from used_board u
+	where u.used_board_no = #{no}
+	</select>
+	<resultMap type="map" id="usedMap">
+		<id column="used_board_no" property="usedBoardNo"/>
+		<result column="title" property="title"/>
+		<result column="book_state" property="bookState"/>
+		<result column="trade_method" property="tradeMethod"/>
+		<result column="price" property="price"/>
+		<result column="category" property="category"/>
+		<result column="content" property="content"/>
+		<result column="writer" property="writer"/>
+		<result column="delete_yn" property="deleteYn"/>
+		<result column="read_count" property="readCount"/>
+		<result column="reg_date" property="regDate"/>
+		<result column="nickname" property="nickname"/>	
+		<result column="profile_image" property="profileImage"/>
+	</resultMap>
+	
+
+	<select id="selectUsedAttachment" parameterType="Integer" resultType="usedAttachment">
+		select no, ORIGINAL_FILENAME, renamed_filename, used_board_no from used_board_attachment where used_board_no = #{no} order by reg_date
+	</select>
+	
+	<update id="deleteUsedContent" parameterType="Integer">
+		update used_board set delete_yn = 'Y' where used_board_no = #{no}
+	</update>
+	
+	<update id="updateUsedContent" parameterType="map">
+		update used_board set title = #{title}, category = #{category},trade_method=#{trade_method}, content = #{content} where used_board_no =#{used_board_no};
+	</update>
+	
+	<select id="getUsedList" resultType="used" parameterType="map">
+		select used_board_no, category, title, (select m.nickname from member m where u.writer = m.id) nickname, 
+		reg_date, read_count from used_board u where delete_yn = 'N'
+			<choose>
+			<when test="category eq 'writer'">
+			and m.nickname like '%' ||  #{keyword} || '%'
+			</when>
+			<otherwise>
+			and (
+			(u.title like '%' ||  #{keyword} || '%') or 
+			(u.content like '%' ||  #{keyword} || '%')
+			)
+			</otherwise>
+			</choose>
+		order by reg_date desc
+	</select>
+	
+	<select id="getTotalUsedContent" resultType="Integer">
+		select	count(*) from used_board
+	</select>
+	
+	<insert id="insertUsed" parameterType="used">
+		insert into
+			used_board(used_board_no, category, title, price, trade_method, book_state, writer, content)
+		values(
+			SEQ_USED_BOARD_USED_BOARD_NO.nextval,
+			#{category},
+			#{title},
+			#{price},
+			#{tradeMethod},
+			#{bookState},
+			#{writer},
+			#{content}
+		)
+	</insert>
+	
+	<insert id="insertUsedAttachment" parameterType="usedAttachment">
+		insert into
+			used_board_attachment(no, used_board_no, ORIGINAL_FILENAME, renamed_filename)
+		values(
+			SEQ_USED_BOARD_ATTACHMENT_NO.nextval,
+			#{usedBoardNo},
+			#{originalFilename},
+			#{renamedFilename}
+		)
+	</insert>
+	<select id="getUsedNoCurrval" resultType="Integer">
+	select SEQ_USED_BOARD_USED_BOARD_NO.currval from dual
+	</select>
+	
+	
+	<select id="writerCheck" resultType="String" parameterType="Integer">
+		select writer from used_board where no=#{no} 
+	</select>
+			
+	<!-- 조회수 -->
+	<update id="updateReadCount">
+		update used_board set read_count = read_count + 1 where used_board_no = #{no}
+	</update>
+	
+	<!-- 검색 -->
+	<select id="searchUsed" parameterType="map" resultType="used">
+	select * from used_board u 
+	join member m on m.id = u.writer
+	where u.delete_yn = 'N'
+	<choose>
+	<when test="category eq 'writer'">
+	and m.nickname like '%' ||  #{keyword} || '%'
+	</when>
+	<otherwise>
+	and (u.title like '%' ||  #{keyword} || '%') 
+	or (u.content like '%' ||  #{keyword} || '%')
+	</otherwise>
+	</choose>
+	
+	order by u.reg_date
+	</select>
+
+	<select id="selectSearchUsedContentCount" parameterType="map" resultType="Integer">
+	select count(*) 
+	 from used_board u where delete_yn = 'N' 
+		
+		<choose>
+			<when test="category eq 'writer'">
+			and m.nickname like '%' ||  #{keyword} || '%'
+			</when>
+			<otherwise>
+			and (u.title like '%' ||  #{keyword} || '%') 
+			or (u.content like '%' ||  #{keyword} || '%')
+			</otherwise>
+			</choose>
+	
+	</select>
+	
+</mapper>
+

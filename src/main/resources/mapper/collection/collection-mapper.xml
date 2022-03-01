@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bookCollection">
+	<select id="selectAllCollection" resultType="bookCollection">
+		select
+		    b.*,
+		    m.nickname,
+		    m.profile_image
+		from 
+		    book_collection b left join member m
+    		on b.member_id = m.id
+    	order by 
+    		dbms_random.random
+	</select>
+	
+	<select id="selectCollectionDetail" resultType="bookCollection">
+		select
+		    b.*,
+		    l.no list_no,
+	        l.book_collection_no,
+    		l.isbn13,
+		    f.title,
+		    f.author,
+		    f.publisher,
+		    f.cover,
+		    m.nickname
+		from
+		    book_collection b left join book_collection_list l
+		    on b.no = l.book_collection_no
+		    left join book_info f
+		    on l.isbn13 = f.isbn13
+		    left join member m
+    		on b.member_id = m.id
+		where
+			b.no = #{no}
+		order by
+    		l.regDate desc
+	</select>
+	
+	<delete id="collectionDetailDelete">
+		delete from book_collection_list where no = #{no}
+	</delete>
+	
+	<select id="selectTotalCollection" resultType="_int">
+		select count(*) from book_collection
+	</select>
+	
+	<select id="selectAllBookList" resultType="bookCollectionList">
+		select * from book_collection_list where book_collection_no = #{no}
+	</select>
+	
+	<select id="selectTotalBookList" resultType="_int">
+		select count(*) from book_collection_list where book_collection_no = #{no}
+	</select>
+	
+	<insert id="insertBook">
+		insert into book_collection_list
+		values (seq_book_collection_list_no.nextval, #{collectionNo}, #{isbn}, default)
+	</insert>
+</mapper>

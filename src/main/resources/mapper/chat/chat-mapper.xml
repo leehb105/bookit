@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="chat">
+
+	<select id="selectChatRoomId" resultType="string">
+		select
+			chat_room_id
+		from
+			chat_room
+		where
+            chat_member_id = #{chatParticipants}
+	
+	</select>
+
+	<update id="updateRead_Check">
+		update
+			chat_history
+		set
+			read_check = 0
+		where
+			chat_room_id = #{id}
+	</update>
+	
+	<select id="selectChatAlarm" resultMap="chatHistory">
+		select
+			*
+		from
+			chat_history
+		where
+			chat_room_id = #{roomId} and read_check = 1 and sender_id != #{writer} 
+	</select>
+	
+	
+	
+	<select id="selectChatHistory" resultMap="chatHistory">
+		select
+			chat_room_id,
+			sender_id,
+			message
+		from
+			chat_history
+		where
+			chat_room_id = #{id}
+		order by
+			send_date asc
+	</select>
+	
+	
+	<insert id = "insertChatHistory">
+		insert into
+			chat_history(chat_room_id,sender_id,message)
+		values(
+			#{roomId},
+			#{writer},
+			#{message}
+		)
+	</insert>
+	
+	<insert id ="insertChatRoom">
+		insert into
+			chat_room(chat_room_id,chat_member_id)
+		values(
+			#{roomId},
+			#{memberId}
+		)
+	
+	</insert>
+	
+	<select id="selectChatRoom" resultMap="chatRoomMap">
+		select
+			*
+		from
+			chat_room
+		where
+			chat_member_id like '%'||#{loginMember}||'%'
+
+	</select>
+	
+	<select id="selectOneChatRoom" resultMap="chatRoomMap">
+		select
+			*
+		from
+			chat_room
+		where
+			chat_room_id = #{id}
+	</select>
+	
+	<select id="selectIdByNickName" resultType="string">
+		select
+			id
+		from
+			member
+		where
+			nickname = #{writer}
+	
+	</select>
+	
+	<resultMap type="chatroom" id="chatRoomMap">
+		<id column="chat_room_id" property="roomId"/>
+		<result column="chat_member_id" property="memberId"/>
+	</resultMap>
+	
+	<resultMap type="chat" id="chatHistory">
+		<result column="chat_room_id" property="roomId"/>
+		<result column="sender_id" property="writer"/>
+		<result column="message" property="message"/>
+	</resultMap>
+  
+	
+</mapper>  

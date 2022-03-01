@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="request">
+
+	<select id="selectAllRequest" resultType="request">
+		select
+			r.*,
+			m.nickname,
+			m.profile_image,
+			b.title,
+			b.author,
+			b.cover,
+			b.publisher,
+			b.pubdate
+		from
+			request_board r left join member m 
+			on r.member_id = m.id
+			left join book_info b
+			on r.isbn13 = b.isbn13
+		order by
+			r.no desc
+	</select>
+	
+	<select id="selectTotalRequest" resultType="_int">
+		select count(*) from request_board
+	</select>
+	
+	<insert id="requestEnroll">
+		insert into request_board
+		values (seq_request_board_no.nextval, #{wishPrice}, #{bookCondition}, #{id}, default, #{isbn13})
+	</insert>
+	
+	<delete id="requestDelete">
+		delete from request_board where no = #{requestNo}
+	</delete>
+	
+</mapper>
+

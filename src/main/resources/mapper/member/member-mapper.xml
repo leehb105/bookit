@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+
+	<select id="findKakao" resultType="member">
+		select * from member where name=#{nickname} and id=#{email}
+	</select>
+	<insert id="kakaoInsert">
+		insert into 
+			member(id, email, name, nickname)
+			values(
+				#{email}, 
+				#{nickname},
+				#{nickname}
+			)
+	</insert>
+	
+	<insert id="insertMember">
+		insert into 
+			member(id, password, email, nickname, name, phone) 
+		values( 
+			#{id}, 
+			#{password}, 
+			#{email}, 
+			#{nickname}, 
+			#{name}, 
+			#{phone} 
+		)
+	</insert>
+	<select id="selectOneMember" resultType="member">
+		select
+			*
+		from
+			member_view
+		where id = #{id}
+	</select>
+	
+	<select id="selectAddress" resultType="_int">
+		select
+			count(*)	
+		from
+			address
+		where
+			member_id = #{memberId}
+	</select>
+	
+	<insert id="insertAddress">
+		insert into
+			address
+		values(
+			#{memberId},
+			#{postcode},
+			#{roadAddress},
+			#{extraAddress},
+			#{depth1},
+			#{depth2},
+			#{depth3},
+			#{bunji1},
+			#{bunji2},
+			#{detailAddress},
+			#{latitude},
+			#{longitude}
+		)
+	</insert>	
+	
+	<update id="updateAddress">
+		update
+			address
+		set
+			postcode = #{postcode},
+			road_address = #{roadAddress},
+			extra_address = #{extraAddress},
+			depth1 = #{depth1},
+			depth2 = #{depth2},
+			depth3 = #{depth3},
+			bunji1 = #{bunji1},
+			bunji2 = #{bunji2},
+			detail_address = #{detailAddress},
+			latitude = #{latitude},
+			longitude = #{longitude}
+		where
+			member_id = #{memberId}
+	</update>
+	
+	<update id="memberUpdate">
+		update
+			member
+		set
+			nickname = #{nickname},
+			email = #{email},
+			phone = #{phone},
+			profile_image = #{profileImage},
+			password = #{encodedNewPassword}
+		where
+			id = #{id}
+	</update>
+	
+	<select id="selectOneMemberCount" resultType="_int">
+		select count(*) from member where id = #{id}
+	</select>
+	
+	<select id="selectOneMemberNicknameCount" resultType="_int">
+		select count(*) from member where nickname = #{nickname}
+	</select>
+	
+	<select id="selectOneMemberEmailCount" resultType="_int">
+		select count(*) from member where email = #{email}
+	</select>
+	
+	<select id="selectOneMemberPhoneCount" resultType="_int">
+		select count(*) from member where phone = #{phone}
+	</select>
+	
+	<insert id="insertAuthority">
+		insert into 
+			authority(member_id) 
+		values(
+			#{id}
+		)
+	</insert>
+	
+	<update id="updateMemberCash">
+		update member set cash = cash + -1 * #{pay} where id = #{id}
+	</update>
+	
+	<update id="chargeMemberCash">
+		update member set cash = cash + #{price} where id = #{lenderId}
+	</update>
+	
+	
+	<select id="selectMemberCash" resultType="_int">
+		select cash from member where id = #{id}
+	</select>
+
+	<select id="selectMemberCash2" resultType="_int">
+		select cash from member where id = #{lenderId}
+	</select>
+	
+	<update id="updateReturnDeposit">
+		update member set cash = cash + #{deposit} where id = #{targetId}
+	</update>
+	
+	<select id="selectMyPosts" resultType="posts" parameterType="string">
+		select a.*  from
+(
+      select '커뮤니티' as tableName, c.community_no as no, c.category as category, c.title as title, c.reg_date as regDate
+     from community c
+     join member m on c.member_id = m.id
+     where c.member_id = #{memberId}
+     and c.delete_yn = 'N' 
+   
+   
+     union all
+	
+	select '중고' as tableName , u.used_board_no as no, u.category as category, u.title as title, u.reg_date as regDate
+     from used_board u
+     join member m on u.writer = m.id
+     where u.writer = #{memberId}
+     and u.delete_yn = 'N'
+     ) a
+     
+     order by regDate desc
+	
+	</select>
+	<select id="selectMyPostsTotalCount" resultType="int" parameterType="string">
+		select count(*) from (
+      select '커뮤니티' as tableName, c.community_no as no, c.category as category, c.title as title, c.reg_date as regDate
+     from community c
+     join member m on c.member_id = m.id
+     where c.member_id = #{memberId}
+     and c.delete_yn = 'N' 
+   
+     union all
+	
+	select '중고'  as tableName , u.used_board_no as no, u.category as category, u.title as title, u.reg_date as regDate
+     from used_board u
+     join member m on u.writer = m.id
+     where u.writer = #{memberId}
+     and u.delete_yn = 'N'
+     ) a
+	</select>
+	<update id="deleteCommunityContent" parameterType="Integer">
+		update community set delete_yn = 'Y' where community_no = #{communiy_no}
+	</update>
+	<update id="deleteUsedContent" parameterType="Integer">
+		update used_board set delete_yn = 'Y' where used_board_no = #{used_board_no}
+	</update>
+
+	<select id="selectMemberRating" resultType="_int">
+		SELECT
+		    nvl(sum(RATING), 0)
+		FROM
+		    REVIEW r join member m
+		    on r.receiver_id = m.id
+		WHERE
+		    RECEIVER_ID = #{id}
+	</select>
+
+	
+</mapper>

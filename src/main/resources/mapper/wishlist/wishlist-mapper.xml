@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wishlist">
+	<select id="selectAllWishlist" resultType="wishlist">
+		select
+		    w.*,
+		    b.content,
+		    b.writer,
+		    b.reg_date
+		from 
+		    wishlist w left join booking b
+		    on w.board_no = b.board_no
+		where
+			member_id = #{id}
+		order by
+			b.reg_date desc
+	</select>
+	
+	<select id="selectAllCollection" resultType="bookCollection">
+		select
+		    b.*,
+		    m.nickname,
+		    m.profile_image
+		from 
+		    book_collection b left join member m
+    		on b.member_id = m.id
+    	where 
+    		member_id = #{id}
+	</select>
+	
+<!-- 
+	cover 가져오기 위해 작성했던 것.
+	<select id="selectAllCollection" resultType="bookCollection">
+		select
+		    b.*,
+		    l.no list_no,
+	        l.book_collection_no,
+    		l.isbn13,
+		    f.title,
+		    f.author,
+		    f.publisher,
+		    f.cover
+		from
+		    book_collection b left join book_collection_list l
+		    on b.no = l.book_collection_no
+		    left join book_info f
+		    on l.isbn13 = f.isbn13
+		where
+			b.member_nickname = #{memberNickname}
+	</select> 
+-->
+	
+	<delete id="wishlistDelete">
+		delete from wishlist where board_no = #{no}
+	</delete>
+	
+	<insert id="wishlistEnroll">
+		insert into wishlist
+		values (#{id}, #{boardNo})
+	</insert>
+	
+	<insert id="collectionInsert">
+		insert into book_collection
+		values (seq_book_collection_no.nextval, #{collectionName}, #{id})
+	</insert>
+	
+	<delete id="collectionDelete">
+		delete from book_collection where no = #{no}
+	</delete>
+	
+	<select id="selectTotalWishlist" resultType="_int">
+		select count(*) from wishlist where member_id = #{id}
+	</select>
+	
+	<delete id="wishlistCancel">
+		delete from wishlist where board_no = #{boardNo} and member_id = #{id}
+	</delete>
+</mapper>

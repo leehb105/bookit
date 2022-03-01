@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	<!-- 암호화처리 bean등록 -->
+	<beans:bean 
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" 
+		id="bcryptPasswordEncoder"/>
+
+	<beans:bean 
+		id = "customSuccessHandler" 
+		class = "com.finale.bookit.member.controller.CustomSuccessHandler"/>
+		
+	<!-- 정적파일은 security체크하지 않음 -->
+	<http pattern="/resources/**" security="none"/>
+
+	<!-- 특별한 설정에서 일반적인 설정순으로 작성 -->
+	<http auto-config="true">
+		<intercept-url pattern="/" access="permitAll"/>
+		<intercept-url pattern="/index.jsp" access="permitAll"/>
+
+		<intercept-url pattern="/admin/**" access="hasRole('ADMIN')"/> <!-- ROLE_ADMIN만 접근 가능 -->
+		
+		
+		<intercept-url pattern="/member/mypageMain.jsp" access="isAuthenticated()"/>
+		<intercept-url pattern="/member/**" access="permitAll"/>
+		
+		<intercept-url pattern="/booking/**" access="isAuthenticated()"/>
+
+		
+		<intercept-url pattern="/**" access="permitAll"/> <!-- =hasRole('USER') -->
+	
+	
+		<!-- 
+			login-page : 로그인폼 페이지 요청 GET(실제 핸들러 작성)
+			login-processing-url : 로그인 처리요청 POST(핸들러 작성하지 않음)
+		 -->
+	
+		<form-login
+				login-page="/member/memberLogin.do"
+				login-processing-url="/member/memberLogin.do"
+				username-parameter="id"
+				password-parameter="password"
+				default-target-url="/"
+				always-use-default-target="false"
+				authentication-success-handler-ref="customSuccessHandler"/>
+				
+	
+		
+			<logout
+				logout-url="/member/memberLogout.do"
+				logout-success-url="/"
+				invalidate-session="true"/>
+				
+				
+			<!-- 모든 POST요청에 csrf 토큰값을 검증한다. -->
+		<csrf disabled="false"/>	
+	</http>
+			
+	
+	<authentication-manager>
+		<authentication-provider user-service-ref="securityService">
+			<password-encoder ref="bcryptPasswordEncoder"/>
+		</authentication-provider>
+	</authentication-manager>
+	
+	<!-- com.kh.security 하위 클래스 빈등록 -->
+	<context:component-scan base-package="com.finale.security"/>
+	
+	
+</beans:beans>

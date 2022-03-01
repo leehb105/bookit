@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="index">
+	<select id="selectAllCollection" resultType="bookCollection">
+		select
+		    b.*,
+		    m.nickname,
+		    m.profile_image
+		from 
+		    book_collection b left join member m
+    		on b.member_id = m.id
+    	order by 
+    		dbms_random.random
+	</select>
+	<select id="selectOneBestWishBook" resultType="wishlist">
+		select 
+		    s.*,
+		    b.isbn13,
+		    i.cover,
+		    i.title,
+		    i.author
+		from(
+		    (select board_no, count(*) c from wishlist group by board_no order by c desc) s join booking b
+		    on s.board_no = b.board_no
+		    join book_info i
+		    on b.isbn13 = i.isbn13
+		)
+		where rownum=1
+	</select>
+</mapper>
