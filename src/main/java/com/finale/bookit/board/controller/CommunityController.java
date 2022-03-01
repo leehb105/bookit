@@ -287,11 +287,12 @@ public class CommunityController {
 	}
 
 	@PostMapping("/insertComment.do")
-	public Map<String, Object> insertComment(@RequestBody Map<String, Object> commentMap,
-			@AuthenticationPrincipal Member member) {
+	public String insertComment(@RequestBody Map<String, Object> commentMap,
+			@AuthenticationPrincipal Member member,
+			HttpServletRequest request) {
 
-		Map<String, Object> resultMap = new HashMap<>();
-		boolean result = false;
+//		Map<String, Object> resultMap = new HashMap<>();
+//		boolean result = false;
 
 		try {
 
@@ -313,16 +314,16 @@ public class CommunityController {
 				communityService.insertComment(comment);
 			}
 
-			result = true;
+//			result = true;
 
 		} catch (Exception e) {
 			e.printStackTrace();
 
 		}
 
-		resultMap.put("result", result);
+//		resultMap.put("result", result);
 
-		return resultMap;
+		return "redirect:" + request.getHeader("Referer");
 	}
 
 	@ResponseBody

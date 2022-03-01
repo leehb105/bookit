@@ -24,12 +24,12 @@
 		<intercept-url pattern="/index.jsp" access="permitAll"/>
 
 		<intercept-url pattern="/admin/**" access="hasRole('ADMIN')"/> <!-- ROLE_ADMIN만 접근 가능 -->
+		<intercept-url pattern="/booking/**" access="isAuthenticated()"/>
 		
 		
 		<intercept-url pattern="/member/mypageMain.jsp" access="isAuthenticated()"/>
 		<intercept-url pattern="/member/**" access="permitAll"/>
 		
-		<intercept-url pattern="/booking/**" access="isAuthenticated()"/>
 
 		
 		<intercept-url pattern="/**" access="permitAll"/> <!-- =hasRole('USER') -->

@@ -33,24 +33,24 @@ function likeCheck(e){
 	
 	$.ajax({
 
-	url: "${pageContext.request.contextPath}/board/like.do?no="+${community.communityNo}+"&isLike="+e,
-	type: "GET",
-	data : {
-		no : ${community.communityNo},
-		isLike : e
-	}, 
-	success(result){
-	
-		if(e){
-			alert("추천했습니다.")
-		}else{
-			alert("추천을 취소했습니다.")
+		url: "${pageContext.request.contextPath}/board/like.do?no="+${community.communityNo}+"&isLike="+e,
+		type: "GET",
+		data : {
+			no : ${community.communityNo},
+			isLike : e
+		}, 
+		success(result){
+		
+			if(e){
+				alert("추천했습니다.")
+			}else{
+				alert("추천을 취소했습니다.")
+			}
+		
+		},
+		error(e){ console.log(e);
+		
 		}
-	
-	},
-	error(e){ console.log(e);
-	
-	}
 	});
 }
 //댓글 수정
