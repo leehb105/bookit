@@ -69,9 +69,7 @@ public class BookingController {
     @GetMapping("/bookingList.do")
     public void bookingList(
     		@RequestParam(defaultValue = "1") int pageNum, 
-    		@RequestParam String bookTitle, 
-    		@RequestParam String checkIn, 
-    		@RequestParam String checkOut, 
+    		@RequestParam String bookTitle,  
     		@AuthenticationPrincipal Member loginMember,
     		Model model, 
     		HttpServletRequest request ){
@@ -82,8 +80,6 @@ public class BookingController {
 
         Map<String, Object> param = new HashMap<>();
         param.put("bookTitle", bookTitle);
-        param.put("checkIn", checkIn);
-        param.put("checkOut", checkOut);
         param.put("cri", cri);
         param.put("address", loginMember.getSearchAddress());
         
@@ -101,16 +97,12 @@ public class BookingController {
         
         model.addAttribute("list", list);
         model.addAttribute("page", page);
-        model.addAttribute("checkIn", checkIn);
-    	model.addAttribute("checkOut", checkOut);
 
     }
 
     @GetMapping("/bookingDetail.do")
     public void bookingDetail(
     		@RequestParam int bno, 
-    		@RequestParam String checkIn, 
-    		@RequestParam String checkOut, 
     		Model model,
     		@AuthenticationPrincipal Member loginMember) {
     	String id = loginMember.getId();
@@ -124,22 +116,19 @@ public class BookingController {
     	String newDate = BookitUtils.getFormatDate(booking.getRegDate());
     	log.debug("booking = {} ", booking);
     	
-    	List<String> startDateList = new ArrayList<String>();
-    	List<String> endDateList = new ArrayList<String>();
-    	for(int i = 0; i < booking.getBookReservations().size(); i++) {
-    		startDateList.add(BookitUtils.getFormatDateToString(booking.getBookReservations().get(i).getStartDate()));
-    		endDateList.add(BookitUtils.getFormatDateToString(booking.getBookReservations().get(i).getEndDate()));
-    	}
-    	log.debug("startDateList = {}", startDateList);
+//    	List<String> startDateList = new ArrayList<String>();
+//    	List<String> endDateList = new ArrayList<String>();
+//    	for(int i = 0; i < booking.getBookReservations().size(); i++) {
+//    		startDateList.add(BookitUtils.getFormatDateToString(booking.getBookReservations().get(i).getStartDate()));
+//    		endDateList.add(BookitUtils.getFormatDateToString(booking.getBookReservations().get(i).getEndDate()));
+//    	}
     	int wishlistCount = bookingService.selectWishCount(param);
     	
     	model.addAttribute("booking", booking);
     	model.addAttribute("newDate", newDate);
-    	model.addAttribute("startDateList", startDateList);
-    	model.addAttribute("endDateList", endDateList);
+//    	model.addAttribute("startDateList", startDateList);
+//    	model.addAttribute("endDateList", endDateList);
     	model.addAttribute("wishlistCount", wishlistCount);
-    	model.addAttribute("checkIn", checkIn);
-    	model.addAttribute("checkOut", checkOut);
     }
     
     @GetMapping("/bookingEnroll.do")

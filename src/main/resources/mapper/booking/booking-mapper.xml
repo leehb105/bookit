@@ -59,14 +59,8 @@
 						WHERE
 							bi.title LIKE '%' || #{bookTitle} || '%' 
 							AND
-							#{checkIn} NOT BETWEEN br.start_date AND br.end_date
-							AND
-							#{checkOut} NOT BETWEEN br.start_date AND br.end_date
-							AND
 							b.DELETE_YN = 'N'
 							AND
-							br.borrower_id is null
-							and
 							br.status is null
 							AND 
 							mv.search_address = #{address}
@@ -145,13 +139,7 @@
 		WHERE
 			bi.title LIKE '%' || #{bookTitle} || '%' 
 			AND
-			#{checkIn} NOT BETWEEN br.start_date AND br.end_date
-			AND
-			#{checkOut} NOT BETWEEN br.start_date AND br.end_date
-			AND
 			b.DELETE_YN = 'N'
-			AND
-			br.borrower_id is not null
 			and
 			br.status is null
 			AND 

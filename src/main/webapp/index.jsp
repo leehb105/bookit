@@ -183,7 +183,7 @@ $(document).ready(function(){
                             <!-- Welcome Text -->
                             <div class="col-12">
                                 <div class="welcome-text text-center">
-                                    <h6 data-animation="fadeInLeft" data-delay="200ms">Rental &amp; Resale</h6>
+                                    <h6 data-animation="fadeInLeft" data-delay="200ms">도서 대여 &amp; 중고거래</h6>
                                     <h2 data-animation="fadeInLeft" data-delay="500ms">Welcome To Bookit</h2>
                                 </div>
                             </div>
@@ -245,22 +245,20 @@ $(document).ready(function(){
                         method="get"
                         id="resfrm">
                         <div class="row justify-content-between align-items-end">
-                            <div class="col-6 col-md-2 col-lg-3">
+                            <!-- <div class="col-6 col-md-2 col-lg-3">
                                 <label for="checkIn">대여 시작일</label>
-                                <!-- <input type="date" class="form-control" id="checkIn" name="checkIn"> -->
                                 <input type="text" class="input-small form-control" name="checkIn" id="checkIn" autocomplete="off" placeholder="대여 시작일">
                             </div>
                             <div class="col-6 col-md-2 col-lg-3">
                                 <label for="checkOut">대여 종료일</label>
-                                <!-- <input type="date" class="form-control" id="checkOut" name="checkOut"> -->
                                 <input type="text" class="input-small form-control" name="checkOut" id="checkOut" autocomplete="off" placeholder="대여 종료일">
-                            </div>
-                            <div class="col-6 col-md-2 col-lg-3">
+                            </div> -->
+                            <div class="col-12 col-md-9 col-lg-9">
                             	<label for="bookTitle">책 제목</label>
-                            	<input type="text" class="form-control" id="bookTitle" name="bookTitle" placeholder="책 제목을 입력하세요" autofocus>
+                            	<input type="text" class="form-control" id="bookTitle" name="bookTitle" placeholder="대여할 책 제목을 입력하세요" autofocus>
                             </div>
                             <div class="col-12 col-md-3">
-                                <button type="button" class="form-control btn roberto-btn w-100" id="searchBtn" onclick="checkInputDate();">Check Availability</button>
+                                <button type="button" class="form-control btn roberto-btn w-100" id="searchBtn" onclick="checkInputDate();">대여 도서 검색</button>
                                 <!-- <button type="button" class="form-control btn roberto-btn w-100" >Check Availability</button> -->
                             </div>
                             <h2>${test}</h2>     

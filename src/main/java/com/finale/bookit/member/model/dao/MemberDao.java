@@ -63,4 +63,6 @@ public interface MemberDao {
 
 	int selectOneMemberPhoneCount(String phone);
 
+	int memberUpdateWithoutPassword(Map<String, Object> param);
+
 }

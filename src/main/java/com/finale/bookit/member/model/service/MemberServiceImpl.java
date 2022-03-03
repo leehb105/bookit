@@ -89,6 +89,18 @@ public class MemberServiceImpl implements MemberService {
 		}
 		return result;
 	}
+	@Override
+	public int memberUpdateWithoutPassword(Map<String, Object> param, Address address) {
+		int result = memberDao.memberUpdateWithoutPassword(param);
+		if (result > 0) {
+			if(selectAddress(address) == 0) {
+				result = insertAddress(address);
+			} else {
+				result = updateAddress(address);
+			}
+		}
+		return result;
+	}
 
 	@Override
 	public int selectOneMemberCount(String id) {
@@ -280,6 +292,8 @@ public class MemberServiceImpl implements MemberService {
 	public void deleteUsedContent(int no) {
 		usedDao.deleteUsedContent(no);
 	}
+
+	
 
 	
 

@@ -34,8 +34,6 @@
                         <tr>
                             <th>번호</th>
                             <th colspan="2">제목</th>
-                            <th>작가</th>
-                            <th>출판사</th>
                             <th>책상태</th>
                             <th>보증금</th>
                             <th>대여비</th>
@@ -48,10 +46,6 @@
                                 <td class="align-middle"><img src="${booking.bookInfo.cover}" alt="" style="width: 30%;"></td>
                                 
                                 <td class="title align-middle" style="text-align: left;">${booking.bookInfo.title}</td>
-                                <td class="author align-middle">
-                                    ${booking.bookInfo.author}
-                                </td>
-                                <td class="align-middle">${booking.bookInfo.publisher}</td>
                                 <td class="align-middle">${booking.bookStatus}</td>
                                 <td class="align-middle"><fmt:formatNumber type="number" maxFractionDigits="3" value="${booking.deposit }" />원</td>
                                 <td class="align-middle"><fmt:formatNumber type="number" maxFractionDigits="3" value="${booking.price }" />원</td>

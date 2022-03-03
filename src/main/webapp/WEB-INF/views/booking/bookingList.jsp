@@ -94,8 +94,6 @@
 					</c:if>
 
 					<form id='actionForm' action="${pageContext.request.contextPath}/booking/bookingList.do" method="get"> 
-						<input type="hidden" name="checkIn" value=""> 
-						<input type="hidden" name="checkOut" value=""> 
 						<input type="hidden" name="bookTitle" value=""> 
 						<input type="hidden" name="pageNum" value="${page.cri.pageNum}"> 
 						<input type="hidden" name="amount" value="${page.cri.amount}"> 

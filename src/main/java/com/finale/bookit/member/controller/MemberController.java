@@ -243,18 +243,30 @@ public class MemberController {
 		param.put("email", email);
 		param.put("phone", phone);
 		
-		if(!newPassword.isEmpty()) {
-			String encodedNewPassword = bcryptPasswordEncoder.encode(newPassword);			
-			param.put("encodedNewPassword", encodedNewPassword);
-		}
-		
 		address.setMemberId(id);
 		log.debug("address = {}", address);
 		
+		
+		
 		// 현재 비밀번호 일치하는지 확인
 		if(loginMember != null && bcryptPasswordEncoder.matches(password, loginMember.getPassword())) {
-			int result = memberService.memberUpdate(param, address);
+			int result = 0;
+			//새 비밀번호가 입력되었으면
+			if(!newPassword.isEmpty()) {
+				//비밀번호 bcryptPasswordEncoder 변환작업
+				String encodedNewPassword = bcryptPasswordEncoder.encode(newPassword);			
+				param.put("encodedNewPassword", encodedNewPassword);
+				
+				//비밀번호 재설정하는 분기
+				result = memberService.memberUpdate(param, address);
+			}else {
+				//비밀번호 수정이 이루어지지 않았으면
+				//비밀번호 재설정 없는 분기
+				result = memberService.memberUpdateWithoutPassword(param, address);
+			}
 			redirectAttr.addFlashAttribute("msg", result > 0 ? "정보 수정 성공!" : "정보 수정 실패!");
+			
+			
 		}
 		else {
 			redirectAttr.addFlashAttribute("msg", "비밀번호가 일치하지 않습니다.");

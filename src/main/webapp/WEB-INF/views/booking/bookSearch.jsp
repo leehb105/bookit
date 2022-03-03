@@ -91,7 +91,7 @@
 
         const cover = div.children[0].children[0].src;
         const title = div.children[1].children[0].innerText;
-        const author = div.children[1].children[0].innerText;
+        const author = div.children[1].children[1].innerText;
         const publisher = div.children[1].children[1].children[1].innerText;
         const pubdate = div.children[1].children[1].children[2].children[0].value;
         const isbn = div.children[1].children[2].children[0].innerText;

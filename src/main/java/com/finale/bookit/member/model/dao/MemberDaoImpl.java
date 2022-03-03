@@ -50,6 +50,11 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
+	public int memberUpdateWithoutPassword(Map<String, Object> param) {
+		return session.update("member.memberUpdateWithoutPassword", param);
+	}
+	
+	@Override
 	public int selectOneMemberCount(String id) {
 		return session.selectOne("member.selectOneMemberCount", id);
 	}
@@ -139,5 +144,6 @@ public class MemberDaoImpl implements MemberDao {
 	public int selectTotalPosts(String loginMember) {
 		return session.selectOne("member.selectMyPostsTotalCount", loginMember);
 	}
+
 
 }

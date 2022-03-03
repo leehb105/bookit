@@ -57,5 +57,7 @@ public interface MemberService {
 
 	int selectOneMemberPhoneCount(String phone);
 
+	int memberUpdateWithoutPassword(Map<String, Object> param, Address address);
+
 
 }

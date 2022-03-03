@@ -112,10 +112,10 @@
                                 <label for="checkInDate">대여일자</label>
                                 <div class="row no-gutters">
                                     <div class="col-6">
-                                        <input type="text" class="input-small form-control" name="checkIn" id="checkIn" autocomplete="off" placeholder="대여 시작일" readonly>
+                                        <input type="text" class="input-small form-control" name="checkIn" id="checkIn" autocomplete="off" placeholder="대여 시작일">
                                     </div>
                                     <div class="col-6">
-                                        <input type="text" class="input-small form-control" name="checkOut" id="checkOut" autocomplete="off" placeholder="대여 종료일" readonly>
+                                        <input type="text" class="input-small form-control" name="checkOut" id="checkOut" autocomplete="off" placeholder="대여 종료일">
                                     </div>
                                 </div>
                                 <div class="form-group mt-30">
@@ -160,165 +160,165 @@
     let startDate = new Date();
     let endDate = new Date();
 
-    // $(function() {
-    //     //대여시작일 설정
-    //     $('#checkIn').datepicker({
-    //         format: 'yyyy-mm-dd' //달력 날짜 형태
-    //         ,language : "ko"	//달력의 언어 선택, 그에 맞는 js로 교체해줘야한다.
-    //         ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
-    //         ,showMonthAfterYear:true // 월- 년 순서가아닌 년도 - 월 순서
-    //         ,changeYear: true //option값 년 선택 가능
-    //         ,changeMonth: true //option값  월 선택 가능                
-    //         ,buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
-    //         ,buttonText: "선택" //버튼 호버 텍스트              
-    //         ,yearSuffix: "년" //달력의 년도 부분 뒤 텍스트
-    //         ,autoclose : true	//사용자가 날짜를 클릭하면 자동 캘린더가 닫히는 옵션
-    //         ,title: "대여 시작일"	//캘린더 상단에 보여주는 타이틀
-    //         // ,showWeekDays : true // 위에 요일 보여주는 옵션 기본값 : true
-    //         ,clearBtn : true //날짜 선택한 값 초기화 해주는 버튼 보여주는 옵션 기본값 false 보여주려면 true
-    //         // ,todayBtn : true //'오늘'버튼 활성화
-    //         ,todayHighlight : true //오늘날짜 하이라이트 효과
-    //         ,startDate : new Date() //오늘날짜 이전의 날짜는 선택 불가
+    $(function() {
+        //대여시작일 설정
+        $('#checkIn').datepicker({
+            format: 'yyyy-mm-dd' //달력 날짜 형태
+            ,language : "ko"	//달력의 언어 선택, 그에 맞는 js로 교체해줘야한다.
+            ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
+            ,showMonthAfterYear:true // 월- 년 순서가아닌 년도 - 월 순서
+            ,changeYear: true //option값 년 선택 가능
+            ,changeMonth: true //option값  월 선택 가능                
+            ,buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
+            ,buttonText: "선택" //버튼 호버 텍스트              
+            ,yearSuffix: "년" //달력의 년도 부분 뒤 텍스트
+            ,autoclose : true	//사용자가 날짜를 클릭하면 자동 캘린더가 닫히는 옵션
+            ,title: "대여 시작일"	//캘린더 상단에 보여주는 타이틀
+            // ,showWeekDays : true // 위에 요일 보여주는 옵션 기본값 : true
+            ,clearBtn : true //날짜 선택한 값 초기화 해주는 버튼 보여주는 옵션 기본값 false 보여주려면 true
+            // ,todayBtn : true //'오늘'버튼 활성화
+            ,todayHighlight : true //오늘날짜 하이라이트 효과
+            ,startDate : new Date() //오늘날짜 이전의 날짜는 선택 불가
            
 
-    //     })
-    //     // .on("show", function(e) {
-    //     //     //이벤트의 종류
-    //     //     //show : datePicker가 보이는 순간 호출
-    //     //     //hide : datePicker가 숨겨지는 순간 호출
-    //     //     //clearDate: clear 버튼 누르면 호출
-    //     //     //changeDate : 사용자가 클릭해서 날짜가 변경되면 호출 (개인적으로 가장 많이 사용함)
-    //     //     //changeMonth : 월이 변경되면 호출
-    //     //     //changeYear : 년이 변경되는 호출
-    //     //     //changeCentury : 한 세기가 변경되면 호출 ex) 20세기에서 21세기가 되는 순간
+        })
+        // .on("show", function(e) {
+        //     //이벤트의 종류
+        //     //show : datePicker가 보이는 순간 호출
+        //     //hide : datePicker가 숨겨지는 순간 호출
+        //     //clearDate: clear 버튼 누르면 호출
+        //     //changeDate : 사용자가 클릭해서 날짜가 변경되면 호출 (개인적으로 가장 많이 사용함)
+        //     //changeMonth : 월이 변경되면 호출
+        //     //changeYear : 년이 변경되는 호출
+        //     //changeCentury : 한 세기가 변경되면 호출 ex) 20세기에서 21세기가 되는 순간
             
-    //     //     console.log(e);// 찍어보면 event 객체가 나온다.
+        //     console.log(e);// 찍어보면 event 객체가 나온다.
             
 
-    //     //     //간혹 e 객체에서 date 를 추출해야 하는 경우가 있는데 
-    //     //     // e.date를 찍어보면 Thu Jun 27 2019 00:00:00 GMT+0900 (한국 표준시)
-    //     // })
-    //     .on('changeDate', function(e){
-    //         // console.log(e.date, typeof e.date);
-    //         endDate = e.date; //선택한 날짜를 대입
-    //         //대여 시작일보다 전날짜를 대여종료일에서 선택할 수 없음
-    //         $('#checkOut').datepicker('setStartDate', endDate);
+        //     //간혹 e 객체에서 date 를 추출해야 하는 경우가 있는데 
+        //     // e.date를 찍어보면 Thu Jun 27 2019 00:00:00 GMT+0900 (한국 표준시)
+        // })
+        .on('changeDate', function(e){
+            // console.log(e.date, typeof e.date);
+            endDate = e.date; //선택한 날짜를 대입
+            //대여 시작일보다 전날짜를 대여종료일에서 선택할 수 없음
+            $('#checkOut').datepicker('setStartDate', endDate);
 
-    //         //종료일보다 시작일이 후라면 자동으로 시작일로 날짜 변경
-    //         if($('#checkOut').val() != ''){
-    //             if($('#checkIn').val() > $('#checkOut').val()){
-    //                 $('#checkIn').datepicker('setDate', new Date($('#checkOut').val()));
-    //             }
-    //         }
+            //종료일보다 시작일이 후라면 자동으로 시작일로 날짜 변경
+            if($('#checkOut').val() != ''){
+                if($('#checkIn').val() > $('#checkOut').val()){
+                    $('#checkIn').datepicker('setDate', new Date($('#checkOut').val()));
+                }
+            }
 
-    //         //사용자가 날짜를 모두 입력해야 버튼 활성화
-    //         let checkInDate = document.getElementById('checkIn').value;
-    //         let checkOutDate = document.getElementById('checkOut').value;
+            //사용자가 날짜를 모두 입력해야 버튼 활성화
+            let checkInDate = document.getElementById('checkIn').value;
+            let checkOutDate = document.getElementById('checkOut').value;
 
-    //         if(checkInDate != '' && checkOutDate != ''){
-    //             console.log(checkInDate);
-    //             console.log(checkOutDate);
-    //             document.getElementById('bookResBtn').disabled = false;
+            if(checkInDate != '' && checkOutDate != ''){
+                console.log(checkInDate);
+                console.log(checkOutDate);
+                document.getElementById('bookResBtn').disabled = false;
 
-    //         }
-    //     });//datepicker end
+            }
+        });//datepicker end
 
 
-    // });
+    });
 
-    // $(function() {
-    //     //대여 종료일 설정
-    //     $('#checkOut').datepicker({
-    //         format: 'yyyy-mm-dd' //달력 날짜 형태
-    //         ,language : 'ko'	//달력의 언어 선택, 그에 맞는 js로 교체해줘야한다.
-    //         ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
-    //         ,showMonthAfterYear:true // 월- 년 순서가아닌 년도 - 월 순서
-    //         ,changeYear: true //option값 년 선택 가능
-    //         ,changeMonth: true //option값  월 선택 가능                
-    //         ,buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
-    //         ,buttonText: "선택" //버튼 호버 텍스트              
-    //         ,yearSuffix: "년" //달력의 년도 부분 뒤 텍스트 
-    //         ,autoclose : true	//사용자가 날짜를 클릭하면 자동 캘린더가 닫히는 옵션
-    //         ,title: "대여 종료일"	//캘린더 상단에 보여주는 타이틀
-    //         // ,showWeekDays : true // 위에 요일 보여주는 옵션 기본값 : true
-    //         ,minDate: 0 //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-    //         ,clearBtn : true //날짜 선택한 값 초기화 해주는 버튼 보여주는 옵션 기본값 false 보여주려면 true
-    //         // ,todayBtn : true //'오늘'버튼 활성화
-    //         ,todayHighlight : true //오늘날짜 하이라이트 효과
-    //         ,startDate : new Date() //오늘날짜 이전의 날짜는 선택 불가
+    $(function() {
+        //대여 종료일 설정
+        $('#checkOut').datepicker({
+            format: 'yyyy-mm-dd' //달력 날짜 형태
+            ,language : 'ko'	//달력의 언어 선택, 그에 맞는 js로 교체해줘야한다.
+            ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
+            ,showMonthAfterYear:true // 월- 년 순서가아닌 년도 - 월 순서
+            ,changeYear: true //option값 년 선택 가능
+            ,changeMonth: true //option값  월 선택 가능                
+            ,buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
+            ,buttonText: "선택" //버튼 호버 텍스트              
+            ,yearSuffix: "년" //달력의 년도 부분 뒤 텍스트 
+            ,autoclose : true	//사용자가 날짜를 클릭하면 자동 캘린더가 닫히는 옵션
+            ,title: "대여 종료일"	//캘린더 상단에 보여주는 타이틀
+            // ,showWeekDays : true // 위에 요일 보여주는 옵션 기본값 : true
+            ,minDate: 0 //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+            ,clearBtn : true //날짜 선택한 값 초기화 해주는 버튼 보여주는 옵션 기본값 false 보여주려면 true
+            // ,todayBtn : true //'오늘'버튼 활성화
+            ,todayHighlight : true //오늘날짜 하이라이트 효과
+            ,startDate : new Date() //오늘날짜 이전의 날짜는 선택 불가
 
-    //     })
-    //     // .on("show", function(e) {
-    //     //     //이벤트의 종류
-    //     //     //show : datePicker가 보이는 순간 호출
-    //     //     //hide : datePicker가 숨겨지는 순간 호출
-    //     //     //clearDate: clear 버튼 누르면 호출
-    //     //     //changeDate : 사용자가 클릭해서 날짜가 변경되면 호출 (개인적으로 가장 많이 사용함)
-    //     //     //changeMonth : 월이 변경되면 호출
-    //     //     //changeYear : 년이 변경되는 호출
-    //     //     //changeCentury : 한 세기가 변경되면 호출 ex) 20세기에서 21세기가 되는 순간
+        })
+        // .on("show", function(e) {
+        //     //이벤트의 종류
+        //     //show : datePicker가 보이는 순간 호출
+        //     //hide : datePicker가 숨겨지는 순간 호출
+        //     //clearDate: clear 버튼 누르면 호출
+        //     //changeDate : 사용자가 클릭해서 날짜가 변경되면 호출 (개인적으로 가장 많이 사용함)
+        //     //changeMonth : 월이 변경되면 호출
+        //     //changeYear : 년이 변경되는 호출
+        //     //changeCentury : 한 세기가 변경되면 호출 ex) 20세기에서 21세기가 되는 순간
             
-    //     //     console.log(e);// 찍어보면 event 객체가 나온다.
-    //     //     //간혹 e 객체에서 date 를 추출해야 하는 경우가 있는데 
-    //     //     // e.date를 찍어보면 Thu Jun 27 2019 00:00:00 GMT+0900 (한국 표준시)
-    //     // })
-    //     .on('changeDate', function(e){
-    //         startDate = e.date; //선택한 날짜를 대입
-    //         //대여 종료일보다 이후 날짜를 대여 시작일에서 선택할 수 없음
-    //         $('#checkIn').datepicker('setEndDate', startDate);
+        //     console.log(e);// 찍어보면 event 객체가 나온다.
+        //     //간혹 e 객체에서 date 를 추출해야 하는 경우가 있는데 
+        //     // e.date를 찍어보면 Thu Jun 27 2019 00:00:00 GMT+0900 (한국 표준시)
+        // })
+        .on('changeDate', function(e){
+            startDate = e.date; //선택한 날짜를 대입
+            //대여 종료일보다 이후 날짜를 대여 시작일에서 선택할 수 없음
+            $('#checkIn').datepicker('setEndDate', startDate);
     
-    //         //시작일보다 전날짜를 선택하면 자동으로 시작일로 날짜 변경
-    //         if($('#checkIn').val() > $('#checkOut').val()){
-    //             $('#checkOut').datepicker('setDate', new Date($('#checkIn').val()));
-    //         }
+            //시작일보다 전날짜를 선택하면 자동으로 시작일로 날짜 변경
+            if($('#checkIn').val() > $('#checkOut').val()){
+                $('#checkOut').datepicker('setDate', new Date($('#checkIn').val()));
+            }
 
-    //          //사용자가 날짜를 모두 입력해야 버튼 활성화
-    //         let checkInDate = document.getElementById('checkIn').value;
-    //         let checkOutDate = document.getElementById('checkOut').value;
+             //사용자가 날짜를 모두 입력해야 버튼 활성화
+            let checkInDate = document.getElementById('checkIn').value;
+            let checkOutDate = document.getElementById('checkOut').value;
 
-    //         if(checkInDate != '' && checkOutDate != ''){
-    //             console.log(checkInDate);
-    //             console.log(checkOutDate);
-    //             document.getElementById('bookResBtn').disabled = false;
+            if(checkInDate != '' && checkOutDate != ''){
+                console.log(checkInDate);
+                console.log(checkOutDate);
+                document.getElementById('bookResBtn').disabled = false;
 
-    //         }
-    //     });//datepicker end
-    // });
-
-
-    let resStartDate = new Array();
-    let resEndDate = new Array();
-    window.onload = function(){
-        // console.log('test');
-        // console.log(resStartDate);
-        // console.log("${startDateList}");
-
-        document.getElementById('checkIn').value = `${checkIn}`;
-        document.getElementById('checkOut').value = `${checkOut}`;
+            }
+        });//datepicker end
+    });
 
 
-        // document.getElementById('bookResBtn').disabled = true;
+    // let resStartDate = new Array();
+    // let resEndDate = new Array();
+    // window.onload = function(){
+    //     // console.log('test');
+    //     // console.log(resStartDate);
+    //     // console.log("${startDateList}");
+
+    //     document.getElementById('checkIn').value = `${checkIn}`;
+    //     document.getElementById('checkOut').value = `${checkOut}`;
 
 
-        //문자열 파싱
-        let temp = "${startDateList}".replace('[', '');
-        temp = temp.replace(']', '');
-        resStartDate = temp.split(", ");
+    //     // document.getElementById('bookResBtn').disabled = true;
 
-        temp = "${endDateList}".replace('[', '');
-        temp = temp.replace(']', '');
-        resEndDate = temp.split(", ");
 
-        // console.log(resStartDate);
-        // console.log(resEndDate);
-        // for(let i = 0; i < resStartDate.length; i++){
-        //     $('#checkIn').datepicker("option", "minDate", new Date(resStartDate[i]));
-        //     // $("#edate").datepicker("option", "minDate", selectedDate);
-        //     $('#checkOut').datepicker('setDatesDisabled', new Date(resEndDate[i]));
+    //     //문자열 파싱
+    //     let temp = "${startDateList}".replace('[', '');
+    //     temp = temp.replace(']', '');
+    //     resStartDate = temp.split(", ");
 
-        // }
+    //     temp = "${endDateList}".replace('[', '');
+    //     temp = temp.replace(']', '');
+    //     resEndDate = temp.split(", ");
+
+    //     // console.log(resStartDate);
+    //     // console.log(resEndDate);
+    //     // for(let i = 0; i < resStartDate.length; i++){
+    //     //     $('#checkIn').datepicker("option", "minDate", new Date(resStartDate[i]));
+    //     //     // $("#edate").datepicker("option", "minDate", selectedDate);
+    //     //     $('#checkOut').datepicker('setDatesDisabled', new Date(resEndDate[i]));
+
+    //     // }
         
-    };
+    // };
 
     
     //대여 신청 버튼
