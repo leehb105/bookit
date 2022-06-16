@@ -127,37 +127,36 @@
                                 <div class="search-btn ml-4" style="padding-right: 15px">
                                     <i class="fa fa-search" aria-hidden="true"></i>
                                 </div>
-                                <!-- Login -->
-                              <sec:authorize access="isAnonymous()">
+                            <!-- Login -->
+                            <sec:authorize access="isAnonymous()">
 
-	                                <div class="book-now-btn ml-3 ml-lg-5">
-	                                    <a href="${pageContext.request.contextPath}/member/memberLogin.do">로그인/회원가입<i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
-	                                </div>
-                              </sec:authorize>
+                                <div class="book-now-btn ml-3 ml-lg-5">
+                                    <a href="${pageContext.request.contextPath}/member/memberLogin.do">로그인/회원가입<i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                                </div>
+                            </sec:authorize>
                               
-                              
-                              <sec:authorize access="isAuthenticated()">
-                              	<div style="padding-right:20px">
-                              		<c:choose>
-	                              		<c:when test="${loginMember.id eq 'admin'}">
-	                              			<a href="${pageContext.request.contextPath}/admin/admin.do">
-		                            		<sec:authentication property="principal.username"/>
-		                            		</a>님 &nbsp
-	                                        <a href="${pageContext.request.contextPath}/booking/myBooking.do?pageNum=1&amout=5"><i class="fa fa-list fa-lg"></i></a> &nbsp
-			                            	<a href="${pageContext.request.contextPath}/member/memberLogout.do" class="btn roberto-btn mb-15 w-10">로그아웃</a>
-	                              		</c:when>
-	                              		
-	                              		<c:otherwise>
-		                              		<a href="${pageContext.request.contextPath}/member/mypageMain.do">
-		                            		<sec:authentication property="principal.username"/>
-		                            		</a>님 &nbsp
-	                                        <a href="${pageContext.request.contextPath}/booking/myBooking.do?pageNum=1&amout=5"><i class="fa fa-list fa-lg"></i></a> &nbsp
-		                            		<a href="${pageContext.request.contextPath}/wishlist/wishlistList.do"><i class="fa fa-heart fa-lg"></i></a>
-		                            		<a href="${pageContext.request.contextPath}/member/memberLogout.do" class="btn roberto-btn mb-15 w-10">로그아웃</a>
-	                              		</c:otherwise>
-                              		</c:choose>
-		                          </div>
-						  	  </sec:authorize>	
+                            <sec:authorize access="isAuthenticated()">
+                            <div style="padding-right:20px">
+                                <c:choose>
+                                    <c:when test="${loginMember.id eq 'admin'}">
+                                        <a href="${pageContext.request.contextPath}/admin/admin.do">
+                                        <sec:authentication property="principal.username"/>
+                                        </a>님 &nbsp
+                                        <a href="${pageContext.request.contextPath}/booking/myBooking.do?pageNum=1&amout=5"><i class="fa fa-list fa-lg"></i></a> &nbsp
+                                        <a href="${pageContext.request.contextPath}/member/memberLogout.do" class="btn roberto-btn mb-15 w-10">로그아웃</a>
+                                    </c:when>
+                                    
+                                    <c:otherwise>
+                                        <a href="${pageContext.request.contextPath}/member/mypageMain.do">
+                                        <sec:authentication property="principal.username"/>
+                                        </a>님 &nbsp
+                                        <a href="${pageContext.request.contextPath}/booking/myBooking.do?pageNum=1&amout=5"><i class="fa fa-list fa-lg"></i></a> &nbsp
+                                        <a href="${pageContext.request.contextPath}/wishlist/wishlistList.do"><i class="fa fa-heart fa-lg"></i></a>
+                                        <a href="${pageContext.request.contextPath}/member/memberLogout.do" class="btn roberto-btn mb-15 w-10">로그아웃</a>
+                                    </c:otherwise>
+                                </c:choose>
+                                </div>
+                            </sec:authorize>	
 						  	  
 						  	  <c:if test="${!empty sessionScope.kakaoE}">
                               	<div style="padding-right:10px">

@@ -92,8 +92,8 @@ public class MemberController {
 	) {
 		
 		MemberEntity member = memberService.selectOneMember(id);
-		log.info("member = {}", member);
-		log.info("encodedPassword = {}", bcryptPasswordEncoder.encode(password));
+		log.debug("member = {}", member);
+		log.debug("encodedPassword = {}", bcryptPasswordEncoder.encode(password));
 
 		String location = "/";
 		if(member != null && bcryptPasswordEncoder.matches(password, member.getPassword())) {

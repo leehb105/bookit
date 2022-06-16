@@ -22,9 +22,10 @@ public class SecurityService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
+		log.debug("username = {}", username);
 		UserDetails member = securityDao.loadUserByUsername(username);
 		
-		log.debug("member = {}",member);
+		log.debug("security member = {}", member);
 		
 		if(member == null) {
 			throw new UsernameNotFoundException(username);
