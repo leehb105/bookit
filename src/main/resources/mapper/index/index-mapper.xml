@@ -7,7 +7,7 @@
 		select
 		    b.*,
 		    m.nickname,
-		    m.profile_image
+			NVL2(m.profile_image, m.profile_image, 'default_profile.png') AS profile_image
 		from 
 		    book_collection b left join member m
     		on b.member_id = m.id

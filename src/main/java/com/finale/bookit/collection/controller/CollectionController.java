@@ -47,6 +47,7 @@ public class CollectionController {
 		param.put("limit", limit);
 		
 		List<BookCollection> collectionList = collectionService.selectAllCollection(param);
+
 		log.debug("collectionList = {}", collectionList);
 		
 		// 페이지 영역

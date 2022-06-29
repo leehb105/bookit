@@ -8,7 +8,7 @@
 
 <script>
 // 인터파크 베스트셀러
-/* $(() => {
+$(() => {
     const csrfHeader = "${_csrf.headerName}";
 	const csrfToken = "${_csrf.token}";
 	const headers = {};
@@ -32,7 +32,7 @@
 				const title = item[i].title;
 				const author = item[i].author;
 				const coverSmallUrl = item[i].coverSmallUrl;
-				console.log(title, author, coverSmallUrl);
+				// console.log(title, author, coverSmallUrl);
 				$(".interpark").before(
 					'<div class="mt-1 d-flex align-items-center">'
 					+ 	'<span class="ml-50">' + (i + 1) + '</span>'
@@ -78,14 +78,14 @@ $(() => {
 		contentType: "javascript/jsonp; charset=utf-8",
 		headers: headers,
 		success(data){
-			console.log(data);
+			// console.log(data);
 			const item = data.item;
-			console.log(item);
+			// console.log(item);
 			for(var i = 0; i < item.length; i++){
 				const title = item[i].title;
 				const author = item[i].author;
 				const cover = item[i].cover;
-				console.log(title, author, cover);
+				// console.log(title, author, cover);
 				$(".aladin").before(
 					'<div class="mt-1 d-flex align-items-center">'
 					+ 	'<span class="ml-50">' + (i + 1) + '</span>'
@@ -104,14 +104,14 @@ $(() => {
 		},
 		error: console.log
 	});
-}); */
+});
 
 //베스트 관심책(BOOKIT)
 $(document).ready(function(){
 	var header = "${_csrf.headerName}";
 	var token = "${_csrf.token}";
-	console.log(header);
-	console.log(token);
+	// console.log(header);
+	// console.log(token);
 	$.ajax({
 		url: `${pageContext.request.contextPath}/bestWishBook.do`,
 		method: "POST",
@@ -120,7 +120,7 @@ $(document).ready(function(){
             xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
         },
 		success(wishlist){
-        	console.log(wishlist);
+        	// console.log(wishlist);
 				$(".bookit").before(
 					'<div class="mb-4" style="padding-top: 110px">'
 						+  '<img class="mr-100 ml-100" src="' + wishlist.cover + '" style="display: inline-block; width: 50%" />'
@@ -138,8 +138,8 @@ $(document).ready(function(){
 $(document).ready(function(){
 	var header = "${_csrf.headerName}";
 	var token = "${_csrf.token}";
-	console.log(header);
-	console.log(token);
+	// console.log(header);
+	// console.log(token);
 	$.ajax({
 		url: `${pageContext.request.contextPath}/collectionList.do`,
 		method: "POST",
@@ -148,7 +148,7 @@ $(document).ready(function(){
             xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
         },
 		success(collectionList){
-        	console.log(collectionList);
+        	// console.log(collectionList);
 			for(var i = 0; i < 3; i++){
 				var no = collectionList[i].no;
 				$(".collection-area").append(
@@ -175,7 +175,8 @@ $(document).ready(function(){
     <section class="welcome-area">
         <div class="welcome-slides owl-carousel">
             <!-- Single Welcome Slide -->
-            <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(img/bg-img/16.jpg);" data-img-url="img/bg-img/16.jpg">
+            <!-- <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(img/bg-img/16.jpg);" data-img-url="img/bg-img/16.jpg"> -->
+            <div class="single-welcome-slide bg-img">
                 <!-- Welcome Content -->
                 <div class="welcome-content h-100">
                     <div class="container h-100">

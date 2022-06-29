@@ -25,7 +25,7 @@
     <title>Bookit - Book Rental & Resale</title>
 
     <!-- Favicon --> 
-    <%-- <link rel="icon" href="${pageContext.request.contextPath}/resources/img/core-img/favicon.png"> --%>
+    <!-- <link rel="icon" href="${pageContext.request.contextPath}/resources/img/core-img/favicon.png"> -->
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/roberto/style.css">
@@ -81,7 +81,7 @@
                     <nav class="classy-navbar justify-content-between" id="robertoNav">
 
                         <!-- Logo -->
-                        <a class="nav-brand" href="${pageContext.request.contextPath}"><img src="${pageContext.request.contextPath}/resources/img/bookit_logo.png" alt=""></a>
+                        <a class="nav-brand" href="${pageContext.request.contextPath}/"><img src="${pageContext.request.contextPath}/resources/img/bookit_logo.png" alt=""></a>
 
                         <!-- Navbar Toggler -->
                         <div class="classy-navbar-toggler">
