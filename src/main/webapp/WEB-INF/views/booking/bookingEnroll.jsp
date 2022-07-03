@@ -3,8 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<script src="https://kit.fontawesome.com/01809a491f.js" crossorigin="anonymous"></script>
+<sec:authentication property="principal" var="loginMember"/>
 
 	<!-- 등록 폼 시작 -->
     <div class="roberto-contact-form-area section-padding-100">
@@ -47,6 +50,7 @@
                     <!-- Single Room Details Area -->
                     <div class="single-room-details-area mb-50 wow fadeInUp">
                         <!-- <form method="post" id="enrollFrm"> -->
+                        <!-- 이하 form까지 작동안되는것 확인함 -->
                         <form:form method="post" id="enrollFrm">
                             <h3>책 정보 입력 <span id="errorTxt"> - 책 정보 등록 필요!</span> </h3>
                             <hr class="my-2">
@@ -76,7 +80,7 @@
                                         </tr>
                                         <tr>
                                             <td>출판일</td>
-                                            <td id="pubdate"><fmt:formatDate value="" pattern="yyyy년 MM월"/></td>
+                                            <td id="pubdate"></td>
                                         </tr>
                                         <tr>
                                             <td>ISBN</td>
@@ -222,7 +226,7 @@
     window.getJson = function(){
 
         book = JSON.parse(localStorage.getItem("book"));
-
+        // console.log(book);
         if(isEmptyObj(book)){
             alert("책정보 없음 - 도서를 다시 선택해주세요.");
         }else if(!checkAllElement(book)){

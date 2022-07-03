@@ -34,8 +34,8 @@
 
 		
 		<intercept-url pattern="/**" access="permitAll"/> <!-- =hasRole('USER') -->
-	
-	
+		<!--403에러	-->
+		<access-denied-handler error-page="/error/accessError.do" />
 		<!-- 
 			login-page : 로그인폼 페이지 요청 GET(실제 핸들러 작성)
 			login-processing-url : 로그인 처리요청 POST(핸들러 작성하지 않음)

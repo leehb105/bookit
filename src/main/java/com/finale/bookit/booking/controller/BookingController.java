@@ -83,17 +83,17 @@ public class BookingController {
         param.put("cri", cri);
         param.put("address", loginMember.getSearchAddress());
         
-        log.debug("title = {}", bookTitle);
+//        log.debug("title = {}", bookTitle);
         List<Booking> list = bookingService.selectBookingList(param);
         int total = bookingService.selectTotalBookingCount(param);
-        log.debug("total = {}", total);
+//        log.debug("total = {}", total);
         String url = request.getRequestURI();
-        log.debug("url = {}", url);
-
-        log.debug("list = {}", list);
-        log.debug("url = {}", url);
+//        log.debug("url = {}", url);
+//
+//        log.debug("list = {}", list);
+//        log.debug("url = {}", url);
         Paging page = new Paging(cri, total);
-        log.debug("paging = {}", page);
+//        log.debug("paging = {}", page);
         
         model.addAttribute("list", list);
         model.addAttribute("page", page);
@@ -110,11 +110,11 @@ public class BookingController {
     	param.put("bno", bno);
     	param.put("id", id);
     	
-    	log.debug("bno = {}", bno);
+//    	log.debug("bno = {}", bno);
     	
     	Booking booking = bookingService.selectBooking(param);
     	String newDate = BookitUtils.getFormatDate(booking.getRegDate());
-    	log.debug("booking = {} ", booking);
+//    	log.debug("booking = {} ", booking);
     	
 //    	List<String> startDateList = new ArrayList<String>();
 //    	List<String> endDateList = new ArrayList<String>();

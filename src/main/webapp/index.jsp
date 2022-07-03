@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/collectionImage.css" />
+
 
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 

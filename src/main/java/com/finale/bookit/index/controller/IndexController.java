@@ -25,7 +25,7 @@ public class IndexController {
 	@PostMapping("/collectionList.do")
 	public List<BookCollection> collectionList(Model model) throws Exception {
 		List<BookCollection> collectionList = indexService.selectAllCollection();
-		log.debug("collectionList = {}", collectionList);
+//		log.debug("collectionList = {}", collectionList);
 		model.addAttribute("collectionList", collectionList);
 		return collectionList;
 	}
@@ -35,7 +35,7 @@ public class IndexController {
 	@PostMapping("/bestWishBook.do")
 	public Wishlist bestWishBook(Model model) throws Exception {
 		Wishlist wishlist = indexService.selectOneBestWishBook();
-		log.debug("bestWishBook = {}", wishlist);
+//		log.debug("bestWishBook = {}", wishlist);
 		model.addAttribute("bestWishBook", wishlist);
 		return wishlist;
 	}
