@@ -31,9 +31,9 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/roberto/style.css">
     
     <!-- Socket JS등록 및 STOMP 채팅을 위한 script 3개 -->
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<!-- <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="${pageContext.request.contextPath }/resources/dist/sockjs.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script> -->
 
     <!-- datepicker 사용을 위한 링크 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
@@ -45,6 +45,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/review.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/collectionImage.css" />
     
 </head>
 <c:if test="${not empty msg}">
