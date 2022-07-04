@@ -8,7 +8,7 @@
 		select
 			r.*,
 			m.nickname,
-			m.profile_image,
+			NVL2(m.profile_image, m.profile_image, 'default_profile.png') AS profile_image,
 			b.title,
 			b.author,
 			b.cover,
