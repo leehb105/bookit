@@ -256,7 +256,7 @@ $(document).ready(function(){
                             </div> -->
                             <div class="col-12 col-md-9 col-lg-9">
                             	<label for="bookTitle">책 제목</label>
-                            	<input type="text" class="form-control" id="bookTitle" name="bookTitle" value="개미" placeholder="대여할 책 제목을 입력하세요" autofocus>
+                            	<input type="text" class="form-control" id="bookTitle" name="bookTitle"  placeholder="대여할 책 제목을 입력하세요 ex)개미" autofocus>
                             </div>
                             <div class="col-12 col-md-3">
                                 <button type="button" class="form-control btn roberto-btn w-100" id="searchBtn" onclick="checkInputDate();">대여 도서 검색</button>
