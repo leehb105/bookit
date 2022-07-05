@@ -27,6 +27,7 @@
 		<intercept-url pattern="/admin/**" access="hasRole('ADMIN')"/> <!-- ROLE_ADMIN만 접근 가능 -->
 		<intercept-url pattern="/booking/**" access="isAuthenticated()"/>
 		<intercept-url pattern="/search/**" access="isAuthenticated()"/>
+		<intercept-url pattern="/collection/**" access="isAuthenticated()"/>
 
 		<intercept-url pattern="/member/mypageMain.jsp" access="isAuthenticated()"/>
 		<intercept-url pattern="/member/**" access="permitAll"/>
